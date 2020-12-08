@@ -11,13 +11,13 @@ from fridaybot.utils import admin_cmd
 @borg.on(admin_cmd(pattern="benheck(?: |$)(.*)"))
 async def oki(event):
     await event.edit("`Processing...`")
-    args = event.pattern_match.group(1).split(" ", 1)
     extra = None
     if event.reply_to_msg_id:
         previous_message = await event.get_reply_message()
         user = await event.client.get_entity(previous_message.sender_id)
         extra = event.pattern_match.group(1)
     elif args:
+        args = event.pattern_match.group(1).split(" ", 1)
         userz = args[0]
         if userz.isnumeric():
             user = int(userz)
@@ -35,14 +35,14 @@ async def oki(event):
         if not user:
             await event.edit("Reply To User Or Mention a User.")
             return
-    gensys = sclient.ban(user, extra)
-    await borg.send_message("antispamincfed", f"/fban {user} {extra}")
-    if gensys["error"] == True:
-        await event.edit("Error : " + gensys["full"])
-    else:
+    try:
+        gensys = sclient.ban(user, extra)
+        await borg.send_message("antispamincfed", f"/fban {user} {extra}")
         await event.edit(
             f"**User :** `{user}` \n**Reason :** `{extra}` \n**Banned Sucessfully !**"
         )
+    except RequestError as e:
+        await event.edit('Errors : ' + e)
 
 
 @borg.on(admin_cmd(pattern="heck(?: |$)(.*)"))
