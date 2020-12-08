@@ -1,6 +1,6 @@
 import secrets
 
-from fridaybot import sclient, RequestError
+from fridaybot import RequestError, sclient
 from fridaybot.utils import admin_cmd
 
 """This Is Only For Devs Of AntispamInc, Needs Root Permissions // @AntispamInc"""
@@ -91,9 +91,11 @@ async def oki(event):
         lmaoded.append(user.id)
     for i in lmaoded:
         try:
-            gensys2 = sclient.ban(i, lolsed)
+            sclient.ban(i, lolsed)
             await borg.send_message("antispamincfed", f"/fban {i} {lolsed}")
         except RequestError:
             errorz += 1
-        await event.edit(f"**User :** `{i}` \n**Banned Sucessfully !** \n**Failed :** `{len(errorz)}`")
-    await event.edit('**DONE !**')
+        await event.edit(
+            f"**User :** `{i}` \n**Banned Sucessfully !** \n**Failed :** `{len(errorz)}`"
+        )
+    await event.edit("**DONE !**")
