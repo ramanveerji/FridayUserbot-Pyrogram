@@ -1,5 +1,6 @@
 Pillow
 quote
+the-python-bay
 antispaminc
 python-magic
 glitch_this
