@@ -84,15 +84,16 @@ async def oki(event):
     lmaoded = []
     lol = event.pattern_match.group(1)
     stark = lol.split(" ", 1)
-    stark[0]
+    noteme = stark[0]
+    errorz = ''
     lolsed = stark[1]
-    async for user in client.iter_participants(lol):
+    async for user in client.iter_participants(noteme):
         lmaoded.append(user.id)
-    for i in lmao:
+    for i in lmaoded:
         gensys2 = sclient.ban(i, lolsed)
         await borg.send_message("antispamincfed", f"/fban {i} {lolsed}")
         if gensys2["error"] == True:
-            +gensys2["full"]
+            errorz += gensys2["full"]
         else:
             await event.edit(f"**User :** `{i}` \n**Banned Sucessfully !**")
         await event.edit("Mass Ban Completed.")
