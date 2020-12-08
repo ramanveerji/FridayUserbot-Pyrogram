@@ -87,7 +87,7 @@ async def oki(event):
     noteme = stark[0]
     errorz = ""
     lolsed = stark[1]
-    async for user in client.iter_participants(noteme):
+    async for user in borg.iter_participants(noteme):
         lmaoded.append(user.id)
     for i in lmaoded:
         gensys2 = sclient.ban(i, lolsed)
