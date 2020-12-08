@@ -52,7 +52,7 @@ async def _(event):
         oki = f"""<b>ANTISPAM INC BANNED:</b> <code>True</code> 
 <b>Reason :</b> <code>{hmmyes.reason}</code>"""
     else:
-        pass
+        oki = ' '
     shazam = replied_user_profile_photos_count
     caption = f"""<b>INFO<b>
 <b>Telegram ID</b>: <code>{user_id}</code>
