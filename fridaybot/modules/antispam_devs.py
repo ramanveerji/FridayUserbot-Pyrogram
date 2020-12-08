@@ -36,13 +36,13 @@ async def oki(event):
             await event.edit("Reply To User Or Mention a User.")
             return
     try:
-        gensys = sclient.ban(user, extra)
+        sclient.ban(user, extra)
         await borg.send_message("antispamincfed", f"/fban {user} {extra}")
         await event.edit(
             f"**User :** `{user}` \n**Reason :** `{extra}` \n**Banned Sucessfully !**"
         )
     except RequestError as e:
-        await event.edit('Errors : ' + e)
+        await event.edit("Errors : " + e)
 
 
 @borg.on(admin_cmd(pattern="heck(?: |$)(.*)"))
