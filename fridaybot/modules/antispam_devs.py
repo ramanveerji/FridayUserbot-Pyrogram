@@ -1,6 +1,7 @@
 import secrets
 
-from fridaybot import RequestError, sclient
+from fridaybot import sclient
+from antispaminc.connect import RequestError
 from fridaybot.utils import admin_cmd
 
 """This Is Only For Devs Of AntispamInc, Needs Root Permissions // @AntispamInc"""
