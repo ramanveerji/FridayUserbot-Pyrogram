@@ -1,8 +1,8 @@
 from textblob import TextBlob
-from fridaybot.Configs import Config
-from fridaybot import CMD_HELP
 
+from fridaybot.Configs import Config
 from fridaybot.utils import admin_cmd
+
 
 @friday.on(admin_cmd(pattern="(.*)"))
 async def _(event):
@@ -16,4 +16,3 @@ async def _(event):
     else:
         bm = TextBlob(input_str)
         await event.edit(bm)
-      
