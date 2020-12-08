@@ -1,6 +1,6 @@
 from telethon.events import ChatAction
 
-from fridaybot import sclient
+from fridaybot import sclient, bot
 from fridaybot.Configs import Config
 
 """Bans Spammers/Scammer At time Of Arrival 
@@ -13,7 +13,7 @@ async def ok(event):
     if Config.ANTISPAM_FEATURE != "ENABLE":
         return
     if event.user_joined:
-        hmmyep = await borg.get_permissions(event.chat_id, juser.id)
+        hmmyep = await borg.get_permissions(event.chat_id, bot.uid)
         if not hmmyep.is_admin:
             return
         user = sclient.is_banned(juser.id)
