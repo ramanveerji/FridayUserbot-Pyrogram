@@ -85,7 +85,7 @@ async def oki(event):
     lol = event.pattern_match.group(1)
     stark = lol.split(" ", 1)
     noteme = stark[0]
-    errorz = ''
+    errorz = ""
     lolsed = stark[1]
     async for user in client.iter_participants(noteme):
         lmaoded.append(user.id)
