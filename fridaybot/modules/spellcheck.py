@@ -1,7 +1,8 @@
 from textblob import TextBlob
-from uniborg.util import friday_on_cmd
+
 from fridaybot import CMD_HELP
 from fridaybot.utils import admin_cmd
+
 
 @friday.on(admin_cmd(pattern="spellcheck (.*)"))
 async def _(event):
@@ -10,13 +11,14 @@ async def _(event):
     input_str = event.pattern_match.group(1)
     a = input_str
 
-    #print("original text: "+str(a))
+    # print("original text: "+str(a))
     b = TextBlob(a)
-    #print("corrected text: "+str(b.correct()))
+    # print("corrected text: "+str(b.correct()))
     c = b.correct()
     await event.edit(
-      f"<b><u>Check Completed</b></u> \n\n<b>Original Text</b>:-  <code>{a}</code> \n<b>Corrected Text:-</b> <code>{c}</code>", parse_mode="HTML",)
-
+        f"<b><u>Check Completed</b></u> \n\n<b>Original Text</b>:-  <code>{a}</code> \n<b>Corrected Text:-</b> <code>{c}</code>",
+        parse_mode="HTML",
+    )
 
 
 CMD_HELP.update(
