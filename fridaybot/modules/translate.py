@@ -4,7 +4,7 @@ Available Commands:
 .tr LangaugeCode | text to translate"""
 
 import emoji
-from googletrans import LANGUAGES, Translator
+from googletrans import Translator
 
 from fridaybot import CMD_HELP
 from fridaybot.utils import edit_or_reply, friday_on_cmd, sudo_cmd
