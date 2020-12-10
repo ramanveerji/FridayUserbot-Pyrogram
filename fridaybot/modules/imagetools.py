@@ -213,6 +213,7 @@ async def lolmetrg(event):
         if files and os.path.exists(files):
             os.remove(files)
 
+
 @friday.on(friday_on_cmd(pattern=r"jail"))
 @friday.on(sudo_cmd(pattern=r"jail", allow_sudo=True))
 async def hmm(event):
@@ -229,19 +230,18 @@ async def hmm(event):
         await event.edit("Reply To Image")
         return
     mon = "./resources/thuglife/mask.png"
-    foreground = Image.open(mon).convert('RGBA')
+    foreground = Image.open(mon).convert("RGBA")
 
-
-    background = Image.open(img).convert('RGB')
+    background = Image.open(img).convert("RGB")
     with Image.open(img) as img:
-      width, height = img.size
-    fg_resized = foreground.resize((width ,height))
-    background.paste(fg_resized,box=(0,0),mask=fg_resized)
+        width, height = img.size
+    fg_resized = foreground.resize((width, height))
+    background.paste(fg_resized, box=(0, 0), mask=fg_resized)
 
-    background.save('./starkgangz/testing.png')
-    
+    background.save("./starkgangz/testing.png")
+
     file_name = "testing.png"
-    ok = "./starkgangz/"  + file_name
+    ok = "./starkgangz/" + file_name
     await borg.send_file(event.chat_id, ok)
     await hmmu.delete()
     for files in (ok, img):
