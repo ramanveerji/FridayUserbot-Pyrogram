@@ -1,4 +1,5 @@
 import secrets
+
 from fridaybot import sclient
 from fridaybot.utils import admin_cmd
 
