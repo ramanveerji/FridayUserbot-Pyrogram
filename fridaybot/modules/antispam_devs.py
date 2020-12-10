@@ -1,7 +1,4 @@
 import secrets
-
-from antispaminc.connect import RequestError
-
 from fridaybot import sclient
 from fridaybot.utils import admin_cmd
 
@@ -41,8 +38,8 @@ async def oki(event):
         await event.edit(
             f"**User :** `{user}` \n**Reason :** `{extra}` \n**Banned Sucessfully !**"
         )
-    except RequestError as e:
-        await event.edit("Errors : " + e)
+    except Exception as e:
+        await event.edit("Errors : " + str(e))
 
 
 @borg.on(admin_cmd(pattern="heck(?: |$)(.*)"))
@@ -95,7 +92,7 @@ async def oki(event):
         try:
             sclient.ban(i, lolsed)
             await borg.send_message("antispamincfed", f"/fban {i} {lolsed}")
-        except RequestError:
+        except:
             errorz += 1
         await event.edit(
             f"**User :** `{i}` \n**Banned Sucessfully !** \n**Failed :** `{len(errorz)}`"
