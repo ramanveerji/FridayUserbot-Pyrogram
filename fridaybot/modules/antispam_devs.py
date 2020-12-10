@@ -10,6 +10,7 @@ from fridaybot.utils import admin_cmd
 async def oki(event):
     await event.edit("`Processing...`")
     extra = None
+    args = event.pattern_match.group(1)
     if event.reply_to_msg_id:
         previous_message = await event.get_reply_message()
         user = await event.client.get_entity(previous_message.sender_id)
