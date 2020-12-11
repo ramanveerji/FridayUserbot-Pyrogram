@@ -4,10 +4,10 @@ Available Commands:
 .tr LangaugeCode | text to translate"""
 
 import emoji
-from googletrans import Translator
-
+from deep_translator import GoogleTranslator
 from fridaybot import CMD_HELP
 from fridaybot.utils import edit_or_reply, friday_on_cmd, sudo_cmd
+from langdetect import detect
 
 
 @friday.on(friday_on_cmd("tr ?(.*)"))
@@ -16,7 +16,6 @@ async def _(event):
     if event.fwd_from:
         return
     if "trim" in event.raw_text:
-        # https://t.me/c/1220993104/192075
         return
     input_str = event.pattern_match.group(1)
     if event.reply_to_msg_id:
@@ -30,17 +29,19 @@ async def _(event):
         return
     text = emoji.demojize(text.strip())
     lan = lan.strip()
-    translator = Translator()
     try:
-        translated = translator.translate(text, dest=lan)
-        after_tr_text = translated.text
-        # TODO: emojify the :
-        # either here, or before translation
+        
+        lmao = detect(text)
+        after_tr_text = lmao
+        to_translate = text
+
+        translated = GoogleTranslator(source='auto', target=lan).translate(to_translate)
+      
         output_str = """**Translated By FridayUserbot** 
          Source **( {} )**
          Translation **( {} )**
          {}""".format(
-            translated.src, lan, after_tr_text
+            after_tr_text, lan, translated
         )
         await edit_or_reply(event, output_str)
     except Exception as exc:
