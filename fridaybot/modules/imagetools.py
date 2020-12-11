@@ -249,7 +249,6 @@ async def hmm(event):
             os.remove(files)
 
 
-
 @friday.on(friday_on_cmd(pattern=r"greyscale"))
 @friday.on(sudo_cmd(pattern=r"greyscale", allow_sudo=True))
 async def hmm(event):
@@ -267,21 +266,16 @@ async def hmm(event):
         return
     img1 = cv2.imread(img)
 
-
     gray_img = cv2.cvtColor(img1, cv2.COLOR_BGR2GRAY)
-
 
     cv2.imwrite("./starkgangz/testing.png", gray_img)
     file_name = "testing.png"
-    ok = "./starkgangz/"  + file_name
+    ok = "./starkgangz/" + file_name
     await borg.send_file(event.chat_id, ok)
     await hmmu.delete()
     for files in (ok, img):
         if files and os.path.exists(files):
             os.remove(files)
-
-
-
 
 
 CMD_HELP.update(
