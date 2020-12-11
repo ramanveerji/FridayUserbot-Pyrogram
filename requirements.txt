@@ -1,6 +1,6 @@
 Pillow
 quote
-the-python-bay
+the_python_bay
 textblob
 antispaminc
 python-magic
