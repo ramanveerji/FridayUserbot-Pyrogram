@@ -1,4 +1,6 @@
 Pillow
+deep_translator
+langdetect
 quote
 the_python_bay
 textblob
