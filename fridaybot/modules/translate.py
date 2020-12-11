@@ -5,9 +5,10 @@ Available Commands:
 
 import emoji
 from deep_translator import GoogleTranslator
+from langdetect import detect
+
 from fridaybot import CMD_HELP
 from fridaybot.utils import edit_or_reply, friday_on_cmd, sudo_cmd
-from langdetect import detect
 
 
 @friday.on(friday_on_cmd("tr ?(.*)"))
@@ -30,13 +31,13 @@ async def _(event):
     text = emoji.demojize(text.strip())
     lan = lan.strip()
     try:
-        
+
         lmao = detect(text)
         after_tr_text = lmao
         to_translate = text
 
-        translated = GoogleTranslator(source='auto', target=lan).translate(to_translate)
-      
+        translated = GoogleTranslator(source="auto", target=lan).translate(to_translate)
+
         output_str = """**Translated By FridayUserbot** 
          Source **( {} )**
          Translation **( {} )**
