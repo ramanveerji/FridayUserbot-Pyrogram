@@ -6,9 +6,11 @@ import itertools
 import os
 import secrets
 from textwrap import TextWrapper
-from fridaybot.utils import friday_on_cmd
+
 from PIL import Image, ImageChops, ImageDraw, ImageFont
 from telethon.tl.functions.users import GetFullUserRequest
+
+from fridaybot.utils import friday_on_cmd
 
 
 async def get_y_and_heights(text_wrapped, dimensions, margin, font):
