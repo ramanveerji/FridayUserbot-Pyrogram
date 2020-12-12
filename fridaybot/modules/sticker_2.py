@@ -131,11 +131,15 @@ async def rounded_rectangle(rectangle, xy, corner_radius, fill=None, outline=Non
     )
 
 
-@borg.on(friday_on_cmd(pattern="nms ?(.*)"))
+@borg.on(friday_on_cmd(pattern="qs ?(.*)"))
 async def create_sticker(event):
+    if not event.reply_to_msg_id:
+        event.edit('Reply tO mSG :/')
+        return
+    loln = await event.edit('`Processing...`')
     ps = await event.get_reply_message()
     this_nub = await borg(GetFullUserRequest(ps.sender_id))
-    m = event.pattern_match.group(1)
+    m = ps.text
     if len(m) < 100:
         body_font_size = 35
         wrap_size = 30
@@ -206,6 +210,7 @@ async def create_sticker(event):
     img.paste(im, (20, in_y))
     sticker_file = f"{secrets.token_hex(2)}.webp"
     img.save(sticker_file)
+    await loln.delete()
     await borg.send_file(event.chat_id, file=sticker_file)
     try:
         if os.path.isfile(sticker_file):
