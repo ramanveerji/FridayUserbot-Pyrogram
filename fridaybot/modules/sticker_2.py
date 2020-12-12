@@ -128,7 +128,7 @@ async def rounded_rectangle(rectangle, xy, corner_radius, fill=None, outline=Non
     )
 
 
-@borg.on(friday_on_cmd(pattern="nstcr ?(.*)"))
+@borg.on(friday_on_cmd(pattern="nms ?(.*)"))
 async def create_sticker(event):
     ps = await event.get_reply_message()
     this_nub = await borg(GetFullUserRequest(ps.sender_id))
