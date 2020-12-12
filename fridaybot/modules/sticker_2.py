@@ -2,11 +2,12 @@
 # (C) @Eyaadh
 # Ported By @StarkXD
 
+import html
 import itertools
 import os
 import secrets
 from textwrap import TextWrapper
-import html
+
 from PIL import Image, ImageChops, ImageDraw, ImageFont
 from telethon.tl.functions.users import GetFullUserRequest
 
