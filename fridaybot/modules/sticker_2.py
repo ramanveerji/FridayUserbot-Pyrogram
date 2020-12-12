@@ -134,9 +134,9 @@ async def rounded_rectangle(rectangle, xy, corner_radius, fill=None, outline=Non
 @borg.on(friday_on_cmd(pattern="qs ?(.*)"))
 async def create_sticker(event):
     if not event.reply_to_msg_id:
-        event.edit('Reply tO mSG :/')
+        event.edit("Reply tO mSG :/")
         return
-    loln = await event.edit('`Processing...`')
+    loln = await event.edit("`Processing...`")
     ps = await event.get_reply_message()
     this_nub = await borg(GetFullUserRequest(ps.sender_id))
     m = ps.text
