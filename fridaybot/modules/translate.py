@@ -31,9 +31,9 @@ async def _(event):
     try:
         lmao_bruh = text
         # Userge :)
-        source_lan = LANGUAGES[f"{text.src.lower()}"]
-        transl_lan = LANGUAGES[f"{text.dest.lower()}"]
         translated = GoogleTranslator(source="auto", target=lan).translate(lmao_bruh)
+        source_lan = LANGUAGES[f"{translated.src.lower()}"]
+        transl_lan = LANGUAGES[f"{translated.dest.lower()}"]
         output_str = f"""**TRANSLATED**
 **Source :** __{source_lan}__
 **Translated To :** __{transl_lan}__
