@@ -272,39 +272,6 @@ async def hmm(event):
         if files and os.path.exists(files):
             os.remove(files)
 
-
-# Plugin By - XlayerCharon[XCB]
-# TG ~>>//@CharonCB21
-# @code-rgb
-@friday.on(friday_on_cmd(pattern=r"fgs ?(.*)"))
-@friday.on(sudo_cmd(pattern=r"fgs ?(.*)", allow_sudo=True))
-async def img(event):
-    text = event.pattern_match.group(1)
-    if not text:
-        await event.edit("No input found!")
-        return
-    if ";" in text:
-        search, result = text.split(";", 1)
-    else:
-        event.edit("Invalid Input! Check help for more info!")
-        return
-    photo = Image.open("resources/dummy_image/fgs.jpg")
-    drawing = ImageDraw.Draw(photo)
-    blue = (0, 0, 255)
-    black = (0, 0, 0)
-    font1 = ImageFont.truetype("Fonts/ProductSans-BoldItalic.ttf", 20)
-    font2 = ImageFont.truetype("Fonts/ProductSans-Light.ttf", 23)
-    drawing.text((450, 258), result, fill=blue, font=font1)
-    drawing.text((270, 37), search, fill=black, font=font2)
-    file_name = "fgs.jpg"
-    ok = sedpath + "/" + file_name
-    photo.save(ok)
-    await event.delete()
-    await friday.send_file(event.chat_id, ok)
-    if os.path.exists(ok):
-        os.remove(ok)
-
-
 CMD_HELP.update(
     {
         "imagetools": "**imagetools**\
@@ -318,8 +285,6 @@ CMD_HELP.update(
         \n**Usage :** Makes a triggered gif of the replied image.\
         \n\n**Syntax : ** `.jail`\
         \n**Usage :** Makes a jail image of the replied image.\
-        \n\n**Syntax : ** `.fgs searchtext;fake text`\
-        \n**Usage :** Makes a Fake Google Search Image.\
         \n\n**Syntax : ** `.greyscale`\
         \n**Usage :** Makes a black and white image of the replied image."
     }
