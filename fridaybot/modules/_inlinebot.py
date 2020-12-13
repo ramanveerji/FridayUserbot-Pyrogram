@@ -246,6 +246,13 @@ def paginate_help(page_number, loaded_modules, prefix):
 
 @tgbot.on(events.InlineQuery(pattern=r"torrent (.*)"))
 async def inline_id_handler(event: events.InlineQuery.Event):
+    if event.query.user_id != bot.uid:
+        resultm = builder.article(
+            title="Not Allowded",
+                text=f"You Can't Use This Bot. \nDeploy Friday To Get Your Own Assistant, Repo Link [Here](https://github.com/StarkGang/FridayUserbot)",
+            )
+            await event.answer([resultm])
+            return
     builder = event.builder
     testinput = event.pattern_match.group(1)
     starkisnub = urllib.parse.quote_plus(testinput)
@@ -320,6 +327,13 @@ async def inline_id_handler(event: events.InlineQuery.Event):
 
 @tgbot.on(events.InlineQuery(pattern=r"yt (.*)"))
 async def inline_id_handler(event: events.InlineQuery.Event):
+    if event.query.user_id != bot.uid:
+        resultm = builder.article(
+            title="Not Allowded",
+                text=f"You Can't Use This Bot. \nDeploy Friday To Get Your Own Assistant, Repo Link [Here](https://github.com/StarkGang/FridayUserbot)",
+            )
+            await event.answer([resultm])
+            return
     builder = event.builder
     testinput = event.pattern_match.group(1)
     urllib.parse.quote_plus(testinput)
@@ -363,6 +377,13 @@ async def inline_id_handler(event: events.InlineQuery.Event):
 
 @tgbot.on(events.InlineQuery(pattern=r"jm (.*)"))
 async def inline_id_handler(event: events.InlineQuery.Event):
+    if event.query.user_id != bot.uid:
+        resultm = builder.article(
+            title="Not Allowded",
+                text=f"You Can't Use This Bot. \nDeploy Friday To Get Your Own Assistant, Repo Link [Here](https://github.com/StarkGang/FridayUserbot)",
+            )
+            await event.answer([resultm])
+            return
     event.builder
     testinput = event.pattern_match.group(1)
     starkisnub = urllib.parse.quote_plus(testinput)
@@ -400,6 +421,13 @@ async def inline_id_handler(event: events.InlineQuery.Event):
 
 @tgbot.on(events.InlineQuery)  # pylint:disable=E0602
 async def inline_handler(event):
+    if event.query.user_id != bot.uid:
+        resultm = builder.article(
+            title="Not Allowded",
+                text=f"You Can't Use This Bot. \nDeploy Friday To Get Your Own Assistant, Repo Link [Here](https://github.com/StarkGang/FridayUserbot)",
+            )
+            await event.answer([resultm])
+            return
     builder = event.builder
     query = event.text
     replied_user = await tgbot.get_me()
