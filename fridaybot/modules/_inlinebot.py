@@ -251,8 +251,8 @@ async def inline_id_handler(event: events.InlineQuery.Event):
             title="Not Allowded",
                 text=f"You Can't Use This Bot. \nDeploy Friday To Get Your Own Assistant, Repo Link [Here](https://github.com/StarkGang/FridayUserbot)",
             )
-            await event.answer([resultm])
-            return
+        await event.answer([resultm])
+        return
     builder = event.builder
     testinput = event.pattern_match.group(1)
     starkisnub = urllib.parse.quote_plus(testinput)
@@ -332,8 +332,8 @@ async def inline_id_handler(event: events.InlineQuery.Event):
             title="Not Allowded",
                 text=f"You Can't Use This Bot. \nDeploy Friday To Get Your Own Assistant, Repo Link [Here](https://github.com/StarkGang/FridayUserbot)",
             )
-            await event.answer([resultm])
-            return
+        await event.answer([resultm])
+        return
     builder = event.builder
     testinput = event.pattern_match.group(1)
     urllib.parse.quote_plus(testinput)
@@ -382,8 +382,8 @@ async def inline_id_handler(event: events.InlineQuery.Event):
             title="Not Allowded",
                 text=f"You Can't Use This Bot. \nDeploy Friday To Get Your Own Assistant, Repo Link [Here](https://github.com/StarkGang/FridayUserbot)",
             )
-            await event.answer([resultm])
-            return
+        await event.answer([resultm])
+        return
     event.builder
     testinput = event.pattern_match.group(1)
     starkisnub = urllib.parse.quote_plus(testinput)
@@ -426,8 +426,8 @@ async def inline_handler(event):
             title="Not Allowded",
                 text=f"You Can't Use This Bot. \nDeploy Friday To Get Your Own Assistant, Repo Link [Here](https://github.com/StarkGang/FridayUserbot)",
             )
-            await event.answer([resultm])
-            return
+        await event.answer([resultm])
+        return
     builder = event.builder
     query = event.text
     replied_user = await tgbot.get_me()
