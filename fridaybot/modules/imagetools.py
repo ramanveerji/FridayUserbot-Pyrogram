@@ -16,7 +16,7 @@ import os
 import cv2
 import numpy as np
 import requests
-from PIL import Image, ImageDraw, ImageFont
+from PIL import Image
 from telegraph import upload_file
 from telethon.tl.types import MessageMediaPhoto
 
@@ -271,6 +271,7 @@ async def hmm(event):
     for files in (ok, img):
         if files and os.path.exists(files):
             os.remove(files)
+
 
 CMD_HELP.update(
     {
