@@ -135,44 +135,47 @@ async def get_full_user(event):
                 return replied_user, None
             except Exception as e:
                 return None, e
-            
+
+
 @friday.on(friday_on_cmd("wru ?(.*)"))
-@friday.on(sudo_cmd("wru ?(.*)", allow_sudo=True))            
+@friday.on(sudo_cmd("wru ?(.*)", allow_sudo=True))
 async def gibinfo(event):
-        if not event.pattern_match.group(1):
-            user = (
-                (await event.get_reply_message()).sender if event.is_reply
-                else event.sender)
-        else:
-            try:
-                user = await borg.get_entity(event.pattern_match.group(1))
-            except ValueError:
-                await event.edit("<i>No User Found.</i>")
-                return
+    if not event.pattern_match.group(1):
+        user = (
+            (await event.get_reply_message()).sender if event.is_reply else event.sender
+        )
+    else:
         try:
-                cas_url = f"https://combot.org/api/cas/check?user_id={user.id}"
-                r = get(cas_url, timeout=3)
-                data = r.json()
-        except:
-                data = None
-        if data and data["ok"]:
-                reason = f"<i>True</i>"
-        else:
-                reason = f'<i>False</i>'
-        hmmyes = sclient.is_banned(user.id)
-        if hmmyes:
-            oki = f"""<i>True</i> 
+            user = await borg.get_entity(event.pattern_match.group(1))
+        except ValueError:
+            await event.edit("<i>No User Found.</i>")
+            return
+    try:
+        cas_url = f"https://combot.org/api/cas/check?user_id={user.id}"
+        r = get(cas_url, timeout=3)
+        data = r.json()
+    except:
+        data = None
+    if data and data["ok"]:
+        reason = f"<i>True</i>"
+    else:
+        reason = f"<i>False</i>"
+    hmmyes = sclient.is_banned(user.id)
+    if hmmyes:
+        oki = f"""<i>True</i> 
 <b>Reason :</b> <i>{hmmyes.reason}</i>"""
-        else:
-            oki = "<i>False</i>"
-        infomsg = (
-            f"<b>Info Of</b> <a href=tg://user?id={user.id}>{user.first_name}</a>:"
-            f"<b>- Username:</b> <i>{user.username}</i>\n"
-            f"<b>- ID:</b> <i>{user.id}</i>\n"
-            f"<b>- Bot:</b> <i>{user.bot}</i>\n"
-            f"<b>- CAS Banned :</b> {reason}"
-            f"<b>- AntispamInc Banned :</b> {oki}")
-        await event.edit(infomsg, parse_mode='HTML')
+    else:
+        oki = "<i>False</i>"
+    infomsg = (
+        f"<b>Info Of</b> <a href=tg://user?id={user.id}>{user.first_name}</a>:"
+        f"<b>- Username:</b> <i>{user.username}</i>\n"
+        f"<b>- ID:</b> <i>{user.id}</i>\n"
+        f"<b>- Bot:</b> <i>{user.bot}</i>\n"
+        f"<b>- CAS Banned :</b> {reason}"
+        f"<b>- AntispamInc Banned :</b> {oki}"
+    )
+    await event.edit(infomsg, parse_mode="HTML")
+
 
 CMD_HELP.update(
     {
