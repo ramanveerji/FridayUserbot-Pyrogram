@@ -36,9 +36,10 @@ async def _(event):
         translated = GoogleTranslator(source="auto", target=lan).translate(lmao_bruh)
         source_lan = LANGUAGES[after_tr_text]
         transl_lan = LANGUAGES[lan]
-        output_str = f"""**TRANSLATED**
-**Source :** __{source_lan}__
-**Translated To :** __{transl_lan}__
+        output_str = f"""**TRANSLATED SUCCESSFULLY**
+**Source ({source_lan})**
+`{text}`
+**Translation ({transl_lan})**
 `{translated}`"""
         if len(output_str) >= 4096:
             out_file = output_str
