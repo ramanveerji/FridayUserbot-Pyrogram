@@ -148,7 +148,7 @@ async def gibinfo(event):
         if data and data["ok"]:
                 reason = f"<i>True</i>"
         else:
-                reason = f'<i>False</i>
+                reason = f'<i>False</i>'
         hmmyes = sclient.is_banned(user_id)
         if hmmyes:
             oki = f"""<i>True</i> 
