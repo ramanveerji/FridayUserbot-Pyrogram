@@ -150,6 +150,7 @@ async def iamthug(event):
         if files and os.path.exists(files):
             os.remove(files)
 
+
 @friday.on(friday_on_cmd(pattern=r"tni"))
 @friday.on(sudo_cmd(pattern=r"tni", allow_sudo=True))
 async def toony(event):
