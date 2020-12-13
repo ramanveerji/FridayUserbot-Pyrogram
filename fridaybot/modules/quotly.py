@@ -426,10 +426,10 @@ class Quote:
 
 @borg.on(friday_on_cmd(pattern="q(?: |$)(.*)"))
 async def create_sticker(message):
-    if event.fwd_from:
+    if message.fwd_from:
         return
-    if not event.reply_to_msg_id:
-        await event.edit("```Reply to any user message.```")
+    if not message.reply_to_msg_id:
+        await message.edit("```Reply to any user message.```")
         return
     if not os.path.isdir(".tmp"):
         os.mkdir(".tmp", 0o755)
