@@ -16,7 +16,7 @@ import os
 import cv2
 import numpy as np
 import requests
-from PIL import Image
+from PIL import Image, ImageDraw, ImageFont
 from telegraph import upload_file
 from telethon.tl.types import MessageMediaPhoto
 
@@ -149,12 +149,6 @@ async def iamthug(event):
     for files in (ok, img):
         if files and os.path.exists(files):
             os.remove(files)
-
-
-import os
-
-import cv2
-
 
 @friday.on(friday_on_cmd(pattern=r"tni"))
 @friday.on(sudo_cmd(pattern=r"tni", allow_sudo=True))
