@@ -18,15 +18,15 @@ import os
 import random
 import textwrap
 import urllib
-from telethon import events
-from telethon.errors.rpcerrorlist import YouBlockedUserError
-from fridaybot import CMD_HELP, bot
-from fridaybot.utils import friday_on_cmd
+
 import emoji
 from fontTools.ttLib import TTFont
 from PIL import Image, ImageDraw, ImageFont, ImageOps
+from telethon import events
+from telethon.errors.rpcerrorlist import YouBlockedUserError
 from telethon.tl import functions, types
 
+from fridaybot import CMD_HELP, bot
 from fridaybot.utils import friday_on_cmd
 
 COLORS = [
@@ -446,6 +446,7 @@ async def create_sticker(message):
     canvas.save(".tmp/sticker.webp")
     await message.respond(file=".tmp/sticker.webp")
     os.remove(".tmp/sticker.webp")
+
 
 @friday.on(friday_on_cmd(pattern=r"qbot(?: |$)(.*)"))
 async def _(event):
