@@ -13,18 +13,16 @@
 #    You should have received a copy of the GNU General Public License
 #    along with NiceGrill.  If not, see <https://www.gnu.org/licenses/>.
 
-from PIL import Image, ImageDraw, ImageFont, ImageOps
-from telethon.tl import types, functions
-from fontTools.ttLib import TTFont 
-from fontTools.unicode import Unicode
-import emoji
-import urllib
-import textwrap
-import random
 import json
 import os
-import re
-from telethon.tl.functions.users import GetFullUserRequest
+import random
+import textwrap
+import urllib
+
+import emoji
+from fontTools.ttLib import TTFont
+from PIL import Image, ImageDraw, ImageFont, ImageOps
+from telethon.tl import functions, types
 
 from fridaybot.utils import friday_on_cmd
 
@@ -63,11 +61,17 @@ class Quote:
 
         title = ""
         try:
-            details = await client(functions.channels.GetParticipantRequest(reply.chat_id, user.id))
+            details = await client(
+                functions.channels.GetParticipantRequest(reply.chat_id, user.id)
+            )
             if isinstance(details.participant, types.ChannelParticipantCreator):
-                title = details.participant.rank if details.participant.rank else "Creator"
+                title = (
+                    details.participant.rank if details.participant.rank else "Creator"
+                )
             elif isinstance(details.participant, types.ChannelParticipantAdmin):
-                title = details.participant.rank if details.participant.rank else "Admin"
+                title = (
+                    details.participant.rank if details.participant.rank else "Admin"
+                )
         except TypeError:
             pass
         titlewidth = font2.getsize(title)[0]
@@ -80,7 +84,9 @@ class Quote:
 
         if namewidth > width:
             width = namewidth
-        width += titlewidth + 30 if titlewidth > width - namewidth else -(titlewidth - 30)
+        width += (
+            titlewidth + 30 if titlewidth > width - namewidth else -(titlewidth - 30)
+        )
         height = len(text) * 40
 
         # Profile Photo BG
@@ -112,8 +118,10 @@ class Quote:
 
         # Creating a big canvas to gather all the elements
         canvassize = (
-            middle.width + pfpbg.width, top.height + middle.height + bottom.height)
-        canvas = Image.new('RGBA', canvassize)
+            middle.width + pfpbg.width,
+            top.height + middle.height + bottom.height,
+        )
+        canvas = Image.new("RGBA", canvassize)
         draw = ImageDraw.Draw(canvas)
 
         y = 80
@@ -121,16 +129,18 @@ class Quote:
             # Creating a big canvas to gather all the elements
             replname = "" if not replied.sender.last_name else replied.sender.last_name
             reptot = replied.sender.first_name + " " + replname
-            replywidth = font2.getsize(reptot)[0]
+            font2.getsize(reptot)[0]
             if reply.sticker:
                 sticker = await reply.download_media()
                 stimg = Image.open(sticker)
                 canvas = canvas.resize((stimg.width + pfpbg.width, stimg.height + 160))
                 top = Image.new("RGBA", (200 + stimg.width, 300), (29, 29, 29, 255))
                 draw = ImageDraw.Draw(top)
-                await Quote.replied_user(draw, reptot, replied.message.replace("\n", " "), 20)
+                await Quote.replied_user(
+                    draw, reptot, replied.message.replace("\n", " "), 20
+                )
                 top = top.crop((135, 70, top.width, 300))
-                canvas.paste(pfpbg, (0,0))
+                canvas.paste(pfpbg, (0, 0))
                 canvas.paste(top, (pfpbg.width + 10, 0))
                 canvas.paste(stimg, (pfpbg.width + 10, 140))
                 os.remove(sticker)
@@ -152,13 +162,19 @@ class Quote:
                 replied.text = "Voice Message"
             elif replied.document:
                 replied.text = "Document"
-            await Quote.replied_user(draw, reptot, replied.message.replace("\n", " "), maxlength + len(title), len(title))
+            await Quote.replied_user(
+                draw,
+                reptot,
+                replied.message.replace("\n", " "),
+                maxlength + len(title),
+                len(title),
+            )
             y = 200
         elif reply.sticker:
             sticker = await reply.download_media()
             stimg = Image.open(sticker)
             canvas = canvas.resize((stimg.width + pfpbg.width + 30, stimg.height + 10))
-            canvas.paste(pfpbg, (0,0))
+            canvas.paste(pfpbg, (0, 0))
             canvas.paste(stimg, (pfpbg.width + 10, 10))
             os.remove(sticker)
             return True, canvas
@@ -170,10 +186,14 @@ class Quote:
             elif reply.document.size < 1048576:
                 docsize = str(round(reply.document.size / 1024, 2)) + " KB "
             elif reply.document.size < 1073741824:
-                docsize = str(round(reply.document.size / 1024**2, 2)) + " MB "
+                docsize = str(round(reply.document.size / 1024 ** 2, 2)) + " MB "
             else:
-                docsize = str(round(reply.document.size / 1024**3, 2)) + " GB "
-            docbglen = font.getsize(docsize)[0] if font.getsize(docsize)[0] > font.getsize(docname)[0] else font.getsize(docname)[0]
+                docsize = str(round(reply.document.size / 1024 ** 3, 2)) + " GB "
+            docbglen = (
+                font.getsize(docsize)[0]
+                if font.getsize(docsize)[0] > font.getsize(docname)[0]
+                else font.getsize(docname)[0]
+            )
             canvas = canvas.resize((pfpbg.width + width + docbglen, 160 + height))
             top, middle, bottom = await Quote.drawer(width + docbglen, height + 30)
             canvas.paste(pfpbg, (0, 0))
@@ -206,34 +226,47 @@ class Quote:
                     space += font.getsize(letter)[0]
 
         if title:
-            draw.text((canvas.width - titlewidth - 20, 25), title, font=font2, fill="#898989")
+            draw.text(
+                (canvas.width - titlewidth - 20, 25), title, font=font2, fill="#898989"
+            )
 
         # Writing all separating emojis and regular texts
         x = pfpbg.width + 30
         bold, mono, italic, link = await Quote.get_entity(reply)
-        mdlength = 0
         index = 0
         emojicount = 0
         textfallback = ImageFont.truetype("Fonts/Quivira.otf", 33, encoding="utf-16")
         textcolor = "white"
         for line in text:
             for letter in line:
-                index = msg.find(letter) if emojicount == 0 else msg.find(letter) + emojicount
+                index = (
+                    msg.find(letter)
+                    if emojicount == 0
+                    else msg.find(letter) + emojicount
+                )
                 for offset, length in bold.items():
                     if index in range(offset, length):
-                        font2 = ImageFont.truetype("Fonts/Roboto-Medium.ttf", 33, encoding="utf-16")
+                        font2 = ImageFont.truetype(
+                            "Fonts/Roboto-Medium.ttf", 33, encoding="utf-16"
+                        )
                         textcolor = "white"
                 for offset, length in italic.items():
                     if index in range(offset, length):
-                        font2 = ImageFont.truetype("Fonts/Roboto-Italic.ttf", 33, encoding="utf-16")
+                        font2 = ImageFont.truetype(
+                            "Fonts/Roboto-Italic.ttf", 33, encoding="utf-16"
+                        )
                         textcolor = "white"
                 for offset, length in mono.items():
                     if index in range(offset, length):
-                        font2 = ImageFont.truetype("Fonts/DroidSansMono.ttf", 30, encoding="utf-16")
+                        font2 = ImageFont.truetype(
+                            "Fonts/DroidSansMono.ttf", 30, encoding="utf-16"
+                        )
                         textcolor = "white"
                 for offset, length in link.items():
                     if index in range(offset, length):
-                        font2 = ImageFont.truetype("Fonts/Roboto-Regular.ttf", 30, encoding="utf-16")
+                        font2 = ImageFont.truetype(
+                            "Fonts/Roboto-Regular.ttf", 30, encoding="utf-16"
+                        )
                         textcolor = "#898989"
                 if letter in emoji.UNICODE_EMOJI:
                     newemoji, mask = await Quote.emoji_fetch(letter)
@@ -254,15 +287,17 @@ class Quote:
 
     async def drawer(width, height):
         # Top part
-        top = Image.new('RGBA', (width, 20), (0,0,0,0))
+        top = Image.new("RGBA", (width, 20), (0, 0, 0, 0))
         draw = ImageDraw.Draw(top)
-        draw.line((10, 0, top.width - 20, 0),  fill=(29, 29, 29, 255), width=50)
+        draw.line((10, 0, top.width - 20, 0), fill=(29, 29, 29, 255), width=50)
         draw.pieslice((0, 0, 30, 50), 180, 270, fill=(29, 29, 29, 255))
-        draw.pieslice((top.width - 75, 0, top.width, 50), 270, 360, fill=(29, 29, 29, 255))
+        draw.pieslice(
+            (top.width - 75, 0, top.width, 50), 270, 360, fill=(29, 29, 29, 255)
+        )
 
         # Middle part
         middle = Image.new("RGBA", (top.width, height + 75), (29, 29, 29, 255))
-        
+
         # Bottom part
         bottom = ImageOps.flip(top)
 
@@ -270,7 +305,7 @@ class Quote:
 
     async def fontTest(letter):
         test = TTFont("Fonts/Roboto-Medium.ttf")
-        for table in test['cmap'].tables:
+        for table in test["cmap"].tables:
             if ord(letter) in table.cmap.keys():
                 return True
 
@@ -304,12 +339,10 @@ class Quote:
         draw.line((66, 28, 66, 53), width=14, fill="white")
         draw.polygon([(67, 77), (90, 53), (42, 53)], fill="white")
         draw.line((40, 87, 90, 87), width=8, fill="white")
-        canvas.paste(doc, (160,23))
+        canvas.paste(doc, (160, 23))
         draw2 = ImageDraw.Draw(canvas)
         draw2.text((320, 40), name, font=font, fill="white")
-        draw2.text(
-            (320, 97), size
-            + type , font=font, fill="#AAAAAA")
+        draw2.text((320, 97), size + type, font=font, fill="#AAAAAA")
         return canvas
 
     async def no_photo(reply, tot):
@@ -324,18 +357,27 @@ class Quote:
 
     async def emoji_fetch(emoji):
         emojis = json.loads(
-            urllib.request.urlopen("https://github.com/erenmetesar/modules-repo/raw/master/emojis.txt").read().decode())
+            urllib.request.urlopen(
+                "https://github.com/erenmetesar/modules-repo/raw/master/emojis.txt"
+            )
+            .read()
+            .decode()
+        )
         if emoji in emojis:
             img = emojis[emoji]
-            return await Quote.transparent(urllib.request.urlretrieve(img, ".tmp/emoji.png")[0])
+            return await Quote.transparent(
+                urllib.request.urlretrieve(img, ".tmp/emoji.png")[0]
+            )
         else:
             img = emojis["⛔"]
-            return await Quote.transparent(urllib.request.urlretrieve(img, ".tmp/emoji.png")[0])
-        
+            return await Quote.transparent(
+                urllib.request.urlretrieve(img, ".tmp/emoji.png")[0]
+            )
+
     async def transparent(emoji):
         emoji = Image.open(emoji).convert("RGBA")
         emoji.thumbnail((40, 40))
-        
+
         # Mask
         mask = Image.new("L", (40, 40), 0)
         draw = ImageDraw.Draw(mask)
@@ -344,11 +386,11 @@ class Quote:
 
     async def replied_user(draw, tot, text, maxlength, title):
         namefont = ImageFont.truetype("Fonts/Roboto-Medium.ttf", 38)
-        namefallback= ImageFont.truetype("Fonts/Quivira.otf", 38)
+        namefallback = ImageFont.truetype("Fonts/Quivira.otf", 38)
         textfont = ImageFont.truetype("Fonts/Roboto-Regular.ttf", 32)
         textfallback = ImageFont.truetype("Fonts/Roboto-Medium.ttf", 38)
         maxlength = maxlength + 7 if maxlength < 10 else maxlength
-        text = text[:maxlength - 2] + ".." if len(text) > maxlength else text
+        text = text[: maxlength - 2] + ".." if len(text) > maxlength else text
         draw.line((165, 90, 165, 170), width=5, fill="white")
         space = 0
         for letter in tot:
@@ -367,20 +409,21 @@ class Quote:
                 draw.text((180 + space, 132), letter, font=textfont, fill="white")
                 space += textfont.getsize(letter)[0]
 
+
 @borg.on(friday_on_cmd(pattern="q ?(.*)"))
 async def create_sticker(message):
-        if not os.path.isdir(".tmp"):
-            os.mkdir(".tmp", 0o755)
-        await message.delete()
-        reply = await message.get_reply_message()
-        msg = reply.message
-        repliedreply = await reply.get_reply_message()
-        user = (
-            await borg.get_entity(reply.forward.sender) if reply.fwd_from
-            else reply.sender)
-        res, canvas = await Quote.process(msg, user, borg, reply, repliedreply)
-        if not res:
-            return
-        canvas.save('.tmp/sticker.webp')
-        await message.respond(file=".tmp/sticker.webp")
-        os.remove('.tmp/sticker.webp')
+    if not os.path.isdir(".tmp"):
+        os.mkdir(".tmp", 0o755)
+    await message.delete()
+    reply = await message.get_reply_message()
+    msg = reply.message
+    repliedreply = await reply.get_reply_message()
+    user = (
+        await borg.get_entity(reply.forward.sender) if reply.fwd_from else reply.sender
+    )
+    res, canvas = await Quote.process(msg, user, borg, reply, repliedreply)
+    if not res:
+        return
+    canvas.save(".tmp/sticker.webp")
+    await message.respond(file=".tmp/sticker.webp")
+    os.remove(".tmp/sticker.webp")
