@@ -29,10 +29,11 @@ async def _(event):
         return
     lan = lan.strip()
     try:
+        lmao_bruh = text
         # Userge :)
         source_lan = LANGUAGES[f"{text.src.lower()}"]
         transl_lan = LANGUAGES[f"{text.dest.lower()}"]
-        translated = GoogleTranslator(source="auto", target=lan).translate(text)
+        translated = GoogleTranslator(source="auto", target=lan).translate(lmao_bruh)
         output_str = f"""**TRANSLATED**
 **Source :** __{source_lan}__
 **Translated To :** __{transl_lan}__
