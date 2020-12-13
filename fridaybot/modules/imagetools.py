@@ -276,7 +276,8 @@ async def hmm(event):
     for files in (ok, img):
         if files and os.path.exists(files):
             os.remove(files)
- 
+
+
 # Plugin By - XlayerCharon[XCB]
 # TG ~>>//@CharonCB21
 # @code-rgb
@@ -292,7 +293,7 @@ async def img(event):
     else:
         event.edit("Invalid Input! Check help for more info!")
         return
-    photo = Image.open('resources/dummy_image/fgs.jpg')
+    photo = Image.open("resources/dummy_image/fgs.jpg")
     drawing = ImageDraw.Draw(photo)
     blue = (0, 0, 255)
     black = (0, 0, 0)
@@ -307,7 +308,8 @@ async def img(event):
     await borg.send_file(event.chat_id, ok)
     if os.path.exists(ok):
         os.remove(ok)
-        
+
+
 CMD_HELP.update(
     {
         "imagetools": "**imagetools**\
