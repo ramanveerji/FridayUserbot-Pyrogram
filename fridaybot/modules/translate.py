@@ -6,6 +6,7 @@ Available Commands:
 from deep_translator import GoogleTranslator
 from googletrans import LANGUAGES
 from langdetect import detect
+
 from fridaybot import CMD_HELP
 from fridaybot.utils import edit_or_reply, friday_on_cmd, sudo_cmd
 
