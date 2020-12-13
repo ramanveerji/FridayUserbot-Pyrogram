@@ -424,7 +424,7 @@ class Quote:
                 space += textfont.getsize(letter)[0]
 
 
-@borg.on(friday_on_cmd(pattern="q$"))
+@borg.on(friday_on_cmd(pattern="q(?: |$)(.*)"))
 async def create_sticker(message):
     if event.fwd_from:
         return
