@@ -148,7 +148,7 @@ async def gibinfo(event):
         try:
             user = await friday.get_entity(event.pattern_match.group(1))
         except ValueError:
-            await event.edit("<i>No User Found.</i>", parse_mode='HTML')
+            await event.edit("<i>No User Found.</i>", parse_mode="HTML")
             return
     try:
         cas_url = f"https://combot.org/api/cas/check?user_id={user.id}"
