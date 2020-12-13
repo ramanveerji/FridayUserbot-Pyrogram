@@ -3,10 +3,9 @@ Available Commands:
 .tr LanguageCode as reply to a message
 .tr LangaugeCode | text to translate"""
 
-import emoji
 from deep_translator import GoogleTranslator
-from langdetect import detect
-from googletrans import Translator, LANGUAGES
+from googletrans import LANGUAGES
+
 from fridaybot import CMD_HELP
 from fridaybot.utils import edit_or_reply, friday_on_cmd, sudo_cmd
 
@@ -31,8 +30,8 @@ async def _(event):
     lan = lan.strip()
     try:
         # Userge :)
-        source_lan = LANGUAGES[f'{text.src.lower()}']
-        transl_lan = LANGUAGES[f'{text.dest.lower()}']
+        source_lan = LANGUAGES[f"{text.src.lower()}"]
+        transl_lan = LANGUAGES[f"{text.dest.lower()}"]
         translated = GoogleTranslator(source="auto", target=lan).translate(text)
         output_str = f"""**TRANSLATED**
 **Source :** __{source_lan}__
@@ -43,7 +42,7 @@ async def _(event):
             url = "https://del.dog/documents"
             r = requests.post(url, data=out_file.encode("UTF-8")).json()
             url2 = f"https://del.dog/{r['key']}"
-            starky = f'Translated Text Was Too Big, Never Mind I Have Pasted It [Here]({url2})'
+            starky = f"Translated Text Was Too Big, Never Mind I Have Pasted It [Here]({url2})"
         else:
             starky = output_str
         await edit_or_reply(event, starky)
