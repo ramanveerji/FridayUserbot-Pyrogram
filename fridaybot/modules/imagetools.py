@@ -296,11 +296,11 @@ async def img(event):
     font2 = ImageFont.truetype("Fonts/ProductSans-Light.ttf", 23)
     drawing.text((450, 258), result, fill=blue, font=font1)
     drawing.text((270, 37), search, fill=black, font=font2)
-    file_name = "fgs.png"
+    file_name = "fgs.jpg"
     ok = sedpath + "/" + file_name
-    photo.save(ok, "PNG")
+    photo.save(ok)
     await event.delete()
-    await borg.send_file(event.chat_id, ok)
+    await friday.send_file(event.chat_id, ok)
     if os.path.exists(ok):
         os.remove(ok)
 
