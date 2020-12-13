@@ -37,9 +37,10 @@ async def _(event):
         source_lan = LANGUAGES[after_tr_text]
         transl_lan = LANGUAGES[lan]
         output_str = f"""**TRANSLATED SUCCESSFULLY**
-**Source ({source_lan})**
+**Source ({source_lan})**:
 `{text}`
-**Translation ({transl_lan})**
+
+**Translation ({transl_lan})**:
 `{translated}`"""
         if len(output_str) >= 4096:
             out_file = output_str
