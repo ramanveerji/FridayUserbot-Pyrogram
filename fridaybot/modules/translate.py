@@ -6,7 +6,7 @@ Available Commands:
 import emoji
 from deep_translator import GoogleTranslator
 from langdetect import detect
-
+from googletrans import Translator, LANGUAGES
 from fridaybot import CMD_HELP
 from fridaybot.utils import edit_or_reply, friday_on_cmd, sudo_cmd
 
@@ -22,29 +22,31 @@ async def _(event):
     if event.reply_to_msg_id:
         previous_message = await event.get_reply_message()
         text = previous_message.message
-        lan = input_str or "gu"
+        lan = input_str or "en"
     elif "|" in input_str:
         lan, text = input_str.split("|")
     else:
         await edit_or_reply(event, "`.tr LanguageCode` as reply to a message")
         return
-    text = emoji.demojize(text.strip())
     lan = lan.strip()
     try:
-
-        lmao = detect(text)
-        after_tr_text = lmao
-        to_translate = text
-
-        translated = GoogleTranslator(source="auto", target=lan).translate(to_translate)
-
-        output_str = """**Translated By FridayUserbot** 
-         Source **( {} )**
-         Translation **( {} )**
-         {}""".format(
-            after_tr_text, lan, translated
-        )
-        await edit_or_reply(event, output_str)
+        # Userge :)
+        source_lan = LANGUAGES[f'{text.src.lower()}']
+        transl_lan = LANGUAGES[f'{text.dest.lower()}']
+        translated = GoogleTranslator(source="auto", target=lan).translate(text)
+        output_str = f"""**TRANSLATED**
+**Source :** __{source_lan}__
+**Translated To :** __{transl_lan}__
+`{translated}`"""
+        if len(output_str) >= 4096:
+            out_file = output_str
+            url = "https://del.dog/documents"
+            r = requests.post(url, data=out_file.encode("UTF-8")).json()
+            url2 = f"https://del.dog/{r['key']}"
+            starky = f'Translated Text Was Too Big, Never Mind I Have Pasted It [Here]({url2})'
+        else:
+            starky = output_str
+        await edit_or_reply(event, starky)
     except Exception as exc:
         await edit_or_reply(event, str(exc))
 
