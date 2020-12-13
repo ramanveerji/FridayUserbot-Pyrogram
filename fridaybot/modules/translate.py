@@ -5,7 +5,7 @@ Available Commands:
 
 from deep_translator import GoogleTranslator
 from googletrans import LANGUAGES
-
+from langdetect import detect
 from fridaybot import CMD_HELP
 from fridaybot.utils import edit_or_reply, friday_on_cmd, sudo_cmd
 
@@ -30,10 +30,11 @@ async def _(event):
     lan = lan.strip()
     try:
         lmao_bruh = text
-        # Userge :)
+        lmao = detect(text)
+        after_tr_text = lmao
         translated = GoogleTranslator(source="auto", target=lan).translate(lmao_bruh)
-        source_lan = LANGUAGES[f"{translated.source.lower()}"]
-        transl_lan = LANGUAGES[f"{translated.target.lower()}"]
+        source_lan = LANGUAGES[after_tr_text]
+        transl_lan = LANGUAGES[lan]
         output_str = f"""**TRANSLATED**
 **Source :** __{source_lan}__
 **Translated To :** __{transl_lan}__
