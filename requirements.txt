@@ -2,6 +2,7 @@ Pillow
 deep_translator
 langdetect
 PyDictionary
+fontTools
 quote
 the_python_bay
 textblob
