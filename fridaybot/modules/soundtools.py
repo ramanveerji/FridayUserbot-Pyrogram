@@ -1,15 +1,15 @@
-from pydub import AudioSegment
-from pydub import effects
-from telethon import types
 import io
-import os
-import requests
-import numpy as np
 import math
+import os
+
+import numpy as np
+from pydub import AudioSegment
+from telethon import types
+
 from fridaybot.utils import admin_cmd
 
 
-@friday.on(admin_cmd(pattern='bassbost ?(.*)'))
+@friday.on(admin_cmd(pattern="bassbost ?(.*)"))
 async def __(message):
     v = False
     accentuate_db = 40
@@ -40,7 +40,9 @@ async def __(message):
     elif fname.endswith(".mp3") or fname.endswith(".m4a") or fname.endswith(".wav"):
         audio = AudioSegment.from_file(fname)
     else:
-        await message.edit("`This Format is Not Supported Yet` \n**Currently Supported :** `mp3, m4a and wav.`")
+        await message.edit(
+            "`This Format is Not Supported Yet` \n**Currently Supported :** `mp3, m4a and wav.`"
+        )
         os.remove(fname)
         return
     sample_track = list(audio.get_array_of_samples())
@@ -57,16 +59,32 @@ async def __(message):
         await message.edit("`Now Exporting...`")
         out.export(m, format="ogg", bitrate="64k", codec="libopus")
         await message.edit("`Process Completed. Uploading Now Here..`")
-        await borg.send_file(message.to_id, m, reply_to=reply.id, voice_note=True, caption='Bass Boosted, \nDone By @FridayOT')
+        await borg.send_file(
+            message.to_id,
+            m,
+            reply_to=reply.id,
+            voice_note=True,
+            caption="Bass Boosted, \nDone By @FridayOT",
+        )
         os.remove(m)
     else:
         m.name = "BassBoosted.mp3"
         await message.edit("`Now Exporting...`")
         out.export(m, format="mp3")
         await message.edit("`Process Completed. Uploading Now Here..`")
-        await borg.send_file(message.to_id, m, reply_to=reply.id, attributes=[
-            types.DocumentAttributeAudio(duration=reply.document.attributes[0].duration,
-                                         title=f"BassBoost {str(accentuate_db)}lvl", performer="BassBoost")], caption='Bass Boosted, \nDone By @FridayOT')
+        await borg.send_file(
+            message.to_id,
+            m,
+            reply_to=reply.id,
+            attributes=[
+                types.DocumentAttributeAudio(
+                    duration=reply.document.attributes[0].duration,
+                    title=f"BassBoost {str(accentuate_db)}lvl",
+                    performer="BassBoost",
+                )
+            ],
+            caption="Bass Boosted, \nDone By @FridayOT",
+        )
         os.remove(m)
     await message.delete()
     os.remove(fname)
