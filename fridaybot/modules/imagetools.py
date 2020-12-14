@@ -337,8 +337,9 @@ async def lottiepie(event):
             message.media,
             Config.TMP_DOWNLOAD_DIRECTORY,
         )
-        await runcmd(f"lottie_convert.py" + " lol" + " json.json")
-        jsonfile = open("json.json", "r")
+        lmaojson = Config.TMP_DOWNLOAD_DIRECTORY + 'json.json'
+        await runcmd(f"lottie_convert.py" + " lol " + lmaojson)
+        jsonfile = open(lmaojson, "r")
         jsn = jsonfile.read()
         jsonfile.close()
         josn = (
@@ -348,9 +349,9 @@ async def lottiepie(event):
             .replace("[4]", "[50]")
             .replace("[5]", "[60]")
         )
-        open("json.json", "w").write(josn)
-        await runcmd(f"lottie_convert.py json.json tgs.tgs")
-        await borg.send_file(event.chat_id, "tgs.tgs")
+        open(lmaojson, "w").write(josn)
+        await runcmd(f"lottie_convert.py " + lmaojson + f" {sed}")
+        await borg.send_file(event.chat_id, sed)
         os.remove("json.json")
         os.remove("tgs.tgs")
 
