@@ -4,6 +4,7 @@ langdetect
 PyDictionary
 fontTools
 quote
+lottie
 the_python_bay
 textblob
 antispaminc
