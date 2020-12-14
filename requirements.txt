@@ -3,6 +3,7 @@ deep_translator
 langdetect
 PyDictionary
 fontTools
+pydub
 quote
 lottie
 the_python_bay
