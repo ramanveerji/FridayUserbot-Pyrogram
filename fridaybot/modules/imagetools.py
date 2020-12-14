@@ -333,9 +333,9 @@ async def lottiepie(event):
         if not "tgsticker" in mime_type:
             await event.edit("Not Supported Yet.")
             return
-        await message.download_media('tgs.tgs')
-        await runcmd('lottie_convert.py tgs.tgs json.json')
-        jsonfile = open('json.json', "r")
+        await message.download_media("tgs.tgs")
+        await runcmd("lottie_convert.py tgs.tgs json.json")
+        jsonfile = open("json.json", "r")
         jsn = jsonfile.read()
         jsonfile.close()
         josn = (
@@ -345,9 +345,9 @@ async def lottiepie(event):
             .replace("[4]", "[50]")
             .replace("[5]", "[60]")
         )
-        open('json.json', "w").write(josn)
+        open("json.json", "w").write(josn)
         await runcmd(f"lottie_convert.py json.json tgs.tgs")
-        await borg.send_file(event.chat_id, 'tgs.tgs')
+        await borg.send_file(event.chat_id, "tgs.tgs")
         os.remove("json.json")
         os.remove("tgs.tgs")
 
