@@ -23,7 +23,7 @@ import requests
 from PIL import Image, ImageDraw, ImageFont
 from telegraph import upload_file
 from telethon.tl.types import MessageMediaPhoto
-
+from random import choice, randint
 from fridaybot import CMD_HELP
 from fridaybot.utils import friday_on_cmd, sudo_cmd
 
@@ -321,20 +321,19 @@ async def lottiepie(event):
             return
         await message.download_media("tgs.tgs")
         os.system("lottie_convert.py tgs.tgs json.json")
-        with open("json.json","r") as f:
-	    stick = f.read()
-	    f.close()
-	for i in range(1, randint(6, 10)):
-	    stick = choice([stick.replace(f'[{i}]', f'[{(i+i)*3}]'), stick.replace(f'.{i}', f'.{i}{i}')])
-	with open("json.json","w") as f:
-	    f.write(stick)
-	    f.close()
+        with open("json.json", "r") as f:
+            stick = f.read()
+            f.close()
+        for i in range(1, randint(6, 10)):
+            stick = choice([stick.replace(f'[{i}]', f'[{(i + i) * 3}]'), stick.replace(f'.{i}', f'.{i}{i}')])
+        with open("json.json", "w") as f:
+            f.write(stick)
+            f.close()
         await event.delete()
         os.system(f"lottie_convert.py json.json tgs.tgs")
         await borg.send_file(event.chat_id, file="tgs.tgs", force_document=False)
         os.remove("json.json")
         os.remove("tgs.tgs")
-
 
 
 @friday.on(friday_on_cmd(pattern=r"ph ?(.*)"))
@@ -351,13 +350,13 @@ async def img(event):
         return
     img = Image.open('./resources/pb/pb.jpg')
     d1 = ImageDraw.Draw(img)
-    
+
     myFont = ImageFont.truetype('./resources/pb/font.TTF', 100)
 
-    d1.text((300, 700), username, font=myFont, fill =(135, 98, 87))
+    d1.text((300, 700), username, font=myFont, fill=(135, 98, 87))
 
-    d1.text((7, 1000), texto, font=myFont, fill =(203, 202, 202))
-    
+    d1.text((7, 1000), texto, font=myFont, fill=(203, 202, 202))
+
     img.save("./starkgangz/testpb.jpg")
     file_name = "testpb.jpg"
     ok = "./starkgangz/" + file_name
@@ -366,8 +365,6 @@ async def img(event):
     for files in (ok, img):
         if files and os.path.exists(files):
             os.remove(files)
-
-
 
 
 CMD_HELP.update(
