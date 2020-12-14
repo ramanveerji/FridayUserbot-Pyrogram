@@ -386,7 +386,7 @@ CMD_HELP.update(
         \n\n**Syntax : ** `.fgs searchtext;fake text`\
         \n**Usage :** Makes a Fake Google Search Image.\
         \n\n**Syntax : ** `.ph username:fake text`\
-        \n**Usage :** Males a Fake PornHub comment with given username and text.\
+        \n**Usage :** Makes a Fake PornHub comment with given username and text.\
         \n\n**Syntax : ** `.greyscale`\
         \n**Usage :** Makes a black and white image of the replied image."
     }
