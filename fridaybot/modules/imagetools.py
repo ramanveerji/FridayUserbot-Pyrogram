@@ -312,7 +312,7 @@ async def img(event):
 @friday.on(friday_on_cmd(pattern=r"lg"))
 @friday.on(sudo_cmd(pattern=r"lg", allow_sudo=True))
 async def lottiepie(event):
-    await event.edit("WAit, For This Shit")
+    await event.edit("`Prooooooccccesssssssinggggg.....`")
     message = await event.get_reply_message()
     if message.media and message.media.document:
         mime_type = message.media.document.mime_type
