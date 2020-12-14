@@ -1,7 +1,8 @@
+import asyncio
 import io
 import math
 import os
-import asyncio
+
 import numpy as np
 from pydub import AudioSegment
 from telethon import types
