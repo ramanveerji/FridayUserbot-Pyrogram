@@ -365,7 +365,60 @@ async def img(event):
         if files and os.path.exists(files):
             os.remove(files)
 
+@friday.on(friday_on_cmd(pattern=r"spin ?(.*)"))
+@friday.on(sudo_cmd(pattern=r"spin ?(.*)", allow_sudo=True))
+async def spinshit(event):
+    if message.is_reply:
+			reply_message = await message.get_reply_message()
+			data = await check_media(reply_message)
+			if isinstance(data, bool):
+				await event.edit(message, "`Reply To Image//Sticker Only.`")
+				return
+		else:
+			await event.edit(message, "`Reply To MSG, You Nub.`")
+			return
+		image = io.BytesIO()
+		await borg.download_media(data, image)
+		image = Image.open(image)
+		image.thumbnail((512, 512), Image.ANTIALIAS)
+		img = Image.new("RGB", (512, 512), "black")
+		img.paste(image, ((512-image.width)//2, (512-image.height)//2))
+		image = img
+		way = random.choice([1, -1])
+		frames = []
+		for i in range(1, 60):
+			im = image.rotate(i*6*way)
+			frames.append(im)
+		frames.remove(im)
+		image_stream = io.BytesIO()
+		image_stream.name = "spin.gif"
+		im.save(image_stream, "GIF", save_all=True, append_images=frames, duration = 10)
+		image_stream.seek(0)
+        await borg.send_file(event.chat_id, 'spin.gif')
+        os.remove(data)
+        os.remove(image)
+        os.remove(image_stream)
+            
+async def check_media(reply_message):
+	if reply_message and reply_message.media:
+		if reply_message.photo:
+			data = reply_message.photo
+		elif reply_message.document:
+			if DocumentAttributeFilename(file_name='AnimatedSticker.tgs') in reply_message.media.document.attributes:
+				return False
+			if reply_message.gif or reply_message.video or reply_message.audio or reply_message.voice:
+				return False
+			data = reply_message.media.document
+		else:
+			return False
+	else:
+		return False
 
+	if not data or data is None:
+		return False
+	else:
+		return data
+    
 CMD_HELP.update(
     {
         "imagetools": "**imagetools**\
