@@ -20,7 +20,10 @@ import requests
 from PIL import Image, ImageDraw, ImageFont
 from telegraph import upload_file
 from telethon.tl.types import MessageMediaPhoto
-
+import io
+from PIL import Image, ImageOps
+from telethon.tl.types import DocumentAttributeFilename
+import random
 from fridaybot import CMD_HELP
 from fridaybot.utils import friday_on_cmd, sudo_cmd
 
@@ -323,10 +326,10 @@ async def lottiepie(event):
         json.close()
         jsn = (
             jsn.replace("[1]", "[2]")
-            .replace("[2]", "[3]")
-            .replace("[3]", "[4]")
-            .replace("[4]", "[5]")
-            .replace("[5]", "[6]")
+                .replace("[2]", "[3]")
+                .replace("[3]", "[4]")
+                .replace("[4]", "[5]")
+                .replace("[5]", "[6]")
         )
         open("json.json", "w").write(jsn)
         await event.delete()
@@ -365,60 +368,80 @@ async def img(event):
         if files and os.path.exists(files):
             os.remove(files)
 
+
+#   Friendly Telegram (telegram userbot)
+#   Copyright (C) 2018-2020 The Authors
+
+#   This program is free software: you can redistribute it and/or modify
+#   it under the terms of the GNU Affero General Public License as published by
+#   the Free Software Foundation, either version 3 of the License, or
+#   (at your option) any later version.
+
+#   This program is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#   GNU Affero General Public License for more details.
+
+#   You should have received a copy of the GNU Affero General Public License
+#   along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
 @friday.on(friday_on_cmd(pattern=r"spin ?(.*)"))
 @friday.on(sudo_cmd(pattern=r"spin ?(.*)", allow_sudo=True))
-async def spinshit(event):
+async def spinshit(message):
+    event = message
     if message.is_reply:
-			reply_message = await message.get_reply_message()
-			data = await check_media(reply_message)
-			if isinstance(data, bool):
-				await event.edit(message, "`Reply To Image//Sticker Only.`")
-				return
-		else:
-			await event.edit(message, "`Reply To MSG, You Nub.`")
-			return
-		image = io.BytesIO()
-		await borg.download_media(data, image)
-		image = Image.open(image)
-		image.thumbnail((512, 512), Image.ANTIALIAS)
-		img = Image.new("RGB", (512, 512), "black")
-		img.paste(image, ((512-image.width)//2, (512-image.height)//2))
-		image = img
-		way = random.choice([1, -1])
-		frames = []
-		for i in range(1, 60):
-			im = image.rotate(i*6*way)
-			frames.append(im)
-		frames.remove(im)
-		image_stream = io.BytesIO()
-		image_stream.name = "spin.gif"
-		im.save(image_stream, "GIF", save_all=True, append_images=frames, duration = 10)
-		image_stream.seek(0)
-        await borg.send_file(event.chat_id, 'spin.gif')
+        reply_message = await message.get_reply_message()
+        data = await check_media(reply_message)
+        if isinstance(data, bool):
+            await message.edit(message, "`Reply To Image//Sticker Only.`")
+            return
+        else:
+            await message.edit(message, "`Reply To MSG, You Nub.`")
+            return
+        image = io.BytesIO()
+        await borg.download_media(data, image)
+        image = Image.open(image)
+        image.thumbnail((512, 512), Image.ANTIALIAS)
+        img = Image.new("RGB", (512, 512), "black")
+        img.paste(image, ((512 - image.width) // 2, (512 - image.height) // 2))
+        image = img
+        way = random.choice([1, -1])
+        frames = []
+        for i in range(1, 60):
+            im = image.rotate(i * 6 * way)
+            frames.append(im)
+        frames.remove(im)
+        image_stream = io.BytesIO()
+        image_stream.name = "spin.gif"
+        im.save(image_stream, "GIF", save_all=True, append_images=frames, duration=10)
+        image_stream.seek(0)
+        await borg.send_file(message.chat_id, image_stream)
         os.remove(data)
         os.remove(image)
         os.remove(image_stream)
-            
-async def check_media(reply_message):
-	if reply_message and reply_message.media:
-		if reply_message.photo:
-			data = reply_message.photo
-		elif reply_message.document:
-			if DocumentAttributeFilename(file_name='AnimatedSticker.tgs') in reply_message.media.document.attributes:
-				return False
-			if reply_message.gif or reply_message.video or reply_message.audio or reply_message.voice:
-				return False
-			data = reply_message.media.document
-		else:
-			return False
-	else:
-		return False
 
-	if not data or data is None:
-		return False
-	else:
-		return data
-    
+
+async def check_media(reply_message):
+    if reply_message and reply_message.media:
+        if reply_message.photo:
+            data = reply_message.photo
+        elif reply_message.document:
+            if DocumentAttributeFilename(file_name='AnimatedSticker.tgs') in reply_message.media.document.attributes:
+                return False
+            if reply_message.gif or reply_message.video or reply_message.audio or reply_message.voice:
+                return False
+            data = reply_message.media.document
+        else:
+            return False
+    else:
+        return False
+
+    if not data or data is None:
+        return False
+    else:
+        return data
+
+
 CMD_HELP.update(
     {
         "imagetools": "**imagetools**\
