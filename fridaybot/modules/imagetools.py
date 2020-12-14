@@ -397,27 +397,27 @@ async def spinshit(message):
     else:
         await message.edit(message, "`Reply To MSG, You Nub.`")
         return
-        image = io.BytesIO()
-        await borg.download_media(data, image)
-        image = Image.open(image)
-        image.thumbnail((512, 512), Image.ANTIALIAS)
-        img = Image.new("RGB", (512, 512), "black")
-        img.paste(image, ((512 - image.width) // 2, (512 - image.height) // 2))
-        image = img
-        way = random.choice([1, -1])
-        frames = []
-        for i in range(1, 60):
-            im = image.rotate(i * 6 * way)
-            frames.append(im)
-        frames.remove(im)
-        image_stream = io.BytesIO()
-        image_stream.name = "spin.gif"
-        im.save(image_stream, "GIF", save_all=True, append_images=frames, duration=10)
-        image_stream.seek(0)
-        await borg.send_file(message.chat_id, image_stream)
-        os.remove(data)
-        os.remove(image)
-        os.remove(image_stream)
+    image = io.BytesIO()
+    await borg.download_media(data, image)
+    image = Image.open(image)
+    image.thumbnail((512, 512), Image.ANTIALIAS)
+    img = Image.new("RGB", (512, 512), "black")
+    img.paste(image, ((512 - image.width) // 2, (512 - image.height) // 2))
+    image = img
+    way = random.choice([1, -1])
+    frames = []
+    for i in range(1, 60):
+        im = image.rotate(i * 6 * way)
+        frames.append(im)
+    frames.remove(im)
+    image_stream = io.BytesIO()
+    image_stream.name = "spin.gif"
+    im.save(image_stream, "GIF", save_all=True, append_images=frames, duration=10)
+    image_stream.seek(0)
+    await borg.send_file(message.chat_id, image_stream)
+    os.remove(data)
+    os.remove(image)
+    os.remove(image_stream)
 
 
 async def check_media(reply_message):
