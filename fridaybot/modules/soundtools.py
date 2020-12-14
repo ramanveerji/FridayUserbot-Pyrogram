@@ -46,17 +46,24 @@ async def __(message):
         os.remove(fname)
         return
     sample_track = list(audio.get_array_of_samples())
+    await asyncio.sleep(0.3)
     est_mean = np.mean(sample_track)
+    await asyncio.sleep(0.3)
     est_std = 3 * np.std(sample_track) / (math.sqrt(2))
+    await asyncio.sleep(0.3)
     bass_factor = int(round((est_std - est_mean) * 0.005))
+    await asyncio.sleep(5)
     attenuate_db = 0
     filtered = audio.low_pass_filter(bass_factor)
+    await asyncio.sleep(5)
     out = (audio - attenuate_db).overlay(filtered + accentuate_db)
+    await asyncio.sleep(6)
     m = io.BytesIO()
     if v:
         m.name = "voice.ogg"
         out.split_to_mono()
         await message.edit("`Now Exporting...`")
+        await asyncio.sleep(0.3)
         out.export(m, format="ogg", bitrate="64k", codec="libopus")
         await message.edit("`Process Completed. Uploading Now Here..`")
         await borg.send_file(
@@ -70,6 +77,7 @@ async def __(message):
     else:
         m.name = "BassBoosted.mp3"
         await message.edit("`Now Exporting...`")
+        await asyncio.sleep(0.3)
         out.export(m, format="mp3")
         await message.edit("`Process Completed. Uploading Now Here..`")
         await borg.send_file(
