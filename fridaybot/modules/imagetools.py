@@ -11,10 +11,7 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-import asyncio
 import os
-import shlex
-from typing import Tuple
 
 import cv2
 import numpy as np
@@ -25,7 +22,6 @@ from telethon.tl.types import MessageMediaPhoto
 
 from fridaybot import CMD_HELP
 from fridaybot.utils import friday_on_cmd, sudo_cmd
-
 
 sedpath = "./starkgangz/"
 if not os.path.isdir(sedpath):
