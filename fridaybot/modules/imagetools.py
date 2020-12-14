@@ -12,7 +12,6 @@
 #    along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 import os
-
 import cv2
 import numpy as np
 import requests
