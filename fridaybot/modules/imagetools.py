@@ -12,10 +12,8 @@
 #    along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 
-import asyncio
 import os
-import shlex
-from typing import Tuple
+from random import choice, randint
 
 import cv2
 import numpy as np
@@ -23,7 +21,7 @@ import requests
 from PIL import Image, ImageDraw, ImageFont
 from telegraph import upload_file
 from telethon.tl.types import MessageMediaPhoto
-from random import choice, randint
+
 from fridaybot import CMD_HELP
 from fridaybot.utils import friday_on_cmd, sudo_cmd
 
@@ -325,7 +323,12 @@ async def lottiepie(event):
             stick = f.read()
             f.close()
         for i in range(1, randint(6, 10)):
-            stick = choice([stick.replace(f'[{i}]', f'[{(i + i) * 3}]'), stick.replace(f'.{i}', f'.{i}{i}')])
+            stick = choice(
+                [
+                    stick.replace(f"[{i}]", f"[{(i + i) * 3}]"),
+                    stick.replace(f".{i}", f".{i}{i}"),
+                ]
+            )
         with open("json.json", "w") as f:
             f.write(stick)
             f.close()
@@ -348,10 +351,10 @@ async def img(event):
     else:
         event.edit("Invalid Input! Check help for more info!")
         return
-    img = Image.open('./resources/pb/pb.jpg')
+    img = Image.open("./resources/pb/pb.jpg")
     d1 = ImageDraw.Draw(img)
 
-    myFont = ImageFont.truetype('./resources/pb/font.TTF', 100)
+    myFont = ImageFont.truetype("./resources/pb/font.TTF", 100)
 
     d1.text((300, 700), username, font=myFont, fill=(135, 98, 87))
 

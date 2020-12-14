@@ -1,22 +1,16 @@
-import os
-import logging
-from uniborg.util import friday_on_cmd
-from telethon.tl.types import MessageMediaPhoto
 import asyncio
-import json
 import math
-import subprocess
+import os
 import time
-from hachoir.metadata import extractMetadata
-from hachoir.parser import createParser
-from pySmartDL import SmartDL
-from fridaybot.Configs import Config
-from telethon.tl.types import DocumentAttributeVideo
-from fridaybot import CMD_HELP, LOGS, TEMP_DOWNLOAD_DIRECTORY
-from fridaybot.events import register
-from fridaybot.utils import edit_or_reply, friday_on_cmd, sudo_cmd, admin_cmd
+
 import requests
-#from var import var
+from uniborg.util import friday_on_cmd
+
+from fridaybot import CMD_HELP, TEMP_DOWNLOAD_DIRECTORY
+from fridaybot.Configs import Config
+from fridaybot.utils import edit_or_reply, friday_on_cmd, sudo_cmd
+
+# from var import var
 
 
 async def progress(current, total, event, start, type_of_ps, file_name=None):
@@ -78,25 +72,25 @@ def time_formatter(milliseconds: int) -> str:
     return tmp[:-2]
 
 
-
 sedpath = "./fridaydevs/"
 if not os.path.isdir(sedpath):
     os.makedirs(sedpath)
-  
 
 
 @friday.on(friday_on_cmd(pattern="vt(?: |$)(.*)", outgoing=True))
 @friday.on(sudo_cmd(pattern="vt(?: |$)(.*)", allow_sudo=True))
 async def download(target_file):
-  friday = await edit_or_reply(target_file, "`Processing ...`")
-  if Config.VIRUSTOTAL_API_KEY is None:
-    await friday.edit("Need to get an API key from https://virustotal.com\nModule stopping!")
-    return
-  await friday.edit("Processing using fridaybot server ( ◜‿◝ )♡")
-  input_str = Config.VIRUSTOTAL_API_KEY
-  if not os.path.isdir(sedpath):
-      os.makedirs(sedpath)
-  if target_file.reply_to_msg_id:
+    friday = await edit_or_reply(target_file, "`Processing ...`")
+    if Config.VIRUSTOTAL_API_KEY is None:
+        await friday.edit(
+            "Need to get an API key from https://virustotal.com\nModule stopping!"
+        )
+        return
+    await friday.edit("Processing using fridaybot server ( ◜‿◝ )♡")
+    input_str = Config.VIRUSTOTAL_API_KEY
+    if not os.path.isdir(sedpath):
+        os.makedirs(sedpath)
+    if target_file.reply_to_msg_id:
         try:
             c_time = time.time()
             downloaded_file_name = await target_file.client.download_media(
@@ -112,24 +106,26 @@ async def download(target_file):
             await friday.edit(
                 "Downloaded to `{}` successfully !!".format(downloaded_file_name)
             )
-  else:
+    else:
         await friday.edit("Reply to a file..")
-    
-  url = 'https://www.virustotal.com/vtapi/v2/file/scan'
-    
-  params = {'apikey': input_str}
-  files = {'file': (downloaded_file_name, open(downloaded_file_name, 'rb'))}
-  response = requests.post(url, files=files, params=params)
-  try:
-    a = response.json()
-    b = a["permalink"]
-  except:
-    await friday.edit("your file is larger than 32 mb.")
-  try:
-    await friday.edit(f"<b><u> File Scan Request Complete</u></b>\n\n<b>Link of the report:-</b>\n<code>{b}</code>\n\nNote:- Please open the link after 5-10 minutes.", parse_mode="HTML")
-  except:
-    await friday.edit("your file is larger than 32 mb.   --__--")
 
+    url = "https://www.virustotal.com/vtapi/v2/file/scan"
+
+    params = {"apikey": input_str}
+    files = {"file": (downloaded_file_name, open(downloaded_file_name, "rb"))}
+    response = requests.post(url, files=files, params=params)
+    try:
+        a = response.json()
+        b = a["permalink"]
+    except:
+        await friday.edit("your file is larger than 32 mb.")
+    try:
+        await friday.edit(
+            f"<b><u> File Scan Request Complete</u></b>\n\n<b>Link of the report:-</b>\n<code>{b}</code>\n\nNote:- Please open the link after 5-10 minutes.",
+            parse_mode="HTML",
+        )
+    except:
+        await friday.edit("your file is larger than 32 mb.   --__--")
 
 
 CMD_HELP.update(
