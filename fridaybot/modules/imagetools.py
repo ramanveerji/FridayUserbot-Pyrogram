@@ -392,11 +392,11 @@ async def spinshit(message):
         reply_message = await message.get_reply_message()
         data = await check_media(reply_message)
         if isinstance(data, bool):
-            await message.edit("`Reply To Image//Sticker Only.`")
+            await message.edit(message, "`Reply To Image//Sticker Only.`")
             return
-        else:
-            await message.edit("`Reply To MSG, You Nub.`")
-            return
+    else:
+        await message.edit(message, "`Reply To MSG, You Nub.`")
+        return
         image = io.BytesIO()
         await borg.download_media(data, image)
         image = Image.open(image)
