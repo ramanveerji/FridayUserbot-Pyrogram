@@ -13,7 +13,6 @@
 
 
 import os
-from random import choice, randint
 
 import cv2
 import numpy as np
@@ -319,11 +318,17 @@ async def lottiepie(event):
             return
         await message.download_media("tgs.tgs")
         os.system("lottie_convert.py tgs.tgs json.json")
-        json = open("json.json","r")
+        json = open("json.json", "r")
         jsn = json.read()
         json.close()
-        jsn = jsn.replace('[1]','[2]').replace('[2]','[3]').replace('[3]','[4]').replace('[4]','[5]').replace('[5]','[6]')
-        open("json.json","w").write(jsn)
+        jsn = (
+            jsn.replace("[1]", "[2]")
+            .replace("[2]", "[3]")
+            .replace("[3]", "[4]")
+            .replace("[4]", "[5]")
+            .replace("[5]", "[6]")
+        )
+        open("json.json", "w").write(jsn)
         await event.delete()
         os.system(f"lottie_convert.py json.json tgs.tgs")
         await borg.send_file(event.chat_id, file="tgs.tgs", force_document=False)
