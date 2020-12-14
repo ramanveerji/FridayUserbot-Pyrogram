@@ -333,13 +333,9 @@ async def lottiepie(event):
         if not "tgsticker" in mime_type:
             await event.edit("Not Supported Yet.")
             return
-        sed = await borg.download_media(
-            message.media,
-            Config.TMP_DOWNLOAD_DIRECTORY,
-        )
-        lmaojson = Config.TMP_DOWNLOAD_DIRECTORY + "json.json"
-        await runcmd(f"lottie_convert.py" + " lol " + lmaojson)
-        jsonfile = open(lmaojson, "r")
+        await message.download_media('tgs.tgs')
+        await runcmd('lottie_convert.py tgs.tgs json.json')
+        jsonfile = open('json.json', "r")
         jsn = jsonfile.read()
         jsonfile.close()
         josn = (
@@ -349,9 +345,9 @@ async def lottiepie(event):
             .replace("[4]", "[50]")
             .replace("[5]", "[60]")
         )
-        open(lmaojson, "w").write(josn)
-        await runcmd(f"lottie_convert.py " + lmaojson + f" {sed}")
-        await borg.send_file(event.chat_id, sed)
+        open('json.json', "w").write(josn)
+        await runcmd(f"lottie_convert.py json.json tgs.tgs")
+        await borg.send_file(event.chat_id, 'tgs.tgs')
         os.remove("json.json")
         os.remove("tgs.tgs")
 
