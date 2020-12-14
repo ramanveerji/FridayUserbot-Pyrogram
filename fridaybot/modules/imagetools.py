@@ -11,7 +11,10 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+import asyncio
 import os
+import shlex
+from typing import Tuple
 
 import cv2
 import numpy as np
@@ -19,12 +22,7 @@ import requests
 from PIL import Image, ImageDraw, ImageFont
 from telegraph import upload_file
 from telethon.tl.types import MessageMediaPhoto
-import asyncio
-import os
-import re
-import shlex
-from os.path import basename
-from typing import List, Optional, Tuple
+
 from fridaybot import CMD_HELP
 from fridaybot.utils import friday_on_cmd, sudo_cmd
 
@@ -42,6 +40,7 @@ async def runcmd(cmd: str) -> Tuple[str, str, int, int]:
         process.returncode,
         process.pid,
     )
+
 
 sedpath = "./starkgangz/"
 if not os.path.isdir(sedpath):
@@ -324,32 +323,38 @@ async def img(event):
     if os.path.exists(ok):
         os.remove(ok)
 
+
 @friday.on(friday_on_cmd(pattern=r"lg"))
 @friday.on(sudo_cmd(pattern=r"lg", allow_sudo=True))
 async def lottiepie(event):
     message = await event.get_reply_message()
     if message.media and message.media.document:
-            mime_type = message.media.document.mime_type
-            if not "tgsticker" in mime_type:
-                await event.edit('Not Supported Yet.')
-                return
-            sed = await borg.download_media(
+        mime_type = message.media.document.mime_type
+        if not "tgsticker" in mime_type:
+            await event.edit("Not Supported Yet.")
+            return
+        sed = await borg.download_media(
             message.media,
             Config.TMP_DOWNLOAD_DIRECTORY,
-            )
-            lol = sed
-            await runcmd(f'lottie_convert.py' + ' lol' + ' json.json')
-            jsonfile = open("json.json","r")
-            jsn = jsonfile.read()
-            jsonfile.close()
-            josn = jsn.replace('[1]','[20]').replace('[2]','[30]').replace('[3]','[40]').replace('[4]','[50]').replace('[5]','[60]')
-            open("json.json","w").write(josn)
-            await runcmd(f'lottie_convert.py json.json tgs.tgs')
-            await borg.send_file(event.chat_id, tgs.tgs)
-            os.remove("json.json")
-            os.remove("tgs.tgs")
-                
-    
+        )
+        await runcmd(f"lottie_convert.py" + " lol" + " json.json")
+        jsonfile = open("json.json", "r")
+        jsn = jsonfile.read()
+        jsonfile.close()
+        josn = (
+            jsn.replace("[1]", "[20]")
+            .replace("[2]", "[30]")
+            .replace("[3]", "[40]")
+            .replace("[4]", "[50]")
+            .replace("[5]", "[60]")
+        )
+        open("json.json", "w").write(josn)
+        await runcmd(f"lottie_convert.py json.json tgs.tgs")
+        await borg.send_file(event.chat_id, tgs.tgs)
+        os.remove("json.json")
+        os.remove("tgs.tgs")
+
+
 CMD_HELP.update(
     {
         "imagetools": "**imagetools**\
