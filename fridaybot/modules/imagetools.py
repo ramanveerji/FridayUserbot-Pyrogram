@@ -322,24 +322,18 @@ async def lottiepie(event):
         await message.download_media("tgs.tgs")
         os.system("lottie_convert.py tgs.tgs json.json")
         with open("json.json","r") as f:
-			stick = f.read()
-			f.close()
-		
-		for i in range(1, randint(6, 10)):
-			
-			stick = choice([stick.replace(f'[{i}]', f'[{(i+i)*3}]'), stick.replace(f'.{i}', f'.{i}{i}')])
-		
-			
-		with open("json.json","w") as f:
-			f.write(stick)
-			f.close()
+		stick = f.read()
+		f.close()
+	for i in range(1, randint(6, 10)):
+		stick = choice([stick.replace(f'[{i}]', f'[{(i+i)*3}]'), stick.replace(f'.{i}', f'.{i}{i}')])
+	with open("json.json","w") as f:
+		f.write(stick)
+		f.close()
         await event.delete()
         os.system(f"lottie_convert.py json.json tgs.tgs")
         await borg.send_file(event.chat_id, file="tgs.tgs", force_document=False)
         os.remove("json.json")
         os.remove("tgs.tgs")
-
-
 
 
 
