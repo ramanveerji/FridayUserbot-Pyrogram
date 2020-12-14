@@ -308,6 +308,7 @@ async def img(event):
 @friday.on(friday_on_cmd(pattern=r"lg"))
 @friday.on(sudo_cmd(pattern=r"lg", allow_sudo=True))
 async def lottiepie(event):
+    await event.edit('WAit, For This Shit')
     message = await event.get_reply_message()
     if message.media and message.media.document:
         mime_type = message.media.document.mime_type
@@ -327,6 +328,7 @@ async def lottiepie(event):
             .replace("[5]", "[50]")
         )
         open("json.json", "w").write(josn)
+        await event.delete()
         os.system(f"lottie_convert.py json.json tgs.tgs")
         await borg.send_file(event.chat_id, file="tgs.tgs", force_document=False)
         os.remove("json.json")
