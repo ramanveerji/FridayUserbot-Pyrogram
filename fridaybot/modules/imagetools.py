@@ -358,13 +358,12 @@ async def img(event):
 
     d1.text((300, 700), username, font=myFont, fill=(135, 98, 87))
 
-    d1.text((7, 1000), texto, font=myFont, fill=(203, 202, 202))
+    d1.text((12, 1000), texto, font=myFont, fill=(203, 202, 202))
 
     img.save("./starkgangz/testpb.jpg")
     file_name = "testpb.jpg"
     ok = "./starkgangz/" + file_name
     await borg.send_file(event.chat_id, ok)
-    await hmmu.delete()
     for files in (ok, img):
         if files and os.path.exists(files):
             os.remove(files)
