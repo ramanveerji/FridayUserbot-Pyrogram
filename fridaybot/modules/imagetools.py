@@ -27,21 +27,6 @@ from fridaybot import CMD_HELP
 from fridaybot.utils import friday_on_cmd, sudo_cmd
 
 
-async def runcmd(cmd: str) -> Tuple[str, str, int, int]:
-    """ run command in terminal """
-    args = shlex.split(cmd)
-    process = await asyncio.create_subprocess_exec(
-        *args, stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.PIPE
-    )
-    stdout, stderr = await process.communicate()
-    return (
-        stdout.decode("utf-8", "replace").strip(),
-        stderr.decode("utf-8", "replace").strip(),
-        process.returncode,
-        process.pid,
-    )
-
-
 sedpath = "./starkgangz/"
 if not os.path.isdir(sedpath):
     os.makedirs(sedpath)
@@ -334,7 +319,7 @@ async def lottiepie(event):
             await event.edit("Not Supported Yet.")
             return
         await message.download_media("tgs.tgs")
-        await runcmd("lottie_convert.py tgs.tgs json.json")
+        os.system("lottie_convert.py tgs.tgs json.json")
         jsonfile = open("json.json", "r")
         jsn = jsonfile.read()
         jsonfile.close()
@@ -346,7 +331,7 @@ async def lottiepie(event):
             .replace("[5]", "[60]")
         )
         open("json.json", "w").write(josn)
-        await runcmd(f"lottie_convert.py json.json tgs.tgs")
+        os.system(f"lottie_convert.py json.json tgs.tgs")
         await borg.send_file(event.chat_id, file="tgs.tgs", force_document=False)
         os.remove("json.json")
         os.remove("tgs.tgs")
