@@ -11,7 +11,11 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+
+import asyncio
 import os
+import shlex
+from typing import Tuple
 
 import cv2
 import numpy as np
@@ -336,6 +340,42 @@ async def lottiepie(event):
         os.remove("tgs.tgs")
 
 
+
+
+
+@friday.on(friday_on_cmd(pattern=r"ph ?(.*)"))
+@friday.on(sudo_cmd(pattern=r"ph ?(.*)", allow_sudo=True))
+async def img(event):
+    text = event.pattern_match.group(1)
+    if not text:
+        await event.edit("No input found!  --__--")
+        return
+    if ":" in text:
+        username, texto = text.split(":", 1)
+    else:
+        event.edit("Invalid Input! Check help for more info!")
+        return
+    img = Image.open('./resources/pb/pb.jpg')
+    d1 = ImageDraw.Draw(img)
+    
+    myFont = ImageFont.truetype('./resources/pb/font.TTF', 100)
+
+    d1.text((300, 700), username, font=myFont, fill =(135, 98, 87))
+
+    d1.text((7, 1000), texto, font=myFont, fill =(203, 202, 202))
+    
+    img.save("./starkgangz/testpb.jpg")
+    file_name = "testpb.jpg"
+    ok = "./starkgangz/" + file_name
+    await borg.send_file(event.chat_id, ok)
+    await hmmu.delete()
+    for files in (ok, img):
+        if files and os.path.exists(files):
+            os.remove(files)
+
+
+
+
 CMD_HELP.update(
     {
         "imagetools": "**imagetools**\
@@ -351,6 +391,8 @@ CMD_HELP.update(
         \n**Usage :** Makes a jail image of the replied image.\
         \n\n**Syntax : ** `.fgs searchtext;fake text`\
         \n**Usage :** Makes a Fake Google Search Image.\
+        \n\n**Syntax : ** `.ph username:fake text`\
+        \n**Usage :** Males a Fake PornHub comment with given username and text.\
         \n\n**Syntax : ** `.greyscale`\
         \n**Usage :** Makes a black and white image of the replied image."
     }
