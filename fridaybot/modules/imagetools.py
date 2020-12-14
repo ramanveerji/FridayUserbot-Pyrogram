@@ -347,7 +347,7 @@ async def lottiepie(event):
         )
         open("json.json", "w").write(josn)
         await runcmd(f"lottie_convert.py json.json tgs.tgs")
-        await message.reply(file="tgs.tgs")
+        await borg.send_file(event.chat_id, file="tgs.tgs", force_document=False)
         os.remove("json.json")
         os.remove("tgs.tgs")
 
