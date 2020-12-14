@@ -12,18 +12,17 @@
 #    along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 
+import io
 import os
+import random
 
 import cv2
 import numpy as np
 import requests
 from PIL import Image, ImageDraw, ImageFont
 from telegraph import upload_file
-from telethon.tl.types import MessageMediaPhoto
-import io
-from PIL import Image, ImageOps
-from telethon.tl.types import DocumentAttributeFilename
-import random
+from telethon.tl.types import DocumentAttributeFilename, MessageMediaPhoto
+
 from fridaybot import CMD_HELP
 from fridaybot.utils import friday_on_cmd, sudo_cmd
 
@@ -326,10 +325,10 @@ async def lottiepie(event):
         json.close()
         jsn = (
             jsn.replace("[1]", "[2]")
-                .replace("[2]", "[3]")
-                .replace("[3]", "[4]")
-                .replace("[4]", "[5]")
-                .replace("[5]", "[6]")
+            .replace("[2]", "[3]")
+            .replace("[3]", "[4]")
+            .replace("[4]", "[5]")
+            .replace("[5]", "[6]")
         )
         open("json.json", "w").write(jsn)
         await event.delete()
@@ -385,10 +384,10 @@ async def img(event):
 #   You should have received a copy of the GNU Affero General Public License
 #   along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+
 @friday.on(friday_on_cmd(pattern=r"spin ?(.*)"))
 @friday.on(sudo_cmd(pattern=r"spin ?(.*)", allow_sudo=True))
 async def spinshit(message):
-    event = message
     if message.is_reply:
         reply_message = await message.get_reply_message()
         data = await check_media(reply_message)
@@ -426,9 +425,17 @@ async def check_media(reply_message):
         if reply_message.photo:
             data = reply_message.photo
         elif reply_message.document:
-            if DocumentAttributeFilename(file_name='AnimatedSticker.tgs') in reply_message.media.document.attributes:
+            if (
+                DocumentAttributeFilename(file_name="AnimatedSticker.tgs")
+                in reply_message.media.document.attributes
+            ):
                 return False
-            if reply_message.gif or reply_message.video or reply_message.audio or reply_message.voice:
+            if (
+                reply_message.gif
+                or reply_message.video
+                or reply_message.audio
+                or reply_message.voice
+            ):
                 return False
             data = reply_message.media.document
         else:
