@@ -337,7 +337,7 @@ async def lottiepie(event):
             message.media,
             Config.TMP_DOWNLOAD_DIRECTORY,
         )
-        lmaojson = Config.TMP_DOWNLOAD_DIRECTORY + 'json.json'
+        lmaojson = Config.TMP_DOWNLOAD_DIRECTORY + "json.json"
         await runcmd(f"lottie_convert.py" + " lol " + lmaojson)
         jsonfile = open(lmaojson, "r")
         jsn = jsonfile.read()
