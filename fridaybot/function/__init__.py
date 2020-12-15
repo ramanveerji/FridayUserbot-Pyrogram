@@ -153,7 +153,7 @@ async def convert_to_image(event, borg):
     elif lmao.audio:
         sed_p = downloaded_file_name
         hmmyes = sedpath + "stark.mp3"
-        imgpath = sedpath + "stark.jpg"
+        imgpath = sedpath + "starky.jpg"
         os.rename(sed_p, hmmyes)
         await runcmd(f"ffmpeg -i {hmmyes} -filter:v scale=500:500 -an {imgpath}")
         if not os.path.exists(imgpath):
