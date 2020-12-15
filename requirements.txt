@@ -9,7 +9,6 @@ fontTools
 pydub
 quote
 lottie
-the_python_bay
 textblob
 antispaminc
 python-magic
