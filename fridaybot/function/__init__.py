@@ -15,7 +15,7 @@ from telethon.tl.types import MessageMediaPhoto
 sedpath = Config.TMP_DOWNLOAD_DIRECTORY
 from fridaybot import logging
 
-logger = logging.getLogger("[WARNING]")
+logger = logging.getLogger("[--WARNING--]")
 if not os.path.isdir(sedpath):
     os.makedirs(sedpath)
 
