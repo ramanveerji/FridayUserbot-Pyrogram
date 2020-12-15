@@ -391,7 +391,7 @@ async def spinshit(message):
     reply = await message.get_reply_message()
     lmaodict = {"1": 1, "2": 3, "3": 6, "4": 12, "5": 24, "6": 60}
     lolshit = pattern.pattern_match.group(1)
-    keke = f'{lolshit}'
+    keke = f"{lolshit}"
     if not reply:
         await message.edit("`Reply To Media First !`")
         return
