@@ -12,22 +12,20 @@
 #    along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 
-import io
 import os
-import random
+from shutil import rmtree
 
 import cv2
 import numpy as np
 import requests
 from PIL import Image, ImageDraw, ImageFont
 from telegraph import upload_file
-from telethon.tl.types import DocumentAttributeFilename, MessageMediaPhoto
-import os
-from shutil import rmtree
-from PIL import Image, ImageOps
+from telethon.tl.types import MessageMediaPhoto
+
 from fridaybot import CMD_HELP
+from fridaybot.function import convert_to_image, crop_vid, runcmd
 from fridaybot.utils import friday_on_cmd, sudo_cmd
-from fridaybot.function import runcmd, convert_to_image, crop_vid, take_screen_shot
+
 sedpath = "./starkgangz/"
 if not os.path.isdir(sedpath):
     os.makedirs(sedpath)
@@ -422,14 +420,12 @@ async def spinshit(message):
         f'ffmpeg -framerate {frate} -i {path}spinx%d.jpg -c:v libx264 -preset ultrafast -vf "crop=trunc(iw/2)*2:trunc(ih/2)*2" -pix_fmt yuv420p {output_vid}'
     )
     if os.path.exists(output_vid):
-        reply_id = reply.message_id if reply else None
+        reply.message_id if reply else None
         round_vid = os.path.join(path, "out_round.mp4")
         await crop_vid(output_vid, round_vid)
-        await borg.send_file(
-                message.chat_id, round_vid)
+        await borg.send_file(message.chat_id, round_vid)
     os.remove(pic_loc)
     rmtree(path, ignore_errors=True)
-
 
 
 CMD_HELP.update(
