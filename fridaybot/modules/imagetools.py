@@ -385,8 +385,8 @@ async def img(event):
 #   along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 
-@friday.on(friday_on_cmd(pattern=r"spin"))
-@friday.on(sudo_cmd(pattern=r"spin", allow_sudo=True))
+@friday.on(friday_on_cmd(pattern=r"spin ?(.*)"))
+@friday.on(sudo_cmd(pattern=r"spin ?(.*)", allow_sudo=True))
 async def spinshit(message):
     reply = await message.get_reply_message()
     lmaodict = {"1": 1, "2": 3, "3": 6, "4": 12, "5": 24, "6": 60}
