@@ -8,6 +8,7 @@ import subprocess
 import time
 from os.path import basename
 from typing import List, Optional, Tuple
+
 from pymediainfo import MediaInfo
 from telethon.tl.types import MessageMediaPhoto
 
