@@ -1,18 +1,17 @@
-import os
 import asyncio
 import json
 import math
 import os
-import subprocess
-import asyncio
-import os
 import re
 import shlex
+import subprocess
+import time
 from os.path import basename
 from typing import List, Optional, Tuple
-import time
+
 from pymediainfo import MediaInfo
 from telethon.tl.types import MessageMediaPhoto
+
 sedpath = Config.TMP_DOWNLOAD_DIRECTORY
 from fridaybot import logging
 
@@ -34,6 +33,7 @@ async def runcmd(cmd: str) -> Tuple[str, str, int, int]:
         process.returncode,
         process.pid,
     )
+
 
 async def progress(current, total, event, start, type_of_ps, file_name=None):
     """Generic progress_callback for uploads and downloads."""
@@ -92,21 +92,21 @@ def time_formatter(milliseconds: int) -> str:
         + ((str(milliseconds) + " millisecond(s), ") if milliseconds else "")
     )
     return tmp[:-2]
-  
+
+
 # Thanks To Userge-X
 # Ported By @STARKXD
 async def convert_to_image(event):
     lmao = await event.get_reply_message()
     if not (
-            lmao.gif
-            or lmao.audio
-            or lmao.voice
-            or lmao.video
-            or lmao.video_note
-            or lmao.sticker
-
+        lmao.gif
+        or lmao.audio
+        or lmao.voice
+        or lmao.video
+        or lmao.video_note
+        or lmao.sticker
     ):
-        await event.edit('`Format Not Supported.`')
+        await event.edit("`Format Not Supported.`")
         return
     else:
         try:
@@ -125,47 +125,51 @@ async def convert_to_image(event):
                 "Downloaded to `{}` successfully !!".format(downloaded_file_name)
             )
     if not os.path.exists(downloaded_file_name):
-        await event.edit('Download Unsucessfull :(')
+        await event.edit("Download Unsucessfull :(")
         return
-    elif lmao.sticker and lmao.sticker.mime_type == 'application/x-tgsticker':
-            pathofsticker = downloaded_file_name
-            image_name = sedpath + 'image.png'
-            os.system(f"lottie_convert.py --frame 0 -if lottie -of png {pathofsticker} {image_name}")
-            os.remove(pathofsticker)
-            if not os.path.exists(image_name):
-                await event.edit("`Wasn't Able To Fetch Shot.`")
-                return
-            lmao_final = image_name
-    elif lmao.sticker and lmao.sticker.mime_type == 'image/webp':
-            pathofsticker2 = downloaded_file_name
-            image_new_path = sedpath + 'image.png'
-            os.rename(pathofsticker2, image_new_path)
-            if not os.path.exists(image_new_path):
-                await event.edit("`Wasn't Able To Fetch Shot.`")
-                return
-            lmao_final = image_new_path
-            os.remove(pathofsticker2)
+    elif lmao.sticker and lmao.sticker.mime_type == "application/x-tgsticker":
+        pathofsticker = downloaded_file_name
+        image_name = sedpath + "image.png"
+        os.system(
+            f"lottie_convert.py --frame 0 -if lottie -of png {pathofsticker} {image_name}"
+        )
+        os.remove(pathofsticker)
+        if not os.path.exists(image_name):
+            await event.edit("`Wasn't Able To Fetch Shot.`")
+            return
+        lmao_final = image_name
+    elif lmao.sticker and lmao.sticker.mime_type == "image/webp":
+        pathofsticker2 = downloaded_file_name
+        image_new_path = sedpath + "image.png"
+        os.rename(pathofsticker2, image_new_path)
+        if not os.path.exists(image_new_path):
+            await event.edit("`Wasn't Able To Fetch Shot.`")
+            return
+        lmao_final = image_new_path
+        os.remove(pathofsticker2)
     elif lmao.audio:
-            sed_p = downloaded_file_name
-            hmmyes = sedpath + 'stark.mp3'
-            imgpath = sedpath + 'stark.jpg'
-            os.rename(sed_p, hmmyes)
-            os.system(f"ffmpeg -i {hmmyes} -filter:v scale=500:500 -an {imgpath}")
-            if not os.path.exists(imgpath):
-                await event.edit("`Wasn't Able To Fetch Shot.`")
-                return
-            lmao_final = imgpath
-            os.remove(sed_p)
+        sed_p = downloaded_file_name
+        hmmyes = sedpath + "stark.mp3"
+        imgpath = sedpath + "stark.jpg"
+        os.rename(sed_p, hmmyes)
+        os.system(f"ffmpeg -i {hmmyes} -filter:v scale=500:500 -an {imgpath}")
+        if not os.path.exists(imgpath):
+            await event.edit("`Wasn't Able To Fetch Shot.`")
+            return
+        lmao_final = imgpath
+        os.remove(sed_p)
     elif lmao.gif or lmao.video or lmao.video_note:
-            sed_p2 = downloaded_file_name
-            jpg_file = os.path.join(sedpath, "image.jpg")
-            await take_screen_shot(sed_p2, 0, jpg_file)
-            if not os.path.exists(jpg_file):
-                await event.edit("`Couldn't Fetch. SS`")
-                return
-            lmao_final = jpg_file
-    await event.edit('`Almost Completed.`')
+        sed_p2 = downloaded_file_name
+        jpg_file = os.path.join(sedpath, "image.jpg")
+        await take_screen_shot(sed_p2, 0, jpg_file)
+        if not os.path.exists(jpg_file):
+            await event.edit("`Couldn't Fetch. SS`")
+            return
+        lmao_final = jpg_file
+    await event.edit("`Almost Completed.`")
     return lmao_final
+
+
 # Thanks To Userge-X
 async def crop_vid(input_vid: str, final_path: str):
     media_info = MediaInfo.parse(input_vid)
@@ -176,12 +180,12 @@ async def crop_vid(input_vid: str, final_path: str):
             width = track.width
     if aspect_ratio != 1:
         crop_by = width if (height > width) else height
-        os.system(
-            f'ffmpeg -i {input_vid} -vf "crop={crop_by}:{crop_by}" {final_path}'
-        )
+        os.system(f'ffmpeg -i {input_vid} -vf "crop={crop_by}:{crop_by}" {final_path}')
         os.remove(input_vid)
     else:
         os.rename(input_vid, final_path)
+
+
 # Thanks To Userge-X
 async def take_screen_shot(
     video_file: str, duration: int, path: str = ""
@@ -193,9 +197,7 @@ async def take_screen_shot(
         duration,
     )
     ttl = duration // 2
-    thumb_image_path = path or os.path.join(
-        sedpath, f"{basename(video_file)}.jpg"
-    )
+    thumb_image_path = path or os.path.join(sedpath, f"{basename(video_file)}.jpg")
     command = f'''ffmpeg -ss {ttl} -i "{video_file}" -vframes 1 "{thumb_image_path}"'''
     err = (await runcmd(command))[1]
     if err:
