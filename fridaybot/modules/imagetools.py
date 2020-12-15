@@ -391,7 +391,7 @@ async def spinshit(message):
     reply = await message.get_reply_message()
     lmaodict = {"1": 1, "2": 3, "3": 6, "4": 12, "5": 24, "6": 60}
     lolshit = pattern.pattern_match.group(1)
-    keke = f"{lolshit}"
+    keke = f'{lolshit}'
     if not reply:
         await message.edit("`Reply To Media First !`")
         return
@@ -402,7 +402,7 @@ async def spinshit(message):
             step = 1
     pic_loc = await convert_to_image(message, borg)
     if not pic_loc:
-        await message.edit("Reply to a valid media first")
+        await message.edit("`Reply to a valid media first.`")
         return
     await message.edit("🌀 `Tighten your seatbelts, sh*t is about to get wild ...`")
     spin_dir = 1
