@@ -124,7 +124,7 @@ async def convert_to_image(event):
             await event.edit(str(e))
         else:
             await event.edit(
-                "Downloaded to `{}` successfully !!".format(downloaded_file_name)
+                "Downloaded to `{}` successfully.".format(downloaded_file_name)
             )
     if not os.path.exists(downloaded_file_name):
         await event.edit("Download Unsucessfull :(")
