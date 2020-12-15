@@ -136,7 +136,7 @@ async def convert_to_image(event, borg):
         pathofsticker = downloaded_file_name
         image_name = os.path.join(sedpath, "image.png")
         await runcmd(
-            f"lottie_convert.py --frame 0 -if lottie -of png {pathofsticker} {image_name}"
+            f"lottie_convert.py --frame 0 -if lottie -of svg {pathofsticker} {image_name}"
         )
         os.remove(pathofsticker)
         if not os.path.exists(image_name):
