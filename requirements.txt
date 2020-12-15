@@ -1,6 +1,7 @@
 Pillow
 deep_translator
 langdetect
+anime_downloader
 PyDictionary
 fontTools
 pydub
