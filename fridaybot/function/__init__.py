@@ -134,8 +134,8 @@ async def convert_to_image(event, borg):
         lmao_final = downloaded_file_name
     elif lmao.sticker and lmao.sticker.mime_type == "application/x-tgsticker":
         pathofsticker = downloaded_file_name
-        image_name = sedpath + "image.png"
-        os.system(
+        image_name = os.path.join(sedpath, "image.png")
+        await runcmd(
             f"lottie_convert.py --frame 0 -if lottie -of png {pathofsticker} {image_name}"
         )
         os.remove(pathofsticker)
@@ -156,7 +156,7 @@ async def convert_to_image(event, borg):
         hmmyes = sedpath + "stark.mp3"
         imgpath = sedpath + "stark.jpg"
         os.rename(sed_p, hmmyes)
-        os.system(f"ffmpeg -i {hmmyes} -filter:v scale=500:500 -an {imgpath}")
+        await runcmd(f"ffmpeg -i {hmmyes} -filter:v scale=500:500 -an {imgpath}")
         if not os.path.exists(imgpath):
             await event.edit("`Wasn't Able To Fetch Shot.`")
             return
