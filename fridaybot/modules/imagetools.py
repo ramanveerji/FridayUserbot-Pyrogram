@@ -389,11 +389,17 @@ async def img(event):
 @friday.on(sudo_cmd(pattern=r"spin", allow_sudo=True))
 async def spinshit(message):
     reply = await message.get_reply_message()
+    lmaodict = {"1": 1, "2": 3, "3": 6, "4": 12, "5": 24, "6": 60}
+    lolshit = pattern.pattern_match.group(1)
+    keke = f'{lolshit}'
     if not reply:
         await message.edit("`Reply To Media First !`")
         return
     else:
-        step = 1
+        if lolshit:
+            step = lmaodict[keke]
+        else:
+            step = 1
     pic_loc = await convert_to_image(message, borg)
     if not pic_loc:
         await message.edit("Reply to a valid media first")
