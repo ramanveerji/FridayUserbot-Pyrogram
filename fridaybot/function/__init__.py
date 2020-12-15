@@ -153,6 +153,7 @@ async def convert_to_image(event, borg):
         imgpath = sedpath + "starky.jpg"
         os.rename(sed_p, hmmyes)
         await runcmd(f"ffmpeg -i {hmmyes} -filter:v scale=500:500 -an {imgpath}")
+        os.remove(sed_p)
         if not os.path.exists(imgpath):
             await event.edit("`Wasn't Able To Fetch Shot.`")
             return
@@ -161,6 +162,7 @@ async def convert_to_image(event, borg):
         sed_p2 = downloaded_file_name
         jpg_file = os.path.join(sedpath, "image.jpg")
         await take_screen_shot(sed_p2, 0, jpg_file)
+        os.remove(sed_p2)
         if not os.path.exists(jpg_file):
             await event.edit("`Couldn't Fetch. SS`")
             return
