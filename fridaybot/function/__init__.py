@@ -106,6 +106,7 @@ async def convert_to_image(event, borg):
         or lmao.voice
         or lmao.video
         or lmao.video_note
+        or lmao.photo
         or lmao.sticker
     ):
         await event.edit("`Format Not Supported.`")
@@ -129,6 +130,8 @@ async def convert_to_image(event, borg):
     if not os.path.exists(downloaded_file_name):
         await event.edit("Download Unsucessfull :(")
         return
+    if lmao and lmao.photo:
+        lmao_final = downloaded_file_name
     elif lmao.sticker and lmao.sticker.mime_type == "application/x-tgsticker":
         pathofsticker = downloaded_file_name
         image_name = sedpath + "image.png"
