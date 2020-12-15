@@ -394,7 +394,7 @@ async def spinshit(message):
         return
     else:
         step = 1
-    pic_loc = await convert_to_image(message)
+    pic_loc = await convert_to_image(message, borg)
     if not pic_loc:
         await message.edit("Reply to a valid media first")
         return
