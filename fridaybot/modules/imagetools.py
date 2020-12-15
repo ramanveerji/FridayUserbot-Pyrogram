@@ -368,21 +368,10 @@ async def img(event):
             os.remove(files)
 
 
-#   Friendly Telegram (telegram userbot)
-#   Copyright (C) 2018-2020 The Authors
-
-#   This program is free software: you can redistribute it and/or modify
-#   it under the terms of the GNU Affero General Public License as published by
-#   the Free Software Foundation, either version 3 of the License, or
-#   (at your option) any later version.
-
-#   This program is distributed in the hope that it will be useful,
-#   but WITHOUT ANY WARRANTY; without even the implied warranty of
-#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#   GNU Affero General Public License for more details.
-
-#   You should have received a copy of the GNU Affero General Public License
-#   along with this program.  If not, see <https://www.gnu.org/licenses/>.
+# Credits To These :
+# https://github.com/midnightmadwalk [TG: @MidnightMadwalk]
+# https://github.com/code-rgb [TG: @DeletedUser420]
+# Ported By  https://github.com/STARKGANG [TG: @STARKXD]
 
 
 @friday.on(friday_on_cmd(pattern=r"spin ?(.*)"))
@@ -428,6 +417,7 @@ async def spinshit(message):
         round_vid = os.path.join(path, "out_round.mp4")
         await crop_vid(output_vid, round_vid)
         await borg.send_file(message.chat_id, round_vid, video_note=True)
+        await event.delete()
     os.remove(pic_loc)
     rmtree(path, ignore_errors=True)
 
