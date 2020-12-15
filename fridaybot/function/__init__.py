@@ -151,7 +151,6 @@ async def convert_to_image(event, borg):
             await event.edit("`Wasn't Able To Fetch Shot.`")
             return
         lmao_final = image_new_path
-        os.remove(pathofsticker2)
     elif lmao.audio:
         sed_p = downloaded_file_name
         hmmyes = sedpath + "stark.mp3"
@@ -162,7 +161,6 @@ async def convert_to_image(event, borg):
             await event.edit("`Wasn't Able To Fetch Shot.`")
             return
         lmao_final = imgpath
-        os.remove(sed_p)
     elif lmao.gif or lmao.video or lmao.video_note:
         sed_p2 = downloaded_file_name
         jpg_file = os.path.join(sedpath, "image.jpg")
