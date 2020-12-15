@@ -3,6 +3,7 @@ pymediainfo
 deep_translator
 langdetect
 anime_downloader
+pandas
 PyDictionary
 fontTools
 pydub
