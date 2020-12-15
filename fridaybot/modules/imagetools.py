@@ -411,7 +411,6 @@ async def spinshit(message):
     for k, nums in enumerate(range(1, 360, step), start=0):
         y = im.rotate(nums * spin_dir)
         y.save(os.path.join(path, "spinx%s.jpg" % k))
-
     output_vid = os.path.join(path, "out.mp4")
     # ;__; Maths lol, y = mx + c
     frate = int(((90 / 59) * step) + (1680 / 59))
@@ -422,7 +421,7 @@ async def spinshit(message):
     if os.path.exists(output_vid):
         round_vid = os.path.join(path, "out_round.mp4")
         await crop_vid(output_vid, round_vid)
-        await borg.send_file(message.chat_id, round_vid)
+        await borg.send_file(message.chat_id, round_vid, video_note=True)
     os.remove(pic_loc)
     rmtree(path, ignore_errors=True)
 
