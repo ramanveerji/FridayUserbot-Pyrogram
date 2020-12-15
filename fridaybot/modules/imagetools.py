@@ -388,7 +388,7 @@ async def img(event):
 @friday.on(friday_on_cmd(pattern=r"spin"))
 @friday.on(sudo_cmd(pattern=r"spin", allow_sudo=True))
 async def spinshit(message):
-    reply = message.get_reply_message()
+    reply = await message.get_reply_message()
     if not reply:
         await message.edit("`Reply To Media First !`")
         return
