@@ -114,7 +114,7 @@ async def convert_to_image(event, borg):
     else:
         try:
             c_time = time.time()
-            downloaded_file_name = await borg.download_file(
+            downloaded_file_name = await borg.download_media(
                 lmao.media,
                 sedpath,
                 progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
