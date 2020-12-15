@@ -420,7 +420,6 @@ async def spinshit(message):
         f'ffmpeg -framerate {frate} -i {path}spinx%d.jpg -c:v libx264 -preset ultrafast -vf "crop=trunc(iw/2)*2:trunc(ih/2)*2" -pix_fmt yuv420p {output_vid}'
     )
     if os.path.exists(output_vid):
-        reply.message_id if reply else None
         round_vid = os.path.join(path, "out_round.mp4")
         await crop_vid(output_vid, round_vid)
         await borg.send_file(message.chat_id, round_vid)
