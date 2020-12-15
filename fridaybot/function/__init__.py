@@ -134,15 +134,14 @@ async def convert_to_image(event, borg):
         lmao_final = downloaded_file_name
     elif lmao.sticker and lmao.sticker.mime_type == "application/x-tgsticker":
         pathofsticker = downloaded_file_name
-        image_name = os.path.join(sedpath, "image.png")
+        image_name = os.path.join(sedpath, "image.svg")
+        image_name2 = os.path.join(sedpath, "image.png")
         await runcmd(
             f"lottie_convert.py --frame 0 -if lottie -of svg {pathofsticker} {image_name}"
         )
+        os.rename(image_name, image_name2)
         os.remove(pathofsticker)
-        if not os.path.exists(image_name):
-            await event.edit("`Wasn't Able To Fetch Shot.`")
-            return
-        lmao_final = image_name
+        lmao_final = image_name2
     elif lmao.sticker and lmao.sticker.mime_type == "image/webp":
         pathofsticker2 = downloaded_file_name
         image_new_path = sedpath + "image.png"
