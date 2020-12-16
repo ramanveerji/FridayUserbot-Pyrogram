@@ -478,6 +478,5 @@ async def whisper(event: events.InlineQuery.Event):
             txtm = "You Can't Read This. LoL"
             await event.answer(txtm, alert=True)
             return
-        else:
-            hmmwspr = starkmsg
-            await event.answer(hmmwspr, alert=True)
+        hmmwspr = starkmsg
+        await event.answer(hmmwspr, alert=True)
