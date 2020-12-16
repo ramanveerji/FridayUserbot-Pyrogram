@@ -1,18 +1,19 @@
 from fridaybot.modules.sql_helper import warns_sql as sql
 from fridaybot.utils import friday_on_cmd
 
-@friday.on(friday_on_cmd(pattern='warn(?: |$)(.*)'))
+
+@friday.on(friday_on_cmd(pattern="warn(?: |$)(.*)"))
 async def _s(event):
     user, reason = await get_user_from_event(event)
     sed = await friday.get_permissions(event.chat_id, user.id)
     if sed.is_admin:
-      await event.edit("Demn, Admins Can't Be Warned")
-      return
+        await event.edit("Demn, Admins Can't Be Warned")
+        return
     dragon = await friday.get_permissions(event.chat_id, bot.uid)
     if not dragon.is_admin:
-      await event.edit('Demn, Me nOT Admin')
-      return
-    his_id = event.chat_id
+        await event.edit("Demn, Me nOT Admin")
+        return
+    event.chat_id
     limit, soft_warn = sql.get_warn_setting(event.chat_id)
     num_warns, reasons = sql.warn_user(user.id, event.chat_id, reason)
     if num_warns >= limit:
@@ -21,9 +22,10 @@ async def _s(event):
             await friday.kick_participant(event.chat_id, user.id)
             reply = "{} warnings, {} has been kicked!".format(limit, user.id)
         else:
-            await friday.edit_permissions(
-                    event.chat_id, user.id, view_messages=False)
-            reply = "{} warnings, {} has been banned!".format(limit, user.id, user.first_name)
+            await friday.edit_permissions(event.chat_id, user.id, view_messages=False)
+            reply = "{} warnings, {} has been banned!".format(
+                limit, user.id, user.first_name
+            )
         for warn_reason in reasons:
             reply += "\n - {}".format(warn_reason)
     else:
@@ -31,22 +33,24 @@ async def _s(event):
         if reason:
             reply += "\nReason for last warn:\n{}".format(reason)
         await event.edit(reply)
-  
-@friday.on(friday_on_cmd(pattern='rwarn(?: |$)(.*)'))
+
+
+@friday.on(friday_on_cmd(pattern="rwarn(?: |$)(.*)"))
 async def _(event):
     user, reason = await get_user_from_event(event)
     sed = await friday.get_permissions(event.chat_id, user.id)
     if sed.is_admin:
-      await event.edit("Demn, Admins Can't Be Warned")
-      return
+        await event.edit("Demn, Admins Can't Be Warned")
+        return
     dragon = await friday.get_permissions(event.chat_id, bot.uid)
     if not dragon.is_admin:
-      await event.edit('Demn, Me nOT Admin')
-      return
+        await event.edit("Demn, Me nOT Admin")
+        return
     sql.reset_warns(user.id, chat_id)
     await event.edit("Warnings have been reset!")
-  
-@friday.on(friday_on_cmd(pattern='allwarns(?: |$)(.*)'))
+
+
+@friday.on(friday_on_cmd(pattern="allwarns(?: |$)(.*)"))
 async def __(event):
     user, reason = await get_user_from_event(event)
     result = sql.get_warns(user.id, event.chat_id)
@@ -54,17 +58,25 @@ async def __(event):
         num_warns, reasons = result
         limit, soft_warn = sql.get_warn_setting(event.chat_id)
         if reasons:
-            text = "This user has {}/{} warnings, for the following reasons: \n\n".format(num_warns, limit)
+            text = (
+                "This user has {}/{} warnings, for the following reasons: \n\n".format(
+                    num_warns, limit
+                )
+            )
             for reason in reasons:
                 text += "- {} \n".format(reason)
             await event.edit(text)
         else:
             await event.edit(
-                "User has {}/{} warnings, but no reasons for any of them.".format(num_warns, limit))
+                "User has {}/{} warnings, but no reasons for any of them.".format(
+                    num_warns, limit
+                )
+            )
     else:
         await event.edit("This user hasn't got any warnings!")
-  
-@friday.on(friday_on_cmd(pattern='slimit ?(.*)'))
+
+
+@friday.on(friday_on_cmd(pattern="slimit ?(.*)"))
 async def m_(event):
     args = event.pattern_match.group(1)
     if args:
@@ -79,6 +91,7 @@ async def m_(event):
     else:
         limit, soft_warn = sql.get_warn_setting(chat.id)
         await event.edit("The current warn limit is {}".format(limit))
+
 
 async def get_user_from_event(event):
     """ Get the user from argument or replied message. """
