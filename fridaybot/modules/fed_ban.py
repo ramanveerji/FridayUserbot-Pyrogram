@@ -6,6 +6,7 @@ from fridaybot.modules.sql_helper.feds_sql import (
     rmfed,
 )
 from fridaybot.utils import friday_on_cmd
+
 chnnl_grp = Config.FBAN_GROUP
 
 
