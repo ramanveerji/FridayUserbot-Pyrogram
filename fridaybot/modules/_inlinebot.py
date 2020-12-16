@@ -453,6 +453,7 @@ async def inline_handler(event):
 
 @tgbot.on(events.InlineQuery(pattern=r"whisper (.*)"))
 async def whisper(event: events.InlineQuery.Event):
+    builder = event.builder
     if event.query.user_id != bot.uid:
         resultm = builder.article(
             title="Not Allowded",
@@ -461,16 +462,15 @@ async def whisper(event: events.InlineQuery.Event):
         await event.answer([resultm])
         return
     lol = event.pattern_match.group(1)
-    builder = event.builder
     starkmsg, target = lol.split(";", 1)
-    lmao = builder.article(
+    lmaom = builder.article(
         title="Secret.",
         text=f"This is Secret Msg for {target}. Only He/She Can See This Secret Message",
         buttons=[
             [custom.Button.inline("Show Message", data="starkmidhun")],
         ],
     )
-
+    await event.answer([lmaom])
     @tgbot.on(events.callbackquery.CallbackQuery(data=re.compile(b"starkmidhun")))
     async def die(event):
         if not event.query.user_id == target:
