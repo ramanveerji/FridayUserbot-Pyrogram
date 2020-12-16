@@ -1,78 +1,85 @@
+from fridaybot.modules.sql_helper.feds_sql import (
+    add_fed,
+    get_all_feds,
+    is_fed_indb,
+    rmfed,
+)
 from fridaybot.utils import friday_on_cmd
-from fridaybot.modules.sql_helper.feds_sql import add_fed, rmfed, get_all_feds, is_fed_indb
 
 chnnl_grp = Config.FBAN_GROUP
 
 
-@friday.on(friday_on_cmd(pattern='fadd ?(.*)'))
+@friday.on(friday_on_cmd(pattern="fadd ?(.*)"))
 async def _(event):
     lol_s = event.match_pattern.group(1)
-    if lol_s == 'all':
-        await event.edit('Done')
+    if lol_s == "all":
+        await event.edit("Done")
     elif is_fed_indb(lol_s):
-        await event.edit('`Fed Already Found On DataBase.`')
+        await event.edit("`Fed Already Found On DataBase.`")
         return
     elif not is_fed_indb(lol_s):
         add_fed(lol_s)
-        await event.edit('`Done ! Added To Fed DataBase`')
+        await event.edit("`Done ! Added To Fed DataBase`")
 
 
-@friday.on(friday_on_cmd(pattern='frm ?(.*)'))
+@friday.on(friday_on_cmd(pattern="frm ?(.*)"))
 async def _(event):
     lol_s = event.match_pattern.group(1)
-    if lol_s == 'all':
+    if lol_s == "all":
         lol = get_all_feds()
         for sedm in lol:
             rmfed(sedm.feds)
-        await event.edit('`Done, Cleared. All Fed Database.')
+        await event.edit("`Done, Cleared. All Fed Database.")
     elif is_fed_indb(lol_s):
         rmfed(lol_s)
-        await event.edit('`Done !`')
+        await event.edit("`Done !`")
     elif not is_fed_indb(lol_s):
-        await event.edit('`This Fed Not Found On Db.`')
+        await event.edit("`This Fed Not Found On Db.`")
 
 
-@friday.on(friday_on_cmd(pattern='fban ?(.*)'))
+@friday.on(friday_on_cmd(pattern="fban ?(.*)"))
 async def _(event):
     lol_s = event.match_pattern.group(1)
     all_fed = get_all_feds()
     errors = 0
     suces_s = 0
     len_feds = len(all_fed)
-    await event.edit(f'`Banning in {len_feds}.`')
+    await event.edit(f"`Banning in {len_feds}.`")
     try:
-        await borg.send_message(chnnl_grp, '`Starting Fbans.`')
+        await borg.send_message(chnnl_grp, "`Starting Fbans.`")
     except Exception as e:
         await event.edit("**Errors** : " + str(e))
         for teamz in all_fed:
             try:
                 suces_s += 1
-                await borg.send_message(chnnl_grp, '/joinchat ' + teamz.feds)
-                await borg.send_message(chnnl_grp, '/fban ' + lol_s)
+                await borg.send_message(chnnl_grp, "/joinchat " + teamz.feds)
+                await borg.send_message(chnnl_grp, "/fban " + lol_s)
             except:
                 errors += 1
     await event.edit(
-        f"**Fban Completed** \nTotal Sucess : `{suces_s}` \nTotal Errors : `{errors}` \nTotal Fed Len : `{len_feds}`")
+        f"**Fban Completed** \nTotal Sucess : `{suces_s}` \nTotal Errors : `{errors}` \nTotal Fed Len : `{len_feds}`"
+    )
 
 
-@friday.on(friday_on_cmd(pattern='unfban ?(.*)'))
+@friday.on(friday_on_cmd(pattern="unfban ?(.*)"))
 async def _(event):
     lol_s = event.match_pattern.group(1)
     all_fed = get_all_feds()
     errors = 0
     suces_s = 0
     len_feds = len(all_fed)
-    await event.edit(f'`UnFBanning in {len_feds}.`')
+    await event.edit(f"`UnFBanning in {len_feds}.`")
     try:
-        await borg.send_message(chnnl_grp, '`Starting Un-Fbans.`')
+        await borg.send_message(chnnl_grp, "`Starting Un-Fbans.`")
     except Exception as e:
         await event.edit("**Errors** : " + str(e))
         for teamz in all_fed:
             try:
                 suces_s += 1
-                await borg.send_message(chnnl_grp, '/joinchat ' + teamz.feds)
-                await borg.send_message(chnnl_grp, '/unfban ' + lol_s)
+                await borg.send_message(chnnl_grp, "/joinchat " + teamz.feds)
+                await borg.send_message(chnnl_grp, "/unfban " + lol_s)
             except:
                 errors += 1
     await event.edit(
-        f"**Un-Fban Completed** \nTotal Sucess : `{suces_s}` \nTotal Errors : `{errors}` \nTotal Fed Len : `{len_feds}`")
+        f"**Un-Fban Completed** \nTotal Sucess : `{suces_s}` \nTotal Errors : `{errors}` \nTotal Fed Len : `{len_feds}`"
+    )
