@@ -7,11 +7,11 @@ async def _s(event):
     user, reason = await get_user_from_event(event)
     sed = await friday.get_permissions(event.chat_id, user.id)
     if sed.is_admin:
-        await event.edit("Demn, Admins Can't Be Warned")
+        await event.edit("`Demn, Admins Can't Be Warned`")
         return
     dragon = await friday.get_permissions(event.chat_id, bot.uid)
     if not dragon.is_admin:
-        await event.edit("Demn, Me nOT Admin")
+        await event.edit("`Demn, Me nOT Admin`")
         return
     limit, soft_warn = sql.get_warn_setting(event.chat_id)
     num_warns, reasons = sql.warn_user(user.id, event.chat_id, reason)
@@ -20,11 +20,13 @@ async def _s(event):
         if soft_warn:
             await friday.kick_participant(event.chat_id, user.id)
             reply = "{} warnings, {} has been kicked!".format(limit, user.id)
+            await event.edit(reply)
         else:
             await friday.edit_permissions(event.chat_id, user.id, view_messages=False)
             reply = "{} warnings, {} has been banned!".format(
                 limit, user.id, user.first_name
             )
+            await event.edit(reply)
         for warn_reason in reasons:
             reply += "\n - {}".format(warn_reason)
     else:
@@ -92,6 +94,25 @@ async def m_(event):
         await event.edit("The current warn limit is {}".format(limit))
 
 
+@friday.on(friday_on_cmd(pattern="wap ?(.*)"))
+async def m_(event):
+    args = event.pattern_match.group(1)
+    if args:
+        if args.lower() in ("on", "yes"):
+            sql.set_warn_strength(event.chat_id, False)
+            await event.edit("Too many warns will now result in a ban!")
+        elif args.lower() in ("off", "no"):
+            sql.set_warn_strength(event.chat_id, True)
+            await event.edit("Too many warns will now result in a kick! Users will be able to join again after.")
+        else:
+            await event.edit("I only understand on/yes/no/off!")
+    else:
+        limit, soft_warn = sql.get_warn_setting(chat.id)
+        if soft_warn:
+            await event.edit("Warns are currently set to **kick** users when they exceed the limits.")
+        else:
+            await event.edit("Warns are currently set to **ban** users when they exceed the limits.")
+            
 async def get_user_from_event(event):
     """ Get the user from argument or replied message. """
     args = event.pattern_match.group(1).split(" ", 1)
