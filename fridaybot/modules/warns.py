@@ -44,7 +44,7 @@ async def _(event):
       await event.edit('Demn, Me nOT Admin')
       return
     sql.reset_warns(user.id, chat_id)
-        await event.edit("Warnings have been reset!")
+    await event.edit("Warnings have been reset!")
   
 @friday.on(friday_on_cmd(pattern='allwarns(?: |$)(.*)'))
 async def __(event):
