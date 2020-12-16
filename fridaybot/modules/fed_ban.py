@@ -59,7 +59,7 @@ async def _(event):
         return
     await event.edit(f"`Banning in {len_feds}.`")
     try:
-        await borg.send_message(chnnl_grp, "`Starting Fbans.`")
+        await borg.send_message(chnnl_grp, "/start")
     except Exception as e:
         await event.edit("**Errors** : " + str(e))
         for teamz in all_fed:
