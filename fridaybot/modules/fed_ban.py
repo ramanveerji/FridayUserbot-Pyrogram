@@ -1,4 +1,4 @@
-from fridaybot.functions import fetch_feds
+from fridaybot.function import fetch_feds
 from fridaybot.modules.sql_helper.feds_sql import (
     add_fed,
     get_all_feds,
@@ -83,7 +83,7 @@ async def _(event):
     len_feds = len(all_fed)
     await event.edit(f"`UnFBanning in {len_feds}.`")
     try:
-        await borg.send_message(chnnl_grp, "`Starting Un-Fbans.`")
+        await borg.send_message(chnnl_grp, "/start")
     except Exception as e:
         await event.edit("**Errors** : " + str(e))
         for teamz in all_fed:
