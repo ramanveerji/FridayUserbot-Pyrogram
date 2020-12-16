@@ -55,7 +55,7 @@ async def _(event):
     suces_s = 0
     len_feds = len(all_fed)
     if len_feds == 0:
-        await event.edit('`No Fed IN DB, Add One To Do So.`')
+        await event.edit("`No Fed IN DB, Add One To Do So.`")
         return
     await event.edit(f"`Banning in {len_feds}.`")
     try:
