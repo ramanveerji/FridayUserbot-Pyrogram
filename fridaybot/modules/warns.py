@@ -6,7 +6,7 @@ async def _s(event):
     user, reason = await get_user_from_event(event)
     sed = await friday.get_permissions(event.chat_id, user.id)
     if sed.is_admin:
-      await event.edit('Demn, Admins Can't Be Warned')
+      await event.edit("Demn, Admins Can't Be Warned")
       return
     dragon = await friday.get_permissions(event.chat_id, bot.uid)
     if not dragon.is_admin:
@@ -37,7 +37,7 @@ async def _(event):
     user, reason = await get_user_from_event(event)
     sed = await friday.get_permissions(event.chat_id, user.id)
     if sed.is_admin:
-      await event.edit('Demn, Admins Can't Be Warned')
+      await event.edit("Demn, Admins Can't Be Warned")
       return
     dragon = await friday.get_permissions(event.chat_id, bot.uid)
     if not dragon.is_admin:
