@@ -103,16 +103,23 @@ async def m_(event):
             await event.edit("Too many warns will now result in a ban!")
         elif args.lower() in ("off", "no"):
             sql.set_warn_strength(event.chat_id, True)
-            await event.edit("Too many warns will now result in a kick! Users will be able to join again after.")
+            await event.edit(
+                "Too many warns will now result in a kick! Users will be able to join again after."
+            )
         else:
             await event.edit("I only understand on/yes/no/off!")
     else:
         limit, soft_warn = sql.get_warn_setting(chat.id)
         if soft_warn:
-            await event.edit("Warns are currently set to **kick** users when they exceed the limits.")
+            await event.edit(
+                "Warns are currently set to **kick** users when they exceed the limits."
+            )
         else:
-            await event.edit("Warns are currently set to **ban** users when they exceed the limits.")
-            
+            await event.edit(
+                "Warns are currently set to **ban** users when they exceed the limits."
+            )
+
+
 async def get_user_from_event(event):
     """ Get the user from argument or replied message. """
     args = event.pattern_match.group(1).split(" ", 1)
