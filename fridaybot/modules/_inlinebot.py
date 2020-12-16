@@ -450,7 +450,7 @@ async def inline_handler(event):
         )
         await event.answer([resulte])
 
-        
+
 @tgbot.on(events.InlineQuery(pattern=r"whisper (.*)"))
 async def whisper(event: events.InlineQuery.Event):
     if event.query.user_id != bot.uid:
@@ -464,12 +464,13 @@ async def whisper(event: events.InlineQuery.Event):
     builder = event.builder
     starkmsg, target = lol.split(";", 1)
     lmao = builder.article(
-            title="Secret.",
-            text=f"This is Secret Msg for {target}. Only He/She Can See This Secret Message",
-            buttons=[
-                [custom.Button.inline("Show Message", data="starkmidhun")],
-            ]
+        title="Secret.",
+        text=f"This is Secret Msg for {target}. Only He/She Can See This Secret Message",
+        buttons=[
+            [custom.Button.inline("Show Message", data="starkmidhun")],
+        ],
     )
+
     @tgbot.on(events.callbackquery.CallbackQuery(data=re.compile(b"starkmidhun")))
     async def die(event):
         if not event.query.user_id == target:
