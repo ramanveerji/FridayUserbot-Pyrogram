@@ -2,6 +2,9 @@ Pillow
 pymediainfo
 deep_translator
 langdetect
+cairosvg
+grapheme
+QScintilla
 anime_downloader
 pandas
 PyDictionary
