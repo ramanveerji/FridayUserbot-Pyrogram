@@ -13,7 +13,6 @@ async def _s(event):
     if not dragon.is_admin:
         await event.edit("Demn, Me nOT Admin")
         return
-    event.chat_id
     limit, soft_warn = sql.get_warn_setting(event.chat_id)
     num_warns, reasons = sql.warn_user(user.id, event.chat_id, reason)
     if num_warns >= limit:
@@ -46,7 +45,7 @@ async def _(event):
     if not dragon.is_admin:
         await event.edit("Demn, Me nOT Admin")
         return
-    sql.reset_warns(user.id, chat_id)
+    sql.reset_warns(user.id, event.chat_id)
     await event.edit("Warnings have been reset!")
 
 
@@ -80,16 +79,16 @@ async def __(event):
 async def m_(event):
     args = event.pattern_match.group(1)
     if args:
-        if args[0].isdigit():
-            if int(args[0]) < 3:
+        if args.isdigit():
+            if int(args) < 3:
                 await event.edit("The minimum warn limit is 3!")
             else:
-                sql.set_warn_limit(chat.id, int(args[0]))
-                await event.edit("Updated the warn limit to {}".format(args[0]))
+                sql.set_warn_limit(event.chat_id, int(args))
+                await event.edit("Updated the warn limit to {}".format(args))
         else:
             await event.edit("Give me a number as an arg!")
     else:
-        limit, soft_warn = sql.get_warn_setting(chat.id)
+        limit, soft_warn = sql.get_warn_setting(event.chat_id)
         await event.edit("The current warn limit is {}".format(limit))
 
 
