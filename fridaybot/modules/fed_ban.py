@@ -14,7 +14,7 @@ chnnl_grp = Config.FBAN_GROUP
 async def _(event):
     nolol = 0
     yeslol = 0
-    lol_s = event.match_pattern.group(1)
+    lol_s = event.pattern_match.group(1)
     if lol_s == "all":
         hmm = fetch_feds(event, borg)
         for i in hmm:
@@ -34,7 +34,7 @@ async def _(event):
 
 @friday.on(friday_on_cmd(pattern="frm ?(.*)"))
 async def _(event):
-    lol_s = event.match_pattern.group(1)
+    lol_s = event.pattern_match.group(1)
     if lol_s == "all":
         lol = get_all_feds()
         for sedm in lol:
@@ -49,11 +49,14 @@ async def _(event):
 
 @friday.on(friday_on_cmd(pattern="fban ?(.*)"))
 async def _(event):
-    lol_s = event.match_pattern.group(1)
+    lol_s = event.pattern_match.group(1)
     all_fed = get_all_feds()
     errors = 0
     suces_s = 0
     len_feds = len(all_fed)
+    if len_feds == 0:
+        await event.edit('`No Fed IN DB, Add One To Do So.`')
+        return
     await event.edit(f"`Banning in {len_feds}.`")
     try:
         await borg.send_message(chnnl_grp, "`Starting Fbans.`")
