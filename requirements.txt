@@ -5,6 +5,7 @@ langdetect
 cairosvg
 grapheme
 QScintilla
+yahoo_fin
 anime_downloader
 pandas
 PyDictionary
