@@ -470,7 +470,7 @@ async def whisper(event: events.InlineQuery.Event):
                 [custom.Button.inline("Show Message", data="starkmidhun")],
             ]
     )
-    @friday.on(events.callbackquery.CallbackQuery(data=re.compile(b"starkmidhun")))
+    @tgbot.on(events.callbackquery.CallbackQuery(data=re.compile(b"starkmidhun")))
     async def die(event):
         if not event.query.user_id == target:
             txtm = "You Can't Read This. LoL"
