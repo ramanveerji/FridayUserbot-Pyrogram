@@ -449,37 +449,3 @@ async def inline_handler(event):
             ],
         )
         await event.answer([resulte])
-
-
-@tgbot.on(events.InlineQuery(pattern=r"whisper (.*)"))
-async def whisper(event: events.InlineQuery.Event):
-    builder = event.builder
-    if event.query.user_id != bot.uid:
-        resultm = builder.article(
-            title="Not Allowded",
-            text=f"You Can't Use This Bot. \nDeploy Friday To Get Your Own Assistant, Repo Link [Here](https://github.com/StarkGang/FridayUserbot)",
-        )
-        await event.answer([resultm])
-        return
-    lol = event.pattern_match.group(1)
-    starkmsg, targetz = lol.split(";", 1)
-    lmaom = builder.article(
-        title="Secret.",
-        text=f"This is Secret Msg for {targetz}. Only He/She Can See This Secret Message",
-        buttons=[
-            [custom.Button.inline("Show Message", data="starkmidhun")],
-        ],
-    )
-    await event.answer([lmaom])
-
-    @tgbot.on(events.callbackquery.CallbackQuery(data=re.compile(b"starkmidhun")))
-    async def die(event):
-        lol_t = int(targetz)
-        if event.query.user_id == lol_t:
-            hmmwspr = starkmsg
-            await event.answer(hmmwspr, alert=True)
-        else:
-            print(lol_t)
-            print(event.query.user_id)
-            txtm = "You Can't Read This. LoL"
-            await event.answer(txtm, alert=True)
