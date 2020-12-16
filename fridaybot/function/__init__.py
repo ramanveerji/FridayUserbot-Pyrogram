@@ -21,6 +21,7 @@ logger = logging.getLogger("[--WARNING--]")
 if not os.path.isdir(sedpath):
     os.makedirs(sedpath)
 
+
 # Thanks To Userge-X
 async def runcmd(cmd: str) -> Tuple[str, str, int, int]:
     """ run command in terminal """
@@ -87,11 +88,11 @@ def time_formatter(milliseconds: int) -> str:
     hours, minutes = divmod(minutes, 60)
     days, hours = divmod(hours, 24)
     tmp = (
-        ((str(days) + " day(s), ") if days else "")
-        + ((str(hours) + " hour(s), ") if hours else "")
-        + ((str(minutes) + " minute(s), ") if minutes else "")
-        + ((str(seconds) + " second(s), ") if seconds else "")
-        + ((str(milliseconds) + " millisecond(s), ") if milliseconds else "")
+            ((str(days) + " day(s), ") if days else "")
+            + ((str(hours) + " hour(s), ") if hours else "")
+            + ((str(minutes) + " minute(s), ") if minutes else "")
+            + ((str(seconds) + " second(s), ") if seconds else "")
+            + ((str(milliseconds) + " millisecond(s), ") if milliseconds else "")
     )
     return tmp[:-2]
 
@@ -101,13 +102,13 @@ def time_formatter(milliseconds: int) -> str:
 async def convert_to_image(event, borg):
     lmao = await event.get_reply_message()
     if not (
-        lmao.gif
-        or lmao.audio
-        or lmao.voice
-        or lmao.video
-        or lmao.video_note
-        or lmao.photo
-        or lmao.sticker
+            lmao.gif
+            or lmao.audio
+            or lmao.voice
+            or lmao.video
+            or lmao.video_note
+            or lmao.photo
+            or lmao.sticker
     ):
         await event.edit("`Format Not Supported.`")
         return
@@ -189,7 +190,7 @@ async def crop_vid(input_vid: str, final_path: str):
 
 # Thanks To Userge-X
 async def take_screen_shot(
-    video_file: str, duration: int, path: str = ""
+        video_file: str, duration: int, path: str = ""
 ) -> Optional[str]:
     """ take a screenshot """
     logger.info(
@@ -204,3 +205,47 @@ async def take_screen_shot(
     if err:
         logger.error(err)
     return thumb_image_path if os.path.exists(thumb_image_path) else None
+
+
+# Thanks To @HeisenbergTheDanger, @its_xditya
+async def fetch_feds(event, borg):
+    fedList = []
+    async with borg.conversation("@MissRose_bot") as bot_conv:
+        await bot_conv.send_message("/start")
+        await bot_conv.send_message("/myfeds")
+        await asyncio.sleep(3)
+        response = await bot_conv.get_response()
+        await asyncio.sleep(3)
+        if "make a file" in response.text:
+            await asyncio.sleep(6)
+            await response.click(0)
+            await asyncio.sleep(6)
+            fedfile = await bot_conv.get_response()
+            await asyncio.sleep(3)
+            if fedfile.media:
+                downloaded_file_name = await borg.download_media(
+                    fedfile, "fedlist"
+                )
+                await asyncio.sleep(6)
+                file = open(downloaded_file_name, "r")
+                lines = file.readlines()
+                for line in lines:
+                    try:
+                        fedList.append(line[:36])
+                    except BaseException:
+                        pass
+        else:
+            In = False
+            tempFedId = ""
+            for x in response.text:
+                if x == "`":
+                    if In:
+                        In = False
+                        fedList.append(tempFedId)
+                        tempFedId = ""
+                    else:
+                        In = True
+
+                elif In:
+                    tempFedId += x
+    return fedList
