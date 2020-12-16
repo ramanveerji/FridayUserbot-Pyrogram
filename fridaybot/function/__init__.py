@@ -137,7 +137,7 @@ async def convert_to_image(event, borg):
         image_name2 = os.path.join(sedpath, "image.png")
         cmd = f"lottie_convert.py --frame 0 -if lottie -of png {rpath} {image_name2}"
         stdout, stderr = (await runcmd(cmd))[:2]
-        os.remove(pathofsticker)
+        os.remove(rpath)
         lmao_final = image_name2
     elif lmao.sticker and lmao.sticker.mime_type == "image/webp":
         pathofsticker2 = downloaded_file_name
