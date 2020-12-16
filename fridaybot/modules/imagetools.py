@@ -319,7 +319,7 @@ async def lottiepie(event):
             await event.edit("Not Supported Yet.")
             return
         await message.download_media("tgs.tgs")
-        os.system("lottie_convert.py tgs.tgs json.json")
+        await runcmd("lottie_convert.py tgs.tgs json.json")
         json = open("json.json", "r")
         jsn = json.read()
         json.close()
@@ -332,7 +332,7 @@ async def lottiepie(event):
         )
         open("json.json", "w").write(jsn)
         await event.delete()
-        os.system(f"lottie_convert.py json.json tgs.tgs")
+        await runcmd(f"lottie_convert.py json.json tgs.tgs")
         await borg.send_file(event.chat_id, file="tgs.tgs", force_document=False)
         os.remove("json.json")
         os.remove("tgs.tgs")
