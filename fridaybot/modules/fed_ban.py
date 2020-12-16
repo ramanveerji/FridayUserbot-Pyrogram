@@ -5,15 +5,24 @@ from fridaybot.modules.sql_helper.feds_sql import (
     rmfed,
 )
 from fridaybot.utils import friday_on_cmd
-
+from fridaybot.functions import fetch_feds
 chnnl_grp = Config.FBAN_GROUP
 
 
 @friday.on(friday_on_cmd(pattern="fadd ?(.*)"))
 async def _(event):
+    nolol = 0
+    yeslol = 0
     lol_s = event.match_pattern.group(1)
     if lol_s == "all":
-        await event.edit("Done")
+        hmm = fetch_feds(event, borg)
+        for i in hmm:
+            try:
+                yeslol += 1
+                add_fed(i)
+            except:
+                nolol += 1
+        await event.edit(f"Added {yeslol} Feds To DB, Failed To Add {nolol} Feds.")
     elif is_fed_indb(lol_s):
         await event.edit("`Fed Already Found On DataBase.`")
         return
