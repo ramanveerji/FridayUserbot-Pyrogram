@@ -16,7 +16,7 @@ async def _(event):
     yeslol = 0
     lol_s = event.pattern_match.group(1)
     if lol_s == "all":
-        hmm = fetch_feds(event, borg)
+        hmm = await fetch_feds(event, borg)
         for i in hmm:
             try:
                 yeslol += 1
@@ -62,11 +62,11 @@ async def _(event):
         await borg.send_message(chnnl_grp, "/start")
     except Exception as e:
         await event.edit("**Errors** : " + str(e))
-        for teamz in all_fed:
+    for teamz in all_fed:
             try:
-                suces_s += 1
                 await borg.send_message(chnnl_grp, "/joinchat " + teamz.feds)
                 await borg.send_message(chnnl_grp, "/fban " + lol_s)
+                suces_s += 1
             except:
                 errors += 1
     await event.edit(
