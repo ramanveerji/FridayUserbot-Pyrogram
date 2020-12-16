@@ -63,12 +63,12 @@ async def _(event):
     except Exception as e:
         await event.edit("**Errors** : " + str(e))
     for teamz in all_fed:
-            try:
-                await borg.send_message(chnnl_grp, "/joinchat " + teamz.feds)
-                await borg.send_message(chnnl_grp, "/fban " + lol_s)
-                suces_s += 1
-            except:
-                errors += 1
+        try:
+            await borg.send_message(chnnl_grp, "/joinchat " + teamz.feds)
+            await borg.send_message(chnnl_grp, "/fban " + lol_s)
+            suces_s += 1
+        except:
+            errors += 1
     await event.edit(
         f"**Fban Completed** \nTotal Sucess : `{suces_s}` \nTotal Errors : `{errors}` \nTotal Fed Len : `{len_feds}`"
     )
