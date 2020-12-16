@@ -4,7 +4,6 @@ langdetect
 PyDictionary
 fontTools
 quote
-the_python_bay
 textblob
 antispaminc
 python-magic
