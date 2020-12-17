@@ -221,7 +221,9 @@ async def fetch_feds(event, borg):
             await event.edit("`Try again after 5 mins.`")
             return
         elif "make a file" in response.text:
-            await event.edit('`Boss, You Real Peru. You Are Admin in So Many Feds. WoW!`')
+            await event.edit(
+                "`Boss, You Real Peru. You Are Admin in So Many Feds. WoW!`"
+            )
             await asyncio.sleep(6)
             await response.click(0)
             await asyncio.sleep(6)
