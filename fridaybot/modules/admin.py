@@ -8,7 +8,14 @@ Userbot module to help you manage a group
 
 from asyncio import sleep
 from os import remove
+from asyncio import sleep
 
+from telethon import events
+from telethon.errors import ChatAdminRequiredError, UserAdminInvalidError
+from telethon.tl.functions.channels import EditBannedRequest
+from telethon.tl.types import ChatBannedRights
+
+from userbot.utils import admin_cmd
 from telethon.errors import (
     BadRequestError,
     ChatAdminRequiredError,
@@ -596,6 +603,58 @@ async def get_users(show):
         remove("userslist.txt")
 
 
+@borg.on(admin_cmd(pattern="zombies", allow_sudo=True))
+@borg.on(sudo_cmd(pattern="zombies", allow_sudo=True))
+async def rm_deletedacc(show):
+    con = show.pattern_match.group(1).lower()
+    del_u = 0
+    del_status = "`No deleted accounts found, Group is clean`"
+    if con != "clean":
+        await show.edit("`Searching for ghost/deleted/zombie accounts...`")
+        async for user in show.client.iter_participants(show.chat_id):
+
+            if user.deleted:
+                del_u += 1
+                await sleep(1)
+        if del_u > 0:
+            del_status = f"`Found` **{del_u}** `ghost/deleted/zombie account(s) in this group,\
+            \nclean them by using .zombies clean`"
+
+        await show.edit(del_status)
+        return
+    chat = await show.get_chat()
+    admin = chat.admin_rights
+    creator = chat.creator
+    if not admin and not creator:
+        await show.edit("`I am not an admin here!`")
+        return
+    await show.edit("`Deleting deleted accounts...\nOh I can do that?!?!`")
+    del_u = 0
+    del_a = 0
+    async for user in show.client.iter_participants(show.chat_id):
+        if user.deleted:
+            try:
+                await show.client(
+                    EditBannedRequest(show.chat_id, user.id, BANNED_RIGHTS)
+                )
+            except ChatAdminRequiredError:
+                await show.edit("`I don't have ban rights in this group`")
+                return
+            except UserAdminInvalidError:
+                del_u -= 1
+                del_a += 1
+            await show.client(EditBannedRequest(show.chat_id, user.id, UNBAN_RIGHTS))
+            del_u += 1
+    if del_u > 0:
+        del_status = f"Cleaned **{del_u}** deleted account(s)"
+    if del_a > 0:
+        del_status = f"Cleaned **{del_u}** deleted account(s) \
+        \n**{del_a}** deleted admin accounts are not removed"
+
+    await show.edit(del_status)
+    await sleep(2)
+    await show.delete()
+    
 async def get_user_from_event(event):
     """ Get the user from argument or replied message. """
     args = event.pattern_match.group(1).split(" ", 1)
