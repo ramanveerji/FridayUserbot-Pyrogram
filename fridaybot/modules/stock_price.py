@@ -35,3 +35,17 @@ async def _(event):
             )
     except AssertionError:
         await event.edit("There Is No Such Ticker.")
+
+
+
+
+
+CMD_HELP.update(
+    {
+        "Stock_Price": "**Stock Price**\
+\n\n**Syntax : **`.liveprice <Share Ticker>`\
+\n**Usage :** Shows Live Price Of Given Shares.\
+\n\n**Example : **`.liveprice tsla`\
+\nThis above syntax shows Tesla's share price in USD."
+    }
+)
