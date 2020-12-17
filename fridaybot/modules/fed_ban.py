@@ -33,7 +33,7 @@ async def _(event):
                     yeslol += 1
             except:
                 pass
-        await event.edit(f"Added {yeslol} Feds To DB, Failed To Add {nolol} Feds.")
+        await event.edit(f"`Added {yeslol} Feds To DB, Failed To Add {nolol} Feds.`")
     elif is_fed_indb(lol_s):
         await event.edit("`Fed Already Found On DataBase.`")
         return
