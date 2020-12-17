@@ -26,7 +26,7 @@ async def _(event):
         hmm = await fetch_feds(event, borg)
         for i in hmm:
             try:
-                is_fed_indb(lol_s):
+                if is_fed_indb(lol_s):
                     nolol += 1
                 elif not is_fed_indb(lol_s):
                     add_fed(i)
