@@ -56,6 +56,7 @@ async def _m(event):
 @bot.on(events.NewMessage)
 async def lul(event):
     lsb = event.chat_id
+    id_s = event.chat_id
     if is_data_indb(event.chat_id):
         try:
             await borg.send_file(event.chat_id, is_data_indb(event.chat_id))
