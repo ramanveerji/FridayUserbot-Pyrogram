@@ -67,10 +67,13 @@ async def _(event):
 @friday.on(friday_on_cmd(pattern="fban ?(.*)"))
 async def _(event):
     lol_s = event.pattern_match.group(1)
+    if lol_s == None:
+        await event.edit('`No user Found To Fban.`')
+        return
     all_fed = get_all_feds()
     errors = 0
     len_feds = len(all_fed)
-    if len_feds == 0:
+    elif len_feds == 0:
         await event.edit("`No Fed IN DB, Add One To Do So.`")
         return
     await event.edit(f"`FBanning in {len_feds} Feds.`")
@@ -94,6 +97,9 @@ async def _(event):
 @friday.on(friday_on_cmd(pattern="unfban ?(.*)"))
 async def _(event):
     lol_s = event.pattern_match.group(1)
+    if lol_s == None:
+        await event.edit('`No user Found To Fban.`')
+        return
     all_fed = get_all_feds()
     errors = 0
     len_feds = len(all_fed)
