@@ -73,7 +73,7 @@ async def _(event):
     all_fed = get_all_feds()
     errors = 0
     len_feds = len(all_fed)
-    elif len_feds == 0:
+    if len_feds == 0:
         await event.edit("`No Fed IN DB, Add One To Do So.`")
         return
     await event.edit(f"`FBanning in {len_feds} Feds.`")
