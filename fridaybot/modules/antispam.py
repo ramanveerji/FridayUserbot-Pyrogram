@@ -30,12 +30,12 @@ async def ok(event):
         else:
             pass
 
-        
+
 @borg.on(ChatAction)
 async def dnamg(event):
     okbruh = await borg.get_me()
     if event.user_added == okbruh.id:
-        lolid = event.chat_id
+        event.chat_id
         lolll = await event.get_added_by()
         added_bys = lolll.id
         lolchat = await event.get_chat()
@@ -46,9 +46,13 @@ async def dnamg(event):
             is_pvt = True
             lmao_info = lolchat.id
         try:
-            await event.reply('**Wait, How Dare You Add Me To This Group, Without My Permission, Never Mind You Are Gonna Get Reported Lol !**')
+            await event.reply(
+                "**Wait, How Dare You Add Me To This Group, Without My Permission, Never Mind You Are Gonna Get Reported Lol !**"
+            )
         except:
             return
         await borg.kick_participant(event.chat_id, okbruh.id)
-        await borg.send_message(Config.PRIVATE_GROUP_ID, f"**WARNING - SPAM ADDING** \nUSER : `{added_bys}` \nCHAT : `{lmao_info}` \nGROUP PRIVATE : `{is_pvt}` \n**You May Report This At @SpamWatch Or @AntispamINC.**")
-        
+        await borg.send_message(
+            Config.PRIVATE_GROUP_ID,
+            f"**WARNING - SPAM ADDING** \nUSER : `{added_bys}` \nCHAT : `{lmao_info}` \nGROUP PRIVATE : `{is_pvt}` \n**You May Report This At @SpamWatch Or @AntispamINC.**",
+        )
