@@ -1,12 +1,14 @@
-from sqlalchemy import Column, String, UnicodeText, Boolean
+from sqlalchemy import Boolean, Column, String, UnicodeText
+
 from fridaybot.modules.sql_helper import BASE, SESSION
+
 
 class Pa(BASE):
     __tablename__ = "pa"
     chat_id = Column(String(14), primary_key=True)
     textto_append = Column(UnicodeText)
     append_foot = Column(Boolean, default=False)
-    
+
     def __init__(self, chat_id, textto_append, append_foot):
         self.chat_id = chat_id
         self.append_foot = append_foot
