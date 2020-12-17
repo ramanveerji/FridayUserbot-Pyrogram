@@ -30,10 +30,9 @@ from telethon.tl.types import (
     MessageEntityMentionName,
     MessageMediaPhoto,
 )
-from fridaybot.utils import admin_cmd, sudo_cmd
 
 from fridaybot import BOTLOG, BOTLOG_CHATID, CMD_HELP
-from fridaybot.utils import admin_cmd, errors_handler
+from fridaybot.utils import admin_cmd, errors_handler, sudo_cmd
 
 # =================== CONSTANT ===================
 PP_TOO_SMOL = "`The image is too small`"
