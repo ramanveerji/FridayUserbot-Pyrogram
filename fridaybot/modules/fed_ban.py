@@ -14,13 +14,13 @@ chnnl_grp = Config.FBAN_GROUP
 async def _(event):
     nolol = 0
     yeslol = 0
-    await event.edit('`Processing..`')
+    await event.edit("`Processing..`")
     lol_s = event.pattern_match.group(1)
     if lol_s == None:
-        await event.edit('`Give FeD ID`')
+        await event.edit("`Give FeD ID`")
         return
-    elif lol_s == ' ':
-        await event.edit('`Give FeD ID`')
+    elif lol_s == " ":
+        await event.edit("`Give FeD ID`")
         return
     elif lol_s == "all":
         hmm = await fetch_feds(event, borg)
@@ -45,13 +45,13 @@ async def _(event):
 @friday.on(friday_on_cmd(pattern="frm ?(.*)"))
 async def _(event):
     lol_s = event.pattern_match.group(1)
-    await event.edit('`Processing..`')
+    await event.edit("`Processing..`")
     lol = get_all_feds()
     if lol_s == None:
-        await event.edit('`Give FeD ID`')
+        await event.edit("`Give FeD ID`")
         return
-    elif lol_s == ' ':
-        await event.edit('`Give FeD ID`')
+    elif lol_s == " ":
+        await event.edit("`Give FeD ID`")
         return
     elif lol_s == "all":
         for sedm in lol:
