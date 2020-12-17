@@ -73,7 +73,7 @@ async def _(event):
     if len_feds == 0:
         await event.edit("`No Fed IN DB, Add One To Do So.`")
         return
-    await event.edit(f"`Banning in {len_feds}.`")
+    await event.edit(f"`FBanning in {len_feds} Feds.`")
     try:
         await borg.send_message(chnnl_grp, "/start")
     except Exception as e:
