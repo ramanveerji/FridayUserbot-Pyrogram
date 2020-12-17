@@ -215,7 +215,7 @@ async def fetch_feds(event, borg):
         await bot_conv.send_message("/start")
         await bot_conv.send_message("/myfeds")
         await asyncio.sleep(3)
-        response = await bot_conv.get_response()
+        response = await bot_conv.get_response(timeout=300)
         await asyncio.sleep(3)
         if "You can only use fed commands once every 5 minutes" in response.text:
             await event.edit("`Try again after 5 mins.`")
