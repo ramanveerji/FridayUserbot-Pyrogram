@@ -227,7 +227,7 @@ async def hmm(event):
     else:
         await event.edit("Reply To Image")
         return
-    mon = "./resources/jail/jail.png"
+    mon = "./resources/jail/hmm.png"
     foreground = Image.open(mon).convert("RGBA")
 
     background = Image.open(img).convert("RGB")
