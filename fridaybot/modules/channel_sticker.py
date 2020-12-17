@@ -1,0 +1,39 @@
+from fridaybot.utils import admin_cmd
+from telethon.utils import pack_bot_file_id
+from fridaybot.modules.helper_sql.channel_sticker_sql import add_new_data_in_db, get_all_st_data, is_data_indb, remove_data
+sedpath = Config.TMP_DOWNLOAD_DIRECTORY
+if not os.path.isdir(sedpath):
+    os.makedirs(sedpath)
+
+@friday.on(admin_cmd(pattern='scs$'))
+async def _m(event):
+    await event.edit('`Processing..`')
+    id_s = event.chat_id
+    lmao = await event.get_reply_message()
+    if not lmao.sticker and lmao.sticker.mime_type == "image/webp":
+        await event.edit('`Only Sticker Allowded.`)
+        return
+    if is_data_indb(id_s):
+        await event.edit('`This Channel Sticker Data Is Already In Db, Remove First To Update it.`')
+        return
+    elif not is_data_indb(id_s):
+        bot_api_file_id = pack_bot_file_id(lmao.media)
+        add_new_data_in_db(id_s, bot_api_file_id)
+        await event.edit('`This Sticker Has Been Set As Channel Sticker For This Channel`')
+    
+@friday.on(admin_cmd(pattern='rcs$'))
+async def _m(event):
+    await event.edit('`Processing..`')
+    id_s = event.chat_id
+    if is_data_indb(id_s):
+        remove_data(id_s)
+        await event.edit(`Done !`')
+    elif not is_data_indb(id_s):
+        await event.edit('`You Need To Set Channel Sticker To Remove It`')
+        
+@bot.on(events.NewMessage)
+async def lul(event):
+    if is_data_indb(event.chat_id):
+        await borg.send_file(event.chat_id, is_data_indb(event.chat_id))
+    elif not is_data_indb(id_s):
+        return
