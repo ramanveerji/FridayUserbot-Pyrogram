@@ -40,8 +40,7 @@ def is_data_indb(chat_id: int):
 
 
 def remove_data(chat_id):
-    s__ = SESSION.query(Cst).get(str(chat_id))
-    saved_data = s__.chat_id, s__.sticker_token
-    if s__:
-        SESSION.delete(saved_data)
+    sed = SESSION.query(Cst).get(str(chat_id))
+    if sed:
+        SESSION.delete(sed)
         SESSION.commit()
