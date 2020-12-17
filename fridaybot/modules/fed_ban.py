@@ -26,9 +26,9 @@ async def _(event):
         hmm = await fetch_feds(event, borg)
         for i in hmm:
             try:
-                if is_fed_indb(lol_s):
+                if is_fed_indb(i):
                     nolol += 1
-                elif not is_fed_indb(lol_s):
+                elif not is_fed_indb(i):
                     add_fed(i)
                     yeslol += 1
             except:
@@ -81,8 +81,9 @@ async def _(event):
         return
     for teamz in all_fed:
         try:
-            await borg.send_message(chnnl_grp, "/joinchat " + teamz.feds)
+            await borg.send_message(chnnl_grp, "/joinfed " + teamz.feds)
             await borg.send_message(chnnl_grp, "/fban " + lol_s)
+            await asyncio.sleep(5)
         except:
             errors += 1
     await event.edit(
@@ -96,7 +97,7 @@ async def _(event):
     all_fed = get_all_feds()
     errors = 0
     len_feds = len(all_fed)
-    await event.edit(f"`UnFBanning in {len_feds}.`")
+    await event.edit(f"`UnFBanning in {len_feds} Feds.`")
     try:
         await borg.send_message(chnnl_grp, "/start")
     except Exception as e:
@@ -104,8 +105,8 @@ async def _(event):
         return
         for teamz in all_fed:
             try:
-                await borg.send_message(chnnl_grp, "/joinchat " + teamz.feds)
                 await borg.send_message(chnnl_grp, "/unfban " + lol_s)
+                await asyncio.sleep(5)
             except:
                 errors += 1
     await event.edit(
