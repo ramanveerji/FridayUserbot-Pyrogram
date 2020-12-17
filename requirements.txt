@@ -4,6 +4,7 @@ deep_translator
 langdetect
 cairosvg
 grapheme
+cryptosteganography
 QScintilla
 requests_html
 flask
