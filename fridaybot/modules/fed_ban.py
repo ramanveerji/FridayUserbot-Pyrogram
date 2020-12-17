@@ -39,7 +39,7 @@ async def _(event):
         return
     elif not is_fed_indb(lol_s):
         add_fed(lol_s)
-        await event.edit("`Done ! Added To Fed DataBase`")
+        await event.edit("`Done ! Added This Fed To DataBase`")
 
 
 @friday.on(friday_on_cmd(pattern="frm ?(.*)"))
@@ -59,7 +59,7 @@ async def _(event):
         await event.edit("`Done, Cleared. All Fed Database.")
     elif is_fed_indb(lol_s):
         rmfed(lol_s)
-        await event.edit("`Done !`")
+        await event.edit("`Done, Removed This FeD From DB`")
     elif not is_fed_indb(lol_s):
         await event.edit("`This Fed Not Found On Db.`")
 
