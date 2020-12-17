@@ -1,6 +1,5 @@
-from sqlalchemy import Column, String
-from sqlalchemy import Column, LargeBinary, Numeric, UnicodeText
 from sql import BASE, SESSION
+from sqlalchemy import Column, String, UnicodeText
 
 
 class Cst(BASE):
@@ -29,7 +28,7 @@ def get_all_st_data(chat_id: int):
     finally:
         SESSION.close()
 
-        
+
 def is_data_indb(chat_id: int):
     try:
         s__ = SESSION.query(Cst).get(str(chat_id))
@@ -37,7 +36,8 @@ def is_data_indb(chat_id: int):
             return s__.sticker_token
     finally:
         SESSION.close()
-        
+
+
 def remove_data(chat_id):
     s__ = SESSION.query(Cst).get(str(chat_id))
     saved_data = s__.chat_id, s__.sticker_token
