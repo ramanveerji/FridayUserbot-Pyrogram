@@ -23,7 +23,7 @@ def add_fed(feds):
 def rmfed(feds):
     rmfeddy = SESSION.query(Fed).get(feds)
     if rmfeddy:
-        SESSION.delete(remove)
+        SESSION.delete(rmfeddy)
         SESSION.commit()
 
 
