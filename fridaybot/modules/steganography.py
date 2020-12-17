@@ -1,22 +1,14 @@
 import os
-from shutil import rmtree
 
-import cv2
-import numpy as np
-import requests
-from PIL import Image, ImageDraw, ImageFont
-from telegraph import upload_file
-from telethon.tl.types import MessageMediaPhoto
-from fridaybot import CMD_HELP
-from fridaybot.function import convert_to_image, crop_vid, runcmd
-from fridaybot.utils import friday_on_cmd, sudo_cmd
 from cryptosteganography import CryptoSteganography
+from telethon.tl.types import MessageMediaPhoto
+
+from fridaybot import CMD_HELP
+from fridaybot.utils import friday_on_cmd, sudo_cmd
 
 sedpath = "./fridaydevs/"
 if not os.path.isdir(sedpath):
     os.makedirs(sedpath)
-
-
 
 
 @friday.on(friday_on_cmd(pattern=r"stegano ?(.*)"))
@@ -25,7 +17,7 @@ async def hmm(event):
     if not event.reply_to_msg_id:
         await event.reply("Reply to any Image.")
         return
-    hmmu = await event.edit("hmm... Hiding Text Inside Image...")
+    await event.edit("hmm... Hiding Text Inside Image...")
     sed = await event.get_reply_message()
     if isinstance(sed.media, MessageMediaPhoto):
         img = await borg.download_media(sed.media, sedpath)
@@ -38,16 +30,19 @@ async def hmm(event):
     if not text:
         await event.edit("No input found!  --__--")
         return
-    crypto_steganography = CryptoSteganography('hell')
-    crypto_steganography.hide(img, './fridaydevs/stegano.png', text)
+    crypto_steganography = CryptoSteganography("hell")
+    crypto_steganography.hide(img, "./fridaydevs/stegano.png", text)
     file_name = "stegano.png"
     ok = "./fridaydevs/" + file_name
-    await borg.send_file(event.chat_id, ok, force_document=True, allow_cache=False,)
+    await borg.send_file(
+        event.chat_id,
+        ok,
+        force_document=True,
+        allow_cache=False,
+    )
     for files in (ok, img):
         if files and os.path.exists(files):
             os.remove(files)
-
-
 
 
 @friday.on(friday_on_cmd(pattern=r"unstegano"))
@@ -56,7 +51,7 @@ async def hmm(event):
     if not event.reply_to_msg_id:
         await event.reply("Reply to any Image.")
         return
-    hmmu = await event.edit("hmm... Searching for Text Inside The Image...")
+    await event.edit("hmm... Searching for Text Inside The Image...")
     sed = await event.get_reply_message()
     if isinstance(sed.media, MessageMediaPhoto):
         img = await borg.download_media(sed.media, sedpath)
@@ -65,15 +60,15 @@ async def hmm(event):
     else:
         await event.edit("Reply To Image")
         return
-    crypto_steganography = CryptoSteganography('hell')
+    crypto_steganography = CryptoSteganography("hell")
     secret = crypto_steganography.retrieve(img)
 
-    
     await event.edit(
-      f"<b><u>Decrypted Text Successfully</b></u> \n<b>text</b>:-  <code>{secret}</code>", parse_mode="HTML",)
-  
-  
-  
+        f"<b><u>Decrypted Text Successfully</b></u> \n<b>text</b>:-  <code>{secret}</code>",
+        parse_mode="HTML",
+    )
+
+
 CMD_HELP.update(
     {
         "steganography": "**Steganography**\
