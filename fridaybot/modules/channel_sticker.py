@@ -1,11 +1,13 @@
+from telethon import events
 from telethon.utils import pack_bot_file_id
-from telethon import Button, custom, events, functions
+
 from fridaybot.modules.sql_helper.channel_sticker_sql import (
     add_new_data_in_db,
     is_data_indb,
     remove_data,
 )
 from fridaybot.utils import admin_cmd
+
 
 @friday.on(admin_cmd(pattern="scs$"))
 async def _m(event):
