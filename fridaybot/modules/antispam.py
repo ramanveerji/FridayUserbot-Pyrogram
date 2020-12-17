@@ -50,7 +50,7 @@ async def dnamg(event):
                 "**Wait, How Dare You Add Me To This Group, Without My Permission, Never Mind You Are Gonna Get Reported Lol !**"
             )
         except:
-            return
+            pass
         await borg.kick_participant(event.chat_id, okbruh.id)
         await borg.send_message(
             Config.PRIVATE_GROUP_ID,
