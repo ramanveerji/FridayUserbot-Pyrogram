@@ -37,9 +37,6 @@ async def _(event):
         await event.edit("There Is No Such Ticker.")
 
 
-
-
-
 CMD_HELP.update(
     {
         "Stock_Price": "**Stock Price**\
