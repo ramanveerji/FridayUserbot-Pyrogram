@@ -14,6 +14,12 @@ async def _m(event):
     await event.edit("`Processing..`")
     id_s = event.chat_id
     lmao = await event.get_reply_message()
+    if event.is_group:
+        await event.edit("`No, LoL You Can't Set Channel Stickers In Groups, lol`")
+        return
+    if event.is_private:
+        await event.edit("`No, LoL You Can't Set Channel Stickers In Private Chats, lol`")
+        return
     if not lmao.sticker and lmao.sticker.mime_type == "image/webp":
         await event.edit("`Only Sticker Allowded.`")
         return
@@ -36,7 +42,7 @@ async def _m(event):
     id_s = event.chat_id
     if is_data_indb(id_s):
         remove_data(id_s)
-        await event.edit("`Done !`")
+        await event.edit("`Done, I have Removed This Channel From DB`")
     elif not is_data_indb(id_s):
         await event.edit("`You Need To Set Channel Sticker To Remove It`")
 
