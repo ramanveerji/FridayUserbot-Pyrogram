@@ -1,4 +1,4 @@
-from sql import BASE, SESSION
+from fridaybot.modules.sql_helper import BASE, SESSION
 from sqlalchemy import Column, String, UnicodeText
 
 
