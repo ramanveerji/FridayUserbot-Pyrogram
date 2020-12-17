@@ -44,6 +44,6 @@ def is_data_indbs(chat_id: int):
 def remove_datas(chat_id):
     s__ = SESSION.query(Pa).get(str(chat_id))
     saved_data = s__.chat_id, s__.append_foot, s__.textto_append
-    if saved_data:
+    if s__:
         SESSION.delete(saved_data)
         SESSION.commit()
