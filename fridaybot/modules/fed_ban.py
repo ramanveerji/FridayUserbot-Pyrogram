@@ -14,15 +14,25 @@ chnnl_grp = Config.FBAN_GROUP
 async def _(event):
     nolol = 0
     yeslol = 0
+    await event.edit('`Processing..`')
     lol_s = event.pattern_match.group(1)
-    if lol_s == "all":
+    if lol_s == None:
+        await event.edit('`Give FeD ID`')
+        return
+    elif lol_s == ' ':
+        await event.edit('`Give FeD ID`')
+        return
+    elif lol_s == "all":
         hmm = await fetch_feds(event, borg)
         for i in hmm:
             try:
-                yeslol += 1
-                add_fed(i)
+                is_fed_indb(lol_s):
+                    nolol += 1
+                elif not is_fed_indb(lol_s):
+                    add_fed(i)
+                    yeslol += 1
             except:
-                nolol += 1
+                pass
         await event.edit(f"Added {yeslol} Feds To DB, Failed To Add {nolol} Feds.")
     elif is_fed_indb(lol_s):
         await event.edit("`Fed Already Found On DataBase.`")
@@ -35,8 +45,15 @@ async def _(event):
 @friday.on(friday_on_cmd(pattern="frm ?(.*)"))
 async def _(event):
     lol_s = event.pattern_match.group(1)
-    if lol_s == "all":
-        lol = get_all_feds()
+    await event.edit('`Processing..`')
+    lol = get_all_feds()
+    if lol_s == None:
+        await event.edit('`Give FeD ID`')
+        return
+    elif lol_s == ' ':
+        await event.edit('`Give FeD ID`')
+        return
+    elif lol_s == "all":
         for sedm in lol:
             rmfed(sedm.feds)
         await event.edit("`Done, Cleared. All Fed Database.")
@@ -52,7 +69,6 @@ async def _(event):
     lol_s = event.pattern_match.group(1)
     all_fed = get_all_feds()
     errors = 0
-    suces_s = 0
     len_feds = len(all_fed)
     if len_feds == 0:
         await event.edit("`No Fed IN DB, Add One To Do So.`")
@@ -62,15 +78,15 @@ async def _(event):
         await borg.send_message(chnnl_grp, "/start")
     except Exception as e:
         await event.edit("**Errors** : " + str(e))
+        return
     for teamz in all_fed:
         try:
             await borg.send_message(chnnl_grp, "/joinchat " + teamz.feds)
             await borg.send_message(chnnl_grp, "/fban " + lol_s)
-            suces_s += 1
         except:
             errors += 1
     await event.edit(
-        f"**Fban Completed** \nTotal Sucess : `{suces_s}` \nTotal Errors : `{errors}` \nTotal Fed Len : `{len_feds}`"
+        f"**Fban Completed** \nTotal Sucess : `{errors - len_feds}` \nTotal Errors : `{errors}` \nTotal Fed Len : `{len_feds}`"
     )
 
 
@@ -79,20 +95,19 @@ async def _(event):
     lol_s = event.match_pattern.group(1)
     all_fed = get_all_feds()
     errors = 0
-    suces_s = 0
     len_feds = len(all_fed)
     await event.edit(f"`UnFBanning in {len_feds}.`")
     try:
         await borg.send_message(chnnl_grp, "/start")
     except Exception as e:
         await event.edit("**Errors** : " + str(e))
+        return
         for teamz in all_fed:
             try:
-                suces_s += 1
                 await borg.send_message(chnnl_grp, "/joinchat " + teamz.feds)
                 await borg.send_message(chnnl_grp, "/unfban " + lol_s)
             except:
                 errors += 1
     await event.edit(
-        f"**Un-Fban Completed** \nTotal Sucess : `{suces_s}` \nTotal Errors : `{errors}` \nTotal Fed Len : `{len_feds}`"
+        f"**Un-Fban Completed** \nTotal Sucess : `{errors - len_feds}` \nTotal Errors : `{errors}` \nTotal Fed Len : `{len_feds}`"
     )
