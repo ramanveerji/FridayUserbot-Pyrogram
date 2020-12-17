@@ -18,6 +18,7 @@ import re
 
 from telethon import Button, custom, events
 from telethon.tl.functions.users import GetFullUserRequest
+from telethon.utils import pack_bot_file_id
 
 from fridaybot import bot
 from fridaybot.Configs import Config
@@ -32,7 +33,7 @@ from fridaybot.modules.sql_helper.idadder_sql import (
     already_added,
     get_all_users,
 )
-from telethon.utils import pack_bot_file_id
+
 
 @assistant_cmd("start", is_args=False)
 async def start(event):
@@ -152,21 +153,21 @@ async def sed(event):
     if event.sender_id != bot.uid:
         return
     elif event.raw_text.startswith("/"):
-            return
+        return
     elif event.text is not None and event.media:
         bot_api_file_id = pack_bot_file_id(event.media)
         await tgbot.send_file(
-                user_id,
-                file=bot_api_file_id,
-                caption=event.text,
-                reply_to=reply_message_id,
+            user_id,
+            file=bot_api_file_id,
+            caption=event.text,
+            reply_to=reply_message_id,
         )
     else:
         msg_s = event.raw_text
         await tgbot.send_message(
-                user_id,
-                msg_s,
-                reply_to=reply_message_id,
+            user_id,
+            msg_s,
+            reply_to=reply_message_id,
         )
 
 
