@@ -1,6 +1,6 @@
 from telethon.utils import pack_bot_file_id
 
-from fridaybot.modules.helper_sql.channel_sticker_sql import (
+from fridaybot.modules.sql_helper.channel_sticker_sql import (
     add_new_data_in_db,
     is_data_indb,
     remove_data,
