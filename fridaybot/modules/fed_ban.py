@@ -93,7 +93,7 @@ async def _(event):
 
 @friday.on(friday_on_cmd(pattern="unfban ?(.*)"))
 async def _(event):
-    lol_s = event.match_pattern.group(1)
+    lol_s = event.pattern_match.group(1)
     all_fed = get_all_feds()
     errors = 0
     len_feds = len(all_fed)
