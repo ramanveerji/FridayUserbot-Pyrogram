@@ -246,6 +246,7 @@ def paginate_help(page_number, loaded_modules, prefix):
 
 @tgbot.on(events.InlineQuery(pattern=r"torrent (.*)"))
 async def inline_id_handler(event: events.InlineQuery.Event):
+    builder = event.builder
     if event.query.user_id != bot.uid:
         resultm = builder.article(
             title="Not Allowded",
@@ -253,7 +254,6 @@ async def inline_id_handler(event: events.InlineQuery.Event):
         )
         await event.answer([resultm])
         return
-    builder = event.builder
     testinput = event.pattern_match.group(1)
     starkisnub = urllib.parse.quote_plus(testinput)
     results = []
@@ -327,6 +327,7 @@ async def inline_id_handler(event: events.InlineQuery.Event):
 
 @tgbot.on(events.InlineQuery(pattern=r"yt (.*)"))
 async def inline_id_handler(event: events.InlineQuery.Event):
+    builder = event.builder
     if event.query.user_id != bot.uid:
         resultm = builder.article(
             title="Not Allowded",
@@ -334,7 +335,6 @@ async def inline_id_handler(event: events.InlineQuery.Event):
         )
         await event.answer([resultm])
         return
-    builder = event.builder
     testinput = event.pattern_match.group(1)
     urllib.parse.quote_plus(testinput)
     results = []
@@ -377,6 +377,7 @@ async def inline_id_handler(event: events.InlineQuery.Event):
 
 @tgbot.on(events.InlineQuery(pattern=r"jm (.*)"))
 async def inline_id_handler(event: events.InlineQuery.Event):
+    builder = event.builder
     if event.query.user_id != bot.uid:
         resultm = builder.article(
             title="Not Allowded",
@@ -384,7 +385,6 @@ async def inline_id_handler(event: events.InlineQuery.Event):
         )
         await event.answer([resultm])
         return
-    event.builder
     testinput = event.pattern_match.group(1)
     starkisnub = urllib.parse.quote_plus(testinput)
     results = []
@@ -421,6 +421,7 @@ async def inline_id_handler(event: events.InlineQuery.Event):
 
 @tgbot.on(events.InlineQuery)  # pylint:disable=E0602
 async def inline_handler(event):
+    builder = event.builder
     if event.query.user_id != bot.uid:
         resultm = builder.article(
             title="Not Allowded",
@@ -428,7 +429,6 @@ async def inline_handler(event):
         )
         await event.answer([resultm])
         return
-    builder = event.builder
     query = event.text
     replied_user = await tgbot.get_me()
     firstname = replied_user.username
