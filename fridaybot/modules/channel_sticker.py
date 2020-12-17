@@ -27,7 +27,7 @@ async def _m(event):
     id_s = event.chat_id
     if is_data_indb(id_s):
         remove_data(id_s)
-        await event.edit(`Done !`')
+        await event.edit('`Done !`')
     elif not is_data_indb(id_s):
         await event.edit('`You Need To Set Channel Sticker To Remove It`')
                          
