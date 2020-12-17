@@ -11,7 +11,7 @@ async def _m(event):
     id_s = event.chat_id
     lmao = await event.get_reply_message()
     if not lmao.sticker and lmao.sticker.mime_type == "image/webp":
-        await event.edit('`Only Sticker Allowded.`)
+        await event.edit('`Only Sticker Allowded.`')
         return
     if is_data_indb(id_s):
         await event.edit('`This Channel Sticker Data Is Already In Db, Remove First To Update it.`')
@@ -30,10 +30,24 @@ async def _m(event):
         await event.edit(`Done !`')
     elif not is_data_indb(id_s):
         await event.edit('`You Need To Set Channel Sticker To Remove It`')
+                         
+@friday.on(admin_cmd(pattern='ccs$'))
+async def _m(event):
+    await event.edit('`Processing..`')
+    id_s = event.chat_id
+    if is_data_indb(id_s):
+        await event.edit(f'Yes, Channel Sticker Has Been Set. Sticker ID : {is_data_indb(id_s)}')
+    elif not is_data_indb(id_s):
+        await event.edit('`No Channel Sticker Set For This Channel.`')
         
 @bot.on(events.NewMessage)
 async def lul(event):
+    lsb = event.chat_id
     if is_data_indb(event.chat_id):
-        await borg.send_file(event.chat_id, is_data_indb(event.chat_id))
+        try:
+            await borg.send_file(event.chat_id, is_data_indb(event.chat_id))
+        except:
+            await borg.send_message(Config.PRIVATE_GROUP_ID, f'Failed, To Send Sticker in {lsb}')
+            return
     elif not is_data_indb(id_s):
         return
