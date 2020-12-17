@@ -207,16 +207,20 @@ async def take_screen_shot(
     return thumb_image_path if os.path.exists(thumb_image_path) else None
 
 
-# Thanks To @HeisenbergTheDanger, @its_xditya
+# Thanks To @HeisenbergTheDanger, @xditya
 async def fetch_feds(event, borg):
     fedList = []
+    await event.edit('`Getting Your FeD List`')
     async with borg.conversation("@MissRose_bot") as bot_conv:
         await bot_conv.send_message("/start")
         await bot_conv.send_message("/myfeds")
         await asyncio.sleep(3)
         response = await bot_conv.get_response()
         await asyncio.sleep(3)
-        if "make a file" in response.text:
+        if "You can only use fed commands once every 5 minutes" in response.text:
+            await event.edit("`Try again after 5 mins.`")
+            return
+        elif "make a file" in response.text:
             await asyncio.sleep(6)
             await response.click(0)
             await asyncio.sleep(6)
@@ -232,6 +236,8 @@ async def fetch_feds(event, borg):
                         fedList.append(line[:36])
                     except BaseException:
                         pass
+                # CleanUp
+                os.remove(downloaded_file_name)
         else:
             In = False
             tempFedId = ""
@@ -246,4 +252,5 @@ async def fetch_feds(event, borg):
 
                 elif In:
                     tempFedId += x
+    await event.edit('`FeD List Fetched SucessFully`')
     return fedList
