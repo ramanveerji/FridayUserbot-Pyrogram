@@ -7,10 +7,6 @@ from fridaybot.modules.sql_helper.channel_sticker_sql import (
 )
 from fridaybot.utils import admin_cmd
 
-sedpath = Config.TMP_DOWNLOAD_DIRECTORY
-if not os.path.isdir(sedpath):
-    os.makedirs(sedpath)
-
 
 @friday.on(admin_cmd(pattern="scs$"))
 async def _m(event):
