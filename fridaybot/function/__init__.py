@@ -210,7 +210,7 @@ async def take_screen_shot(
 # Thanks To @HeisenbergTheDanger, @xditya
 async def fetch_feds(event, borg):
     fedList = []
-    await event.edit('`Getting Your FeD List`')
+    await event.edit("`Getting Your FeD List`")
     async with borg.conversation("@MissRose_bot") as bot_conv:
         await bot_conv.send_message("/start")
         await bot_conv.send_message("/myfeds")
@@ -252,5 +252,5 @@ async def fetch_feds(event, borg):
 
                 elif In:
                     tempFedId += x
-    await event.edit('`FeD List Fetched SucessFully`')
+    await event.edit("`FeD List Fetched SucessFully`")
     return fedList
