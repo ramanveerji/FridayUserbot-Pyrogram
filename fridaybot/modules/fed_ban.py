@@ -68,7 +68,7 @@ async def _(event):
 async def _(event):
     lol_s = event.pattern_match.group(1)
     if lol_s == None:
-        await event.edit('`No user Found To Fban.`')
+        await event.edit("`No user Found To Fban.`")
         return
     all_fed = get_all_feds()
     errors = 0
@@ -98,7 +98,7 @@ async def _(event):
 async def _(event):
     lol_s = event.pattern_match.group(1)
     if lol_s == None:
-        await event.edit('`No user Found To Fban.`')
+        await event.edit("`No user Found To Fban.`")
         return
     all_fed = get_all_feds()
     errors = 0

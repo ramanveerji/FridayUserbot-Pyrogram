@@ -8,14 +8,7 @@ Userbot module to help you manage a group
 
 from asyncio import sleep
 from os import remove
-from asyncio import sleep
 
-from telethon import events
-from telethon.errors import ChatAdminRequiredError, UserAdminInvalidError
-from telethon.tl.functions.channels import EditBannedRequest
-from telethon.tl.types import ChatBannedRights
-
-from userbot.utils import admin_cmd
 from telethon.errors import (
     BadRequestError,
     ChatAdminRequiredError,
@@ -37,6 +30,7 @@ from telethon.tl.types import (
     MessageEntityMentionName,
     MessageMediaPhoto,
 )
+from userbot.utils import admin_cmd
 
 from fridaybot import BOTLOG, BOTLOG_CHATID, CMD_HELP
 from fridaybot.utils import admin_cmd, errors_handler
@@ -441,6 +435,7 @@ async def unmoot(unmot):
                 f"CHAT: {unmot.chat.title}(`{unmot.chat_id}`)",
             )
 
+
 # @register(outgoing=True, pattern="^.adminlist$")
 @borg.on(admin_cmd(pattern=r"adminlist"))
 @errors_handler
@@ -654,7 +649,8 @@ async def rm_deletedacc(show):
     await show.edit(del_status)
     await sleep(2)
     await show.delete()
-    
+
+
 async def get_user_from_event(event):
     """ Get the user from argument or replied message. """
     args = event.pattern_match.group(1).split(" ", 1)
