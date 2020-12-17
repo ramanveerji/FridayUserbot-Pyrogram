@@ -416,7 +416,9 @@ async def spinshit(message):
     if os.path.exists(output_vid):
         round_vid = os.path.join(path, "out_round.mp4")
         await crop_vid(output_vid, round_vid)
-        await borg.send_file(message.chat_id, round_vid, video_note=True, reply_to=reply.id)
+        await borg.send_file(
+            message.chat_id, round_vid, video_note=True, reply_to=reply.id
+        )
         await message.delete()
     os.remove(pic_loc)
     rmtree(path, ignore_errors=True)
