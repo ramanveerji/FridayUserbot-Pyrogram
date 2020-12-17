@@ -19,7 +19,7 @@ Pa.__table__.create(checkfirst=True)
 
 
 def add_new_datas_in_db(chat_id: int, textto_append, append_foot):
-    setting_adder = Cst(str(chat_id), textto_append, append_foot)
+    setting_adder = Pa(str(chat_id), textto_append, append_foot)
     SESSION.add(setting_adder)
     SESSION.commit()
 
