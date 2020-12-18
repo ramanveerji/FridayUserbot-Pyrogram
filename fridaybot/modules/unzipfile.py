@@ -4,7 +4,6 @@ code rewritten my SnapDragon7410
 """
 
 import os
-import time
 import zipfile
 from datetime import datetime
 
@@ -13,15 +12,13 @@ from hachoir.parser import createParser
 from telethon.tl.types import DocumentAttributeVideo
 
 from fridaybot import CMD_HELP
-from fridaybot.function import progress, humanbytes, time_formatter
+from fridaybot.function import progress
 from fridaybot.utils import friday_on_cmd
 
 thumb_image_path = Config.TMP_DOWNLOAD_DIRECTORY + "/thumb_image.jpg"
 extracted = Config.TMP_DOWNLOAD_DIRECTORY + "extracted/"
 if not os.path.isdir(extracted):
     os.makedirs(extracted)
-
-
 
 
 @friday.on(friday_on_cmd(pattern="unzip"))
@@ -32,10 +29,10 @@ async def _(event):
     if not os.path.isdir(Config.TMP_DOWNLOAD_DIRECTORY):
         os.makedirs(Config.TMP_DOWNLOAD_DIRECTORY)
     if event.reply_to_msg_id:
-        start = datetime.now()
+        datetime.now()
         reply_message = await event.get_reply_message()
-        if reply_message.media.document.mime_type != 'application/zip':
-            await mone.edit('`Please Reply To Zip, To Unzip It.`')
+        if reply_message.media.document.mime_type != "application/zip":
+            await mone.edit("`Please Reply To Zip, To Unzip It.`")
             return
         try:
             downloaded_file_name = await borg.download_media(
@@ -48,9 +45,7 @@ async def _(event):
         except Exception as e:  # pylint:disable=C0103,W0703
             await mone.edit(str(e))
         else:
-            await mone.edit(
-                "Stored the zip to `{}`.".format(downloaded_file_name)
-            )
+            await mone.edit("Stored the zip to `{}`.".format(downloaded_file_name))
         with zipfile.ZipFile(downloaded_file_name, "r") as zip_ref:
             zip_ref.extractall(extracted)
         filename = sorted(get_lst_of_files(extracted, []))
@@ -105,7 +100,7 @@ async def _(event):
                     )
                     # some media were having some issues
                     continue
-                await event.edit('`Unzipped SucessFully By @FridayOT.`')
+                await event.edit("`Unzipped SucessFully By @FridayOT.`")
                 os.remove(single_file)
         os.remove(downloaded_file_name)
 
