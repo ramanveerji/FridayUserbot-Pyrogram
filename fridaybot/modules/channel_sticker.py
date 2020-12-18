@@ -27,14 +27,14 @@ async def _m(event):
         return
     if is_data_indb(id_s):
         await event.edit(
-            "`This Channel Sticker Data Is Already In Db, Remove First To Update it. This is Current Sticker 👇🏿`"
+            "`This Channel Sticker Data Is Already In Db, Remove First To Update it.`"
         )
         return
     elif not is_data_indb(id_s):
         bot_api_file_id = pack_bot_file_id(lmao.media)
         add_new_data_in_db(id_s, bot_api_file_id)
         await event.edit(
-            "`👇🏿 This Sticker Has Been Set As Channel Sticker For This Channel 👇🏿`"
+            "`This Sticker Has Been Set As Channel Sticker For This Channel`"
         )
 
 
@@ -55,7 +55,7 @@ async def _m(event):
     id_s = event.chat_id
     if is_data_indb(id_s):
         await event.edit(
-            f"Yes, Channel Sticker Has Been Set. Sticker ID : {is_data_indb(id_s)}"
+            f"**Yes, Channel Sticker Has Been Set. Sticker ID :** `{is_data_indb(id_s)}`"
         )
     elif not is_data_indb(id_s):
         await event.edit("`No Channel Sticker Set For This Channel.`")
@@ -65,14 +65,14 @@ async def _m(event):
 async def lul(event):
     lsb = event.chat_id
     id_s = event.chat_id
-    if event.text.startswith("."):
+    if event.text.startswith(".", "'", "!", ",", "/"):
         return
     if is_data_indb(event.chat_id):
         try:
             await borg.send_file(event.chat_id, is_data_indb(event.chat_id))
         except:
             await borg.send_message(
-                Config.PRIVATE_GROUP_ID, f"Failed, To Send Sticker in {lsb}"
+                Config.PRIVATE_GROUP_ID, f"Failed, To Send Sticker in {lsb}, Probably Due To No Access, Or Channel Not Found."
             )
             return
     elif not is_data_indb(id_s):
