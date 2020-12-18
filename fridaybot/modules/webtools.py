@@ -6,7 +6,6 @@ from selenium import webdriver
 from youtube_search import YoutubeSearch
 
 from fridaybot import CMD_HELP
-from fridaybot.function import get_lang, search_sub
 from fridaybot.utils import edit_or_reply, friday_on_cmd, sudo_cmd
 
 
