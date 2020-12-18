@@ -13,12 +13,15 @@ from hachoir.parser import createParser
 from telethon.tl.types import DocumentAttributeVideo
 
 from fridaybot import CMD_HELP
+from fridaybot.function import progress, humanbytes, time_formatter
 from fridaybot.utils import friday_on_cmd
 
 thumb_image_path = Config.TMP_DOWNLOAD_DIRECTORY + "/thumb_image.jpg"
 extracted = Config.TMP_DOWNLOAD_DIRECTORY + "extracted/"
 if not os.path.isdir(extracted):
     os.makedirs(extracted)
+
+
 
 
 @friday.on(friday_on_cmd(pattern="unzip"))
@@ -31,26 +34,28 @@ async def _(event):
     if event.reply_to_msg_id:
         start = datetime.now()
         reply_message = await event.get_reply_message()
+        if reply_message.media.document.mime_type != 'application/zip':
+            await mone.edit('`Please Reply To Zip, To Unzip It.`')
+            return
         try:
-            time.time()
             downloaded_file_name = await borg.download_media(
-                reply_message,
+                reply_message.media,
                 Config.TMP_DOWNLOAD_DIRECTORY,
+                progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
+                    progress(d, t, event, c_time, "**Downloading This Zip.**")
+                ),
             )
         except Exception as e:  # pylint:disable=C0103,W0703
             await mone.edit(str(e))
         else:
-            end = datetime.now()
-            ms = (end - start).seconds
             await mone.edit(
-                "Stored the zip to `{}` in {} seconds.".format(downloaded_file_name, ms)
+                "Stored the zip to `{}`.".format(downloaded_file_name)
             )
-
         with zipfile.ZipFile(downloaded_file_name, "r") as zip_ref:
             zip_ref.extractall(extracted)
         filename = sorted(get_lst_of_files(extracted, []))
         # filename = filename + "/"
-        await event.edit("Unzipping now")
+        await event.edit("`Unzipping now.`")
         # r=root, d=directories, f = files
         for single_file in filename:
             if os.path.exists(single_file):
@@ -85,15 +90,12 @@ async def _(event):
                     await borg.send_file(
                         event.chat_id,
                         single_file,
-                        caption=f"UnZipped `{caption_rts}`",
+                        caption=f"**Current Unzip File Name :** `{caption_rts}` \n**Orginal file Path** : `{downloaded_file_name}`",
                         force_document=force_document,
                         supports_streaming=supports_streaming,
                         allow_cache=False,
                         reply_to=event.message.id,
                         attributes=document_attributes,
-                        # progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
-                        #     progress(d, t, event, c_time, "trying to upload")
-                        # )
                     )
                 except Exception as e:
                     await borg.send_message(
@@ -103,6 +105,7 @@ async def _(event):
                     )
                     # some media were having some issues
                     continue
+                await event.edit('`Unzipped SucessFully By @FridayOT.`')
                 os.remove(single_file)
         os.remove(downloaded_file_name)
 
