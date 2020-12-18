@@ -137,6 +137,7 @@ async def gibinfo(event):
         user = (
             (await event.get_reply_message()).sender if event.is_reply else event.sender
         )
+        lolu = await event.client(GetFullUserRequest(user.id))
     else:
         try:
             lolu = await event.client(GetFullUserRequest(event.pattern_match.group(1)))
