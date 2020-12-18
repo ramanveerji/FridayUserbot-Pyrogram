@@ -62,3 +62,19 @@ async def _(event):
         f"<b><u>Below Are Your Movie Recommendations</b></u>\n\n<b>Your Emotion:- <code>{input_str}</code>\n<b>Recommended Movie List:- </b><code>{sed}</code>",
         parse_mode="HTML",
     )
+
+
+
+
+
+CMD_HELP.update(
+    {
+        "movie_recommendation": "**Movie Recommender**\
+\n\n**Syntax : **`.rmovie <emotion>`\
+\n**Usage :** Recommends Movies According To Your Emotion.\
+\n\n**Example : **`.rmovie Sad`\
+\nThis above syntax shows recommended mobies for a sad person.\
+\n\n**Note : ** Emotions are case sensitive.\
+\n\n\n**Available Emotions : ** `Sad`\n`Trust`\n`Fear`\n`Enjoyment`"
+    }
+)
