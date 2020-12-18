@@ -33,7 +33,7 @@ async def starkmeme(event):
         return
     mryeast = await event.edit("Making Memes Until Praise MrBeast.")
     await event.get_reply_message()
-    seds = await convert_to_image(message, borg)
+    seds = await convert_to_image(event, borg)
     if ";" in hmm:
         stark = hmm.split(";", 1)
         first_txt = stark[0]
