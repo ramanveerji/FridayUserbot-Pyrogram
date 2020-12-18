@@ -88,12 +88,15 @@ async def luli(event):
             await event.edit(f"{is_data_indbs(event.chat_id)} \n{lol_text}")
     elif not is_data_indbs(event.chat_id):
         return
-    
+
+
 @friday.on(admin_cmd(pattern="scd$"))
 async def _m(event):
     await event.edit("`Processing..`")
     id_s = event.chat_id
     if is_data_indbs(id_s):
-        await event.edit(f"`Channel ID : {id_s} \nIs Foot: {is_footer(event.chat_id)} \nText: {is_data_indbs(event.chat_id)}`")
+        await event.edit(
+            f"`Channel ID : {id_s} \nIs Foot: {is_footer(event.chat_id)} \nText: {is_data_indbs(event.chat_id)}`"
+        )
     elif not is_data_indbs(id_s):
         await event.edit("`You Need To Set Channel Append System To Check It`")
