@@ -72,7 +72,8 @@ async def lul(event):
             await borg.send_file(event.chat_id, is_data_indb(event.chat_id))
         except:
             await borg.send_message(
-                Config.PRIVATE_GROUP_ID, f"Failed, To Send Sticker in {lsb}, Probably Due To No Access, Or Channel Not Found."
+                Config.PRIVATE_GROUP_ID,
+                f"Failed, To Send Sticker in {lsb}, Probably Due To No Access, Or Channel Not Found.",
             )
             return
     elif not is_data_indb(id_s):
