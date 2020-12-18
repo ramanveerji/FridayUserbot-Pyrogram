@@ -5,9 +5,11 @@ from fridaybot.modules.sql_helper.broadcast_sql import (
     get_all_setting_data,
     is_data_indbs,
     remove_datas,
+    is_footer,
 )
 from fridaybot.utils import friday_on_cmd
-
+from telethon import events
+lulstark = ['.', ',', '!', "'"]
 @friday.on(friday_on_cmd(pattern='scf ?(.*)'))
 async def _stark(event):
     lul_id = event.chat_id
