@@ -32,7 +32,7 @@ async def _m(event):
             "`This Channel Sticker Data Is Already In Db, Remove First To Update it.`"
         )
         return
-    elif not is_data_indb(id_s):
+    if not is_data_indb(id_s):
         bot_api_file_id = pack_bot_file_id(lmao.media)
         add_new_data_in_db(id_s, bot_api_file_id)
         await event.edit(
