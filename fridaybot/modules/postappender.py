@@ -11,8 +11,9 @@ from fridaybot.utils import admin_cmd, friday_on_cmd
 lulstark = [".", ",", "!", "'"]
 
 
-@friday.on(friday_on_cmd(pattern="scf ?(.*)"))
-async def _stark(event):
+@friday.on(admin_cmd(pattern="spf (.*)"))
+async def mstark(event):
+    await event.edit('`Processing..`')
     lul_id = event.chat_id
     append_text = event.pattern_match.group(1)
     is_foot = True
@@ -37,8 +38,9 @@ async def _stark(event):
         )
 
 
-@friday.on(friday_on_cmd(pattern="sch ?(.*)"))
-async def _stark(event):
+@friday.on(admin_cmd(pattern="sph (.*)"))
+async def _starky(event):
+    await event.edit('`Processing..`')
     lul_id = event.chat_id
     append_text = event.pattern_match.group(1)
     is_foot = False
@@ -50,7 +52,7 @@ async def _stark(event):
             "`No, LoL You Can't Set Channel Append System In Private Chats, lol`"
         )
         return
-    if append_text == (None, " "):
+    if append_text == None:
         await event.edit("Footer Can't Be None.`")
         return
     elif is_data_indbs(lul_id):
@@ -63,7 +65,7 @@ async def _stark(event):
         )
 
 
-@friday.on(admin_cmd(pattern="rcs$"))
+@friday.on(admin_cmd(pattern="rpd$"))
 async def _m(event):
     await event.edit("`Processing..`")
     id_s = event.chat_id
@@ -90,7 +92,7 @@ async def luli(event):
         return
 
 
-@friday.on(admin_cmd(pattern="scd$"))
+@friday.on(admin_cmd(pattern="spad$"))
 async def _m(event):
     await event.edit("`Processing..`")
     id_s = event.chat_id
