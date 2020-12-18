@@ -29,7 +29,7 @@ async def _(event):
     if not os.path.isdir(Config.TMP_DOWNLOAD_DIRECTORY):
         os.makedirs(Config.TMP_DOWNLOAD_DIRECTORY)
     if not event.reply_to_msg_id:
-        await event.edit('`Please Reply To Zip, To Unzip It`')
+        await event.edit("`Please Reply To Zip, To Unzip It`")
         return
     replym = await event.get_reply_message()
     if replym.media.document.mime_type != "application/zip":
