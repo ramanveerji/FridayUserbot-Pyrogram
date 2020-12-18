@@ -1,6 +1,6 @@
 from telethon import events
 
-from fridaybot.modules.sql_helper.PostAppender_sql.py import (
+from fridaybot.modules.sql_helper.PostAppender_sql import (
     add_new_datas_in_db,
     is_data_indbs,
     is_footer,
@@ -86,6 +86,5 @@ async def luli(event):
             await event.edit(f"{lol_text} \n{is_data_indbs(event.chat_id)}")
         elif not is_footer(event.chat_id):
             await event.edit(f"{is_data_indbs(event.chat_id)} \n{lol_text}")
-
     elif not is_data_indbs(event.chat_id):
         return
