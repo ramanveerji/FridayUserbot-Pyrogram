@@ -68,7 +68,7 @@ async def lul(event):
     lsb = event.chat_id
     id_s = event.chat_id
     if is_data_indb(event.chat_id):
-        if event.text.startswith("."):
+        if event.text.startswith(tuple(lulstark)):
             return
         try:
             await borg.send_file(event.chat_id, is_data_indb(event.chat_id))
