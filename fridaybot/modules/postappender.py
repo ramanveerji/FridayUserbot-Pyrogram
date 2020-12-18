@@ -47,7 +47,7 @@ async def _stark(event):
         )
         return
     if append_text == (None, ' '):
-        await event.edit('`Footer Can't Be None.`')
+        await event.edit("Footer Can't Be None.`")
         return
     elif is_data_indbs(lul_id):
         await event.edit('`Please Remove Old Data, To Add New One`')
@@ -61,7 +61,7 @@ async def luli(event):
     lsb = event.chat_id
     id_s = event.chat_id
     lol_text = event.text
-    if event.text.startswith(".", "'", "!"):
+    if any(x in lulstark for x in event.text.startswith):
         return
     if is_data_indbs(event.chat_id):
         if is_footer(event.chat_id):
