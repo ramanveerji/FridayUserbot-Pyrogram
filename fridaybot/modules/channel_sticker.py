@@ -27,14 +27,14 @@ async def _m(event):
         return
     if is_data_indb(id_s):
         await event.edit(
-            "`This Channel Sticker Data Is Already In Db, Remove First To Update it.`"
+            "`This Channel Sticker Data Is Already In Db, Remove First To Update it. This is Current Sticker 👇🏿`"
         )
         return
     elif not is_data_indb(id_s):
         bot_api_file_id = pack_bot_file_id(lmao.media)
         add_new_data_in_db(id_s, bot_api_file_id)
         await event.edit(
-            "`This Sticker Has Been Set As Channel Sticker For This Channel`"
+            "`👇🏿 This Sticker Has Been Set As Channel Sticker For This Channel 👇🏿`"
         )
 
 
