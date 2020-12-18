@@ -1,4 +1,3 @@
-from fridaybot.function.heroku_helper import HerokuHelper
 import asyncio
 import math
 import os
@@ -6,7 +5,7 @@ import os
 import heroku3
 import requests
 
-from fridaybot import CMD_HELP
+from fridaybot.function.heroku_helper import HerokuHelper
 from fridaybot.utils import edit_or_reply, friday_on_cmd, sudo_cmd
 
 telegraph = Telegraph()
@@ -16,23 +15,26 @@ Heroku = heroku3.from_key(Var.HEROKU_API_KEY)
 heroku_api = "https://api.heroku.com"
 
 
-@friday.on(friday_on_cmd(pattern='(logs|log)'))
+@friday.on(friday_on_cmd(pattern="(logs|log)"))
 @friday.on(sudo_cmd(pattern="(logs|log)", allow_sudo=True))
 async def giblog(event):
     herokuHelper = HerokuHelper(Var.HEROKU_APP_NAME, Var.HEROKU_API_KEY)
     logz = herokuHelper.getLog()
     with open("logs.txt", "w") as log:
         log.write(logz)
-    await borg.send_file(event.chat_id, 'logs.txt', caption=f'**Logs Of {Var.HEROKU_APP_NAME}**') 
-    
-@friday.on(friday_on_cmd(pattern='(restart|restarts)'))
+    await borg.send_file(
+        event.chat_id, "logs.txt", caption=f"**Logs Of {Var.HEROKU_APP_NAME}**"
+    )
+
+
+@friday.on(friday_on_cmd(pattern="(restart|restarts)"))
 @friday.on(sudo_cmd(pattern="(restart|restarts)", allow_sudo=True))
 async def restart_me(event):
     herokuHelper = HerokuHelper(Var.HEROKU_APP_NAME, Var.HEROKU_API_KEY)
     await event.edit("`App is Restarting. This is May Take Upto 10Min.`")
     herokuHelper.restart()
-    
-    
+
+
 @friday.on(friday_on_cmd(pattern="usage$"))
 @friday.on(sudo_cmd(pattern="usage$", allow_sudo=True))
 async def dyno_usage(dyno):
@@ -94,6 +96,7 @@ async def dyno_usage(dyno):
         f"✗ `{hours}`**h**  `{minutes}`**m** \n"
         f"✗ **Percentage :-** [`{percentage}`**%**]",
     )
+
 
 @friday.on(
     friday_on_cmd(pattern="(set|get|del) var(?: |$)(.*)(?: |$)([\s\S]*)", outgoing=True)
@@ -186,17 +189,18 @@ async def variable(var):
             await edit_or_reply(var, f"**{variable}**  `successfully deleted`")
             del heroku_var[variable]
         else:
-            return await edit_or_reply(var, f"**{variable}**  `is not exists`")    
-    
+            return await edit_or_reply(var, f"**{variable}**  `is not exists`")
 
-@friday.on(friday_on_cmd(pattern='shp ?(.*)'))
+
+@friday.on(friday_on_cmd(pattern="shp ?(.*)"))
 async def lel(event):
     cpass, npass = event.pattern_match.group(1).split(" ", 1)
-    await event.edit('`Changing You Pass`')
+    await event.edit("`Changing You Pass`")
     account = Heroku.account()
     account.change_password(cpass, npass)
-    await event.edit(f'`Done !, Changed You Pass to {npass}')
-    
+    await event.edit(f"`Done !, Changed You Pass to {npass}")
+
+
 def prettyjson(obj, indent=2, maxlinelength=80):
     """Renders JSON content with indentation and line splits/concatenations to fit maxlinelength.
     Only dicts, lists and basic types are supported"""
