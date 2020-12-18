@@ -2,6 +2,7 @@ import re
 
 import requests as HTTP
 from bs4 import BeautifulSoup as SOUP
+
 from fridaybot import CMD_HELP
 from fridaybot.utils import admin_cmd
 
