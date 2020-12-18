@@ -25,17 +25,13 @@ async def mstark(event):
             "`No, LoL You Can't Set Channel Stickers In Private Chats, lol`"
         )
         return
-    if append_text == None:
-        await event.edit("`Footer Can't Be None.`")
-        return
     if is_data_indbs(lul_id):
         await event.edit("`Please Remove Old Data, To Add New One`")
-        return
-    if is_data_indbs(lul_id):
+    elif not is_data_indbs(lul_id):
         add_new_datas_in_db(lul_id, append_text, is_foot)
         await event.edit(
-            "`Sucessfully, Saved This Text. Every New Message's Footer Will Be Edited To `{append_text}`"
-        )
+                "`Sucessfully, Saved This Text. Every New Message's Footer Will Be Edited To `{append_text}`"
+            )
 
 
 @friday.on(admin_cmd(pattern="sph (.*)"))
@@ -52,13 +48,9 @@ async def _starky(event):
             "`No, LoL You Can't Set Channel Append System In Private Chats, lol`"
         )
         return
-    if append_text == None:
-        await event.edit("Footer Can't Be None.`")
-        return
     if is_data_indbs(lul_id):
         await event.edit("`Please Remove Old Data, To Add New One`")
-        return
-    if is_data_indbs(lul_id):
+    elif not is_data_indbs(lul_id):
         add_new_datas_in_db(lul_id, append_text, is_foot)
         await event.edit(
             "`Sucessfully, Saved This Text. Every New Message's Header Will Be Edited To `{append_text}`"
