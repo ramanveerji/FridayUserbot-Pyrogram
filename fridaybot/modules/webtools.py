@@ -4,7 +4,7 @@ import requests
 from iplookup import iplookup
 from selenium import webdriver
 from youtube_search import YoutubeSearch
-
+from fridaybot.function import search_sub, get_lang
 from fridaybot import CMD_HELP
 from fridaybot.utils import edit_or_reply, friday_on_cmd, sudo_cmd
 
@@ -157,7 +157,15 @@ async def _(event):
     except:
         await event.edit("Some Thing Went Wrong.")
 
-
+@friday.on(friday_on_cmd(pattern='subtitle ?(.*)'))
+async def warnerbros(event):
+    msg = await event.edit('`Fetching..`')
+    warner_media = event.pattern_match.group(1)
+    full_index, title, keyword = search_sub(warner_media)
+    index, language, link = get_lang(keyword[0])
+    await borg.send_file(event.chat_id, link, caption=f"**Video Title :** `{title[0]}` \n**Language :** `{language}` \n**Download Link :** `{link}`")
+    await msg.delete()
+    
 CMD_HELP.update(
     {
         "webtools": "**Web Tools**\
