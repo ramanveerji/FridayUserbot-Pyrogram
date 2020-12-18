@@ -24,7 +24,7 @@ async def _stark(event):
         )
         return
     if append_text == (None, ' '):
-        await event.edit('`Footer Can't Be None.`')
+        await event.edit("`Footer Can't Be None.`")
         return
     elif is_data_indbs(lul_id):
         await event.edit('`Please Remove Old Data, To Add New One`')
