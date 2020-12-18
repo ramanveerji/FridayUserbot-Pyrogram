@@ -40,7 +40,7 @@ async def _(event):
 
 CMD_HELP.update(
     {
-        "Stock_Price": "**Stock Price**\
+        "stock_price": "**Stock Price**\
 \n\n**Syntax : **`.liveprice <Share Ticker>`\
 \n**Usage :** Shows Live Price Of Given Shares.\
 \n\n**Example : **`.liveprice tsla`\
