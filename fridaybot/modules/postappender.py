@@ -4,7 +4,7 @@ from fridaybot.modules.sql_helper.PostAppender_sql.py import (
     add_new_datas_in_db,
     is_data_indbs,
     is_footer,
-    remove_dataz
+    remove_dataz,
 )
 from fridaybot.utils import friday_on_cmd
 
@@ -62,6 +62,7 @@ async def _stark(event):
             "`Sucessfully, Saved This Text. Every New Message's Header Will Be Edited To `{append_text}`"
         )
 
+
 @friday.on(admin_cmd(pattern="rcs$"))
 async def _m(event):
     await event.edit("`Processing..`")
@@ -71,7 +72,8 @@ async def _m(event):
         await event.edit("`Done, I have Removed This Channel From DB`")
     elif not is_data_indbs(id_s):
         await event.edit("`You Need To Set Channel Sticker To Remove It`")
-        
+
+
 @bot.on(events.NewMessage)
 async def luli(event):
     event.chat_id
