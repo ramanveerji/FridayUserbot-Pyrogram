@@ -36,7 +36,7 @@ def is_data_indbs(chat_id: int):
     try:
         s__ = SESSION.query(Pa).get(str(chat_id))
         if s__:
-            return s__.textto_append, s__.append_foot
+            return s__.textto_append
     finally:
         SESSION.close()
 
