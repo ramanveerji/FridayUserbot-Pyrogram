@@ -50,7 +50,7 @@ def is_footer(chat_id: int):
         SESSION.close()
 
 
-def remove_datas(chat_id):
+def remove_dataz(chat_id):
     lul = SESSION.query(Pa).get(str(chat_id))
     if lul:
         SESSION.delete(lul)
