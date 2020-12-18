@@ -65,6 +65,8 @@ async def _m(event):
 async def lul(event):
     lsb = event.chat_id
     id_s = event.chat_id
+    if event.text == 'Processing..':
+        return
     if is_data_indb(event.chat_id):
         try:
             await borg.send_file(event.chat_id, is_data_indb(event.chat_id))
