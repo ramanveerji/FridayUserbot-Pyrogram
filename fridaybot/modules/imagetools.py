@@ -20,7 +20,6 @@ import numpy as np
 import requests
 from PIL import Image, ImageDraw, ImageFont
 from telegraph import upload_file
-from telethon.tl.types import MessageMediaPhoto
 
 from fridaybot import CMD_HELP
 from fridaybot.function import convert_to_image, crop_vid, runcmd
@@ -38,7 +37,7 @@ async def hmm(event):
         await event.reply("Reply to any Image.")
         return
     hmmu = await event.edit("Colourzing..")
-    sed = await event.get_reply_message()
+    await event.get_reply_message()
     img = await convert_to_image(message, borg)
     net = cv2.dnn.readNetFromCaffe(
         "./resources/imgcolour/colouregex.prototxt",
@@ -87,7 +86,7 @@ async def hmm(event):
         return
     headers = {"api-key": life}
     hmm = await event.edit("Colourzing..")
-    sed = await event.get_reply_message()
+    await event.get_reply_message()
     img = await convert_to_image(message, borg)
     img_file = {
         "image": open(img, "rb"),
@@ -111,7 +110,7 @@ async def iamthug(event):
         await event.reply("Reply to any Image.")
         return
     hmm = await event.edit("`Converting To thug Image..`")
-    sed = await event.get_reply_message()
+    await event.get_reply_message()
     img = await convert_to_image(message, borg)
     imagePath = img
     maskPath = "./resources/thuglife/mask.png"
@@ -143,7 +142,7 @@ async def toony(event):
         await event.reply("Reply to any Image.")
         return
     hmmu = await event.edit("`Converting Toonized Image..`")
-    sed = await event.get_reply_message()
+    await event.get_reply_message()
     img = await convert_to_image(message, borg)
     imagez = cv2.imread(img)
     cartoon_image_style_2 = cv2.stylization(
@@ -189,7 +188,7 @@ async def hmm(event):
         await event.reply("Reply to any Image.")
         return
     hmmu = await event.edit("hmm... Sending him to jail...🚶")
-    sed = await event.get_reply_message()
+    await event.get_reply_message()
     img = await convert_to_image(message, borg)
     mon = "./resources/jail/hmm.png"
     foreground = Image.open(mon).convert("RGBA")
@@ -218,7 +217,7 @@ async def hmm(event):
         await event.reply("Reply to any Image.")
         return
     hmmu = await event.edit("hmm.. Creating a black&White image...")
-    sed = await event.get_reply_message()
+    await event.get_reply_message()
     img = await convert_to_image(message, borg)
     img1 = cv2.imread(img)
 
