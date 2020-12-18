@@ -4,7 +4,7 @@ from telethon.utils import pack_bot_file_id
 from fridaybot.modules.sql_helper.channel_sticker_sql import (
     add_new_data_in_db,
     is_data_indb,
-    remove_data,
+    remove_datas,
 )
 from fridaybot.utils import admin_cmd
 
@@ -43,7 +43,7 @@ async def _m(event):
     await event.edit("`Processing..`")
     id_s = event.chat_id
     if is_data_indb(id_s):
-        remove_data(id_s)
+        remove_datas(id_s)
         await event.edit("`Done, I have Removed This Channel From DB`")
     elif not is_data_indb(id_s):
         await event.edit("`You Need To Set Channel Sticker To Remove It`")
