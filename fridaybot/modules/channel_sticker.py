@@ -8,7 +8,8 @@ from fridaybot.modules.sql_helper.channel_sticker_sql import (
 )
 from fridaybot.utils import admin_cmd
 
-lulstark = ['.', ',', '!', "'"]
+lulstark = [".", ",", "!", "'"]
+
 
 @friday.on(admin_cmd(pattern="scs$"))
 async def _m(event):
