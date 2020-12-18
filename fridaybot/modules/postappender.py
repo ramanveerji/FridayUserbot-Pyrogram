@@ -61,9 +61,9 @@ async def luli(event):
     lsb = event.chat_id
     id_s = event.chat_id
     lol_text = event.text
-    if any(x in lulstark for x in event.text.startswith):
-        return
     if is_data_indbs(event.chat_id):
+        if any(x in lulstark for x in event.text.startswith):
+              return
         if is_footer(event.chat_id):
               await event.edit(f"{lol_text} \n{is_data_indbs(event.chat_id)}")
         elif not is_footer(event.chat_id):
