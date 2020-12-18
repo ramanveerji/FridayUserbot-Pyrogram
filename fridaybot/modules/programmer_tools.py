@@ -33,7 +33,7 @@ async def __(event):
         return
     output = howdoi.howdoi(query)
     lel = f"<b><u>Here is Your Answer</b></u> \n<code>{output}</code>"
-    await event.edit(output)
+    await event.edit(lel)
 
 
 CMD_HELP.update(
