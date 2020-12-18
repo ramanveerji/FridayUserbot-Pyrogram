@@ -6,7 +6,7 @@ from fridaybot.modules.sql_helper.PostAppender_sql import (
     is_footer,
     remove_dataz,
 )
-from fridaybot.utils import friday_on_cmd, admin_cmd
+from fridaybot.utils import admin_cmd, friday_on_cmd
 
 lulstark = [".", ",", "!", "'"]
 
