@@ -32,6 +32,7 @@ async def __(event):
         await event.edit("`Give Some Query First`")
         return
     output = howdoi.howdoi(query)
+    lel = f"<b><u>Here is Your Answer</b></u> \n<code>{output}</code>"
     await event.edit(output)
 
 
