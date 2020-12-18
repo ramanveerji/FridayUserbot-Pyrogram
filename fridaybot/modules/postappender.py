@@ -43,11 +43,11 @@ async def _stark(event):
     append_text = event.pattern_match.group(1)
     is_foot = False
     if event.is_group:
-        await event.edit("`No, LoL You Can't Set Channel Stickers In Groups, lol`")
+        await event.edit("`No, LoL You Can't Set Channel Append System In Groups, lol`")
         return
     if event.is_private:
         await event.edit(
-            "`No, LoL You Can't Set Channel Stickers In Private Chats, lol`"
+            "`No, LoL You Can't Set Channel Append System In Private Chats, lol`"
         )
         return
     if append_text == (None, " "):
@@ -71,7 +71,7 @@ async def _m(event):
         remove_dataz(id_s)
         await event.edit("`Done, I have Removed This Channel From DB`")
     elif not is_data_indbs(id_s):
-        await event.edit("`You Need To Set Channel Sticker To Remove It`")
+        await event.edit("`You Need To Set Channel Append System To Remove It`")
 
 
 @bot.on(events.NewMessage)
