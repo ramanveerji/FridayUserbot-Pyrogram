@@ -39,13 +39,7 @@ async def hmm(event):
         return
     hmmu = await event.edit("Colourzing..")
     sed = await event.get_reply_message()
-    if isinstance(sed.media, MessageMediaPhoto):
-        img = await borg.download_media(sed.media, sedpath)
-    elif "image" in sed.media.document.mime_type.split("/"):
-        img = await borg.download_media(sed.media, sedpath)
-    else:
-        await event.edit("Reply To Image")
-        return
+    img = await convert_to_image(message, borg)
     net = cv2.dnn.readNetFromCaffe(
         "./resources/imgcolour/colouregex.prototxt",
         "./resources/imgcolour/colorization_release_v2.caffemodel",
@@ -94,13 +88,7 @@ async def hmm(event):
     headers = {"api-key": life}
     hmm = await event.edit("Colourzing..")
     sed = await event.get_reply_message()
-    if isinstance(sed.media, MessageMediaPhoto):
-        img = await borg.download_media(sed.media, sedpath)
-    elif "image" in sed.media.document.mime_type.split("/"):
-        img = await borg.download_media(sed.media, sedpath)
-    else:
-        await event.edit("Reply To Image")
-        return
+    img = await convert_to_image(message, borg)
     img_file = {
         "image": open(img, "rb"),
     }
@@ -124,13 +112,7 @@ async def iamthug(event):
         return
     hmm = await event.edit("`Converting To thug Image..`")
     sed = await event.get_reply_message()
-    if isinstance(sed.media, MessageMediaPhoto):
-        img = await borg.download_media(sed.media, sedpath)
-    elif "image" in sed.media.document.mime_type.split("/"):
-        img = await borg.download_media(sed.media, sedpath)
-    else:
-        await event.edit("Reply To Image")
-        return
+    img = await convert_to_image(message, borg)
     imagePath = img
     maskPath = "./resources/thuglife/mask.png"
     cascPath = "./resources/thuglife/face_regex.xml"
@@ -162,13 +144,7 @@ async def toony(event):
         return
     hmmu = await event.edit("`Converting Toonized Image..`")
     sed = await event.get_reply_message()
-    if isinstance(sed.media, MessageMediaPhoto):
-        img = await borg.download_media(sed.media, sedpath)
-    elif "image" in sed.media.document.mime_type.split("/"):
-        img = await borg.download_media(sed.media, sedpath)
-    else:
-        await event.edit("Reply To Image")
-        return
+    img = await convert_to_image(message, borg)
     imagez = cv2.imread(img)
     cartoon_image_style_2 = cv2.stylization(
         imagez, sigma_s=60, sigma_r=0.5
@@ -191,13 +167,7 @@ async def toony(event):
 async def lolmetrg(event):
     await event.edit("`Triggered This Image`")
     sed = await event.get_reply_message()
-    if isinstance(sed.media, MessageMediaPhoto):
-        img = await borg.download_media(sed.media, sedpath)
-    elif "image" in sed.media.document.mime_type.split("/"):
-        img = await borg.download_media(sed.media, sedpath)
-    else:
-        await event.edit("Reply To Image")
-        return
+    img = await convert_to_image(message, borg)
     url_s = upload_file(img)
     imglink = f"https://telegra.ph{url_s[0]}"
     lolul = f"https://some-random-api.ml/canvas/triggered?avatar={imglink}"
@@ -220,13 +190,7 @@ async def hmm(event):
         return
     hmmu = await event.edit("hmm... Sending him to jail...🚶")
     sed = await event.get_reply_message()
-    if isinstance(sed.media, MessageMediaPhoto):
-        img = await borg.download_media(sed.media, sedpath)
-    elif "image" in sed.media.document.mime_type.split("/"):
-        img = await borg.download_media(sed.media, sedpath)
-    else:
-        await event.edit("Reply To Image")
-        return
+    img = await convert_to_image(message, borg)
     mon = "./resources/jail/hmm.png"
     foreground = Image.open(mon).convert("RGBA")
 
@@ -255,13 +219,7 @@ async def hmm(event):
         return
     hmmu = await event.edit("hmm.. Creating a black&White image...")
     sed = await event.get_reply_message()
-    if isinstance(sed.media, MessageMediaPhoto):
-        img = await borg.download_media(sed.media, sedpath)
-    elif "image" in sed.media.document.mime_type.split("/"):
-        img = await borg.download_media(sed.media, sedpath)
-    else:
-        await event.edit("Reply To Image")
-        return
+    img = await convert_to_image(message, borg)
     img1 = cv2.imread(img)
 
     gray_img = cv2.cvtColor(img1, cv2.COLOR_BGR2GRAY)
