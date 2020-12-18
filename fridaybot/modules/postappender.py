@@ -80,7 +80,7 @@ async def luli(event):
     event.chat_id
     lol_text = event.text
     if is_data_indbs(event.chat_id):
-        if event.text.startswith("."):
+        if event.text.startswith(tuple(lulstark)):
             return
         if is_footer(event.chat_id):
             await event.edit(f"{lol_text} \n{is_data_indbs(event.chat_id)}")
