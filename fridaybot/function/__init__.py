@@ -9,10 +9,10 @@ import time
 from os.path import basename
 from typing import List, Optional, Tuple
 
-from pymediainfo import MediaInfo
-from telethon.tl.types import MessageMediaPhoto
 import requests
 from bs4 import BeautifulSoup as bs
+from pymediainfo import MediaInfo
+from telethon.tl.types import MessageMediaPhoto
 
 BASE_URL = "https://isubtitles.org"
 from fridaybot.Configs import Config
@@ -261,6 +261,7 @@ async def fetch_feds(event, borg):
     await event.edit("`FeD List Fetched SucessFully.`")
     return fedList
 
+
 # Ported From https://github.com/Anandpskerala/SubtitlesBot
 def search_sub(query):
     r = requests.get(f"{BASE_URL}/search?kwd={query}").text
@@ -270,7 +271,7 @@ def search_sub(query):
     title = []
     keywords = []
 
-    second_soup = bs(str(list_search), 'lxml')
+    second_soup = bs(str(list_search), "lxml")
     headings = second_soup.find_all("h3")
 
     third_soup = bs(str(headings), "lxml")
