@@ -39,7 +39,7 @@ def is_data_indb(chat_id: int):
         SESSION.close()
 
 
-def remove_data(chat_id):
+def remove_datas(chat_id):
     sed = SESSION.query(Cst).get(str(chat_id))
     if sed:
         SESSION.delete(sed)
