@@ -16,7 +16,7 @@ import textwrap
 
 from PIL import Image, ImageDraw, ImageFont
 from telethon.tl.types import MessageMediaPhoto
-
+from fridaybot.function import convert_to_image
 from fridaybot.utils import friday_on_cmd
 
 sedpath = Config.TMP_DOWNLOAD_DIRECTORY
@@ -33,16 +33,8 @@ async def starkmeme(event):
         return
     mryeast = await event.edit("Making Memes Until Praise MrBeast.")
     response = await event.get_reply_message()
-    name = response.media
-    if response and response.media:
-        if isinstance(response.media, MessageMediaPhoto):
-            seds = await borg.download_media(name, sedpath)
-        elif "image" in response.media.document.mime_type.split("/"):
-            seds = await borg.download_media(name, sedpath)
-        else:
-            await event.reply("This is Not Supported Yet.")
-            return
-        if ";" in hmm:
+    seds = await convert_to_image(message, borg)
+    if ";" in hmm:
             stark = hmm.split(";", 1)
             first_txt = stark[0]
             second_txt = stark[1]
@@ -54,7 +46,7 @@ async def starkmeme(event):
             if os.path.exists(imgpath):
                 os.remove(imgpath)
             await mryeast.delete()
-        else:
+    else:
             top_text = hmm
             bottom_text = ""
             generate_meme(seds, top_text=top_text, bottom_text=bottom_text)
