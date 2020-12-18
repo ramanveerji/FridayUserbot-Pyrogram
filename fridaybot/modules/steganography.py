@@ -76,7 +76,7 @@ CMD_HELP.update(
 \n**Usage :** Hides Given Text Inside Image.\
 \n\n**Syntax : **`.unstegano <Reply To The image>`\
 \n**Usage :** Reveals Hidden Text From Image.\
-\n**Example :** .stegano hello this is secret message <replying to an image>.\
+\n\n**Example :** `.stegano hello this is secret message` <replying to an image>.\
 \n\n**What is Steganography :** Steganography is the art and science of writing hidden messages in such a way that no one, apart from the sender and intended recipient, suspects the existence of the message, a form of security through obscurity. Additionally this plugin also enhance the security of the steganography through data encryption. The data concealed is encrypted using AES 256 encryption, a popular algorithm used in symmetric key cryptography."
     }
 )
