@@ -6,14 +6,14 @@ from fridaybot.modules.sql_helper.PostAppender_sql import (
     is_footer,
     remove_dataz,
 )
-from fridaybot.utils import admin_cmd, friday_on_cmd
+from fridaybot.utils import admin_cmd
 
 lulstark = [".", ",", "!", "'"]
 
 
 @friday.on(admin_cmd(pattern="spf (.*)"))
 async def mstark(event):
-    await event.edit('`Processing..`')
+    await event.edit("`Processing..`")
     lul_id = event.chat_id
     append_text = event.pattern_match.group(1)
     is_foot = True
@@ -40,7 +40,7 @@ async def mstark(event):
 
 @friday.on(admin_cmd(pattern="sph (.*)"))
 async def _starky(event):
-    await event.edit('`Processing..`')
+    await event.edit("`Processing..`")
     lul_id = event.chat_id
     append_text = event.pattern_match.group(1)
     is_foot = False
