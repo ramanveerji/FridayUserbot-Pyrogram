@@ -39,7 +39,8 @@ def is_data_indbs(chat_id: int):
             return s__.textto_append, s__.append_foot
     finally:
         SESSION.close()
-        
+
+
 def is_footer(chat_id: int):
     try:
         s__ = SESSION.query(Pa).get(str(chat_id))
@@ -47,6 +48,7 @@ def is_footer(chat_id: int):
             return s__.append_foot
     finally:
         SESSION.close()
+
 
 def remove_datas(chat_id):
     lul = SESSION.query(Pa).get(str(chat_id))
