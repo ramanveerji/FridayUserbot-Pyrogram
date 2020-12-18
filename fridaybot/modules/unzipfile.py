@@ -28,12 +28,16 @@ async def _(event):
     mone = await event.edit("Processing ...")
     if not os.path.isdir(Config.TMP_DOWNLOAD_DIRECTORY):
         os.makedirs(Config.TMP_DOWNLOAD_DIRECTORY)
+    if not event.reply_to_msg_id:
+        await event.edit('`Please Reply To Zip, To Unzip It`')
+        return
+    replym = await event.get_reply_message()
+    if replym.media.document.mime_type != "application/zip":
+        await mone.edit("`Please Reply To Zip, To Unzip It.`")
+        return
     if event.reply_to_msg_id:
         datetime.now()
         reply_message = await event.get_reply_message()
-        if reply_message.media.document.mime_type != "application/zip":
-            await mone.edit("`Please Reply To Zip, To Unzip It.`")
-            return
         try:
             downloaded_file_name = await borg.download_media(
                 reply_message.media,
