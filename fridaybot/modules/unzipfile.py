@@ -8,7 +8,7 @@ import time
 import time as t
 import zipfile
 from datetime import datetime
-
+from fridaybot import CMD_HELP
 from fridaybot.utils import admin_cmd
 
 extracted = Config.TMP_DOWNLOAD_DIRECTORY + "extracted/"
