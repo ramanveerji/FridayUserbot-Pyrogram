@@ -65,7 +65,7 @@ async def _m(event):
 async def lul(event):
     lsb = event.chat_id
     id_s = event.chat_id
-    if event.text.startswith('.'):
+    if event.text.startswith("."):
         return
     if is_data_indb(event.chat_id):
         try:
