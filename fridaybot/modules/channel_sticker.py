@@ -8,6 +8,7 @@ from fridaybot.modules.sql_helper.channel_sticker_sql import (
 )
 from fridaybot.utils import admin_cmd
 
+lulstark = ['.', ',', '!', "'"]
 
 @friday.on(admin_cmd(pattern="scs$"))
 async def _m(event):
@@ -65,7 +66,7 @@ async def _m(event):
 async def lul(event):
     lsb = event.chat_id
     id_s = event.chat_id
-    if event.text.startswith(".", "'", "!"):
+    if any(x in lulstark for x in event.text.startswith):
         return
     if is_data_indb(event.chat_id):
         try:
