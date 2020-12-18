@@ -14,7 +14,6 @@
 
 import os
 from shutil import rmtree
-
 import cv2
 import numpy as np
 import requests
