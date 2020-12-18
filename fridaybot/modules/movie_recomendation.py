@@ -64,9 +64,6 @@ async def _(event):
     )
 
 
-
-
-
 CMD_HELP.update(
     {
         "movie_recommendation": "**Movie Recommender**\
