@@ -30,8 +30,8 @@ async def mstark(event):
     elif not is_data_indbs(lul_id):
         add_new_datas_in_db(lul_id, append_text, is_foot)
         await event.edit(
-                "`Sucessfully, Saved This Text. Every New Message's Footer Will Be Edited To `{append_text}`"
-            )
+            "`Sucessfully, Saved This Text. Every New Message's Footer Will Be Edited To `{append_text}`"
+        )
 
 
 @friday.on(admin_cmd(pattern="sph (.*)"))
