@@ -40,6 +40,32 @@ async def _(event):
             await event.edit(f"{response.message.message}")
 
 
+@friday.on(friday_on_cmd("fakemail ?(.*)"))	
+async def _(event):	
+    if event.fwd_from:	
+        return	
+    chat = "@fakemailbot"	
+    reply_message.sender	
+    await event.edit("```Processing```")
+    link = f"/generate"
+    async with borg.conversation(chat) as conv:	
+        try:	
+            response = conv.wait_event(	
+                events.NewMessage(incoming=True, from_users=177914997)	
+            )	
+            msg = await conv.send_message(link)
+            response = await response	
+        except YouBlockedUserError:	
+            await event.reply("```Please unblock @fakemailbot and try again```")	
+            return	
+        if response.text.startswith("send"):	
+            await event.edit(	
+                "```can you kindly disable your forward privacy settings for good?```"	
+            )	
+        else:	
+            await event.edit(f"{response.message.message}")
+
+
 @friday.on(friday_on_cmd("ub ?(.*)"))
 async def _(event):
     if event.fwd_from:
