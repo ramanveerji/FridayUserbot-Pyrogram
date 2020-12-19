@@ -163,7 +163,7 @@ async def _(event):
     if event.fwd_from:
         return
     stark = event.pattern_match.group(1)
-    imdb_id = re.search('/(tt\d{5,7})', requests.get(f"https://www.yifysubtitles.com/search?q={stark}").text
+    imdb_id = re.search('/(tt\d{5,7})', requests.get(f"https://www.yifysubtitles.com/search?q={stark}").text)
     if imdb_id:
         lel, name, urlx = await get_yiffy(imdb_id[0])
     else:
