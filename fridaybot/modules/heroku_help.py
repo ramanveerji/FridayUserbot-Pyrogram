@@ -202,10 +202,8 @@ async def lel(event):
 async def sf(event):
     hmm = event.pattern_match.group(1)
     app = Heroku.app(Var.HEROKU_APP_NAME)
-    collaborator = app.add_collaborator(
-        user_id_or_email=hmm, silent=0
-    )
-    await event.edit('`Sent Invitation To Accept Your Collab`')
+    collaborator = app.add_collaborator(user_id_or_email=hmm, silent=0)
+    await event.edit("`Sent Invitation To Accept Your Collab`")
 
 
 @friday.on(friday_on_cmd(pattern="tfa (.*)"))
@@ -213,12 +211,14 @@ async def l(event):
     hmm = event.pattern_match.group(1)
     app = Heroku.app(Var.HEROKU_APP_NAME)
     transfer = app.create_transfer(recipient_id_or_name=hmm)
-    
+
+
 @friday.on(friday_on_cmd(pattern="kd (.*)"))
 async def killdyno(event):
     app = Heroku.app(Var.HEROKU_APP_NAME)
-    await event.edit('`Dyno Is Off. Manually Turn it On Later`')
-    dynokill = app.kill_dyno('bash start.sh')
+    await event.edit("`Dyno Is Off. Manually Turn it On Later`")
+    app.kill_dyno("bash start.sh")
+
 
 def prettyjson(obj, indent=2, maxlinelength=80):
     """Renders JSON content with indentation and line splits/concatenations to fit maxlinelength.
