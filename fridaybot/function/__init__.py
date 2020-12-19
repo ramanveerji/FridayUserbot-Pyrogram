@@ -261,33 +261,42 @@ async def fetch_feds(event, borg):
     await event.edit("`FeD List Fetched SucessFully.`")
     return fedList
 
+
 # Thanks To https://github.com/CW4RR10R/yify-grabber/blob/master/yify/__init__.py
 async def get_yiffy(imdb_id, event, borg):
     url = f"https://yts-subs.com/movie-imdb{imdb_id}"
-    page = BeautifulSoup(requests.get(url).content, 'html.parser')
-    content = page.find('div',{"class":"table-responsive"})
+    page = BeautifulSoup(requests.get(url).content, "html.parser")
+    content = page.find("div", {"class": "table-responsive"})
     if content:
         await event.edit("Fetching all languages and its ratings...")
         lang = "English"
-        movies = [[movie.find("span",{"class" : "label"}).get_text(), "https://yts-subs.com" + movie.find('a')['href']] \
-            for movie in content.find_all("tr",{"class" :"high-rating"}) if \
-         movie.find("span",{"class" : "sub-lang"}).get_text() == lang and movie.find("span",{"class" : "label"})]
-        list_eng = {movie[1]:int(movie[0])  for movie in movies}
+        movies = [
+            [
+                movie.find("span", {"class": "label"}).get_text(),
+                "https://yts-subs.com" + movie.find("a")["href"],
+            ]
+            for movie in content.find_all("tr", {"class": "high-rating"})
+            if movie.find("span", {"class": "sub-lang"}).get_text() == lang
+            and movie.find("span", {"class": "label"})
+        ]
+        list_eng = {movie[1]: int(movie[0]) for movie in movies}
         await event.edit(f"Selecting top rated {lang} subtitle")
         top_rated = max(list_eng, key=list_eng.get)
-        html = BeautifulSoup(requests.get(top_rated).content, 'html.parser')
-        file_name = html.find('div', {"class": "col-xs-12","style":"margin-bottom:15px;"}).get_text().strip() 
-        dwn_url = html.find('a', {"class": "btn-icon download-subtitle"})['href']    
-        dwn_dir = sedpath + file_name.replace("/"," ") + ".zip"  
+        html = BeautifulSoup(requests.get(top_rated).content, "html.parser")
+        file_name = (
+            html.find("div", {"class": "col-xs-12", "style": "margin-bottom:15px;"})
+            .get_text()
+            .strip()
+        )
+        dwn_url = html.find("a", {"class": "btn-icon download-subtitle"})["href"]
+        dwn_dir = sedpath + file_name.replace("/", " ") + ".zip"
         await event.edit(f"Found {file_name}")
-        await event.edit(f"Downloading to my local. Please Wait")         
-        with open(dwn_dir, 'wb') as f:
-            f.write(requests.get(dwn_url).content) 
+        await event.edit(f"Downloading to my local. Please Wait")
+        with open(dwn_dir, "wb") as f:
+            f.write(requests.get(dwn_url).content)
     else:
         dwn_dir = None
         file_name = None
         dwn_url = None
-        await event.edit('`No Movies Found.`')
-    return dwn_dir, file_name, dwn_url    
-        
-            
+        await event.edit("`No Movies Found.`")
+    return dwn_dir, file_name, dwn_url
