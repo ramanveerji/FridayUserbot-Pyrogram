@@ -24,7 +24,7 @@ async def giblog(event):
     )
 
 
-@friday.on(friday_on_cmd(pattern="(restart|restarts)"))
+@friday.on(friday_on_cmd(pattern="(rerun|restarts)"))
 @friday.on(sudo_cmd(pattern="(restart|restarts)", allow_sudo=True))
 async def restart_me(event):
     herokuHelper = HerokuHelper(Var.HEROKU_APP_NAME, Var.HEROKU_API_KEY)
