@@ -44,13 +44,13 @@ async def _(event):
 async def _(event):
     if event.fwd_from:
         return
-    if not event.reply_to_msg_id:	
-        await event.edit("```Reply to any user message.```")	
-        return	
-    reply_message = await event.get_reply_message()	
-    if not reply_message.text:	
-        await event.edit("```reply to text message```")	
-        return	
+    if not event.reply_to_msg_id:
+        await event.edit("```Reply to any user message.```")
+        return
+    reply_message = await event.get_reply_message()
+    if not reply_message.text:
+        await event.edit("```reply to text message```")
+        return
     chat = "@fakemailbot"
     reply_message.sender
     await event.edit("```Processing```")
