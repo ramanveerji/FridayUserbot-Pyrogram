@@ -7,7 +7,7 @@ from fridaybot import CMD_HELP
 from fridaybot.utils import admin_cmd
 
 
-@friday.on(admin_cmd(pattern="movie (.*)"))
+@friday.on(admin_cmd(pattern="rmovie (.*)"))
 async def _(event):
     if event.fwd_from:
         return
