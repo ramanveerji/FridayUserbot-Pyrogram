@@ -1,6 +1,6 @@
 # @FridayoT
-from fridaybot.function import get_yiff
 import re
+
 import requests
 from iplookup import iplookup
 from selenium import webdriver
