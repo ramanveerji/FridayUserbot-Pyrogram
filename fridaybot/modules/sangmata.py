@@ -32,7 +32,7 @@ async def _(event):
         except YouBlockedUserError:
             await event.reply("```Please unblock @SangMataInfo_bot and try again```")
             return
-        if response.text.startswith("Hello,"):
+        if response.text.startswith("Forward"):
             await event.edit(
                 "```can you kindly disable your forward privacy settings for good?```"
             )
