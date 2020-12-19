@@ -40,6 +40,8 @@ CMD_HELP.update(
     {
         "programmer_jokes": "**Programmer Jokes**\
 \n\n**Syntax : **`.pjoke`\
-\n**Usage :** Get programmer jokes."
+\n**Usage :** Get programmer jokes.\
+\n\n**Syntax : **`.howdoi <programming query>`\
+\n**Usage :** Gives Answers For Given Programming Questions."
     }
 )
