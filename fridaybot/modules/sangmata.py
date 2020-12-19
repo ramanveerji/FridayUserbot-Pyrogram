@@ -40,8 +40,6 @@ async def _(event):
             await event.edit(f"{response.message.message}")
 
 
-
-
 @friday.on(friday_on_cmd("ub ?(.*)"))
 async def _(event):
     if event.fwd_from:
