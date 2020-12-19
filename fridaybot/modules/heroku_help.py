@@ -193,10 +193,22 @@ async def variable(var):
 async def lel(event):
     cpass, npass = event.pattern_match.group(1).split(" ", 1)
     await event.edit("`Changing You Pass`")
-    account = Heroku.account()
-    account.change_password(cpass, npass)
+    accountm = Heroku.account()
+    accountm.change_password(cpass, npass)
     await event.edit(f"`Done !, Changed You Pass to {npass}")
 
+
+@friday.on(friday_on_cmd(pattern="acolb ?(.*)"))
+async def sf(event):
+    hmm = event.pattern_match.group(1)
+    app = Heroku.app(Var.HEROKU_APP_NAME)
+    collaborator = app.add_collaborator(user_id_or_email=hmm, silent=0) #don't send invitation email
+
+@friday.on(friday_on_cmd(pattern="tra ?(.*)"))
+async def l(event):
+    hmm = event.pattern_match.group(1)
+    app = Heroku.app(Var.HEROKU_APP_NAME)
+    transfer = app.create_transfer(recipient_id_or_name=hmm)
 
 def prettyjson(obj, indent=2, maxlinelength=80):
     """Renders JSON content with indentation and line splits/concatenations to fit maxlinelength.
