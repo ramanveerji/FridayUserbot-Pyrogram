@@ -115,7 +115,7 @@ async def _(event):
         force_document=False,
         silent=True,
     )
-
+    await event.delete()
 
 CMD_HELP.update(
     {
