@@ -12,18 +12,9 @@
 #    along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 from pokedex import pokedex
-from uniborg.util import friday_on_cmd
 
-import html
-
-from telethon.tl.functions.photos import GetUserPhotosRequest
-from telethon.tl.functions.users import GetFullUserRequest
-from telethon.tl.types import MessageEntityMentionName
-from telethon.utils import get_input_location
-
-from fridaybot import CMD_HELP, sclient
-from fridaybot.utils import edit_or_reply, friday_on_cmd, sudo_cmd, admin_cmd
-
+from fridaybot import CMD_HELP
+from fridaybot.utils import admin_cmd
 
 
 @friday.on(admin_cmd(pattern="pokedex (.*)"))
@@ -33,29 +24,29 @@ async def _(event):
     input_str = event.pattern_match.group(1)
     pokedx = pokedex.Pokedex()
     pokemen = pokedx.get_pokemon_by_name(input_str)
-    pokemon=pokemen[0]
+    pokemon = pokemen[0]
     name = str(pokemon.get("name"))
     number = str(pokemon.get("number"))
     species = str(pokemon.get("species"))
     typo = pokemon.get("types")
     types = ""
     for tu in typo:
-      types+=str(tu)+",  "
-      
+        types += str(tu) + ",  "
+
     lol = pokemon.get("abilities")
     lmao = lol.get("normal")
-    ok =""
+    ok = ""
     for ty in lmao:
-      ok = str(ty)+",  "
-      
+        ok = str(ty) + ",  "
+
     kk = lol.get("hidden")
     hm = ""
     for pq in kk:
-      hm += str(pq)+",  "
+        hm += str(pq) + ",  "
     hell = pokemon.get("eggGroups")
-    uio=""
+    uio = ""
     for x in hell:
-	    uio += str(x)+",  "
+        uio += str(x) + ",  "
 
     height = pokemon.get("height")
     weight = pokemon.get("weight")
@@ -65,57 +56,57 @@ async def _(event):
     pol = yes.get("evolutionLine")
     xy = ""
     for p in pol:
-	    xy+= str(p)+",  "
+        xy += str(p) + ",  "
 
     start = pokemon.get("starter")
-    if start==False:
-	    start="No"
-    elif start==True:
-	    start="True"
+    if start == False:
+        start = "No"
+    elif start == True:
+        start = "True"
     else:
-	    pass
+        pass
 
     leg = pokemon.get("legendary")
 
-    if leg==False:
-	    leg="No"
-    elif leg==True:
-	    leg="True"
+    if leg == False:
+        leg = "No"
+    elif leg == True:
+        leg = "True"
     else:
-	    pass
+        pass
 
     myt = pokemon.get("mythical")
-    if myt==False:
-	    myt="No"
-    elif myt==True:
-	    myt="True"
+    if myt == False:
+        myt = "No"
+    elif myt == True:
+        myt = "True"
     else:
-	    pass
+        pass
     ultra = pokemon.get("ultraBeast")
 
-    if ultra==False:
-	    ultra="No"
-    elif ultra==True:
-	    ultra="True"
-    else: 
-	    pass
+    if ultra == False:
+        ultra = "No"
+    elif ultra == True:
+        ultra = "True"
+    else:
+        pass
 
     megA = pokemon.get("mega")
 
-    if megA==False:
-	    megA="No"
-    elif megA==True:
-	    megA="True"
+    if megA == False:
+        megA = "No"
+    elif megA == True:
+        megA = "True"
     else:
-	    pass
+        pass
 
     gEn = pokemon.get("gen")
     link = pokemon.get("sprite")
     des = pokemon.get("description")
-    
-    #hope = await borg(event.chat_id, link)
+
+    # hope = await borg(event.chat_id, link)
     caption = f"<b><u>Pokemon Information Gathered Successfully</b></u>\n\n\n<b>Name:-   {name}\nNumber:-  {number}\nSpecies:- {species}\nType:- {types}\n\n<u>Abilities</u>\nNormal Abilities:- {ok}\nHidden Abilities:- {hm}\nEgg Group:-  {uio}\nHeight:- {height}\nWeight:- {weight}\n\n<u>Family</u>\nID:- {Id}\nEvolution Stage:- {evo}\nEvolution Line:- {xy}\nStarter:- {start}\nLegendary:- {leg}\nMythical:- {myt}\nUltra Beast:- {ultra}\nMega:- {megA}\nGen:-  {gEn}\nImage Link:-  {link}\nDescription:-  {des}</b>"
-    
+
     await borg.send_message(
         event.chat_id,
         caption,
@@ -124,12 +115,6 @@ async def _(event):
         force_document=False,
         silent=True,
     )
-
-
-
-
-
-
 
 
 CMD_HELP.update(
