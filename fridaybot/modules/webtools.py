@@ -157,7 +157,20 @@ async def _(event):
     except:
         await event.edit("Some Thing Went Wrong.")
 
-
+@friday.on(friday_on_cmd(pattern="yiffy ?(.*)"))
+@friday.on(sudo_cmd(pattern="yiffy ?(.*)", allow_sudo=True))
+async def _(event):
+    if event.fwd_from:
+        return
+    stark = event.pattern_match.group(1)
+    imdb_id = re.search('/(tt\d{5,7})', requests.get(f"https://www.yifysubtitles.com/search?q={stark}").text
+    if imdb_id:
+        lel, name, urlx = await get_yiffy(imdb_id[0])
+    else:
+        await event.edit('`Invalid Name`')
+        return
+    await borg.send_file(event.chat_id, lel, caption=f"**File Name :** `{name}` \n**Url :** `{urlx}`")
+    
 CMD_HELP.update(
     {
         "webtools": "**Web Tools**\
