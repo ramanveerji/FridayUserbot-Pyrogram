@@ -261,52 +261,33 @@ async def fetch_feds(event, borg):
     await event.edit("`FeD List Fetched SucessFully.`")
     return fedList
 
-
-# Ported From https://github.com/Anandpskerala/SubtitlesBot
-def search_sub(query):
-    r = requests.get(f"{BASE_URL}/search?kwd={query}").text
-    soup = bs(r, "lxml")
-    list_search = soup.find_all("div", class_="row")
-    index = []
-    title = []
-    keywords = []
-
-    second_soup = bs(str(list_search), "lxml")
-    headings = second_soup.find_all("h3")
-
-    third_soup = bs(str(headings), "lxml")
-    search_links = third_soup.find_all("a")
-
-    i = 0
-
-    for a in search_links:
-        i += 1
-        index.append(i)
-        title.append(a.text)
-        key = a.get("href").split("/")
-        keywords.append(key[1])
-
-    return index, title, keywords
-
-
-def get_lang(keyword):
-    url = f"{BASE_URL}/{keyword}"
-    request = requests.get(url).text
-    fourth_soup = bs(request, "lxml")
-    filesoup = fourth_soup.find_all("table")
-    fifth_soup = bs(str(filesoup), "lxml")
-    table_soup = fifth_soup.find_all("a")
-    language = []
-    index = []
-    link = []
-    i = 0
-    for b in table_soup:
-        if b["href"].startswith("/download/"):
-            i += 1
-            h = b.get("href").split("/")
-            buttoname = h[3]
-            if buttoname not in language:
-                index.append(i)
-                language.append(buttoname)
-                link.append(f"{BASE_URL}{b.get('href')}")
-    return index, language, link
+# Thanks To https://github.com/CW4RR10R/yify-grabber/blob/master/yify/__init__.py
+async def get_yiffy(imdb_id, event, borg):
+    url = f"https://yts-subs.com/movie-imdb{imdb_id}"
+    page = BeautifulSoup(requests.get(url).content, 'html.parser')
+    content = page.find('div',{"class":"table-responsive"})
+    if content:
+        await event.edit("Fetching all languages and its ratings...")
+        lang = "English"
+        movies = [[movie.find("span",{"class" : "label"}).get_text(), "https://yts-subs.com" + movie.find('a')['href']] \
+            for movie in content.find_all("tr",{"class" :"high-rating"}) if \
+         movie.find("span",{"class" : "sub-lang"}).get_text() == lang and movie.find("span",{"class" : "label"})]
+        list_eng = {movie[1]:int(movie[0])  for movie in movies}
+        await event.edit(f"Selecting top rated {lang} subtitle")
+        top_rated = max(list_eng, key=list_eng.get)
+        html = BeautifulSoup(requests.get(top_rated).content, 'html.parser')
+        file_name = html.find('div', {"class": "col-xs-12","style":"margin-bottom:15px;"}).get_text().strip() 
+        dwn_url = html.find('a', {"class": "btn-icon download-subtitle"})['href']    
+        dwn_dir = sedpath + file_name.replace("/"," ") + ".zip"  
+        await event.edit(f"Found {file_name}")
+        await event.edit(f"Downloading to my local. Please Wait")         
+        with open(dwn_dir, 'wb') as f:
+            f.write(requests.get(dwn_url).content) 
+    else:
+        dwn_dir = None
+        file_name = None
+        dwn_url = None
+        await event.edit('`No Movies Found.`')
+    return dwn_dir, file_name, dwn_url    
+        
+            
