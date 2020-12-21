@@ -1,5 +1,17 @@
 Pillow
 pymediainfo
+tensorflow
+keras
+matplotlib
+scikit-learn
+scikit-image
+imgaug
+labelme2coco
+progressbar2
+scipy
+h5py
+configobj
+xtreme-vision
 apscheduler
 git+https://github.com/gleitz/howdoi
 pokedex.py
