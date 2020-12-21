@@ -23,7 +23,7 @@ async def hotstar(event):
     hits_dict = []
     hits = 0
     bads = 0
-    lol = event.get_reply_message()
+    lol = await event.get_reply_message()
     starky = await borg.download_media(lol.media, Config.TMP_DOWNLOAD_DIRECTORY)
     afile = open(starky, "r")
     for line in afile:
