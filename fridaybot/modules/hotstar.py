@@ -49,7 +49,7 @@ async def hotstar(event):
             bads += 1
     print(hits_dict)
     if len(hits_dict) == 0:
-        await event.edit("No Hits. " + meke.text)
+        await event.edit("No Hits " + meke.text)
         return
     with open("hits.txt", "w") as hitfile:
         for s in hits_dict:
