@@ -275,37 +275,40 @@ async def get_imdb_id(search, event):
         warner_s = warner_bros[0]["mv_imdbCode"]
     return warner_media, warner_s
 
+
 async def get_subtitles(imdb_id, borg, event):
-    await event.edit('`Processing..`')
-    link = f'https://yts-subs.com/movie-imdb/' + imdb_id
+    await event.edit("`Processing..`")
+    link = f"https://yts-subs.com/movie-imdb/" + imdb_id
     movie_response = requests.get(url=link)
     subtitles = []
-    soup1 = BeautifulSoup(movie_response.content, 'html.parser')
-    rows = soup1.find_all('tr', class_='high-rating')
+    soup1 = BeautifulSoup(movie_response.content, "html.parser")
+    rows = soup1.find_all("tr", class_="high-rating")
     for row in rows:
-        td = row.find('td', class_='flag-cell')
-        lang = td.find('span', class_='sub-lang').text
-        if lang == 'English':
-            sub_link_tag = row.find('td', class_='download-cell')
-            sub_link = sub_link_tag.find('a', class_='subtitle-download').get('href')
-            sub_link = f'https://yts-subs.com/{sub_link}'
-            sub_name_tag = row.find('td', class_=None)
-            sub_name = str(sub_name_tag.find('a').text).replace('subtitle', '').replace('\n', '')       
+        td = row.find("td", class_="flag-cell")
+        lang = td.find("span", class_="sub-lang").text
+        if lang == "English":
+            sub_link_tag = row.find("td", class_="download-cell")
+            sub_link = sub_link_tag.find("a", class_="subtitle-download").get("href")
+            sub_link = f"https://yts-subs.com/{sub_link}"
+            sub_name_tag = row.find("td", class_=None)
+            sub_name = (
+                str(sub_name_tag.find("a").text)
+                .replace("subtitle", "")
+                .replace("\n", "")
+            )
             sub = (sub_name, sub_link)
             subtitles.append(sub)
-    await event.edit('`Almost Done.`')
-    sub_response = requests.get(url=subtitles[0]['sub_link'])
-    selected_sub_name = subtitles[0]['sub_name']
-    soup2 = BeautifulSoup(sub_response.content, 'html.parser')
-    link = soup2.find('a', class_='btn-icon download-subtitle').get('href')
+    await event.edit("`Almost Done.`")
+    sub_response = requests.get(url=subtitles[0]["sub_link"])
+    selected_sub_name = subtitles[0]["sub_name"]
+    soup2 = BeautifulSoup(sub_response.content, "html.parser")
+    link = soup2.find("a", class_="btn-icon download-subtitle").get("href")
     final_response = requests.get(link, stream=True)
-    await event.edit('`Downloading Now`') 
+    await event.edit("`Downloading Now`")
     if final_response.status_code == 200:
-        with open(sedpath + f'{selected_sub_name}.zip', 'wb') as sfile:
+        with open(sedpath + f"{selected_sub_name}.zip", "wb") as sfile:
             for byte in final_response.iter_content(chunk_size=128):
                 sfile.write(byte)
-    final_paths = sedpath + f'{selected_sub_name}.zip'
+    final_paths = sedpath + f"{selected_sub_name}.zip"
     namez = selected_sub_name
-    return final_paths, namez, subtitles[0]['sub_link']             
-
-            
+    return final_paths, namez, subtitles[0]["sub_link"]
