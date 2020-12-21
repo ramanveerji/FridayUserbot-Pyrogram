@@ -1,5 +1,4 @@
 # @FridayoT
-import re
 
 import requests
 from iplookup import iplookup
@@ -157,7 +156,6 @@ async def _(event):
         await stark_result.edit(noob, parse_mode="HTML")
     except:
         await event.edit("Some Thing Went Wrong.")
-
 
 
 CMD_HELP.update(
