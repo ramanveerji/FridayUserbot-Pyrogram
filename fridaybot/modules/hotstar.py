@@ -33,8 +33,8 @@ async def hotstar(event):
         starkm = i.split(":")
         email = starkm[0]
         password = starkm[1]
-        print(email)
-        print(password)
+        logger.info(email)
+        logger.info(password)
         payload = {"isProfileRequired":"false","userData":{"deviceId":"a7d1bc04-f55e-4b16-80e8-d8fbf4c91768","password":password,"username":email,"usertype":"email"}}
         try:
             meke = requests.post(url, data=json.dumps(payload), headers=headers)
