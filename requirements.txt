@@ -1,6 +1,6 @@
 Pillow
 pymediainfo
-git+https://github.com/tensorflow/tensorflow.git
+https://storage.googleapis.com/tensorflow/mac/cpu/tensorflow-1.12.0-py3-none-any.whl
 keras
 matplotlib
 scikit-learn
