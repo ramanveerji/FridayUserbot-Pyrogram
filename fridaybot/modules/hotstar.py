@@ -28,6 +28,7 @@ async def hotstar(event):
     afile = open(starky, "r")
     for line in afile:
         stark_dict.append(line)
+        print(line)
     for i in stark_dict:
         starkm = i.split(":")
         email = starkm[0]
