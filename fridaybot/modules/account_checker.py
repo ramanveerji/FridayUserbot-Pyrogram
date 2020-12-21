@@ -1,5 +1,5 @@
 import json
-
+import os
 import requests
 
 from fridaybot.utils import friday_on_cmd
