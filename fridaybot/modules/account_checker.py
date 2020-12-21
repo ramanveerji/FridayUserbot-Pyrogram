@@ -9,7 +9,7 @@ data = {
    "Accept-Encoding":"gzip"
 }
 
-@friday.on(friday_on_cmd(pattern="zee5"))
+@friday.on(friday_on_cmd(pattern="cz5$"))
 async def hotstar(event):
     stark_dict = []
     hits_dict = []
@@ -47,7 +47,7 @@ async def hotstar(event):
     os.remove(starky)
     os.remove("hits.txt")
 
-@friday.on(friday_on_cmd(pattern="nord"))
+@friday.on(friday_on_cmd(pattern="cnd"))
 async def vypr(event):
     stark_dict = []
     hits_dict = []
