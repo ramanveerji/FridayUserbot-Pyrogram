@@ -263,18 +263,14 @@ async def fetch_feds(event, borg):
 
 
 async def get_imdb_id(search, event):
-    link = 'https://yts-subs.com/search/ajax?mov=' + search
+    link = "https://yts-subs.com/search/ajax?mov=" + search
     lol = requests.get(link)
     warner_bros = lol.json()
     if warner_bros == []:
-        await event.edit('`No Results Found.`')
+        await event.edit("`No Results Found.`")
         warner_media = None
         warner_s = None
     else:
-        warner_media = warner_bros[0]['mv_mainTitle']
-        warner_s = warner_bros[0]['mv_imdbCode']
+        warner_media = warner_bros[0]["mv_mainTitle"]
+        warner_s = warner_bros[0]["mv_imdbCode"]
     return warner_media, warner_s
-
-
-
-
