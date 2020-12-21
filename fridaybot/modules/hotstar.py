@@ -46,7 +46,7 @@ async def hotstar(event):
         except Exception as s:
             await event.edit("**Errors : **" + s)
             return
-        if r.status_code == 200:
+        if meke.status_code == 200:
             hits += 1
             hits_dict.append(f"{email}:{password}")
         else:
@@ -57,4 +57,5 @@ async def hotstar(event):
     await borg.send_file(
         event.chat_id, "hits.txt", caption=f"**HITS :** `{hits}` \n**BAD :** `{bads}`"
     )
+    os.remove(starky)
     os.remove("hits.txt")
