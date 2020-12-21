@@ -25,10 +25,10 @@ async def hotstar(event):
     bads = 0
     lol = await event.get_reply_message()
     starky = await borg.download_media(lol.media, Config.TMP_DOWNLOAD_DIRECTORY)
-    afile = open(starky, "r")
-    for line in afile:
+    file = open(starky, "r")
+    lines = file.readlines()
+    for line in lines:
         stark_dict.append(line)
-        print(line)
     for i in stark_dict:
         starkm = i.split(":")
         email = starkm[0]
