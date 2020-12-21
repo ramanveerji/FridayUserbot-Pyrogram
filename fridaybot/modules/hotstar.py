@@ -43,7 +43,7 @@ async def hotstar(event):
         }
         try:
             meke = requests.post(url, data=json.dumps(payload), headers=headers)
-            print(f'{meke.text} {int(meke.status_code)}')
+            print(f"{meke.text} {int(meke.status_code)}")
         except Exception as s:
             await event.edit("**Errors : **" + str(s))
             return
