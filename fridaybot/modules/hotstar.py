@@ -51,6 +51,9 @@ async def hotstar(event):
             hits_dict.append(f"{email}:{password}")
         else:
             bads += 1
+    if len(hits_dict) < 0:
+        await event.edit('No Hits. ' + meke.text)
+        return
     with open("hits.txt", "w") as hitfile:
         for s in hits_dict:
             hitfile.write(s)
