@@ -20,7 +20,6 @@ import numpy as np
 import requests
 from PIL import Image, ImageDraw, ImageFont
 from telegraph import upload_file
-from xtreme_vision.Detection import Object_Detection
 from fridaybot import CMD_HELP
 from fridaybot.function import convert_to_image, crop_vid, runcmd
 from fridaybot.utils import friday_on_cmd, sudo_cmd
