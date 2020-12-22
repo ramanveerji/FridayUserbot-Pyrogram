@@ -335,7 +335,7 @@ async def recognize(message):
     img = await convert_to_image(event, borg)
     model = Object_Detection()
     model.Use_YOLOv4()
-    model.Detect_From_Image(input_path=img
+    model.Detect_From_Image(input_path=img,
                         output_path="./starkgangz/@fridayOT.jpg")
     await borg.send_file(event.chat_id, './starkgangz/@fridayOT.jpg')
     
