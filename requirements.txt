@@ -1,17 +1,5 @@
 Pillow
 pymediainfo
-https://storage.googleapis.com/tensorflow/mac/cpu/tensorflow-1.12.0-py3-none-any.whl
-keras
-matplotlib
-scikit-learn
-scikit-image
-imgaug
-labelme2coco
-progressbar2
-scipy
-h5py
-configobj
-xtreme-vision
 apscheduler
 git+https://github.com/gleitz/howdoi
 pokedex.py
