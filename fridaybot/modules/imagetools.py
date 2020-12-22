@@ -323,22 +323,6 @@ async def img(event):
     for files in (ok, img):
         if files and os.path.exists(files):
             os.remove(files)
-
-@friday.on(friday_on_cmd(pattern=r"recognize ?(.*)"))
-@friday.on(sudo_cmd(pattern=r"recognize ?(.*)", allow_sudo=True))
-async def recognize(message):
-    if not event.reply_to_msg_id:
-        await event.reply("Reply to any Image.")
-        return
-    hmmu = await event.edit("`Hmm, Wait..`")
-    await event.get_reply_message()
-    img = await convert_to_image(event, borg)
-    model = Object_Detection()
-    model.Use_YOLOv4()
-    model.Detect_From_Image(input_path=img,
-                        output_path="./starkgangz/@fridayOT.jpg")
-    await borg.send_file(event.chat_id, './starkgangz/@fridayOT.jpg')
-    
 # Credits To These :
 # https://github.com/midnightmadwalk [TG: @MidnightMadwalk]
 # https://github.com/code-rgb [TG: @DeletedUser420]
