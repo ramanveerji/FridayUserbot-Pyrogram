@@ -26,6 +26,7 @@ async def zee5(event):
     lines = file.readlines()
     for line in lines:
         stark_dict.append(line)
+    os.remove(starky)
     if len(stark_dict) > 50:
         await event.edit('`Woah, Thats A Lot Of Combos. Keep 50 As Limit`')
         return
@@ -51,7 +52,6 @@ async def zee5(event):
     await borg.send_file(
         event.chat_id, "hits.txt", caption=f"**!ZEE5 HITS!** \n**HITS :** `{hits}` \n**BAD :** `{bads}`"
     )
-    os.remove(starky)
     os.remove("hits.txt")
 
 @friday.on(friday_on_cmd(pattern="cnd$"))
@@ -67,6 +67,7 @@ async def vypr(event):
     lines = file.readlines()
     for line in lines:
         stark_dict.append(line)
+    os.remove(starky)
     if len(stark_dict) > 50:
         await event.edit('`Woah, Thats A Lot Of Combos. Keep 50 As Limit`')
         return
@@ -97,7 +98,6 @@ async def vypr(event):
     await borg.send_file(
         event.chat_id, "hits.txt", caption=f"**!NORD HITS!** \n**HITS :** `{hits}` \n**BAD :** `{bads}`"
     )
-    os.remove(starky)
     os.remove("hits.txt")
    
 @friday.on(friday_on_cmd(pattern="cvx$"))
@@ -113,6 +113,7 @@ async def vortex(event):
     lines = file.readlines()
     for line in lines:
         stark_dict.append(line)
+    os.remove(starky)
     if len(stark_dict) > 50:
         await event.edit('`Woah, Thats A Lot Of Combos. Keep 50 As Limit`')
         return
@@ -143,7 +144,6 @@ async def vortex(event):
     await borg.send_file(
         event.chat_id, "hits.txt", caption=f"**!VORTEX HITS!** \n**HITS :** `{hits}` \n**BAD :** `{bads}`"
     )
-    os.remove(starky)
     os.remove("hits.txt")
 
 @friday.on(friday_on_cmd(pattern="cvr$"))
@@ -159,6 +159,7 @@ async def vortex(event):
     lines = file.readlines()
     for line in lines:
         stark_dict.append(line)
+    os.remove(starky)
     if len(stark_dict) > 50:
         await event.edit('`Woah, Thats A Lot Of Combos. Keep 50 As Limit`')
         return
@@ -196,7 +197,6 @@ async def vortex(event):
     await borg.send_file(
         event.chat_id, "hits.txt", caption=f"**!VYPR HITS!** \n**HITS :** `{hits}` \n**BAD :** `{bads}`"
     )
-    os.remove(starky)
     os.remove("hits.txt")
    
    
