@@ -14,7 +14,6 @@
 
 import os
 from shutil import rmtree
-
 import cv2
 import numpy as np
 import requests
@@ -42,6 +41,7 @@ async def hmm(event):
         "./resources/imgcolour/colouregex.prototxt",
         "./resources/imgcolour/colorization_release_v2.caffemodel",
     )
+    
     pts = np.load("./resources/imgcolour/pts_in_hull.npy")
     class8 = net.getLayerId("class8_ab")
     conv8 = net.getLayerId("conv8_313_rh")
