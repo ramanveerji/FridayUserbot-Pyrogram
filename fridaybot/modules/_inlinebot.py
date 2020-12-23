@@ -5,7 +5,7 @@ from math import ceil
 
 import requests
 from telethon import Button, custom, events, functions
-from youtubesearchpython import SearchVideos
+from youtube-search-python import SearchVideos
 
 from fridaybot import ALIVE_NAME, CMD_HELP, CMD_LIST
 from fridaybot.modules import inlinestats
