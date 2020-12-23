@@ -248,3 +248,22 @@ async def _(event):
       await borg.send_file(event.chat_id, "goood.txt", caption=f"**PROXIES CHECKED**\n**GOOD PROXIES: ** {Counter}\n\n**CHECKED BY FRIDAY. GET YOUR OWN FRIDAY FROM @FRIDAYCHAT.**")
       os.remove(escobar)
       os.remove("goood.txt")
+
+
+CMD_HELP.update(
+    {
+        "cracking_tools": "**Cracking Tools**\
+\n\n**Syntax : **`.cz5 <reply to combo>`\
+\n**Usage :** Checks for Zee5 accounts from combo.\
+\n\n**Syntax : **`.cnd <reply to combo>`\
+\n**Usage :** Checks for VYPR accounts from combo.\
+\n\n**Syntax : **`.cvx <reply to combo>`\
+\n**Usage :** Checks for Vortex accounts from combo.\
+\n\n**Syntax : **`.cz5 <reply to combo>`\
+\n**Usage :** Checks for Zee5 accounts from combo.\
+\n\n**Syntax : **`.proxy <reply to proxies file>`\
+\n**Usage :** Checks for alive proxies."
+    }
+)
+
+
