@@ -135,3 +135,13 @@ async def _(event):
         silent=True,
     )
     await event.delete()
+
+
+
+CMD_HELP.update(
+    {
+        "superhero": "**Super Hero**\
+\n\n**Syntax : **`.hero <Hero/Villian name>`\
+\n**Usage :** Shows Stats Of The Given Hero Or Villian."
+    }
+)
