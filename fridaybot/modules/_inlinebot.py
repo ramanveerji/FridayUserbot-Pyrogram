@@ -337,7 +337,7 @@ async def inline_id_handler(event: events.InlineQuery.Event):
     testinput = event.pattern_match.group(1)
     urllib.parse.quote_plus(testinput)
     results = []
-    search = SearchVideos(f"{testinput}", offset=1, mode="dict", max_results=20)
+    search = VideosSearch(f"{testinput}", offset=1, mode="dict", max_results=20)
     mi = search.result()
     moi = mi["search_result"]
     if search == None:
