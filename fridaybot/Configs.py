@@ -12,6 +12,7 @@ if ENV:
         LOCATION = os.environ.get("LOCATION", None)
         OPEN_WEATHER_MAP_APPID = os.environ.get("OPEN_WEATHER_MAP_APPID", None)
         VIRUSTOTAL_API_KEY = os.environ.get("VIRUSTOTAL_API_KEY", None)
+        SUPERHERO_API_KEY = os.environ.get("SUPERHERO_API_KEY", None)
         AUTO_SPELL_FIX = os.environ.get("AUTO_SPELL_FIX", False)
         # Get your own ACCESS_KEY from http://api.screenshotlayer.com/api/capture
         SCREEN_SHOT_LAYER_ACCESS_KEY = os.environ.get(
