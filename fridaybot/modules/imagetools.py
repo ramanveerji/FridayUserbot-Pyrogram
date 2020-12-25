@@ -189,6 +189,14 @@ async def hmm(event):
     hmmu = await event.edit("hmm... Sending him to jail...🚶")
     await event.get_reply_message()
     img = await convert_to_image(event, borg)
+    sed = await event.get_reply_message()
+    if isinstance(sed.media, MessageMediaPhoto):
+        img = await borg.download_media(sed.media, sedpath)
+    elif "image" in sed.media.document.mime_type.split("/"):
+        img = await borg.download_media(sed.media, sedpath)
+    else:
+        await event.edit("Reply To Image")
+        return
     mon = "./resources/jail/hmm.png"
     foreground = Image.open(mon).convert("RGBA")
 
