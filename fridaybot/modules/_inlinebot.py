@@ -339,7 +339,8 @@ async def inline_id_handler(event: events.InlineQuery.Event):
     results = []
     search = VideosSearch(f"{testinput}", limit = 20)
     mi = search.result()
-    moi = mi["search_result"]
+    moi = mi["result"]
+    fk = 0
     if search == None:
         resultm = builder.article(
             title="No Results Found.",
@@ -357,7 +358,9 @@ async def inline_id_handler(event: events.InlineQuery.Event):
         fridayz = mio["id"]
         thums = mio["channel"]
         td = mio["duration"]
-        tw = mio["views"]
+        kk = moi[fk]
+        tw = kk["viewCount"]["text"]
+        fk = fk+1
         kekme = f"https://img.youtube.com/vi/{fridayz}/hqdefault.jpg"
         okayz = f"**Title :** `{thum}` \n**Link :** `{mo}` \n**Channel :** `{thums}` \n**Views :** `{tw}` \n**Duration :** `{td}`"
         hmmkek = f"Channel : {thums} \nDuration : {td} \nViews : {tw}"
