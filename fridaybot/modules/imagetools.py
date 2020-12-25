@@ -324,6 +324,7 @@ async def img(event):
     for files in (ok, img):
         if files and os.path.exists(files):
             os.remove(files)
+        event.delete()
 # Credits To These :
 # https://github.com/midnightmadwalk [TG: @MidnightMadwalk]
 # https://github.com/code-rgb [TG: @DeletedUser420]
