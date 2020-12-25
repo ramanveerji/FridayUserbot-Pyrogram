@@ -190,7 +190,7 @@ async def hmm(event):
     await event.get_reply_message()
     img = await convert_to_image(event, borg)
     sed = await event.get_reply_message()
-    img = await convert_to_image(message, borg)
+    img = await convert_to_image(event, borg)
     mon = "./resources/jail/hmm.png"
     foreground = Image.open(mon).convert("RGBA")
 
