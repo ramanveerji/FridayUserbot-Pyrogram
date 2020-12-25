@@ -61,6 +61,7 @@ async def _(event):
         
         await borg.send_file(event.chat_id, "book.txt", caption=f"**BOOKS GATHERED SUCCESSFULLY!\n\nBY FRIDAY. GET YOUR OWN FRIDAY FROM @FRIDAYCHAT.**")
         os.remove("book.txt")
+        await event.delete()
         
 
 
