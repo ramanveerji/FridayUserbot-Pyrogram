@@ -18,11 +18,11 @@ async def mstark(event):
     append_text = event.pattern_match.group(1)
     is_foot = True
     if event.is_group:
-        await event.edit("`No, LoL You Can't Set Channel Stickers In Groups, lol`")
+        await event.edit("`No, LoL You Can't Set Channel Post Appender In Groups, lol`")
         return
     if event.is_private:
         await event.edit(
-            "`No, LoL You Can't Set Channel Stickers In Private Chats, lol`"
+            "`No, LoL You Can't Set Channel Post Appender In Private Chats, lol`"
         )
         return
     if is_data_indbs(lul_id):
