@@ -321,6 +321,7 @@ async def img(event):
     file_name = "testpb.jpg"
     ok = "./starkgangz/" + file_name
     await borg.send_file(event.chat_id, ok)
+    os.remove(files)
     for files in (ok, img):
         if files and os.path.exists(files):
             os.remove(files)
