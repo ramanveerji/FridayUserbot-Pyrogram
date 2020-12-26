@@ -14,7 +14,8 @@
 
 import emoji
 from googletrans import Translator
-
+from google_trans_new import google_translator
+import requests
 
 @assistant_cmd("tr", is_args=True)
 async def _(event):
@@ -27,12 +28,12 @@ async def _(event):
         lan, text = input_str.split("|")
     else:
         await tgbot.send_message(
-            event.chat_id, "`.tr LanguageCode` as reply to a message"
+            event.chat_id, "`/tr LanguageCode` as reply to a message"
         )
         return
     text = emoji.demojize(text.strip())
     lan = lan.strip()
-    translator = Translator()
+    translator = google_translator()
     translated = translator.translate(text, dest=lan)
     after_tr_text = translated.text
     output_str = (
