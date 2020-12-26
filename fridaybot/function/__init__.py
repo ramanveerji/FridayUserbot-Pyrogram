@@ -14,7 +14,6 @@ import requests
 from bs4 import BeautifulSoup as bs
 from pymediainfo import MediaInfo
 from telethon.tl.types import MessageMediaPhoto
-
 BASE_URL = "https://isubtitles.org"
 from fridaybot.Configs import Config
 
