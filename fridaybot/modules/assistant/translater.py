@@ -16,6 +16,9 @@ import emoji
 from googletrans import Translator
 from google_trans_new import google_translator
 import requests
+from deep_translator import GoogleTranslator
+from googletrans import LANGUAGES
+from langdetect import detect
 
 @assistant_cmd("tr", is_args=True)
 async def _(event):
@@ -35,11 +38,18 @@ async def _(event):
     lan = lan.strip()
     translator = google_translator()
     translated = translator.translate(text, lang_tgt=lan)
-    after_tr_text = translated.text
-    output_str = (
-        f"**Translated By Friday Assistant Bot** \n"
-        f"Source {translated.src} \nTranslation {lan} \nWhat I Can Translate From This {after_tr_text}"
-    )
+    lmao_bruh = text
+    lmao = detect(text)
+    after_tr_text = lmao
+    source_lan = LANGUAGES[after_tr_text]
+    transl_lan = LANGUAGES[lan]
+    output_str = f"""**TRANSLATED SUCCESSFULLY**
+**Source ({source_lan})**:
+`{text}`
+
+**Translation ({transl_lan})**:
+`{translated}`"""
+      
     try:
         await tgbot.send_message(event.chat_id, output_str)
     except Exception:
