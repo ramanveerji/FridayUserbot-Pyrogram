@@ -393,6 +393,8 @@ CMD_HELP.update(
         \n**Usage :** makes a thug life meme image.\
         \n\n**Syntax : ** `.tig`\
         \n**Usage :** Makes a triggered gif of the replied image.\
+        \n\n**Syntax : ** `.spin <number between 1-6>`\
+        \n**Usage :** Spins The Given Image.\
         \n\n**Syntax : ** `.jail`\
         \n**Usage :** Makes a jail image of the replied image.\
         \n\n**Syntax : ** `.fgs searchtext;fake text`\
