@@ -121,7 +121,7 @@ async def download(target_file):
         await friday.edit("your file is larger than 32 mb.")
     try:
         await friday.edit(
-            f"<b><u> File Scan Request Complete</u></b>\n\n<b>Link of the report:-</b>\n{b}\n\nNote:- Please open the link after 5-10 minutes.",
+            f"<b><u> File Scan Request Complete</u></b>\n\n<b>Link of the report:-</b>\n{b}\n\nNote:- Please open the link after 5-10 minutes.\n\n<b>Virus Scan Completed By Friday\nGet Your Own Friday From @FRIDAYCHAT</b>",
             parse_mode="HTML",
         )
     except:
