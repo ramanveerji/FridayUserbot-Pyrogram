@@ -1,6 +1,6 @@
 from fridaybot.modules.sql_helper import warns_sql as sql
 from fridaybot.utils import friday_on_cmd
-
+from fridaybot import CMD_HELP
 
 @friday.on(friday_on_cmd(pattern="warn(?: |$)(.*)"))
 async def _s(event):
