@@ -388,7 +388,7 @@ async def spinshit(message):
 async def hmm(event):
     text = event.pattern_match.group(1)
     if not text:
-        await event.edit("No input found!  --__--")
+        await event.reply("No input found!  --__--")
         return
     if not event.reply_to_msg_id:
         await event.reply("Reply to any Image.")
