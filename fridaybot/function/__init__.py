@@ -16,6 +16,8 @@ from pymediainfo import MediaInfo
 from telethon.tl.types import MessageMediaPhoto
 BASE_URL = "https://isubtitles.org"
 from fridaybot.Configs import Config
+from zipfile import ZipFile
+import os
 
 sedpath = Config.TMP_DOWNLOAD_DIRECTORY
 from fridaybot import logging
@@ -40,7 +42,11 @@ async def runcmd(cmd: str) -> Tuple[str, str, int, int]:
         process.pid,
     )
 
-
+def unzip_file(zip_file, my_path):
+	with ZipFile(zip_file, 'r') as zipObj:
+        zipObj.extractall(my_path)
+    return my_path
+            
 async def progress(current, total, event, start, type_of_ps, file_name=None):
     """Generic progress_callback for uploads and downloads."""
     now = time.time()
