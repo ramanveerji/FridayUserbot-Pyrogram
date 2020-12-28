@@ -42,11 +42,19 @@ async def runcmd(cmd: str) -> Tuple[str, str, int, int]:
         process.pid,
     )
 
-def unzip_file(zip_file, my_path):
-	with ZipFile(zip_file, 'r') as zipObj:
-        zipObj.extractall(my_path)
-    return my_path
-            
+def unzip_file(zip_file, my_path, event):
+	if not zipfile.is_zipfile(zip_file):
+		await event.edit('`This is Not A Zip. Reply To Zip To Unzip It.`')
+		return
+	await event.edit('`Unzipping Your Files.`')
+	try:
+		with zipfile.ZipFile(file_name, 'r') as file:
+        		file.extractall(my_path)
+        except (zipfile.LargeZipFile, zipfile.BadZipFile):
+		await event.edit('`Either Zip is Corrupted Or Is Too Large.`')
+		return
+	return my_path
+		
 async def progress(current, total, event, start, type_of_ps, file_name=None):
     """Generic progress_callback for uploads and downloads."""
     now = time.time()
