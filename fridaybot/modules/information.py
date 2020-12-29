@@ -166,7 +166,7 @@ async def gibinfo(event):
         f"<b>- ID :</b> <i>{lolu.user.id}</i>\n"
         f"<b>- Bot :</b> <i>{lolu.user.bot}</i>\n"
         f"<b>- CAS Banned :</b> {reason} \n"
-        f"<b>- AntispamInc Banned :</b> {oki}"
+        f"<b>- Nospam+ Banned :</b> {oki}"
     )
     await event.edit(infomsg, parse_mode="HTML")
 
@@ -177,6 +177,6 @@ CMD_HELP.update(
 \n\n**Syntax : **`.info <mention a username/reply to a message>`\
 \n**Usage :** Gives you information about the username.\
 \n\n**Syntax : **`.wru <mention a username/reply to a message>`\
-\n**Usage :** Shows if the person is banned in antispaminc or not."
+\n**Usage :** Shows if the person is banned in NospamPlus or not."
     }
 )
