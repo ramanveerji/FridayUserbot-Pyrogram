@@ -1,4 +1,5 @@
 Pillow
+nospamplus
 pymediainfo
 apscheduler
 git+https://github.com/gleitz/howdoi
@@ -23,7 +24,6 @@ pydub
 quote
 lottie
 textblob
-nospamplus
 python-magic
 glitch_this
 PyGithub
