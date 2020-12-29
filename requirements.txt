@@ -23,7 +23,7 @@ pydub
 quote
 lottie
 textblob
-antispaminc
+nospamplus
 python-magic
 glitch_this
 PyGithub
