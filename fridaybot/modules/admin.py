@@ -597,7 +597,7 @@ async def get_users(show):
         remove("userslist.txt")
 
 
-@borg.on(admin_cmd(pattern="zombies(?: |$)(.*)")
+@borg.on(admin_cmd(pattern="zombies(?: |$)(.*)"))
 async def rm_deletedacc(show):
     con = show.pattern_match.group(1).lower()
     del_u = 0
