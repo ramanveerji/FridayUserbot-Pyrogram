@@ -137,6 +137,8 @@ def get_lst_of_files(input_directory, output_lst):
 CMD_HELP.update(
     {
         "unzipfile": "**Unzip File**\
+\n\n**Syntax : **`.zip <reply to file>`\
+\n**Usage :** zips given file."
 \n\n**Syntax : **`.unzip <reply to zip file>`\
 \n**Usage :** Unzips given zip file."
     }
