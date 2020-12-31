@@ -34,7 +34,6 @@ from fridaybot.modules.sql_helper.idadder_sql import (
     already_added,
     get_all_users,
 )
-from fridaybot.function import check_if_subbed
 
 @assistant_cmd("start", is_args=False)
 async def start(event):
