@@ -62,11 +62,6 @@ pm_caption += "[🇮🇳 Deploy FridayUserbot 🇮🇳](https://telegra.ph/FRIDA
 async def friday(alive):
     await alive.get_chat()
     """ For .alive command, check if the bot is running.  """
-    if Config.ALIVE_TEXT is None:
-        pass
-    else:
-        pm_caption=Config.ALIVE_TEXT
-
     await borg.send_file(alive.chat_id, PM_IMG, caption=pm_caption)
     await alive.delete()
 
