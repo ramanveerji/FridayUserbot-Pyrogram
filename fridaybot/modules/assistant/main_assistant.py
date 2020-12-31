@@ -33,7 +33,7 @@ from fridaybot.modules.sql_helper.idadder_sql import (
     already_added,
     get_all_users,
 )
-
+from fridaybot.function import check_if_subbed
 
 @assistant_cmd("start", is_args=False)
 async def start(event):
@@ -128,6 +128,12 @@ async def users(event):
 # Bot Permit.
 @tgbot.on(events.NewMessage(func=lambda e: e.is_private))
 async def all_messages_catcher(event):
+    if Config.SUB_TO_MSG_ASSISTANT:
+        lolbro = await check_if_subbed(Config.JTM_CHANNEL_ID, event, borg, event.sender_id)
+        if lolbro is False:
+            await event.reply(f"**Opps, I Couldn't Forward That Message To Owner. Please Join My Channel {Config.JMT_CHANNEL_USERNAME} First And Then Try Again!**")
+        else:
+            pass
     if is_he_added(event.sender_id):
         return
     if event.raw_text.startswith("/"):
