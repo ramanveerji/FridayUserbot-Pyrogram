@@ -350,11 +350,11 @@ async def apk_dl(app_name, path, event):
     final_path = f'{path}/{name}@FridayOT.apk'
     return final_path, name
 
-async def check_if_subbed(channel_id: int, event, stark, nibba_id: int):
+async def check_if_subbed(channel_id, event, bot):
     try:
-            result = await stark(
+            result = await bot(
                 functions.channels.GetParticipantRequest(
-                    channel=channel_id, user_id=nibba_id
+                    channel=channel_id, user_id=event.sender_id
                 )
             )
             if result.participant:
