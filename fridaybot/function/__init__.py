@@ -15,6 +15,10 @@ import webbrowser
 from bs4 import BeautifulSoup
 import requests
 from bs4 import BeautifulSoup as bs
+import re
+
+import telethon
+from telethon import Button, custom, events, functions
 from pymediainfo import MediaInfo
 from telethon.tl.types import MessageMediaPhoto
 
@@ -345,3 +349,15 @@ async def apk_dl(app_name, path, event):
     await event.edit('`Apk, Downloaded. Let me Upload It here.`')
     final_path = f'{path}/{name}@FridayOT.apk'
     return final_path, name
+
+async def check_if_subbed(channel_id: int, event, stark, nibba_id: int):
+    try:
+            result = await stark(
+                functions.channels.GetParticipantRequest(
+                    channel=channel_id, user_id=nibba_id
+                )
+            )
+            if result.participant:
+                return True
+    except telethon.errors.rpcerrorlist.UserNotParticipantError:
+        return False
