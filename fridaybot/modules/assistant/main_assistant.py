@@ -16,7 +16,8 @@ import io
 import os
 import re
 
-from telethon import Button, custom, events
+from telethon import Button, custom, events, function
+import telethon
 from telethon.tl.functions.users import GetFullUserRequest
 from telethon.utils import pack_bot_file_id
 
@@ -129,11 +130,15 @@ async def users(event):
 @tgbot.on(events.NewMessage(func=lambda e: e.is_private))
 async def all_messages_catcher(event):
     if Config.SUB_TO_MSG_ASSISTANT:
-        lolbro = await check_if_subbed(Config.JTM_CHANNEL_ID, event, bot)
-        if lolbro is False:
+        try:
+            result = await tgbot(
+                functions.channels.GetParticipantRequest(
+                    channel=Config.JTM_CHANNEL_ID, user_id=event.sender_id
+                )
+            )
+        except telethon.errors.rpcerrorlist.UserNotParticipantError:
             await event.reply(f"**Opps, I Couldn't Forward That Message To Owner. Please Join My Channel {Config.JTM_CHANNEL_USERNAME} First And Then Try Again!**")
-        else:
-            pass
+            return
     if is_he_added(event.sender_id):
         return
     if event.raw_text.startswith("/"):
