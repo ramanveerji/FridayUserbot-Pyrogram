@@ -129,7 +129,7 @@ async def users(event):
 @tgbot.on(events.NewMessage(func=lambda e: e.is_private))
 async def all_messages_catcher(event):
     if Config.SUB_TO_MSG_ASSISTANT:
-        lolbro = await check_if_subbed(Config.JTM_CHANNEL_ID, event, borg, event.sender_id)
+        lolbro = await check_if_subbed(Config.JTM_CHANNEL_ID, event, bot, event.sender_id)
         if lolbro is False:
             await event.reply(f"**Opps, I Couldn't Forward That Message To Owner. Please Join My Channel {Config.JTM_CHANNEL_USERNAME} First And Then Try Again!**")
         else:
