@@ -137,7 +137,8 @@ async def all_messages_catcher(event):
                 )
             )
         except telethon.errors.rpcerrorlist.UserNotParticipantError:
-            await event.reply(f"**Opps, I Couldn't Forward That Message To Owner. Please Join My Channel {Config.JTM_CHANNEL_USERNAME} First And Then Try Again!**")
+            await event.reply(f"**Opps, I Couldn't Forward That Message To Owner. Please Join My Channel First And Then Try Again!**",
+                             buttons = [Button.url("Join Channel 🇮🇳", Config.JTM_CHANNEL_USERNAME)])
             return
     if is_he_added(event.sender_id):
         return
