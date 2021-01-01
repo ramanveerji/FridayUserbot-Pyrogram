@@ -34,12 +34,12 @@ async def _(event):
     sed = 0
     oks = 0
     if input_chnnl == "all":
+        await event.edit("`Adding All Channel TO DB.`")
         addall = [
             d.entity
             for d in await event.client.get_dialogs()
             if (d.is_group or d.is_channel)
         ]
-        await event.edit("`Adding All Channel TO DB.")
         for i in addall:
             try:
                 if i.broadcast:
@@ -134,11 +134,6 @@ async def _(event):
                 total_count += 1
             except Exception as e:
                 total_errors += 1
-                errorno += f"{e} \n"
-        await borg.send_message(
-            loggy_grp,
-            f"Failed in {channelz.chat_id} Because Of Error : `{errorno}` \n\n",
-        )
     elif hmm.message.poll:
         await event.edit("Bruh, This Can't Be Broadcasted.")
         return
