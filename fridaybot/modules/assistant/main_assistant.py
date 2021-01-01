@@ -130,9 +130,11 @@ async def users(event):
 async def all_messages_catcher(event):
     if is_he_added(event.sender_id):
         return
+    if event.sender_id == bot.uid:
+        return
     if event.raw_text.startswith("/"):
-        pass
-    elif Config.SUB_TO_MSG_ASSISTANT:
+        return
+    if Config.SUB_TO_MSG_ASSISTANT:
         try:
             result = await tgbot(
                 functions.channels.GetParticipantRequest(
@@ -142,14 +144,10 @@ async def all_messages_catcher(event):
         except telethon.errors.rpcerrorlist.UserNotParticipantError:
             await event.reply(f"**Opps, I Couldn't Forward That Message To Owner. Please Join My Channel First And Then Try Again!**",
                              buttons = [Button.url("Join Channel 🇮🇳", Config.JTM_CHANNEL_USERNAME)])
-    elif event.sender_id == bot.uid:
-        return
-    else:
-        await event.get_sender()
-        sed = await event.forward_to(bot.uid)
-        # Add User To Database ,Later For Broadcast Purpose
-        # (C) @SpecHide
-        add_me_in_db(sed.id, event.sender_id, event.id)
+            return
+    await event.get_sender()
+    sed = await event.forward_to(bot.uid)
+    add_me_in_db(sed.id, event.sender_id, event.id)
 
 
 @tgbot.on(events.NewMessage(func=lambda e: e.is_private))
