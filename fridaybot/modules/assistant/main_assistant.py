@@ -128,7 +128,11 @@ async def users(event):
 # Bot Permit.
 @tgbot.on(events.NewMessage(func=lambda e: e.is_private))
 async def all_messages_catcher(event):
-    if Config.SUB_TO_MSG_ASSISTANT:
+    if is_he_added(event.sender_id):
+        return
+    if event.raw_text.startswith("/"):
+        pass
+    elif Config.SUB_TO_MSG_ASSISTANT:
         try:
             result = await tgbot(
                 functions.channels.GetParticipantRequest(
@@ -139,10 +143,6 @@ async def all_messages_catcher(event):
             await event.reply(f"**Opps, I Couldn't Forward That Message To Owner. Please Join My Channel First And Then Try Again!**",
                              buttons = [Button.url("Join Channel 🇮🇳", Config.JTM_CHANNEL_USERNAME)])
             return
-    if is_he_added(event.sender_id):
-        return
-    if event.raw_text.startswith("/"):
-        pass
     elif event.sender_id == bot.uid:
         return
     else:
