@@ -31,7 +31,7 @@ PyGithub
 pytesseract
 youtube-dl
 opencv-contrib-python
-telethon>=1.17
+telethon
 iplookup
 wget
 numpy
