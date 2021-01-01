@@ -49,4 +49,16 @@ Get Your Own Friday From @FRIDAYCHAT.</b></u>
         parse_mode="HTML",
     )
     await event.delete()
-    
+
+
+
+CMD_HELP.update(
+    {
+        "ekart_tracker": "**Ekat Tracker**\
+\n\n**Syntax : **`.ekart <Tracking-ID>`\
+\n**Usage :** Shows Details And Latest Updates About Given Tracking-ID."
+    }
+)
+
+
+
