@@ -16,11 +16,11 @@ async def _(event):
     dictionary = PyDictionary()
     a = dictionary.meaning(input_str)
     b = a.get("Noun")
-    chsaiujwal = ""
+    messi = ""
     for x in b:
-        chsaiujwal += x + "\n"
+        messi += x + "\n"
     await omg.edit(
-        f"<b> meaning of {input_str} is:-</b>\n {chsaiujwal}",
+        f"<b> meaning of {input_str} is:-</b>\n{messi}",
         parse_mode="HTML",
     )
 
