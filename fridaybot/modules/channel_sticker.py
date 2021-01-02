@@ -24,7 +24,7 @@ async def _m(event):
             "`No, LoL You Can't Set Channel Stickers In Private Chats, lol`"
         )
         return
-    if lmao.sticker.mime_type != "image/webp":
+    if not lmao.sticker:
         await event.edit("`Only Sticker Allowded.`")
         return
     if is_data_indb(id_s):
