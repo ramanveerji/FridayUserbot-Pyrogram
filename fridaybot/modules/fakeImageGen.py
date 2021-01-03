@@ -25,6 +25,7 @@ async def _(event):
     
     url = "https://thispersondoesnotexist.com/image"
     response = requests.get(url)
+    await event.edit("Creating a fake face for you... 🌚")
     if response.status_code == 200:
       with open("FRIDAYOT.jpg", 'wb') as f:
         f.write(response.content)
