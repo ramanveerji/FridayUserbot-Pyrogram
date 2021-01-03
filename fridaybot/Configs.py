@@ -13,6 +13,7 @@ if ENV:
         ALIVE_TEXT = os.environ.get("ALIVE_TEXT", None)
         OPEN_WEATHER_MAP_APPID = os.environ.get("OPEN_WEATHER_MAP_APPID", None)
         VIRUSTOTAL_API_KEY = os.environ.get("VIRUSTOTAL_API_KEY", None)
+        GPLINKS_API_KEY = os.environ.get("GPLINKS_API_KEY", None)
         SUPERHERO_API_KEY = os.environ.get("SUPERHERO_API_KEY", None)
         FOOTBALL_API_KEY = os.environ.get("FOOTBALL_API_KEY", None)
         SUB_TO_MSG_ASSISTANT = os.environ.get("SUB_TO_MSG_ASSISTANT", False)
