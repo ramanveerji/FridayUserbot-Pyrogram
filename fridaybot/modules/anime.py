@@ -11,11 +11,13 @@ async def _(event):
     input_str = event.pattern_match.group(1)
     ommhg = await event.reply("Searching For Anime.....")
     lmao = input_str.split(":", 1)
-    site = lmao[1]
-    lol = lmao[0]
-    if site==None:
+    try:
+       site = lmao[1]
+    except:
        site = "twist.moe"
        await ommhg.edit("Please Provide Site Name From Next Time. Now Continuing With Default Site.")
+
+    lol = lmao[0]
     why = site.lower()
 
     Twist = get_anime_class(why)
