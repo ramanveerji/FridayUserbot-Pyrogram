@@ -11,8 +11,8 @@ async def _(event):
     input_str = event.pattern_match.group(1)
     ommhg = await event.reply("Searching For Anime.....")
     lmao = input_str.split(":", 1)
-    site = lmao[0]
-    lol = lmao[1]
+    site = lmao[1]
+    lol = lmao[0]
     if site==None:
        site = "twist.moe"
        await ommhg.edit("Please Provide Site Name From Next Time. Now Continuing With Default Site.")
@@ -45,9 +45,9 @@ async def _(event):
 CMD_HELP.update(
     {
         "anime": "**Anime**\
-\n\n**Syntax : **`.anime <site name:Amime Name>`\
+\n\n**Syntax : **`.anime <Amime Name:site Name>`\
 \n**Usage :** Automatically Gets Streaming Link Of The Anime.\
-\n**Example :** `.anime twist.moe:one piece`\
+\n**Example :** `.anime one piece:twist.moe`\
 \n**Note** :** Get Site names list from [Here](https://devsexpoanime.netlify.app/)."
     }
 )
