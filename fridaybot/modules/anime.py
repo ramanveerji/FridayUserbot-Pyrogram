@@ -9,13 +9,17 @@ async def _(event):
     if event.fwd_from:
         return
     input_str = event.pattern_match.group(1)
+    ommhg = await event.reply("Searching For Anime.....")
     lmao = input_str.split(":", 1)
     site = lmao[0]
     lol = lmao[1]
     why = site.lower()
 
     Twist = get_anime_class(why)
-    search = Twist.search(lol)
+    try:
+       search = Twist.search(lol)
+    except:
+       await ommhg.edit("Please Try Different Site. Given Site Is Down.")
 
     title1 = search[0].title
     url1 = search[0].url
