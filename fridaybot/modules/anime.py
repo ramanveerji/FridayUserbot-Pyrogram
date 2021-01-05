@@ -15,7 +15,7 @@ async def _(event):
        site = lmao[1]
     except:
        site = "twist.moe"
-       await ommhg.edit("Please Provide Site Name From Next Time. Now Continuing With Default Site.")
+       await event.reply("Please Provide Site Name From Next Time. Now Continuing With Default Site.")
 
     lol = lmao[0]
     why = site.lower()
