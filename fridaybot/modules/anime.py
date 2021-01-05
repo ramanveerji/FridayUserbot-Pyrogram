@@ -14,7 +14,8 @@ async def _(event):
     site = lmao[0]
     lol = lmao[1]
     if site==None:
-       await event.edit("Please Provide Site Name. Get It From https://devsexpoanime.netlify.app/")
+       site = "twist.moe"
+       await ommhg.edit("Please Provide Site Name From Next Time. Now Continuing With Default Site.")
     why = site.lower()
 
     Twist = get_anime_class(why)
