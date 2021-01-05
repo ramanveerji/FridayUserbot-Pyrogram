@@ -339,9 +339,9 @@ CMD_HELP.update(
 \n\n**Syntax : **`.cz5 <reply to combo>`\
 \n**Usage :** Checks for Zee5 accounts from combo.\
 \n\n**Syntax : **`.cnd <reply to combo>`\
-\n**Usage :** Checks for Voot accounts from combo.\
-\n\n**Syntax : **`.cvt <reply to combo>`\
 \n**Usage :** Checks for VYPR accounts from combo.\
+\n\n**Syntax : **`.cvt <reply to combo>`\
+\n**Usage :** Checks for Voot accounts from combo.\
 \n\n**Syntax : **`.cvx <reply to combo>`\
 \n**Usage :** Checks for Vortex accounts from combo.\
 \n\n**Syntax : **`.cz5 <reply to combo>`\
