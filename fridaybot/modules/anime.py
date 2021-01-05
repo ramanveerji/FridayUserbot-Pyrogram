@@ -13,6 +13,8 @@ async def _(event):
     lmao = input_str.split(":", 1)
     site = lmao[0]
     lol = lmao[1]
+    if site==None:
+       await event.edit("Please Provide Site Name. Get It From https://devsexpoanime.netlify.app/")
     why = site.lower()
 
     Twist = get_anime_class(why)
@@ -45,6 +47,6 @@ CMD_HELP.update(
 \n\n**Syntax : **`.anime <site name:Amime Name>`\
 \n**Usage :** Automatically Gets Streaming Link Of The Anime.\
 \n**Example :** `.anime twist.moe:one piece`\
-\n**Note** :** Get Site names list from [Here](https://fridayanime.netlify.app/)."
+\n**Note** :** Get Site names list from [Here](https://devsexpoanime.netlify.app/)."
     }
 )
