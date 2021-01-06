@@ -86,11 +86,10 @@ async def _(event):
         try:
             await borg.send_message(chnnl_grp, "/joinfed " + teamz.feds)
             await borg.send_message(chnnl_grp, "/fban " + lol_s)
-            await asyncio.sleep(5)
         except:
             errors += 1
     await event.edit(
-        f"**Fban Completed** \nTotal Sucess : `{errors - len_feds}` \nTotal Errors : `{errors}` \nTotal Fed Len : `{len_feds}`"
+        f"**Fban Completed** \nTotal Sucess : `{len_feds - errors}` \nTotal Errors : `{errors}` \nTotal Fed Len : `{len_feds}`"
     )
 
 
@@ -113,9 +112,8 @@ async def _(event):
         try:
             await borg.send_message(chnnl_grp, "/joinfed " + teamz.feds)
             await borg.send_message(chnnl_grp, "/unfban " + lol_s)
-            await asyncio.sleep(5)
         except:
             errors += 1
     await event.edit(
-        f"**Un-Fban Completed** \nTotal Sucess : `{errors - len_feds}` \nTotal Errors : `{errors}` \nTotal Fed Len : `{len_feds}`"
+        f"**Un-Fban Completed** \nTotal Sucess : `{len_feds - errors}` \nTotal Errors : `{errors}` \nTotal Fed Len : `{len_feds}`"
     )
