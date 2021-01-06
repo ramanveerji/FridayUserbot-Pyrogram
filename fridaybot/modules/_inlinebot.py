@@ -145,7 +145,7 @@ async def rip(event):
 @tgbot.on(events.callbackquery.CallbackQuery(data=re.compile(b"yt_dl_(.*)")))
 async def rip(event):
     yt_dl_data = event.data_match.group(1)
-    link_s = f"https://youtu.be/{yt_dl_data}"
+    link_s = yt_dl_data
     if event.query.user_id != bot.uid:
         text = f"Please Get Your Own Friday And Don't Waste My Resources"
         await event.answer(text, alert=True)
@@ -391,7 +391,7 @@ async def inline_id_handler(event: events.InlineQuery.Event):
                 file=kekme,
                 text=okayz,
                 buttons=[
-                [custom.Button.inline("Download Test", data=f"yt_dl_{fridayz}")],
+                [custom.Button.inline("Download Test", data=f"yt_dl_{mo}")],
                 [Button.switch_inline("Search Again", query="yt ", same_peer=True)],
                 ]
               )
