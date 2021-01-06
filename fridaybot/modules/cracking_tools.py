@@ -47,10 +47,8 @@ async def zee5(event):
     bads = 0
     lol = await event.get_reply_message()
     starky = await borg.download_media(lol.media, Config.TMP_DOWNLOAD_DIRECTORY)
-    file = open(starky, "r")
-    lines = file.readlines()
-    for line in lines:
-        stark_dict.append(line)
+    with open(starky) as f:
+        stark_dict = f.read().splitlines()
     os.remove(starky)
     if len(stark_dict) > 50:
         await event.edit('`Woah, Thats A Lot Of Combos. Keep 50 As Limit`')
