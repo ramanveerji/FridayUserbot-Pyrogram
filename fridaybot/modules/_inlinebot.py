@@ -401,6 +401,7 @@ async def inline_id_handler(event: events.InlineQuery.Event):
                 [Button.switch_inline("Search Again", query="yt ", same_peer=True)],
                 ]
               )
+        )
     await event.answer(results)
 
 
