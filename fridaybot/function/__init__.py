@@ -1,6 +1,17 @@
 import requests
 from bs4 import BeautifulSoup
-
+from telethon.tl.types import DocumentAttributeAudio
+from youtube_dl import YoutubeDL
+from youtube_dl.utils import (
+    ContentTooShortError,
+    DownloadError,
+    ExtractorError,
+    GeoRestrictedError,
+    MaxDownloadsReached,
+    PostProcessingError,
+    UnavailableVideoError,
+    XAttrMetadataError,
+)
 import asyncio
 import json
 import math
@@ -362,3 +373,95 @@ async def check_if_subbed(channel_id, event, bot):
                 return True
     except telethon.errors.rpcerrorlist.UserNotParticipantError:
         return False
+    
+async def _ytdl(link_s, is_it, event, tgbot):
+    await friday.edit("`Ok Downloading This Video / Audio`")
+    if is_it:
+        opts = {
+            "format": "bestaudio",
+            "addmetadata": True,
+            "key": "FFmpegMetadata",
+            "writethumbnail": True,
+            "prefer_ffmpeg": True,
+            "geo_bypass": True,
+            "nocheckcertificate": True,
+            "postprocessors": [
+                {
+                    "key": "FFmpegExtractAudio",
+                    "preferredcodec": "mp3",
+                    "preferredquality": "480",
+                }
+            ],
+            "outtmpl": "%(id)s.mp3",
+            "quiet": True,
+            "logtostderr": False,
+        }
+        video = False
+        song = True
+    else:
+        opts = {
+            "format": "best",
+            "addmetadata": True,
+            "key": "FFmpegMetadata",
+            "prefer_ffmpeg": True,
+            "geo_bypass": True,
+            "nocheckcertificate": True,
+            "postprocessors": [
+                {"key": "FFmpegVideoConvertor", "preferedformat": "mp4"}
+            ],
+            "outtmpl": "%(id)s.mp4",
+            "logtostderr": False,
+            "quiet": True,
+        }
+        song = False
+        video = True
+    try:
+        with YoutubeDL(opts) as ytdl:
+            ytdl_data = ytdl.extract_info(url)
+    except Exception as e:
+        await event.edit(f"**Failed To Download** \n**Error :** `{str(e)}`")
+        return
+    c_time = time.time()
+    if song:
+        await event.edit(
+            f"**Uploading Audio**\
+        \n**Title :** `{ytdl_data['title']}`\
+        \n**Video Uploader :** `{ytdl_data['uploader']}`"
+        )
+        await tgbot.edit_message(
+            event.chat_id,
+            file=f"{ytdl_data['id']}.mp3",
+            supports_streaming=True,
+            attributes=[
+                DocumentAttributeAudio(
+                    duration=int(ytdl_data["duration"]),
+                    title=str(ytdl_data["title"]),
+                    performer=str(ytdl_data["uploader"]),
+                )
+            ],
+            progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
+                progress(
+                    d, t, event, c_time, "**Uploading This Media**", f"{ytdl_data['title']}.mp3"
+                )
+            ),
+        )
+        os.remove(f"{ytdl_data['id']}.mp3")
+                  
+    elif video:
+        await friday.edit(
+            f"**Uploading Video**\
+        \n**Title :** `{ytdl_data['title']}`\
+        \n**Video Uploader :** `{ytdl_data['uploader']}`"
+        )
+        await tgbot.edit_message(
+            event.chat_id,
+            file=f"{ytdl_data['id']}.mp4",
+            supports_streaming=True,
+            text=ytdl_data["title"],
+            progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
+                progress(
+                    d, t, event, c_time, "Uploading..", f"{ytdl_data['title']}.mp4"
+                )
+            ),
+        )
+        os.remove(f"{ytdl_data['id']}.mp4")
