@@ -111,6 +111,7 @@ async def _(event):
         return
     for teamz in all_fed:
         try:
+            await borg.send_message(chnnl_grp, "/joinfed " + teamz.feds)
             await borg.send_message(chnnl_grp, "/unfban " + lol_s)
             await asyncio.sleep(5)
         except:
