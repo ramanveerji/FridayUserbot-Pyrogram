@@ -144,7 +144,7 @@ async def rip(event):
         
 @tgbot.on(events.callbackquery.CallbackQuery(data=re.compile(b"yt_dl_(.*)")))
 async def rip(event):
-    yt_dl_data = event.pattern_match.data(1).split("|", 1)
+    yt_dl_data = event.data_match.group(1).split("|", 1)
     link_s = yt_dl_data[0]
     is_video = yt_dl_data[1]
     if event.query.user_id != bot.uid:
