@@ -71,7 +71,7 @@ async def zee5(event):
         return
     with open("hits.txt", "w") as hitfile:
         for s in hits_dict:
-            hitfile.write(s + ' | @FridayOT')
+            hitfile.write(s + ' | @FridayOT\n')
     await borg.send_file(
         event.chat_id, "hits.txt", caption=f"**!ZEE5 HITS!** \n**HITS :** `{hits}` \n**BAD :** `{bads}`"
     )
