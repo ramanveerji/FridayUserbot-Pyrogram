@@ -86,10 +86,8 @@ async def vypr(event):
     bads = 0
     lol = await event.get_reply_message()
     starky = await borg.download_media(lol.media, Config.TMP_DOWNLOAD_DIRECTORY)
-    file = open(starky, "r")
-    lines = file.readlines()
-    for line in lines:
-        stark_dict.append(line)
+    with open(starky) as f:
+        stark_dict = f.read().splitlines()
     os.remove(starky)
     if len(stark_dict) > 50:
         await event.edit('`Woah, Thats A Lot Of Combos. Keep 50 As Limit`')
@@ -132,10 +130,8 @@ async def vortex(event):
     bads = 0
     lol = await event.get_reply_message()
     starky = await borg.download_media(lol.media, Config.TMP_DOWNLOAD_DIRECTORY)
-    file = open(starky, "r")
-    lines = file.readlines()
-    for line in lines:
-        stark_dict.append(line)
+    with open(starky) as f:
+        stark_dict = f.read().splitlines()
     os.remove(starky)
     if len(stark_dict) > 50:
         await event.edit('`Woah, Thats A Lot Of Combos. Keep 50 As Limit`')
@@ -178,10 +174,8 @@ async def vortex(event):
     bads = 0
     lol = await event.get_reply_message()
     starky = await borg.download_media(lol.media, Config.TMP_DOWNLOAD_DIRECTORY)
-    file = open(starky, "r")
-    lines = file.readlines()
-    for line in lines:
-        stark_dict.append(line)
+    with open(starky) as f:
+        stark_dict = f.read().splitlines()
     os.remove(starky)
     if len(stark_dict) > 50:
         await event.edit('`Woah, Thats A Lot Of Combos. Keep 50 As Limit`')
@@ -275,10 +269,8 @@ async def voot(event):
     bady = 0
     lol = await event.get_reply_message()
     humm = await borg.download_media(lol.media, Config.TMP_DOWNLOAD_DIRECTORY)
-    file = open(humm, "r")
-    lines = file.readlines()
-    for line in lines:
-        normal_dict.append(line)
+    with open(hummu) as f:
+        normal_dict = f.read().splitlines()
     os.remove(humm)
     if len(normal_dict) > 50:
         await event.edit('`Woah, Thats A Lot Of Combos. Keep 50 As Limit`')
