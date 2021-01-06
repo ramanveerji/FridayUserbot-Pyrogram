@@ -4,6 +4,7 @@ import urllib
 from math import ceil
 from re import findall
 from search_engine_parser import GoogleSearch
+from fridaybot.function import _ytdl
 from urllib.parse import quote
 import requests
 from telethon import Button, custom, events, functions
@@ -143,7 +144,7 @@ async def rip(event):
         
 @tgbot.on(events.callbackquery.CallbackQuery(data=re.compile(b"yt_dl_(.*)")))
 async def rip(event):
-    yt_dl_data = event.pattern_match.group(1).split("|", 1)
+    yt_dl_data = event.pattern_match.data(1).split("|", 1)
     link_s = yt_dl_data[0]
     is_video = yt_dl_data[1]
     if event.query.user_id != bot.uid:
@@ -390,15 +391,16 @@ async def inline_id_handler(event: events.InlineQuery.Event):
         okayz = f"**Title :** `{thum}` \n**Link :** `{mo}` \n**Channel :** `{thums}` \n**Views :** `{tw}` \n**Duration :** `{td}`"
         hmmkek = f"Channel : {thums} \nDuration : {td} \nViews : {tw}"
         results.append(
-            await event.builder.article(
+            await event.builder.photo(
+                file=kekme,
                 title=thum,
                 description=hmmkek,
                 text=okayz,
-                buttons=Button.switch_inline(
-                    "Search Again", query="yt ", same_peer=True
-                ),
-            )
-        )
+                buttons=[
+                [custom.Button.inline("Download Test", data=f"yt_dl_{mo}|{friday}")],
+                [Button.switch_inline("Search Again", query="yt ", same_peer=True)],
+                ]
+              )
     await event.answer(results)
 
 
