@@ -2,7 +2,8 @@ import os
 import re
 import urllib
 from math import ceil
-
+from re import findall
+from search_engine_parser import GoogleSearch
 import requests
 from telethon import Button, custom, events, functions
 from youtubesearchpython import VideosSearch
@@ -451,3 +452,49 @@ async def inline_handler(event):
             ],
         )
         await event.answer([resulte])
+        
+@tgbot.on(events.InlineQuery(pattern=r"google (.*)"))
+async def inline_id_handler(event: events.InlineQuery.Event):
+    builder = event.builder
+    if event.query.user_id != bot.uid:
+        resultm = builder.article(
+            title="Not Allowded",
+            text=f"You Can't Use This Bot. \nDeploy Friday To Get Your Own Assistant, Repo Link [Here](https://github.com/StarkGang/FridayUserbot)",
+        )
+        await event.answer([resultm])
+        return
+    results = []
+    match = event.pattern_match.group(1)
+    page = findall(r"page=\d+", match)
+    try:
+        page = page[0]
+        page = page.replace("page=", "")
+        match = match.replace("page=" + page[0], "")
+    except IndexError:
+        page = 1
+    search_args = (str(match), int(page))
+    gsearch = GoogleSearch()
+    gresults = await gsearch.async_search(*search_args)
+    msg = ""
+    for i in range(len(gresults["links"])):
+        try:
+            title = gresults["titles"][i]
+            link = gresults["links"][i]
+            desc = gresults["descriptions"][i]
+            okiknow = f"[{title}]({link})\n`{desc}`"
+            results.append(
+                await event.builder.article(
+                    title=okiknow,
+                    description=desc,
+                    text=okiknow,
+                    buttons=[
+                        Button.switch_inline(
+                            "Search Again", query="google ", same_peer=True
+                        )
+                    ],
+                )
+            )
+        except IndexError:
+            break
+    await event.answer(results)
+    
