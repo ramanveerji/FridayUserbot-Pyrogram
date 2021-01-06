@@ -4,6 +4,7 @@ import urllib
 from math import ceil
 from re import findall
 from search_engine_parser import GoogleSearch
+from urllib.parse import quote
 import requests
 from telethon import Button, custom, events, functions
 from youtubesearchpython import VideosSearch
