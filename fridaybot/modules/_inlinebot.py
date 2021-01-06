@@ -535,3 +535,62 @@ async def inline_id_handler(event: events.InlineQuery.Event):
       else:
         pass
     await event.answer(results)
+    
+@tgbot.on(events.InlineQuery(pattern=r"xkcd (.*)"))
+async def inline_id_handler(event: events.InlineQuery.Event):
+    builder = event.builder
+    if event.query.user_id != bot.uid:
+        resultm = builder.article(
+            title="- Not Allowded -",
+            text=f"You Can't Use This Bot. \nDeploy Friday To Get Your Own Assistant, Repo Link [Here](https://github.com/StarkGang/FridayUserbot)",
+        )
+        await event.answer([resultm])
+        return
+    results = []
+    input_str = event.pattern_match.group(1)
+    xkcd_id = None
+    if input_str:
+        if input_str.isdigit():
+            xkcd_id = input_str
+        else:
+            xkcd_search_url = "https://relevantxkcd.appspot.com/process?"
+            queryresult = requests.get(
+                xkcd_search_url, params={"action": "xkcd", "query": quote(input_str)}
+            ).text
+            xkcd_id = queryresult.split(" ")[2].lstrip("\n")
+    if xkcd_id is None:
+        xkcd_url = "https://xkcd.com/info.0.json"
+    else:
+        xkcd_url = "https://xkcd.com/{}/info.0.json".format(xkcd_id)
+    r = requests.get(xkcd_url)
+    if r.ok:
+        data = r.json()
+        year = data.get("year")
+        month = data["month"].zfill(2)
+        day = data["day"].zfill(2)
+        xkcd_link = "https://xkcd.com/{}".format(data.get("num"))
+        safe_title = data.get("safe_title")
+        data.get("transcript")
+        alt = data.get("alt")
+        img = data.get("img")
+        data.get("title")
+        output_str = """
+[XKCD]({})
+Title: {}
+Alt: {}
+Day: {}
+Month: {}
+Year: {}""".format(
+            xkcd_link, safe_title, alt, day, month, year
+        )
+        lul_k = builder.photo(
+            file=img,
+            text=output_str
+        )
+        await event.answer([lul_k])
+    else:
+        resultm = builder.article(
+            title="- No Results :/ -",
+            text=f"No Results Found !"
+        )
+        await event.answer([resultm])
