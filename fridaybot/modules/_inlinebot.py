@@ -483,9 +483,10 @@ async def inline_id_handler(event: events.InlineQuery.Event):
             link = gresults["links"][i]
             desc = gresults["descriptions"][i]
             okiknow = f"[{title}]({link})\n`{desc}`"
+            tutm = f"[{title}]({link})\n{desc}"
             results.append(
                 await event.builder.article(
-                    title=okiknow,
+                    title=tutm,
                     description=desc,
                     text=okiknow,
                     buttons=[
