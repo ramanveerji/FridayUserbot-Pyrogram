@@ -144,7 +144,7 @@ async def rip(event):
         
 @tgbot.on(events.callbackquery.CallbackQuery(data=re.compile(b"yt_dl_(.*)")))
 async def rip(event):
-    yt_dl_data = event.data_match.group(1)
+    yt_dl_data = event.data_match.group(1).decode("UTF-8")
     link_s = yt_dl_data
     if event.query.user_id != bot.uid:
         text = f"Please Get Your Own Friday And Don't Waste My Resources"
