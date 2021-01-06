@@ -375,7 +375,7 @@ async def check_if_subbed(channel_id, event, bot):
         return False
     
 async def _ytdl(link_s, is_it, event, tgbot):
-    await friday.edit("`Ok Downloading This Video / Audio`")
+    await event.edit("`Ok Downloading This Video / Audio`")
     if is_it:
         opts = {
             "format": "bestaudio",
@@ -448,7 +448,7 @@ async def _ytdl(link_s, is_it, event, tgbot):
         os.remove(f"{ytdl_data['id']}.mp3")
                   
     elif video:
-        await friday.edit(
+        await event.edit(
             f"**Uploading Video**\
         \n**Title :** `{ytdl_data['title']}`\
         \n**Video Uploader :** `{ytdl_data['uploader']}`"
