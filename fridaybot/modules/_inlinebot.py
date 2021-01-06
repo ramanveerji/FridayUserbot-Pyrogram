@@ -482,11 +482,10 @@ async def inline_id_handler(event: events.InlineQuery.Event):
             title = gresults["titles"][i]
             link = gresults["links"][i]
             desc = gresults["descriptions"][i]
-            okiknow = f"[{title}]({link})\n`{desc}`"
-            tutm = f"[{title}]({link})\n{desc}"
+            okiknow = f"**GOOGLE - SEARCH** \n[{title}]({link})\n\n`{desc}`"
             results.append(
                 await event.builder.article(
-                    title=tutm,
+                    title=title,
                     description=desc,
                     text=okiknow,
                     buttons=[
@@ -521,7 +520,7 @@ async def inline_id_handler(event: events.InlineQuery.Event):
     oik = ""
     for vid in data.videos:
       if ok <= 5:
-        lul_m = (f"**Video title :** `{vid.title}` \n**Video link :** `https://www.pornhub.com/view_video.php?viewkey={vid.video_id}`")
+        lul_m = (f"**PORN-HUB SEARCH** \n**Video title :** `{vid.title}` \n**Video link :** `https://www.pornhub.com/view_video.php?viewkey={vid.video_id}`")
         results.append(
                 await event.builder.article(
                     title=vid.title,
