@@ -431,19 +431,7 @@ async def _ytdl(url, is_it, event, tgbot):
         await tgbot.edit_message(
             event.chat_id,
             file=f"{ytdl_data['id']}.mp3",
-            supports_streaming=True,
-            attributes=[
-                DocumentAttributeAudio(
-                    duration=int(ytdl_data["duration"]),
-                    title=str(ytdl_data["title"]),
-                    performer=str(ytdl_data["uploader"]),
-                )
-            ],
-            progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
-                progress(
-                    d, t, event, c_time, "**Uploading This Media**", f"{ytdl_data['title']}.mp3"
-                )
-            ),
+            text=ytdl_data["title"]
         )
         os.remove(f"{ytdl_data['id']}.mp3")
                   
@@ -456,12 +444,6 @@ async def _ytdl(url, is_it, event, tgbot):
         await tgbot.edit_message(
             event.chat_id,
             file=f"{ytdl_data['id']}.mp4",
-            supports_streaming=True,
-            text=ytdl_data["title"],
-            progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
-                progress(
-                    d, t, event, c_time, "Uploading..", f"{ytdl_data['title']}.mp4"
-                )
-            ),
+            text=ytdl_data["title"]
         )
         os.remove(f"{ytdl_data['id']}.mp4")
