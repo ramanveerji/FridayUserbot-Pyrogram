@@ -428,8 +428,7 @@ async def _ytdl(url, is_it, event, tgbot):
         \n**Title :** `{ytdl_data['title']}`\
         \n**Video Uploader :** `{ytdl_data['uploader']}`"
         )
-        await tgbot.edit_message(
-            event.chat_id,
+        await event.edit(
             file=f"{ytdl_data['id']}.mp3",
             text=ytdl_data["title"]
         )
@@ -441,8 +440,7 @@ async def _ytdl(url, is_it, event, tgbot):
         \n**Title :** `{ytdl_data['title']}`\
         \n**Video Uploader :** `{ytdl_data['uploader']}`"
         )
-        await tgbot.edit_message(
-            event.chat_id,
+        await event.edit(
             file=f"{ytdl_data['id']}.mp4",
             text=ytdl_data["title"]
         )
