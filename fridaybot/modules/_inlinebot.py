@@ -389,8 +389,6 @@ async def inline_id_handler(event: events.InlineQuery.Event):
         results.append(
             await event.builder.photo(
                 file=kekme,
-                title=thum,
-                description=hmmkek,
                 text=okayz,
                 buttons=[
                 [custom.Button.inline("Download Test", data=f"yt_dl_{fridayz}")],
