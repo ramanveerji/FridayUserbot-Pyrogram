@@ -429,7 +429,7 @@ async def _ytdl(url, is_it, event, tgbot):
         \n**Video Uploader :** `{ytdl_data['uploader']}`"
         )
         await event.edit(
-            file=f"{ytdl_data["title"]}@FridayOT.mp3",
+            file=f"{ytdl_data['title']}@FridayOT.mp3",
             text=ytdl_data["title"]
         )
         os.remove(f"{ytdl_data['id']}.mp3")
@@ -441,7 +441,7 @@ async def _ytdl(url, is_it, event, tgbot):
         \n**Video Uploader :** `{ytdl_data['uploader']}`"
         )
         await event.edit(
-            file=f"{ytdl_data["title"]}@FridayOT.mp4",
+            file=f"{ytdl_data['title']}@FridayOT.mp4",
             text=ytdl_data["title"]
         )
         os.remove(f"{ytdl_data['id']}.mp4")
