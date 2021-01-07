@@ -396,10 +396,12 @@ async def inline_id_handler(event: events.InlineQuery.Event):
         okayz = f"**Title :** `{stark_name}` \n**Link :** `{kek}` \n**Channel :** `{stark_chnnl}` \n**Views :** `{stark_views}` \n**Duration :** `{total_stark}`"
         hmmkek = f"Video Name : {stark_name} \nChannel : {stark_chnnl} \nDuration : {total_stark} \nViews : {stark_views}"
         results.append(
-            await event.builder.photo(
+            await event.builder.document(
                 file=kekme,
+                title=stark_name,
                 description=hmmkek,
                 text=okayz,
+                include_media=True,
                 buttons=[
                 [custom.Button.inline("Download Video", data=f"yt_vid_{mo}")],
                 [custom.Button.inline("Download Audio", data=f"yt_dla_{mo}")],
