@@ -372,8 +372,7 @@ async def inline_id_handler(event: events.InlineQuery.Event):
     urllib.parse.quote_plus(testinput)
     results = []
     moi = YoutubeSearch(testinput, max_results=20).to_dict()
-    fk = 0
-    if not search:
+    if not moi:
         resultm = builder.article(
             title="No Results Found.",
             description="Check Your Spelling / Keyword",
@@ -402,6 +401,7 @@ async def inline_id_handler(event: events.InlineQuery.Event):
                 text=okayz,
                 buttons=[
                 [custom.Button.inline("Download Video", data=f"yt_vid_{mo}")],
+                [custom.Button.inline("Download Audio", data=f"yt_dla_{mo}")],
                 [Button.switch_inline("Search Again", query="yt ", same_peer=True)],
                 ]
               )
