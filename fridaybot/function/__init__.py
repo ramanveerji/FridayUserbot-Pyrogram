@@ -429,9 +429,9 @@ async def _ytdl(url, is_it, event, tgbot):
         \n**Video Uploader :** `{ytdl_data['uploader']}`"
         )
         yt_new_path = sedpath + f"{ytdl_data['name']}@FridayOT.mp3"
-        os.rename(f"{ytdl_data['id']}@FridayOT.mp3", yt_new_path)
+        os.rename(f"{ytdl_data['id']}.mp3", yt_new_path)
         await event.edit(
-            file=f"yt_new_path,
+            file=yt_new_path,
             text=ytdl_data["title"]
         )
         os.remove(yt_new_path)
@@ -443,7 +443,7 @@ async def _ytdl(url, is_it, event, tgbot):
         \n**Video Uploader :** `{ytdl_data['uploader']}`"
         )
         yt_new_path = sedpath + f"{ytdl_data['name']}@FridayOT.mp4"
-        os.rename(f"{ytdl_data['id']}@FridayOT.mp4", yt_new_path)
+        os.rename(f"{ytdl_data['id']}.mp4", yt_new_path)
         await event.edit(
             file=yt_new_path,
             text=ytdl_data["title"]
