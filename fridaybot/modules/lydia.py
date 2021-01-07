@@ -31,7 +31,7 @@ if Var.LYDIA_API_KEY:
     lydia = LydiaAI(api_client)
 
 
-@command(pattern="^.repcf", outgoing=True)
+@borg.on(admin_cmd(pattern='rcf$')
 async def repcf(event):
     if event.fwd_from:
         return
@@ -47,7 +47,7 @@ async def repcf(event):
         await event.edit(str(e))
 
 
-@command(pattern="^.addcf", outgoing=True)
+@borg.on(admin_cmd(pattern='addcf$')
 async def addcf(event):
     if event.fwd_from:
         return
@@ -73,7 +73,7 @@ async def addcf(event):
         await event.edit("Reply to a user to activate Lydia AI on them")
 
 
-@command(pattern="^.remcf", outgoing=True)
+@borg.on(admin_cmd(pattern='remcf$')
 async def remcf(event):
     if event.fwd_from:
         return
