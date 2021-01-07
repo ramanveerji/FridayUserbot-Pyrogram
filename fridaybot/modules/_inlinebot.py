@@ -165,15 +165,6 @@ async def rip(event):
     is_it = False
     ok = await _ytdl(link_s, is_it, event, tgbot)
     
-@tgbot.on(events.callbackquery.CallbackQuery(data=re.compile(b"ph_dl_(.*)")))
-async def rip(event):
-    link_s = event.pattern_match.group(1)
-    if event.query.user_id != bot.uid:
-        text = f"Please Get Your Own Friday And Don't Waste My Resources."
-        await event.answer(text, alert=True)
-        return
-    ok = await _phdl(link_s, event, tgbot)
-    
 @tgbot.on(events.callbackquery.CallbackQuery(data=re.compile(b"dontspamnigga")))
 async def rip(event):
     if event.query.user_id == bot.uid:
@@ -371,7 +362,7 @@ async def inline_id_handler(event: events.InlineQuery.Event):
     testinput = event.pattern_match.group(1)
     urllib.parse.quote_plus(testinput)
     results = []
-    moi = YoutubeSearch(testinput, max_results=20).to_dict()
+    moi = YoutubeSearch(testinput, max_results=9).to_dict()
     if not moi:
         resultm = builder.article(
             title="No Results Found.",
@@ -403,8 +394,8 @@ async def inline_id_handler(event: events.InlineQuery.Event):
                 text=okayz,
                 include_media=True,
                 buttons=[
-                [custom.Button.inline("Download Video", data=f"yt_vid_{mo}")],
-                [custom.Button.inline("Download Audio", data=f"yt_dla_{mo}")],
+                [custom.Button.inline("Download Video - mp4", data=f"yt_vid_{mo}")],
+                [custom.Button.inline("Download Audio - mp3", data=f"yt_dla_{mo}")],
                 [Button.switch_inline("Search Again", query="yt ", same_peer=True)],
                 ]
               )
