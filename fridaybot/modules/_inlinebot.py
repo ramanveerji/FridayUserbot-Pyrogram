@@ -3,6 +3,7 @@ import re
 import urllib
 from math import ceil
 from re import findall
+from youtube_search import YoutubeSearch
 from search_engine_parser import GoogleSearch
 from fridaybot.function import _ytdl
 from urllib.parse import quote
@@ -142,7 +143,7 @@ async def rip(event):
         txt = "You Can't View My Masters Stats"
         await event.answer(txt, alert=True)
         
-@tgbot.on(events.callbackquery.CallbackQuery(data=re.compile(b"yt_dl_(.*)")))
+@tgbot.on(events.callbackquery.CallbackQuery(data=re.compile(b"yt_dla_(.*)")))
 async def rip(event):
     yt_dl_data = event.data_match.group(1).decode("UTF-8")
     link_s = yt_dl_data
@@ -151,6 +152,17 @@ async def rip(event):
         await event.answer(text, alert=True)
         return
     is_it = True
+    ok = await _ytdl(link_s, is_it, event, tgbot)
+    
+@tgbot.on(events.callbackquery.CallbackQuery(data=re.compile(b"yt_vid_(.*)")))
+async def rip(event):
+    yt_dl_data = event.data_match.group(1).decode("UTF-8")
+    link_s = yt_dl_data
+    if event.query.user_id != bot.uid:
+        text = f"Please Get Your Own Friday And Don't Waste My Resources"
+        await event.answer(text, alert=True)
+        return
+    is_it = False
     ok = await _ytdl(link_s, is_it, event, tgbot)
     
 @tgbot.on(events.callbackquery.CallbackQuery(data=re.compile(b"ph_dl_(.*)")))
@@ -359,11 +371,9 @@ async def inline_id_handler(event: events.InlineQuery.Event):
     testinput = event.pattern_match.group(1)
     urllib.parse.quote_plus(testinput)
     results = []
-    search = VideosSearch(f"{testinput}", limit = 20)
-    mi = search.result()
-    moi = mi["result"]
+    moi = YoutubeSearch(testinput, max_results=20).to_dict()
     fk = 0
-    if search == None:
+    if not search:
         resultm = builder.article(
             title="No Results Found.",
             description="Check Your Spelling / Keyword",
@@ -374,24 +384,24 @@ async def inline_id_handler(event: events.InlineQuery.Event):
         )
         await event.answer([resultm])
         return
-    for mio in moi:
-        mo = mio["link"]
-        thum = mio["title"]
-        fridayz = mio["id"]
-        thums = mio["channel"]
-        td = mio["duration"]
-        kk = moi[fk]
-        tw = kk["viewCount"]["text"]
-        fk = fk+1
+    for moon in moi:
+        hmm = moon["id"]
+        kek = f"https://www.youtube.com/watch?v={hmm}"
+        stark_name = moon["title"]
+        stark_chnnl = moon["channel"]
+        total_stark = moon["duration"]
+        stark_views = moon["views"]
+        lol_desc = moon["long_desc"]
         kekme = f"https://img.youtube.com/vi/{fridayz}/hqdefault.jpg"
-        okayz = f"**Title :** `{thum}` \n**Link :** `{mo}` \n**Channel :** `{thums}` \n**Views :** `{tw}` \n**Duration :** `{td}`"
-        hmmkek = f"Channel : {thums} \nDuration : {td} \nViews : {tw}"
+        okayz = f"**Title :** `{stark_name}` \n**Link :** `{kek}` \n**Channel :** `{stark_chnnl}` \n**Views :** `{stark_views}` \n**Duration :** `{total_stark}`"
+        hmmkek = f"Video Name : {stark_name} \nChannel : {stark_chnnl} \nDuration : {total_stark} \nViews : {stark_views}"
         results.append(
             await event.builder.photo(
                 file=kekme,
+                description=hmmkek,
                 text=okayz,
                 buttons=[
-                [custom.Button.inline("Download Test", data=f"yt_dl_{mo}")],
+                [custom.Button.inline("Download Video", data=f"yt_vid_{mo}")],
                 [Button.switch_inline("Search Again", query="yt ", same_peer=True)],
                 ]
               )
