@@ -443,7 +443,7 @@ async def _ytdl(url, is_it, event, tgbot):
             file=f"{ytdl_data['title']}.mp4",
             progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
                 progress(
-                    d, t, v_url, c_time, "**Uploading To TG**", f"{ytdl_data['title']}.mp4"
+                    d, t, event, c_time, "**Uploading To TG**", f"{ytdl_data['title']}.mp4"
                 )
             ),
         )
