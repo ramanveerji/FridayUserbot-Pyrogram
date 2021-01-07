@@ -430,13 +430,6 @@ async def _ytdl(url, is_it, event, tgbot):
         )
         lol_m = await tgbot.upload_file(
             file=f"{ytdl_data['title']}.mp3",
-            attributes=[
-                DocumentAttributeAudio(
-                    duration=int(ytdl_data["duration"]),
-                    title=str(ytdl_data["title"]),
-                    performer=str(ytdl_data["uploader"]),
-                )
-            ],
             progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
                 progress(
                     d, t, event, c_time, "**Uploading Audio To TG**", f"{ytdl_data['title']}.mp3"
