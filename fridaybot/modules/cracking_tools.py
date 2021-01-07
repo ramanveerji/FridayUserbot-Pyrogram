@@ -430,6 +430,8 @@ CMD_HELP.update(
 \n**Usage :** Checks for VYPR accounts from combo.\
 \n\n**Syntax : **`.cvt <reply to combo>`\
 \n**Usage :** Checks for Voot accounts from combo.\
+\n\n**Syntax : **`.cab <reply to combo>`\
+\n**Usage :** Checks for Altbalaji accounts from combo.\
 \n\n**Syntax : **`.cvx <reply to combo>`\
 \n**Usage :** Checks for Vortex accounts from combo.\
 \n\n**Syntax : **`.cz5 <reply to combo>`\
