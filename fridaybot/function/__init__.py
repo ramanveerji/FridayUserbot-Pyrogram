@@ -392,7 +392,7 @@ async def _ytdl(url, is_it, event, tgbot):
                     "preferredquality": "480",
                 }
             ],
-            "outtmpl": "%(id)s.mp3",
+            "outtmpl": "%(title)s.mp3",
             "quiet": True,
             "logtostderr": False,
         }
@@ -409,7 +409,7 @@ async def _ytdl(url, is_it, event, tgbot):
             "postprocessors": [
                 {"key": "FFmpegVideoConvertor", "preferedformat": "mp4"}
             ],
-            "outtmpl": "%(id)s.mp4",
+            "outtmpl": "%(title)s.mp4",
             "logtostderr": False,
             "quiet": True,
         }
@@ -429,19 +429,26 @@ async def _ytdl(url, is_it, event, tgbot):
         \n**Video Uploader :** `{ytdl_data['uploader']}`"
         )
         await event.edit(
-            file=f"{ytdl_data['id']}.mp3",
+            file=f"{ytdl_data['title']}.mp3",
             text=f"{ytdl_data['title']} \n**Uploaded Using @FRidayOt**"
         )
-        os.remove(f"{ytdl_data['id']}.mp3")
-                  
+        os.remove(f"{ytdl_data['title']}.mp3")
     elif video:
         await event.edit(
             f"**Uploading Video**\
         \n**Title :** `{ytdl_data['title']}`\
         \n**Video Uploader :** `{ytdl_data['uploader']}`"
         )
+        hmmo = await tgbot.upload_file(
+            file=f"{ytdl_data['title']}.mp4",
+            progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
+                progress(
+                    d, t, v_url, c_time, "**Uploading To TG**", f"{ytdl_data['title']}.mp4"
+                )
+            ),
+        )
         await event.edit(
-            file=f"{ytdl_data['id']}.mp3",
+            file=hmmo,
             text=f"{ytdl_data['title']} \n**Uploaded Using @FRidayOt**"
         )
-        os.remove(f"{ytdl_data['id']}.mp3")
+        os.remove(f"{ytdl_data['title']}.mp4")
