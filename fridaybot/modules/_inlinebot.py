@@ -385,6 +385,7 @@ async def inline_id_handler(event: events.InlineQuery.Event):
         return
     for moon in moi:
         hmm = moon["id"]
+        mo = f"https://www.youtube.com/watch?v={hmm}"
         kek = f"https://www.youtube.com/watch?v={hmm}"
         stark_name = moon["title"]
         stark_chnnl = moon["channel"]
