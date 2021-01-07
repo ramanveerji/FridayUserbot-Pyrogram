@@ -12,16 +12,18 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 
-import asyncio
+import asyncio, coffeehouse
 
 from coffeehouse.api import API
 from coffeehouse.lydia import LydiaAI
 from telethon import events
 
 from fridaybot import CMD_HELP
+from var import Var
 
 # Non-SQL Mode
 ACC_LYDIA = {}
+SESSION_ID = {}
 
 if Var.LYDIA_API_KEY:
     api_key = Var.LYDIA_API_KEY
@@ -36,10 +38,10 @@ async def repcf(event):
     await event.edit("Processing...")
     try:
         session = lydia.create_session()
-        session.id
+        session_id = session.id
         reply = await event.get_reply_message()
         msg = reply.text
-        text_rep = session.think_thought(msg)
+        text_rep = session.think_thought((session_id, msg))
         await event.edit("💫 {0}".format(text_rep))
     except Exception as e:
         await event.edit(str(e))
@@ -55,10 +57,13 @@ async def addcf(event):
     reply_msg = await event.get_reply_message()
     if reply_msg:
         session = lydia.create_session()
-        session.id
+        session_id = session.id
         if reply_msg.from_id is None:
             return await event.edit("Invalid user type.")
-        ACC_LYDIA.update({(event.chat_id & reply_msg.from_id): session})
+        ACC_LYDIA.update({str(event.chat_id) + " " + str(reply_msg.from_id): session})
+        SESSION_ID.update(
+            {str(event.chat_id) + " " + str(reply_msg.from_id): session_id}
+        )
         await event.edit(
             "Lydia successfully (re)enabled for user: {} in chat: {}".format(
                 str(reply_msg.from_id), str(event.chat_id)
@@ -77,7 +82,8 @@ async def remcf(event):
     await event.edit("Processing...")
     reply_msg = await event.get_reply_message()
     try:
-        del ACC_LYDIA[event.chat_id & reply_msg.from_id]
+        del ACC_LYDIA[str(event.chat_id) + " " + str(reply_msg.from_id)]
+        del SESSION_ID[str(event.chat_id) + " " + str(reply_msg.from_id)]
         await event.edit(
             "Lydia successfully disabled for user: {} in chat: {}".format(
                 str(reply_msg.from_id), str(event.chat_id)
@@ -91,10 +97,11 @@ async def remcf(event):
 async def user(event):
     event.text
     try:
-        session = ACC_LYDIA[event.chat_id & event.sender_id]
+        session = ACC_LYDIA[str(event.chat_id) + " " + str(event.from_id)]
+        session_id = SESSION_ID[str(event.chat_id) + " " + str(event.from_id)]
         msg = event.text
         async with event.client.action(event.chat_id, "typing"):
-            text_rep = session.think_thought(msg)
+            text_rep = session.think_thought((session_id, msg))
             wait_time = 0
             for i in range(len(text_rep)):
                 wait_time = wait_time + 0.1
@@ -110,6 +117,8 @@ CMD_HELP.update(
 \n\n**Syntax : **`.addcf <reply to user>`\
 \n**Usage :** Enables Lydia ai on the user.\
 \n\n**Syntax : **`.remcf <reply to user>`\
-\n**Usage :** Disables AI Lydia on the user."
+\n**Usage :** Disables AI Lydia on the user.\
+\n\n**Syntax : **`.repcf <reply to user>`\
+\n**Usage :** Auto reply on the user."
     }
 )
