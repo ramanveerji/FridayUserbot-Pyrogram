@@ -428,8 +428,24 @@ async def _ytdl(url, is_it, event, tgbot):
         \n**Title :** `{ytdl_data['title']}`\
         \n**Video Uploader :** `{ytdl_data['uploader']}`"
         )
-        await event.edit(
+        lol_m = await tgbot.upload_file(
             file=f"{ytdl_data['title']}.mp3",
+            supports_streaming=True,
+            attributes=[
+                DocumentAttributeAudio(
+                    duration=int(ytdl_data["duration"]),
+                    title=str(ytdl_data["title"]),
+                    performer=str(ytdl_data["uploader"]),
+                )
+            ],
+            progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
+                progress(
+                    d, t, event, c_time, "**Uploading To TG**", f"{ytdl_data['title']}.mp3"
+                )
+            ),
+        )
+        await event.edit(
+            file=lol_m,
             text=f"{ytdl_data['title']} \n**Uploaded Using @FRidayOt**"
         )
         os.remove(f"{ytdl_data['title']}.mp3")
@@ -441,6 +457,7 @@ async def _ytdl(url, is_it, event, tgbot):
         )
         hmmo = await tgbot.upload_file(
             file=f"{ytdl_data['title']}.mp4",
+            supports_streaming=True,
             progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
                 progress(
                     d, t, event, c_time, "**Uploading To TG**", f"{ytdl_data['title']}.mp4"
