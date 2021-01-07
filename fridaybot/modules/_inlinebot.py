@@ -391,7 +391,7 @@ async def inline_id_handler(event: events.InlineQuery.Event):
         total_stark = moon["duration"]
         stark_views = moon["views"]
         lol_desc = moon["long_desc"]
-        kekme = f"https://img.youtube.com/vi/{fridayz}/hqdefault.jpg"
+        kekme = f"https://img.youtube.com/vi/{hmm}/hqdefault.jpg"
         okayz = f"**Title :** `{stark_name}` \n**Link :** `{kek}` \n**Channel :** `{stark_chnnl}` \n**Views :** `{stark_views}` \n**Duration :** `{total_stark}`"
         hmmkek = f"Video Name : {stark_name} \nChannel : {stark_chnnl} \nDuration : {total_stark} \nViews : {stark_views}"
         results.append(
@@ -452,37 +452,7 @@ async def inline_id_handler(event: events.InlineQuery.Event):
         )
     await event.answer(results)
 
-
-@tgbot.on(events.InlineQuery)  # pylint:disable=E0602
-async def inline_handler(event):
-    builder = event.builder
-    if event.query.user_id != bot.uid:
-        resultm = builder.article(
-            title="Not Allowded",
-            text=f"You Can't Use This Bot. \nDeploy Friday To Get Your Own Assistant, Repo Link [Here](https://github.com/StarkGang/FridayUserbot)",
-        )
-        await event.answer([resultm])
-        return
-    query = event.text
-    replied_user = await tgbot.get_me()
-    firstname = replied_user.username
-    if query == None:
-        resulte = builder.article(
-            title="Usage Guide.",
-            description="(C) @FridayOT",
-            text=f"**How To Use Me?** \n**Youtube :** `@{firstname} yt <query>` \n**Example :** `@{firstname} yt why we lose song` \n\n**Torrent :** `@{firstname} torrent <query>` \n**Example :** `@{firstname} torrent avengers endgame ` \n\n**JioSaavan :** `@{firstname} jm <query>` \n**Example :** `@{firstname} jm dilbaar`",
-            buttons=[
-                [Button.url("Contact Me", f"t.me/{firstname}")],
-                [Button.switch_inline("Search Youtube", query="yt ", same_peer=True)],
-                [
-                    Button.switch_inline(
-                        "Search Torrent", query="torrent ", same_peer=True
-                    )
-                ],
-                [Button.switch_inline("Search JioSaavn", query="jm ", same_peer=True)],
-            ],
-        )
-        await event.answer([resulte])
+    
         
 @tgbot.on(events.InlineQuery(pattern=r"google (.*)"))
 async def inline_id_handler(event: events.InlineQuery.Event):
