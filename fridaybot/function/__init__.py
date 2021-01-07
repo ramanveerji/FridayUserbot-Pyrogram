@@ -392,7 +392,7 @@ async def _ytdl(url, is_it, event, tgbot):
                     "preferredquality": "480",
                 }
             ],
-            "outtmpl": "%(title)s.mp3",
+            "outtmpl": "%(id)s.mp3",
             "quiet": True,
             "logtostderr": False,
         }
@@ -409,7 +409,7 @@ async def _ytdl(url, is_it, event, tgbot):
             "postprocessors": [
                 {"key": "FFmpegVideoConvertor", "preferedformat": "mp4"}
             ],
-            "outtmpl": "%(title)s.mp4",
+            "outtmpl": "%(id)s.mp4",
             "logtostderr": False,
             "quiet": True,
         }
@@ -429,7 +429,7 @@ async def _ytdl(url, is_it, event, tgbot):
         \n**Video Uploader :** `{ytdl_data['uploader']}`"
         )
         lol_m = await tgbot.upload_file(
-            file=f"{ytdl_data['title']}.mp3",
+            file=f"{ytdl_data['id']}.mp3",
             progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
                 progress(
                     d, t, event, c_time, "**Uploading Audio To TG**", f"{ytdl_data['title']}.mp3"
@@ -440,7 +440,7 @@ async def _ytdl(url, is_it, event, tgbot):
             file=lol_m,
             text=f"{ytdl_data['title']} \n**Uploaded Using @FRidayOt**"
         )
-        os.remove(f"{ytdl_data['title']}.mp3")
+        os.remove(f"{ytdl_data['id']}.mp3")
     elif video:
         await event.edit(
             f"**Uploading Video**\
@@ -448,7 +448,7 @@ async def _ytdl(url, is_it, event, tgbot):
         \n**Video Uploader :** `{ytdl_data['uploader']}`"
         )
         hmmo = await tgbot.upload_file(
-            file=f"{ytdl_data['title']}.mp4",
+            file=f"{ytdl_data['id']}.mp4",
             progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
                 progress(
                     d, t, event, c_time, "**Uploading Video To TG**", f"{ytdl_data['title']}.mp4"
@@ -459,4 +459,4 @@ async def _ytdl(url, is_it, event, tgbot):
             file=hmmo,
             text=f"{ytdl_data['title']} \n**Uploaded Using @FRidayOt**"
         )
-        os.remove(f"{ytdl_data['title']}.mp4")
+        os.remove(f"{ytdl_data['id']}.mp4")
