@@ -39,7 +39,10 @@ async def anti_spambot(event):
     if Config.ANTISPAM_FEATURE != "ENABLE":
         return
     user = await event.get_user()
-    juser = await event.client(GetFullUserRequest(int(user.id)))
+    try:
+        juser = await event.client(GetFullUserRequest(int(user.id)))
+    except:
+        return
     if "@date4ubot" in str(juser.about):
             try:
                 await bot.edit_permissions(
