@@ -36,7 +36,7 @@ async def gps(event):
         lat = response[0]["lat"]
         lon = response[0]["lon"]
         await reply_to_id.reply(
-            address, file=types.InputMediaGeoPoint(types.InputGeoPoint(lat, lon))
+            address, file=types.InputMediaGeoPoint(types.InputGeoPoint(float(lat), float(lon)))
         )
         await event.delete()
     except:
