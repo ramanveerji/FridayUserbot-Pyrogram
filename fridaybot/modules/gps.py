@@ -8,7 +8,8 @@ credits :@mrconfused
 
 from geopy.geocoders import Nominatim
 from telethon.tl import types
-
+import requests
+import urllib.parse
 from fridaybot import CMD_HELP
 from fridaybot.utils import edit_or_reply, friday_on_cmd, sudo_cmd
 
@@ -22,25 +23,24 @@ async def gps(event):
     reply_to_id = event.message
     if event.reply_to_msg_id:
         reply_to_id = await event.get_reply_message()
-    input_str = event.pattern_match.group(1)
+    address = event.pattern_match.group(1)
 
-    if not input_str:
+    if not address:
         return await starkislub.edit("what should i find give me location.")
 
     await starkislub.edit("finding")
 
-    geolocator = Nominatim(user_agent="catfridaybot")
-    geoloc = geolocator.geocode(input_str)
-
-    if geoloc:
-        lon = geoloc.longitude
-        lat = geoloc.latitude
+    url = 'https://nominatim.openstreetmap.org/search/' + urllib.parse.quote(address) +'?format=json'
+    response = requests.get(url).json()
+    try:
+        lat = response[0]["lat"]
+	lon = response[0]["lon"]
         await reply_to_id.reply(
             input_str, file=types.InputMediaGeoPoint(types.InputGeoPoint(lat, lon))
         )
         await event.delete()
-    else:
-        await starkislub.edit("i coudn't find it")
+    except:
+        await starkislub.edit("location not found. please try giving input with country.")
 
 
 CMD_HELP.update(
