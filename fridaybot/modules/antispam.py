@@ -42,6 +42,7 @@ async def anti_spambot(event):
                 await bot.edit_permissions(
                         event.chat_id, juser.user.id, view_messages=False
                     )
+                await event.reply("**Banned Porn Spammer Bot** \n**Powered By @FridayOT**")
             except:
                 return
                                     
