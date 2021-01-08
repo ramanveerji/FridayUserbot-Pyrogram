@@ -34,7 +34,7 @@ async def gps(event):
     response = requests.get(url).json()
     try:
         lat = response[0]["lat"]
-	lon = response[0]["lon"]
+        lon = response[0]["lon"]
         await reply_to_id.reply(
             input_str, file=types.InputMediaGeoPoint(types.InputGeoPoint(lat, lon))
         )
