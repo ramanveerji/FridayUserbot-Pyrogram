@@ -1,5 +1,5 @@
 from telethon.events import ChatAction
-
+from telethon import events
 from fridaybot import bot, sclient
 from fridaybot.Configs import Config
 
@@ -30,7 +30,21 @@ async def ok(event):
         else:
             pass
 
-
+@bot.on(events.ChatAction())
+async def anti_spambot(event):
+    if not event.user_joined and not event.user_added:
+        return
+    if Config.ANTISPAM_FEATURE != "ENABLE":
+        return
+    user = await event.get_user()
+    if "@date4ubot" in str(juser.about):
+            try:
+                await bot.edit_permissions(
+                        event.chat_id, juser.user.id, view_messages=False
+                    )
+            except:
+                return
+                                    
 @borg.on(ChatAction)
 async def dnamg(event):
     okbruh = await borg.get_me()
