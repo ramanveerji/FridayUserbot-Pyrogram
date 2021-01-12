@@ -1,18 +1,13 @@
 import os
-import numpy as np
 import requests
-from PIL import Image, ImageDraw, ImageFont
-from telegraph import upload_file
 from fridaybot import CMD_HELP
-from fridaybot.function import convert_to_image, crop_vid, runcmd
+from fridaybot.function import convert_to_image
 from fridaybot.utils import friday_on_cmd, sudo_cmd
 import json
 import requests
-
 sedpath = "./yandex/"
 if not os.path.isdir(sedpath):
     os.makedirs(sedpath)
-
 
 @friday.on(friday_on_cmd(pattern=r"yandex"))
 @friday.on(sudo_cmd(pattern=r"yandex", allow_sudo=True))
@@ -25,7 +20,6 @@ async def hmm(event):
     img = await convert_to_image(event, borg)
     sed = await event.get_reply_message()
     img = await convert_to_image(event, borg)
-    
     filePath = img
     searchUrl = 'https://yandex.ru/images/search'
     files = {'upfile': ('blob', open(filePath, 'rb'), 'image/jpeg')}
@@ -53,4 +47,12 @@ Get Your Own Friday From @FRIDAYCHAT.</b></u>
     )
     await event.delete()
     
-    
+
+CMD_HELP.update(
+    {
+        "yandex_reverse_img": "**Yandex Reverse Image search**\
+\n\n**Syntax : **`.yandex <reply to image>`\
+\n**Usage :** Reverse Searches The Image on yandex."
+    }
+)
+
