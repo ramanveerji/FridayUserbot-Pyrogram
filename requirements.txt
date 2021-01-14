@@ -1,15 +1,6 @@
 Pillow
 git+https://github.com/cher-nov/cryptg
 nospamplus
-scikit-image
-torch
-torchvision
-waitress
-tqdm
-scipy
-pymatting
-filetype
-hsh
 pymediainfo
 apscheduler
 git+https://github.com/gleitz/howdoi
