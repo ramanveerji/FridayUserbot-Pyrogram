@@ -448,7 +448,7 @@ def find_instance(items, class_or_tuple):
     return None
 
 def get_sticker_emoji(event)
-    reply_message = event.get_reply_message()
+    reply_message = await event.get_reply_message()
     try:
         final_emoji = reply_message.media.document.attributes[1].alt
     except:
