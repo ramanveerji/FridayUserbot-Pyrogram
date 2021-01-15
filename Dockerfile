@@ -9,6 +9,7 @@ RUN apt-get install -y\
     bzip2 \
     mpv \
     curl \
+    pavucontrol \
     tesseract-ocr \
     tesseract-ocr-eng \
     imagemagick \
