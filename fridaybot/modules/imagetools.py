@@ -227,16 +227,19 @@ async def lolmetrg(event):
     await event.edit("`Making Comment`")
     sed = await event.get_reply_message()
     hmm_s = await borg(GetFullUserRequest(sed.sender_id))
-    img = await borg.download_media(hmm_s.profile_photo, sedpath)
+    if not hmm_s.profile_photo:
+        imglink = 'https://telegra.ph/file/b9684cda357dfbe6f5748.jpg'
+    elif hmm_s.profile_photo:
+        img = await borg.download_media(hmm_s.profile_photo, sedpath)
+        url_s = upload_file(img)
+        imglink = f"https://telegra.ph{url_s[0]}"
     first_name = html.escape(hmm_s.user.first_name)
     if first_name is not None:
         first_name = first_name.replace("\u2060", "")
     if sed.text is None:
         comment = 'Give Some Text'
     else:
-        comment = sed.text
-    url_s = upload_file(img)
-    imglink = f"https://telegra.ph{url_s[0]}"
+        comment = sed.raw_text
     lolul = f"https://some-random-api.ml/canvas/youtube-comment?avatar={imglink}&username={first_name}&comment={comment}"
     r = requests.get(lolul)
     open("ytc.png", "wb").write(r.content)
