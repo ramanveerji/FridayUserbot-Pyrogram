@@ -33,6 +33,7 @@ async def _(event):
 async def _(event):
     if event.fwd_from:
         return
+    await event.delete()
     hmm_s = 'https://some-random-api.ml/meme'
     r = requests.get(url=hmm_s).json()
     image_s = r['image']
