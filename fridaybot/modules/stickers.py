@@ -57,14 +57,9 @@ async def _(event):
         user.username = user.id
     pack = 1
     userid = event.sender_id
-    if userid == 1263617196:
-        packname = f"@StarkGang Packs 🎭"
-        packshortname = "StarkGangPack"
-    else:
-        packname = f"@{user.username} KangPack {pack}"
-        packshortname = f"FRIDAY_{userid}_Pack"
+    packname = f"@{user.username} KangPack {pack}"
+    packshortname = f"FRIDAY_{userid}_Pack"
     await moods.edit("`This Sticker is Gonna Get Stolen.....`")
-
     is_a_s = is_it_animated_sticker(reply_message)
     file_ext_ns_ion = "@FRIDAYOT.png"
     uploaded_sticker = None
@@ -72,12 +67,8 @@ async def _(event):
         file = await borg.download_file(reply_message.media)
         file_ext_ns_ion = "AnimatedSticker.tgs"
         uploaded_sticker = await borg.upload_file(file, file_name=file_ext_ns_ion)
-        if userid == 813878981:
-            packname = f"StarkGang Ka Pack"
-            packshortname = "StarkGangisgreat"
-        else:
-            packname = f"@{user.username} KangPack {pack}"
-            packshortname = f"FRIDAY_{userid}"  # format: Uni_Borg_userid
+        packname = f"@{user.username} KangPack {pack}"
+        packshortname = f"FRIDAY_{userid}"  # format: Uni_Borg_userid
     else:
         sticker = await convert_to_image(event, borg)
         resize_image(sticker)
@@ -133,12 +124,6 @@ async def _(event):
                     prevv = int(pack) - 1
                     packname = f"{user.username}'s {pack}"
                     packshortname = f"Vol_{pack}_with_{user.username}"
-                    # if userid == 948408212:
-                    # packname = f"{user.username}'s {pack}"
-                    # packshortname = "Vol._{pack}_FRIDAY_ke_locker_me"
-                    # else:
-                    # packname = f"Vol._{pack}_FRIDAY{userid}"
-                    # packshortname = f"Vol._{pack}_Friday_{userid}_ns"
                     if not await stickerset_exists(bot_conv, packshortname):
                         await moods.edit(
                             "**Pack No. **"
