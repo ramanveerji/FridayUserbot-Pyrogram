@@ -74,9 +74,6 @@ async def _(event):
         else:
             packname = f"@{user.username} KangPack {pack}"
             packshortname = f"FRIDAY_{userid}"  # format: Uni_Borg_userid
-    elif not is_message_image(reply_message):
-        await moods.edit("Invalid message type")
-        return
     else:
         sticker = convert_to_image(event, borg)
         uploaded_sticker = await borg.upload_file(
