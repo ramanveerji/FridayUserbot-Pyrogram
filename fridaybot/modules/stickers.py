@@ -25,6 +25,10 @@ from telethon.tl.types import (
 from fridaybot import ALIVE_NAME, CMD_HELP
 from fridaybot.utils import edit_or_reply, friday_on_cmd, sudo_cmd
 
+sedpath = Config.TMP_DOWNLOAD_DIRECTORY
+if not os.path.isdir(sedpath):
+    os.makedirs(sedpath)
+
 DEFAULTUSER = str(ALIVE_NAME) if ALIVE_NAME else "Who is this"
 FILLED_UP_DADDY = "Invalid pack selected."
 
