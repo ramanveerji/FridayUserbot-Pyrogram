@@ -10,7 +10,7 @@ import os
 import zipfile
 from collections import defaultdict
 from io import BytesIO
-
+from fridaybot.function import convert_to_image, crop_vid, runcmd
 from PIL import Image
 from telethon.errors import MessageNotModifiedError
 from telethon.errors.rpcerrorlist import StickersetInvalidError
@@ -53,8 +53,6 @@ async def _(event):
         user.username = user.id
     pack = 1
     userid = event.sender_id
-    # packname = f"FRIDAY PACK"
-    # packshortname = f"FRIDAY_{userid}_ns"  # format: Uni_Borg_userid
     if userid == 1263617196:
         packname = f"@StarkGang Packs 🎭"
         packshortname = "StarkGangPack"
@@ -65,9 +63,9 @@ async def _(event):
 
     is_a_s = is_it_animated_sticker(reply_message)
     file_ext_ns_ion = "@FRIDAYOT.png"
-    file = await borg.download_file(reply_message.media)
     uploaded_sticker = None
     if is_a_s:
+        file = await borg.download_file(reply_message.media)
         file_ext_ns_ion = "AnimatedSticker.tgs"
         uploaded_sticker = await borg.upload_file(file, file_name=file_ext_ns_ion)
         if userid == 813878981:
@@ -80,12 +78,10 @@ async def _(event):
         await moods.edit("Invalid message type")
         return
     else:
-        with BytesIO(file) as mem_file, BytesIO() as sticker:
-            resize_image(mem_file, sticker)
-            sticker.seek(0)
-            uploaded_sticker = await borg.upload_file(
-                sticker, file_name=file_ext_ns_ion
-            )
+        sticker = convert_to_image(event, borg)
+        uploaded_sticker = await borg.upload_file(
+            sticker, file_name=file_ext_ns_ion
+        )
 
     await moods.edit("`Inviting This Sticker To Your Pack 🚶`")
 
