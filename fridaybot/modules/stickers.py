@@ -76,12 +76,12 @@ async def _(event):
             packshortname = f"FRIDAY_{userid}"  # format: Uni_Borg_userid
     else:
         sticker = await convert_to_image(event, borg)
+        resize_image(sticker)
+        ok = sedpath + "/" + "@FridayOT.png"
         uploaded_sticker = await borg.upload_file(
-            sticker, file_name=file_ext_ns_ion
+            ok, file_name=file_ext_ns_ion
         )
-
     await moods.edit("`Inviting This Sticker To Your Pack 🚶`")
-
     async with borg.conversation("@Stickers") as bot_conv:
         now = datetime.datetime.now()
         dt = now + datetime.timedelta(minutes=1)
@@ -400,7 +400,7 @@ async def stickerset_exists(conv, setname):
         return False
 
 
-def resize_image(image, save_locaton):
+def resize_image(image):
     """Copyright Rhyse Simpson:
     https://github.com/skittles9823/SkittBot/blob/master/tg_bot/modules/stickers.py
     """
@@ -423,7 +423,9 @@ def resize_image(image, save_locaton):
         im = im.resize(sizenew)
     else:
         im.thumbnail(maxsize)
-    im.save(save_locaton, "PNG")
+    file_name = "@FridayOT.png"
+    ok = sedpath + "/" + file_name
+    im.save(ok, "PNG")
 
 
 def progress(current, total):
