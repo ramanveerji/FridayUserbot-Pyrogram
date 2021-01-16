@@ -85,6 +85,7 @@ async def _(event):
         uploaded_sticker = await borg.upload_file(
             ok, file_name=file_ext_ns_ion
         )
+        os.remove(sticker)
     await moods.edit("`Inviting This Sticker To Your Pack 🚶`")
     async with borg.conversation("@Stickers") as bot_conv:
         now = datetime.datetime.now()
