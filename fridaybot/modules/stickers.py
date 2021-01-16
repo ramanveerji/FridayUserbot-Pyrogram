@@ -75,7 +75,7 @@ async def _(event):
             packname = f"@{user.username} KangPack {pack}"
             packshortname = f"FRIDAY_{userid}"  # format: Uni_Borg_userid
     else:
-        sticker = convert_to_image(event, borg)
+        sticker = await convert_to_image(event, borg)
         uploaded_sticker = await borg.upload_file(
             sticker, file_name=file_ext_ns_ion
         )
