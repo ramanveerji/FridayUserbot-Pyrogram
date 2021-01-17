@@ -83,3 +83,4 @@ youtube-search
 password_strength
 pyjokes
 cryptocompare
+cryptg
