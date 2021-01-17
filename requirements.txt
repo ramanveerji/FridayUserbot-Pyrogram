@@ -1,11 +1,11 @@
 Pillow
-cryptg
 nospamplus
 pymediainfo
 apscheduler
 howdoi
 pyseoanalyzer
 pokedex.py
+faker
 deep_translator
 pornhub-api
 countryinfo
@@ -43,7 +43,6 @@ aiohttp
 bs4
 coffeehouse
 cowpy
-cryptg
 emoji
 gTTS-token>=1.1.3
 gTTS>=2.0.1
