@@ -43,7 +43,7 @@ async def hi(event):
 CMD_HELP.update(	
     {	
         "fakegen": "**Fake information Generator**\	
-\n\n**Syntax : **`.fakegen`\	
-\n**Usage :** Automatically generates fake information."	
+        \n\n**Syntax : **`.fakegen`\	
+        \n**Usage :** Automatically generates fake information."	
     }	
 )
