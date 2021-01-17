@@ -21,7 +21,6 @@ flask
 yahoo_fin
 anime_downloader
 pandas
-PyDictionary
 fontTools
 pydub
 quote
