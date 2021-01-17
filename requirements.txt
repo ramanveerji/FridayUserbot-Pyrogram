@@ -83,3 +83,4 @@ password_strength
 pyjokes
 cryptocompare
 cryptg
+googletrans
