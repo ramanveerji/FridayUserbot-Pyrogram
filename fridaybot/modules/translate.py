@@ -5,6 +5,7 @@ Available Commands:
 
 from deep_translator import GoogleTranslator
 from googletrans import LANGUAGES
+from google_trans_new import google_translator
 from langdetect import detect
 import requests
 from fridaybot import CMD_HELP
