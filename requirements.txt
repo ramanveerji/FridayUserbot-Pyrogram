@@ -84,4 +84,4 @@ youtube-search
 password_strength
 pyjokes
 cryptocompare
-faker
+faker==5.2.0
