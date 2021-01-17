@@ -7,9 +7,7 @@ RUN apt-get install -y\
     coreutils \
     bash \
     bzip2 \
-    mpv \
     curl \
-    pavucontrol \
     tesseract-ocr \
     tesseract-ocr-eng \
     imagemagick \
