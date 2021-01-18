@@ -10,6 +10,7 @@ faker
 deep_translator
 pornhub-api
 countryinfo
+mal-api
 youtube-search-python
 emoji-country-flag
 langdetect
