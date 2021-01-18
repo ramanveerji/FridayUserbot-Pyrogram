@@ -3,7 +3,7 @@ google-trans-new
 nospamplus
 pymediainfo
 apscheduler
-howdoi
+git+https://github.com/gleitz/howdoi
 pyseoanalyzer
 pokedex.py
 faker
