@@ -53,6 +53,12 @@ async def _(event):
     ID = search.results[0].mal_id
     anime = Anime(ID)
     jp = ""
+    site = "twist.moe"
+    loloo = anime.title
+    why = site.lower()
+    Twist = get_anime_class(why)
+    search = Twist.search(loloo)
+    ul = search[0].url
     for x in anime.genres:
       jp += x + ";  "
     link = anime.image_url
@@ -62,6 +68,7 @@ async def _(event):
 <b>tlele:- {search.results[0].title}
 Mal ID:- {search.results[0].mal_id}
 Url:- {search.results[0].url}
+Free Streaming Link:- {ul}
 Type:- {search.results[0].type}
 Episodes:- {search.results[0].episodes}
 Score:- {search.results[0].score}
@@ -91,7 +98,7 @@ CMD_HELP.update(
     {
         "anime": "**Anime**\
 \n\n**Syntax : **`.ainfo <Amime Name>`\
-\n**Usage :** Gives anime information.\
+\n**Usage :** Gives anime information with streaming link.\
 \n\n**Syntax : **`.anime <Amime Name:site Name>`\
 \n**Usage :** Automatically Gets Streaming Link Of The Anime.\
 \n**Example :** `.anime one piece:twist.moe`\
