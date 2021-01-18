@@ -53,12 +53,28 @@ async def _(event):
     ID = search.results[0].mal_id
     anime = Anime(ID)
     jp = ""
-    site = "twist.moe"
-    loloo = anime.title
-    why = site.lower()
-    Twist = get_anime_class(why)
-    search = Twist.search(loloo)
-    ul = search[0].url
+    try:
+      site = "twist.moe"
+      loloo = anime.title
+      why = site.lower()
+      Twist = get_anime_class(why)
+      search = Twist.search(loloo)
+      ul = search[0].url
+    except:
+      try:
+        site = "animeonline360"
+        loloo = anime.title
+        why = site.lower()
+        Twist = get_anime_class(why)
+        search = Twist.search(loloo)
+        ul = search[0].url
+      except:
+        site = "animefreak"
+        loloo = anime.title
+        why = site.lower()
+        Twist = get_anime_class(why)
+        search = Twist.search(loloo)
+        ul = search[0].url
     for x in anime.genres:
       jp += x + ";  "
     link = anime.image_url
