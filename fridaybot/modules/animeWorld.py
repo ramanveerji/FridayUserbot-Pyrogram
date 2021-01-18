@@ -2,7 +2,7 @@ from anime_downloader.sites import get_anime_class
 
 from fridaybot import CMD_HELP
 from fridaybot.utils import admin_cmd
-from mal import AnimeSearch, Anime
+from mal import AnimeSearch, Anime, MangaSearch, Manga
 
 @friday.on(admin_cmd(pattern="anime (.*)"))
 async def _(event):
@@ -14,7 +14,7 @@ async def _(event):
     try:
        site = lmao[1]
     except:
-       site = "twist.moe"
+       site = "animeonline360"
        await event.reply("Please Provide Site Name From Next Time. Now Continuing With Default Site.")
 
     lol = lmao[0]
@@ -49,6 +49,7 @@ async def _(event):
     if event.fwd_from:
         return
     input_str = event.pattern_match.group(1)
+    await event.edit("Please Wait....🚶‍♂️🚶‍♂️🚶‍♂️")
     search = AnimeSearch(input_str)
     ID = search.results[0].mal_id
     anime = Anime(ID)
@@ -84,14 +85,56 @@ favorites:- {anime.favorites}</b>
     await event.delete()
 
 
+@friday.on(admin_cmd(pattern="manga (.*)"))
+async def _(event):
+    if event.fwd_from:
+        return
+    input_str = event.pattern_match.group(1)
+    await event.edit("Please Wait....🚶‍♂️🚶‍♂️🚶‍♂️")
+    search = MangaSearch(input_str)
+    ID = search.results[0].mal_id
+    manga = Manga(ID)
+    jp = ""
+    for x in manga.genres:
+      jp += x + ";  "
+    link = manga.image_url
+    if link == None:
+      link = search.results[0].image_url
+    By = f"""<u><b>manga Information Gathered</b></u>
+<b>tlele:- {search.results[0].title}
+Mal ID:- {search.results[0].mal_id}
+Url:- {search.results[0].url}
+Type:- {search.results[0].type}
+volumes:- {search.results[0].volumes}
+Score:- {search.results[0].score}
+Synopsis:- {search.results[0].synopsis}
+Status:- {manga.status}
+Genres:- {jp}
+Chapters:- {manga.chapters}
+Popularity:- {manga.popularity}
+Rank:- {manga.rank}
+favorites:- {manga.favorites}</b>
+"""
+    await borg.send_message(
+        event.chat_id,
+        By,
+        parse_mode="HTML",
+        file=link,
+        force_document=False,
+        silent=True,
+    )
+    await event.delete()
+
 
 
 
 CMD_HELP.update(
     {
-        "anime": "**Anime**\
+        "animeWorld": "**Anime World**\
 \n\n**Syntax : **`.ainfo <Amime Name>`\
-\n**Usage :** Gives anime information with streaming link.\
+\n**Usage :** Gives anime information.\
+\n\n**Syntax : **`.manga <Amime Name>`\
+\n**Usage :** Gives manga information.\
 \n\n**Syntax : **`.anime <Amime Name:site Name>`\
 \n**Usage :** Automatically Gets Streaming Link Of The Anime.\
 \n**Example :** `.anime one piece:twist.moe`\
