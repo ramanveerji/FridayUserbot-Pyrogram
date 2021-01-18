@@ -2,7 +2,7 @@ from anime_downloader.sites import get_anime_class
 
 from fridaybot import CMD_HELP
 from fridaybot.utils import admin_cmd
-
+from mal import AnimeSearch, Anime
 
 @friday.on(admin_cmd(pattern="anime (.*)"))
 async def _(event):
@@ -44,9 +44,54 @@ async def _(event):
     await ommhg.delete()
 
 
+@friday.on(admin_cmd(pattern="ainfo (.*)"))
+async def _(event):
+    if event.fwd_from:
+        return
+    input_str = event.pattern_match.group(1)
+    search = AnimeSearch(input_str)
+    ID = search.results[0].mal_id
+    anime = Anime(ID)
+    jp = ""
+    for x in anime.genres:
+      jp += x + ";  "
+    link = anime.image_url
+    if link == None:
+      link = search.results[0].image_url
+    By = f"""<u><b>Anime Information Gathered</b></u>
+<b>tlele:- {search.results[0].title}
+Mal ID:- {search.results[0].mal_id}
+Url:- {search.results[0].url}
+Type:- {search.results[0].type}
+Episodes:- {search.results[0].episodes}
+Score:- {search.results[0].score}
+Synopsis:- {search.results[0].synopsis}
+Status:- {anime.status}
+Genres:- {jp}
+Duration:- {anime.duration}
+Popularity:- {anime.popularity}
+Rank:- {anime.rank}
+favorites:- {anime.favorites}</b>
+"""
+    await borg.send_message(
+        event.chat_id,
+        By,
+        parse_mode="HTML",
+        file=link,
+        force_document=False,
+        silent=True,
+    )
+    await event.delete()
+
+
+
+
+
 CMD_HELP.update(
     {
         "anime": "**Anime**\
+\n\n**Syntax : **`.ainfo <Amime Name>`\
+\n**Usage :** Gives anime information.\
 \n\n**Syntax : **`.anime <Amime Name:site Name>`\
 \n**Usage :** Automatically Gets Streaming Link Of The Anime.\
 \n**Example :** `.anime one piece:twist.moe`\
