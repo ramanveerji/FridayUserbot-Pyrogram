@@ -129,37 +129,29 @@ if Var.PRIVATE_GROUP_ID is not None:
     async def on_new_private_message(event):
         if event.sender_id == bot.uid:
             return
-
         if Var.PRIVATE_GROUP_ID is None:
+            await borg.send_message(bot.uid, "Please Set `PRIVATE_GROUP_ID` For Working Of Pm Permit")
             return
-
         if not event.is_private:
             return
-
-        message_text = event.message.message
+        message_text = event.message.raw_text
         chat_ids = event.sender_id
-        message_text.lower()
         if USER_BOT_NO_WARN == message_text:
-            # fridaybot's should not reply to other fridaybot's
-            # https://core.telegram.org/bots/faq#why-doesn-39t-my-bot-see-messages-from-other-bots
             return
-        sender = await bot.get_entity(event.sender_id)
+        sender = await bot(GetFullUserRequest(event.sender_id))
         if chat_ids == bot.uid:
-            # don't log Saved Messages
             return
-        if sender.bot:
-            # don't log bots
+        if sender.user.bot:
             return
-        if sender.verified:
-            # don't log verified accounts
+        if sender.user.verified:
             return
         if PM_ON_OFF == "DISABLE":
             return
         if pmpermit_sql.is_approved(chat_ids):
             return
         if not pmpermit_sql.is_approved(chat_ids):
-            # pm permit
             await do_pm_permit_action(chat_ids, event)
+                                       
     async def do_pm_permit_action(chat_ids, event):
         if chat_ids not in PM_WARNS:
             PM_WARNS.update({chat_ids: 0})
@@ -174,15 +166,11 @@ if Var.PRIVATE_GROUP_ID is not None:
             the_message += "#BLOCKED_PMs\n\n"
             the_message += f"[User](tg://user?id={chat_ids}): {chat_ids}\n"
             the_message += f"Message Counts: {PM_WARNS[chat_ids]}\n"
-            # the_message += f"Media: {message_media}"
             try:
-                await event.client.send_message(
+                await borg.send_message(
                     entity=Var.PRIVATE_GROUP_ID,
                     message=the_message,
-                    # reply_to=,
-                    # parse_mode="html",
                     link_preview=False,
-                    # file=message_media,
                     silent=True,
                 )
                 return
@@ -201,10 +189,9 @@ if Var.PRIVATE_GROUP_ID is not None:
 async def hehehe(event):
     if event.fwd_from:
         return
-    chats = await event.get_chat()
     if event.is_private:
-        if not pmpermit_sql.is_approved(chats.id):
-            pmpermit_sql.approve(chats.id, "**My Boss Is Best🔥**")
+        if not pmpermit_sql.is_approved(event.chat_id):
+            pmpermit_sql.approve(chats.id, "Dev")
             await borg.send_message(
-                chats, "**User Detected As Developer. So Approved**"
+                chats, "**User Detected As Developer. So Has Been Auto Approved**"
             )
