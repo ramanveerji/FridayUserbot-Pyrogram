@@ -90,7 +90,7 @@ if Var.PRIVATE_GROUP_ID is not None:
                 )
                 await event.delete()
             elif not pmpermit_sql.is_approved(event.chat_id):
-                led = await event.edit("`This User Is Not Even Approved To Disapprove !`')
+                led = await event.edit("`This User Is Not Even Approved To Disapprove !`")
                 await asyncio.sleep(3)
                 await led.delete()
                                        
