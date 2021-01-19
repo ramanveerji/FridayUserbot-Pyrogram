@@ -3,6 +3,7 @@
 import time
 from telethon import __version__ as tv
 import sys
+import platform
 from git import Repo
 from uniborg.util import friday_on_cmd, sudo_cmd
 from fridaybot import ALIVE_NAME, CMD_HELP, Lastupdate
@@ -49,12 +50,11 @@ async def friday(alive):
     await alive.get_chat()
     uptime = get_readable_time((time.time() - Lastupdate))
     repo = Repo()
-    py_v = sys.version_info[0]
     branch_name = repo.active_branch.name
     pm_caption = ("➥ **FRIDAY IS:** `ONLINE`\n\n"
                   "➥ **SYSTEMS STATS**\n"
                   f"➥ **Telethon Version:** `{tv}` \n"
-                  f"➥ **Python:** `{py_v}` \n"
+                  f"➥ **Python:** `{platform.python_version()}` \n"
                   f"➥ **Uptime** : `{uptime}` \n"
                   "➥ **Database Status:**  `Functional`\n"
                   f"➥ **Current Branch** : `{branch_name}`\n"
