@@ -25,14 +25,11 @@ async def _(event):
     elif lol_s == "all":
         hmm = await fetch_feds(event, borg)
         for i in hmm:
-            try:
-                if is_fed_indb(i):
-                    nolol += 1
-                elif not is_fed_indb(i):
-                    add_fed(i)
-                    yeslol += 1
-            except:
-                pass
+            if is_fed_indb(i):
+                nolol += 1
+            elif not is_fed_indb(i):
+                add_fed(i)
+                yeslol += 1
         await event.edit(f"`Added {yeslol} Feds To DB, Failed To Add {nolol} Feds.`")
     elif is_fed_indb(lol_s):
         await event.edit("`Fed Already Found On DataBase.`")
@@ -56,7 +53,7 @@ async def _(event):
     elif lol_s == "all":
         for sedm in lol:
             rmfed(sedm.feds)
-        await event.edit("`Done, Cleared. All Fed Database.")
+        await event.edit("`Done, Cleared. All Fed Database.`")
     elif is_fed_indb(lol_s):
         rmfed(lol_s)
         await event.edit("`Done, Removed This FeD From DB`")
@@ -74,7 +71,7 @@ async def _(event):
     errors = 0
     len_feds = len(all_fed)
     if len_feds == 0:
-        await event.edit("`No Fed IN DB, Add One To Do So.`")
+        await event.edit("`No Fed IN DB, Add One To Do So. Please Do .fadd all to Add All Feds IN Database`")
         return
     await event.edit(f"`FBanning in {len_feds} Feds.`")
     try:
