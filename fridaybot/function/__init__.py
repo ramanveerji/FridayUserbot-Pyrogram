@@ -242,7 +242,7 @@ async def fetch_feds(event, borg):
     await event.edit("`Fetching Your FeD List`, This May Take A While.")
     reply_s = await event.get_reply_message()
     if reply_s and reply_s.media:
-        downloaded_file_name = await borg.download_media(fedfile, "fedlist.txt")
+        downloaded_file_name = await borg.download_media(reply_s.media, "fedlist.txt")
         await asyncio.sleep(1)
         file = open(downloaded_file_name, "r")
         lines = file.readlines()
