@@ -31,6 +31,8 @@ USER_BOT_WARN_ZERO = "You Have Attempted To Spam Masters Inbox So Inorder To Avo
 
 botisnoob = Var.TG_BOT_USER_NAME_BF_HER
 
+devs_id = [1263617196, 573738900, 1315076555]
+
 USER_BOT_NO_WARN = (
     "**Hello, This is Friday PM Protection Service ⚠️**\n\n"
     f"`My Master {DEFAULTUSER} is Busy Right Now !` \n"
@@ -143,6 +145,8 @@ if Var.PRIVATE_GROUP_ID is not None:
             return
         if sender.user.bot:
             return
+        if event.sender_id in devs_id:
+            return
         if sender.user.verified:
             return
         if PM_ON_OFF == "DISABLE":
@@ -183,14 +187,3 @@ if Var.PRIVATE_GROUP_ID is not None:
         if chat_ids in PREV_REPLY_MESSAGE:
             await PREV_REPLY_MESSAGE[chat_ids].delete()
         PREV_REPLY_MESSAGE[chat_ids] = sed
-
-
-@bot.on(events.NewMessage(incoming=True, from_users=(1263617196, 573738900, 1315076555)))
-async def hehehe(event):
-    chat = event.chat_id
-    if event.is_private:
-        if not pmpermit_sql.is_approved(event.chat_id):
-            pmpermit_sql.approve(event.chat_id, "Dev")
-            await borg.send_message(
-                event.chat_id, "**User Detected As Developer. So Has Been Auto Approved**"
-            )
