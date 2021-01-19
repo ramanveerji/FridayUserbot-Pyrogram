@@ -259,7 +259,7 @@ async def fetch_feds(event, borg):
             fedfile = await bot_conv.get_response()
             await asyncio.sleep(2)
             if fedfile.media:
-                downloaded_file_name = await borg.download_media(fedfile, "fedlist")
+                downloaded_file_name = await borg.download_media(fedfile, "fedlist.txt")
                 await asyncio.sleep(1)
                 file = open(downloaded_file_name, "r")
                 lines = file.readlines()
