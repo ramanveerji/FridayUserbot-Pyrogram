@@ -82,7 +82,9 @@ async def _(event):
     for teamz in all_fed:
         try:
             await borg.send_message(chnnl_grp, "/joinfed " + teamz.feds)
+            await asyncio.sleep(2)
             await borg.send_message(chnnl_grp, "/fban " + lol_s)
+            await asyncio.sleep(5)
         except:
             errors += 1
     await event.edit(
@@ -94,7 +96,7 @@ async def _(event):
 async def _(event):
     lol_s = event.pattern_match.group(1)
     if lol_s == None:
-        await event.edit("`No user Found To Fban.`")
+        await event.edit("`No User Found To Fban.`")
         return
     all_fed = get_all_feds()
     errors = 0
@@ -108,7 +110,9 @@ async def _(event):
     for teamz in all_fed:
         try:
             await borg.send_message(chnnl_grp, "/joinfed " + teamz.feds)
+            await asyncio.sleep(2)
             await borg.send_message(chnnl_grp, "/unfban " + lol_s)
+            await asyncio.sleep(5)
         except:
             errors += 1
     await event.edit(
