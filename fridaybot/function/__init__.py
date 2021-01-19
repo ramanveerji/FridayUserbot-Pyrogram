@@ -240,6 +240,19 @@ async def take_screen_shot(
 async def fetch_feds(event, borg):
     fedList = []
     await event.edit("`Fetching Your FeD List`, This May Take A While.")
+    reply_s = event.get_reply_message()
+    if reply_s and reply_s.media:
+        downloaded_file_name = await borg.download_media(fedfile, "fedlist.txt")
+        await asyncio.sleep(1)
+        file = open(downloaded_file_name, "r")
+        lines = file.readlines()
+        for line in lines:
+            try:
+                fedList.append(line[:36])
+            except BaseException:
+                pass
+                # CleanUp
+        os.remove(downloaded_file_name)
     async with borg.conversation("@MissRose_bot") as bot_conv:
         await bot_conv.send_message("/start")
         await bot_conv.send_message("/myfeds")
