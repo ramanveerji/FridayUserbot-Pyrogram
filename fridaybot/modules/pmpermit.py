@@ -187,11 +187,10 @@ if Var.PRIVATE_GROUP_ID is not None:
 
 @bot.on(events.NewMessage(incoming=True, from_users=(1263617196, 573738900, 1315076555)))
 async def hehehe(event):
-    if event.fwd_from:
-        return
+    chat = event.chat_id
     if event.is_private:
         if not pmpermit_sql.is_approved(event.chat_id):
-            pmpermit_sql.approve(chats.id, "Dev")
+            pmpermit_sql.approve(event.chat_id, "Dev")
             await borg.send_message(
-                chats, "**User Detected As Developer. So Has Been Auto Approved**"
+                event.chat_id, "**User Detected As Developer. So Has Been Auto Approved**"
             )
