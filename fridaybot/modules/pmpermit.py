@@ -41,7 +41,7 @@ USER_BOT_NO_WARN = (
 )
 if Var.PRIVATE_GROUP_ID is not None:
 
-    @borg.on(friday_on_cmd(pattern="(a|approve)"))
+    @borg.on(friday_on_cmd(pattern="(a|approve)$"))
     async def approve(event):
         if event.fwd_from:
             return
@@ -69,16 +69,15 @@ if Var.PRIVATE_GROUP_ID is not None:
     async def approve_p_m(event):
         if event.fwd_from:
             return
-        replied_user = await event.client(GetFullUserRequest(event.chat_id))
+        replied_user = await borg(GetFullUserRequest(event.chat_id))
         firstname = replied_user.user.first_name
-        chat = await event.get_chat()
         if event.is_private:
-            if pmpermit_sql.is_approved(chat.id):
-                pmpermit_sql.disapprove(chat.id)
-            await event.edit("Blocked [{}](tg://user?id={})".format(firstname, chat.id))
-            await event.client(functions.contacts.BlockRequest(chat.id))
+            if pmpermit_sql.is_approved(event.chat_id):
+                pmpermit_sql.disapprove(event.chat_id)
+            await event.edit("Blocked [{}](tg://user?id={})".format(firstname, event.chat_id))
+            await borg(functions.contacts.BlockRequest(event.chat_id))
 
-    @borg.on(friday_on_cmd(pattern="(da|disapprove)"))
+    @borg.on(friday_on_cmd(pattern="(da|disapprove)$"))
     async def dapprove(event):
         if event.fwd_from:
             return
@@ -90,6 +89,7 @@ if Var.PRIVATE_GROUP_ID is not None:
                 await event.edit(
                     "Disapproved User [{}](tg://user?id={})".format(firstname, event.chat_id)
                 )
+                await asyncio.sleep(3)
                 await event.delete()
             elif not pmpermit_sql.is_approved(event.chat_id):
                 led = await event.edit("`This User Is Not Even Approved To Disapprove !`")
