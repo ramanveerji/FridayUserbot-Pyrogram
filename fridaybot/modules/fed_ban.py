@@ -5,6 +5,7 @@ from fridaybot.modules.sql_helper.feds_sql import (
     is_fed_indb,
     rmfed,
 )
+import asyncio
 from fridaybot.utils import friday_on_cmd
 
 chnnl_grp = Config.FBAN_GROUP
