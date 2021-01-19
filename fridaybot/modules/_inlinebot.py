@@ -177,11 +177,10 @@ async def rip(event):
     await event.edit("Choice Not Accepted ❌")
     await borg.send_message(event.query.user_id, text1)
     await borg(functions.contacts.BlockRequest(event.query.user_id))
-    await tgbot.send_message(
-        LOG_CHAT,
-        f"Hello, A Noob [Nibba](tg://user?id={him_id}) Selected Probhited Option, Therefore Blocked.",
+    await borg.send_message(
+            LOG_CHAT,
+            f"Hello, A Noob [Nibba](tg://user?id={him_id}) Selected Probhited Option, Therefore Blocked."
     )
-
 
 @tgbot.on(events.callbackquery.CallbackQuery(data=re.compile(b"backme")))
 async def sed(event):
@@ -208,11 +207,9 @@ async def rip(event):
     await event.edit("Choice Accepted ✔️")
     text2 = "Ok. Please Wait Until My Master Approves. Don't Spam Or Try Anything Stupid. \nThank You For Contacting Me."
     await borg.send_message(event.query.user_id, text2)
-    await tgbot.send_message(
+    await borg.send_message(
         LOG_CHAT,
-        message=f"Hello, A [New User](tg://user?id={him_id}). Wants To Talk With You.",
-        buttons=[Button.url("Contact Him", f"tg://user?id={him_id}")],
-    )
+        message=f"Hello, A [New User](tg://user?id={him_id}). Wants To Talk With You.")
 
 
 @tgbot.on(events.callbackquery.CallbackQuery(data=re.compile(b"askme")))
@@ -226,11 +223,9 @@ async def rip(event):
     await event.edit("Choice Accepted ✔️")
     text3 = "Ok, Wait. You can Ask After Master Approves You. Kindly, Wait."
     await borg.send_message(event.query.user_id, text3)
-    await tgbot.send_message(
+    await borg.send_message(
         LOG_CHAT,
-        message=f"Hello, A [New User](tg://user?id={him_id}). Wants To Ask You Something.",
-        buttons=[Button.url("Contact Him", f"tg://user?id={him_id}")],
-    )
+        message=f"Hello, A [New User](tg://user?id={him_id}). Wants To Ask You Something.")
 
 
 def paginate_help(page_number, loaded_modules, prefix):
