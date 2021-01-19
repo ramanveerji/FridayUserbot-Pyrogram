@@ -249,10 +249,11 @@ async def fetch_feds(event, borg):
         for line in lines:
             try:
                 fedList.append(line[:36])
-            except BaseException:
+            except:
                 pass
                 # CleanUp
         os.remove(downloaded_file_name)
+        return fedList
     async with borg.conversation("@MissRose_bot") as bot_conv:
         await bot_conv.send_message("/start")
         await bot_conv.send_message("/myfeds")
