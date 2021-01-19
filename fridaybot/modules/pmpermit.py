@@ -45,9 +45,9 @@ if Var.PRIVATE_GROUP_ID is not None:
     async def approve(event):
         if event.fwd_from:
             return
-        replied_user = await borg(GetFullUserRequest(event.chat_id))
-        firstname = replied_user.user.first_name
         if event.is_private:
+            replied_user = await borg(GetFullUserRequest(event.chat_id))
+            firstname = replied_user.user.first_name
             if not pmpermit_sql.is_approved(event.chat_id):
                 if event.chat_id in PM_WARNS:
                     del PM_WARNS[event.chat_id]
@@ -98,9 +98,9 @@ if Var.PRIVATE_GROUP_ID is not None:
     async def dapprove(event):
         if event.fwd_from:
             return
-        replied_user = await borg(GetFullUserRequest(event.chat_id))
-        firstname = replied_user.user.first_name
         if event.is_private:
+            replied_user = await borg(GetFullUserRequest(event.chat_id))
+            firstname = replied_user.user.first_name
             if pmpermit_sql.is_approved(event.chat_id):
                 pmpermit_sql.disapprove(event.chat_id)
                 await event.edit(
