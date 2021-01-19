@@ -58,15 +58,15 @@ async def addcf(event):
     if reply_msg:
         session = lydia.create_session()
         session_id = session.id
-        if reply_msg.from_id is None:
+        if reply_msg.sender_id is None:
             return await event.edit("Invalid user type.")
-        ACC_LYDIA.update({str(event.chat_id) + " " + str(reply_msg.from_id): session})
+        ACC_LYDIA.update({str(event.chat_id) + " " + str(reply_msg.sender_id): session})
         SESSION_ID.update(
-            {str(event.chat_id) + " " + str(reply_msg.from_id): session_id}
+            {str(event.chat_id) + " " + str(reply_msg.sender_id): session_id}
         )
         await event.edit(
             "Lydia successfully (re)enabled for user: {} in chat: {}".format(
-                str(reply_msg.from_id), str(event.chat_id)
+                str(reply_msg.sender_id), str(event.chat_id)
             )
         )
     else:
@@ -82,11 +82,11 @@ async def remcf(event):
     await event.edit("Processing...")
     reply_msg = await event.get_reply_message()
     try:
-        del ACC_LYDIA[str(event.chat_id) + " " + str(reply_msg.from_id)]
-        del SESSION_ID[str(event.chat_id) + " " + str(reply_msg.from_id)]
+        del ACC_LYDIA[str(event.chat_id) + " " + str(reply_msg.sender_id)]
+        del SESSION_ID[str(event.chat_id) + " " + str(reply_msg.sender_id)]
         await event.edit(
             "Lydia successfully disabled for user: {} in chat: {}".format(
-                str(reply_msg.from_id), str(event.chat_id)
+                str(reply_msg.sender_id), str(event.chat_id)
             )
         )
     except Exception:
@@ -97,8 +97,8 @@ async def remcf(event):
 async def user(event):
     event.text
     try:
-        session = ACC_LYDIA[str(event.chat_id) + " " + str(event.from_id)]
-        session_id = SESSION_ID[str(event.chat_id) + " " + str(event.from_id)]
+        session = ACC_LYDIA[str(event.chat_id) + " " + str(event.sender_id)]
+        session_id = SESSION_ID[str(event.chat_id) + " " + str(event.sender_id)]
         msg = event.text
         async with event.client.action(event.chat_id, "typing"):
             text_rep = session.think_thought((session_id, msg))
