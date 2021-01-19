@@ -145,7 +145,7 @@ async def on_snip_delete(event):
 @friday.on(friday_on_cmd(pattern="rmfilters$"))
 @friday.on(sudo_cmd(pattern="rmfilters$", allow_sudo=True))
 async def on_all_snip_delete(event):
-    await edit_or_reply(event, "Processing....")
+    sadness = edit_or_reply(event, "Processing....")
     remove_all_filters(event.chat_id)
     await sadness.edit(f"filters **in current chat** deleted successfully")
 
