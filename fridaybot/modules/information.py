@@ -152,12 +152,15 @@ async def gibinfo(event):
         reason = f"<i>True</i>"
     else:
         reason = f"<i>False</i>"
-    hmmyes = sclient.is_banned(lolu.user.id)
-    if hmmyes:
-        oki = f"""<i>True</i>
+    if sclient is None:
+        oki = "<i>Token Invalid</i>"
+    elif sclient:
+        hmmyes = sclient.is_banned(lolu.user.id)
+        if hmmyes:
+            oki = f"""<i>True</i>
 <b>~ Reason :</b> <i>{hmmyes.reason}</i>"""
-    else:
-        oki = "<i>False</i>"
+        else:
+            oki = "<i>False</i>"
     infomsg = (
         f"<b>Info Of</b> <a href=tg://user?id={lolu.user.id}>{lolu.user.first_name}</a>: \n"
         f"<b>- Username :</b> <i>{lolu.user.username}</i>\n"
