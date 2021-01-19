@@ -64,7 +64,24 @@ if Var.PRIVATE_GROUP_ID is not None:
                 sed = await event.edit('`This User Already Approved.`')
                 await asyncio.sleep(3)
                 await sed.delete()
-
+        elif event.is_group:
+            reply_s = await event.get_reply_message()
+            if not reply_s:
+                await event.edit('`Reply To User To Approve Him !`')
+                return
+            if not pmpermit_sql.is_approved(reply_s.sender_id):
+                replied_user = await borg(GetFullUserRequest(reply_s.sender_id))
+                firstname = replied_user.user.first_name
+                pmpermit_sql.approve(reply_s.sender_id, "Approved Another Nibba")
+                await event.edit(
+                        "Approved to pm [{}](tg://user?id={})".format(firstname, reply_s.sender_id)
+                    )
+                await asyncio.sleep(3)
+                await event.delete()
+            elif pmpermit_sql.is_approved(reply_s.sender_id):
+                await event.edit('`User Already Approved !`')
+                await event.delete()
+                
     @borg.on(friday_on_cmd(pattern="block$"))
     async def approve_p_m(event):
         if event.fwd_from:
@@ -95,7 +112,25 @@ if Var.PRIVATE_GROUP_ID is not None:
                 led = await event.edit("`This User Is Not Even Approved To Disapprove !`")
                 await asyncio.sleep(3)
                 await led.delete()
-                                       
+        elif event.is_group:
+            reply_s = await event.get_reply_message()
+            if not reply_s:
+                await event.edit('`Reply To User To DisApprove Him !`')
+                return
+            if pmpermit_sql.is_approved(reply_s.sender_id):
+                replied_user = await borg(GetFullUserRequest(reply_s.sender_id))
+                firstname = replied_user.user.first_name
+                pmpermit_sql.disapprove(reply_s.sender_id)
+                await event.edit(
+                    "Disapproved User [{}](tg://user?id={})".format(firstname, reply_s.sender_id)
+                )
+                await asyncio.sleep(3)
+                await event.delete()
+            elif not pmpermit_sql.is_approved(reply_s.sender_id):
+                await event.edit('`User Even Not Approved !`')
+                await event.delete()    
+                
+                
     @borg.on(friday_on_cmd(pattern="listapproved$"))
     async def approve_p_m(event):
         if event.fwd_from:
