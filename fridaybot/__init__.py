@@ -23,11 +23,11 @@ from var import Var
 Lastupdate = time.time()
 sedprint = logging.getLogger("WARNING")
 from var import Var
+from fridaybot.modules.sql_helper import SESSION
 
-container = AlchemySessionContainer(Var.DB_URI)
+container = AlchemySessionContainer(engine=SESSION)
 session_name = Var.STRING_SESSION
 session = container.new_session(session_name)
-
 
 if Var.STRING_SESSION:
     bot = TelegramClient(StringSession(session), Var.APP_ID, Var.API_HASH)
