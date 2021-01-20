@@ -16,7 +16,7 @@ from fridaybot.wraptools import (
     ignore_pm,
 )
 from var import Var
-
+from fridaybot.function import strings as _tr
 sedprint = logging.getLogger("PLUGINS")
 cmdhandler = Config.COMMAND_HAND_LER
 bothandler = Config.BOT_HANDLER
@@ -123,6 +123,7 @@ def load_module(shortname):
         mod.tgbot = bot.tgbot
         mod.Var = Var
         mod.command = command
+        mod._tr = _tr
         mod.logger = logging.getLogger(shortname)
         # support for uniborg
         sys.modules["uniborg.util"] = fridaybot.utils
@@ -480,7 +481,7 @@ async def edit_or_reply(event, text):
     return await event.edit(text)
 
 
-#    Copyright (C) Midhun KM 2020-2021
+#    Copyright (C) Midhun KM 2020
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as published by
 #    the Free Software Foundation, either version 3 of the License, or
