@@ -143,7 +143,7 @@ async def iamnone(event):
     if not event.reply_to_msg_id:
         await event.reply("Reply to any Image.")
         return
-    hmm = await event.edit("`Converting To Maked Image..`")
+    hmm = await event.edit("`Converting To Masked Image..`")
     await event.get_reply_message()
     img = await convert_to_image(event, borg)
     imagePath = img
