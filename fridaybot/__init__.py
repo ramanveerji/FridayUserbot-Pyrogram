@@ -25,17 +25,6 @@ sedprint = logging.getLogger("WARNING")
 from var import Var
 from fridaybot.modules.sql_helper import SESSION
 
-container = AlchemySessionContainer(engine=SESSION)
-session_name = Var.STRING_SESSION
-session = container.new_session(session_name)
-
-if Var.STRING_SESSION:
-    bot = TelegramClient(StringSession(session), Var.APP_ID, Var.API_HASH)
-else:
-    session_name = "startup"
-    bot = TelegramClient(session_name, Var.APP_ID, Var.API_HASH)
-
-
 CMD_LIST = {}
 CMD_HELP = {}
 INT_PLUG = ""
