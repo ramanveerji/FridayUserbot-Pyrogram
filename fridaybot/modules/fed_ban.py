@@ -62,9 +62,9 @@ async def _(event):
         await event.edit("`This Fed Not Found On Db.`")
 
 
-@friday.on(friday_on_cmd(pattern="fban ?(.*)"))
+@friday.on(friday_on_cmd(pattern="fban"))
 async def _(event):
-    lol_s = event.pattern_match.group(1)
+    lol_s = event.text.split(" ", maxsplit=1)[1]
     if lol_s == None:
         await event.edit("`No user Found To Fban.`")
         return
@@ -93,7 +93,7 @@ async def _(event):
     )
 
 
-@friday.on(friday_on_cmd(pattern="unfban ?(.*)"))
+@friday.on(friday_on_cmd(pattern="unfban$"))
 async def _(event):
     lol_s = event.pattern_match.group(1)
     if lol_s == None:
