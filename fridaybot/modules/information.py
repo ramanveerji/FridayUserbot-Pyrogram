@@ -86,6 +86,11 @@ async def _(event):
 
 
 async def get_full_user(event):
+    if event.is_private:
+        replied_user = await event.client(
+                GetFullUserRequest(event.chat_id)
+            )
+            return replied_user, None
     if event.reply_to_msg_id:
         previous_message = await event.get_reply_message()
         if previous_message.forward:
@@ -107,7 +112,14 @@ async def get_full_user(event):
             input_str = event.pattern_match.group(1)
         except IndexError as e:
             return None, e
-        if event.message.entities is not None:
+        if event.is_private:
+            try:
+                user_id = event.chat_id
+                replied_user = await event.client(GetFullUserRequest(user_id))
+                return replied_user, None
+            except Exception as e:
+                return None, e
+        elif event.message.entities is not None:
             mention_entity = event.message.entities
             probable_user_mention_entity = mention_entity[0]
             if isinstance(probable_user_mention_entity, MessageEntityMentionName):
@@ -122,13 +134,6 @@ async def get_full_user(event):
                     return replied_user, None
                 except Exception as e:
                     return None, e
-        elif event.is_private:
-            try:
-                user_id = event.chat_id
-                replied_user = await event.client(GetFullUserRequest(user_id))
-                return replied_user, None
-            except Exception as e:
-                return None, e
         else:
             try:
                 user_object = await event.client.get_entity(int(input_str))
