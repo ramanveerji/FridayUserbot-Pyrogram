@@ -1,9 +1,9 @@
 import asyncio
 import os
 from pathlib import Path
-from fridaybot.function import get_all_modules
-from fridaybot import CMD_HELP
 from fridaybot.utils import friday_on_cmd, load_module
+from .fridaybot.function import get_all_modules
+from fridaybot import CMD_HELP
 
 DELETE_TIMEOUT = 5
 
