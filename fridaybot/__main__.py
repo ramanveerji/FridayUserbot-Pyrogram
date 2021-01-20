@@ -1,7 +1,17 @@
 import logging
 from pathlib import Path
 from sys import argv
-
+import pylast
+import wget
+from nospamplus.connect import Connect
+from dotenv import load_dotenv
+from pylast import LastFMNetwork, md5
+from pySmartDL import SmartDL
+from requests import get
+from telegraph import Telegraph, exceptions, upload_file
+from telethon import TelegramClient
+from telethon.sessions import StringSession
+from alchemysession import AlchemySessionContainer
 import telethon.utils
 from telethon import TelegramClient
 from fridaybot.Configs import Config
