@@ -14,17 +14,13 @@ async def _(event):
         return
     reply_message = await convert_to_image(event, borg)
     chat = "@hazmat_suit_bot"
-    reply_message.sender
-    if reply_message.sender.bot:
-        await event.edit("```Reply to actual users message.```")
-        return
     sed = await event.edit("Making mask")
     async with borg.conversation(chat) as conv:
         try:
             response = conv.wait_event(
                 events.NewMessage(incoming=True, from_users=905164246)
             )
-            await borg.send_message(chat, reply_message)
+            await borg.send_file(chat, reply_message)
             response = await response
         except YouBlockedUserError:
             await event.edit("```Please unblock @hazmat_suit_bot and try again```")
