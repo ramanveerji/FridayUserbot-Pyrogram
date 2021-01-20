@@ -5,6 +5,7 @@ import sys
 import time
 from distutils.util import strtobool as sb
 from logging import DEBUG, INFO, basicConfig, getLogger
+
 import pylast
 import wget
 from nospamplus.connect import Connect
@@ -15,6 +16,7 @@ from requests import get
 from telegraph import Telegraph, exceptions, upload_file
 from telethon import TelegramClient
 from telethon.sessions import StringSession
+
 from var import Var
 
 from .Configs import Config
