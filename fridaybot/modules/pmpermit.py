@@ -40,6 +40,31 @@ USER_BOT_NO_WARN = (
     f"**{CUSTOM_MIDDLE_PMP}**"
 )
 if Var.PRIVATE_GROUP_ID is not None:
+    
+    @bot.on(events.NewMessage(outgoing=True))
+    async def auto_approve_for_out_going(event):
+        if event.fwd_from:
+            return
+        if not event.is_private:
+            return
+        chat_ids = event.chat_id
+        sender = await event.client(GetFullUserRequest(event.chat_id))
+        first_name = sender.user.first_name
+        if chat_ids == bot.uid:
+            return
+        if sender.user.bot:
+            return
+        if sender.user.verified:
+            return
+        if PM_ON_OFF == "DISABLE":
+            return
+        if not pmpermit_sql.is_approved(event.chat_id):
+            if not event.chat_id in PM_WARNS:
+                pmpermit_sql.approve(event.chat_id, "outgoing")
+                bruh = "AutoApproved Due To Out Going Message [{}](tg://user?id={})".format(first_name, event.chat_id)
+                rko = await borg.send_message(event.chat_id, bruh)
+                await asyncio.sleep(3)
+                await rko.delete()           
 
     @borg.on(friday_on_cmd(pattern="(a|approve)$"))
     async def approve(event):
