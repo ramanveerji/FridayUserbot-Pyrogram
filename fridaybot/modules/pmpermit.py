@@ -61,7 +61,7 @@ if Var.PRIVATE_GROUP_ID is not None:
         if not pmpermit_sql.is_approved(event.chat_id):
             if not event.chat_id in PM_WARNS:
                 pmpermit_sql.approve(event.chat_id, "outgoing")
-                bruh = "AutoApproved Due To Out Going Message [{}](tg://user?id={})".format(first_name, event.chat_id)
+                bruh = "AutoApproved [{}](tg://user?id={}) Due To Out Going Message !".format(first_name, event.chat_id)
                 rko = await borg.send_message(event.chat_id, bruh)
                 await asyncio.sleep(3)
                 await rko.delete()           
