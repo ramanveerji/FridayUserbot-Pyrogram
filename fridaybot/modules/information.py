@@ -86,11 +86,6 @@ async def _(event):
 
 
 async def get_full_user(event):
-    if event.is_private:
-        replied_user = await event.client(
-                GetFullUserRequest(event.chat_id)
-            )
-            return replied_user, None
     if event.reply_to_msg_id:
         previous_message = await event.get_reply_message()
         if previous_message.forward:
