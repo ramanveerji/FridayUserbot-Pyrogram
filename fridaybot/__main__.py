@@ -1,36 +1,14 @@
 import logging
 from pathlib import Path
 from sys import argv
-import pylast
-import wget
-from nospamplus.connect import Connect
-from dotenv import load_dotenv
-from pylast import LastFMNetwork, md5
-from pySmartDL import SmartDL
-from requests import get
-from telegraph import Telegraph, exceptions, upload_file
-from telethon import TelegramClient
-from telethon.sessions import StringSession
-from alchemysession import AlchemySessionContainer
+
 import telethon.utils
 from telethon import TelegramClient
+
+from fridaybot import bot
 from fridaybot.Configs import Config
 from fridaybot.utils import load_module, start_assistant
 from var import Var
-Lastupdate = time.time()
-sedprint = logging.getLogger("WARNING")
-from var import Var
-from fridaybot.modules.sql_helper import SESSION
-
-container = AlchemySessionContainer(engine=SESSION)
-session_name = Var.STRING_SESSION
-session = container.new_session(session_name)
-
-if Var.STRING_SESSION:
-    bot = TelegramClient(StringSession(session), Var.APP_ID, Var.API_HASH)
-else:
-    session_name = "startup"
-    bot = TelegramClient(session_name, Var.APP_ID, Var.API_HASH)
 
 sed = logging.getLogger("Friday")
 
