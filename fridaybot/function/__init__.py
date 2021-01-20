@@ -3,6 +3,12 @@ from bs4 import BeautifulSoup
 from hachoir.metadata import extractMetadata
 from hachoir.parser import createParser
 import hachoir
+import asyncio
+import os
+from pathlib import Path
+from fridaybot.function import get_all_modules
+from fridaybot import CMD_HELP
+from fridaybot.utils import friday_on_cmd, load_module
 from telethon.tl.types import DocumentAttributeAudio
 from youtube_dl import YoutubeDL
 from youtube_dl.utils import (
@@ -107,7 +113,7 @@ def humanbytes(size):
         raised_to_pow += 1
     return str(round(size, 2)) + " " + dict_power_n[raised_to_pow] + "B"
 
-async def get_all_modules(borg, channel_id):
+async def get_all_modules(event, borg, channel_id):
     await event.edit(f"Ìnstalling All Plugins from {channel_id}")
     try:
         a_plugins = await borg.get_messages(
