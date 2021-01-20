@@ -13,6 +13,7 @@
 
 
 import os
+import wget
 from shutil import rmtree
 import cv2
 import numpy as np
@@ -146,9 +147,8 @@ async def iamnone(event):
     await event.get_reply_message()
     img = await convert_to_image(event, borg)
     imagePath = img
-    r = requests.get(event.pattern_match.group(1))
-    open("mask.png", "wb").write(r.content)
-    maskPath = "mask.png"
+    wget_s = wget.download(event.pattern_match.group(1), out=Config.TMP_DOWNLOAD_DIRECTORY)
+    maskPath = wget_s
     cascPath = "./resources/thuglife/face_regex.xml"
     faceCascade = cv2.CascadeClassifier(cascPath)
     image = cv2.imread(imagePath)
