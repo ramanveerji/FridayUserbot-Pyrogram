@@ -1,4 +1,5 @@
 Pillow
+telethon-session-sqlalchemy
 google-trans-new
 nospamplus
 pymediainfo
