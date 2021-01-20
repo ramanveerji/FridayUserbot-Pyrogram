@@ -24,7 +24,6 @@ flask
 yahoo_fin
 anime_downloader
 pandas
-scikit-learn
 fontTools
 pydub
 quote
