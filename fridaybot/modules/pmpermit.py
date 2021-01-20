@@ -178,7 +178,7 @@ if Var.PRIVATE_GROUP_ID is not None:
         try:
             sender = await borg(GetFullUserRequest(event.sender_id))
         except ValueError:
-            pass
+            return
         if chat_ids == bot.uid:
             return
         if sender.user.bot:
