@@ -480,7 +480,7 @@ async def edit_or_reply(event, text):
     return await event.edit(text)
 
 
-#    Copyright (C) Midhun KM 2020-2021-2021-2021-2021-2021-2021-2021
+#    Copyright (C) Midhun KM 2020-2021-2021-2021-2021-2021-2021-2021-2021
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as published by
 #    the Free Software Foundation, either version 3 of the License, or
