@@ -129,6 +129,7 @@ async def get_all_modules(event, borg, channel_id):
     if len_p == 0:
         await event.edit("**No PLugins Found To Load !**")
         return
+    await event.edit(f"**Found : {len_p} Plugins. Trying To Install**")
     for sed in a_plugins:
         try:
             downloaded_file_name = await borg.download_media(sed, "fridaybot/modules/")
@@ -136,10 +137,19 @@ async def get_all_modules(event, borg, channel_id):
                 path1 = Path(downloaded_file_name)
                 shortname = path1.stem
                 load_module(shortname.replace(".py", ""))
+                await event.edit("**Installed :** `{}`".format(os.path.basename(downloaded_file_name)
+                                                              )
+                                )
             else:
                 nom += 1
+                await event.edit("**Failed to Install [PLugin Already Found] :** `{}`".format(os.path.basename(downloaded_file_name)
+                                                              )
+                                )
                 os.remove(downloaded_file_name)
         except:
+                await event.edit("**Failed To Install :** `{}`".format(os.path.basename(downloaded_file_name)
+                                                              )
+                                )
                 nom += 1
                 pass
     yesm = len_p - nom
