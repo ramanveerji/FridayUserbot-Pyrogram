@@ -30,7 +30,7 @@ from bs4 import BeautifulSoup
 import requests
 from bs4 import BeautifulSoup as bs
 import re
-
+from telethon.tl.types import InputMessagesFilterDocument
 import telethon
 from telethon import Button, custom, events, functions
 from pymediainfo import MediaInfo
@@ -107,6 +107,39 @@ def humanbytes(size):
         raised_to_pow += 1
     return str(round(size, 2)) + " " + dict_power_n[raised_to_pow] + "B"
 
+async def get_all_modules(borg, channel_id):
+    await event.edit(f"Ìnstalling All Plugins from {channel_id}")
+    try:
+        a_plugins = await borg.get_messages(
+            entity=channel_id,
+            filter=InputMessagesFilterDocument,
+            limit=None,
+            search=".py",
+        )
+    except:
+        await event.edit("`Failed To Retrieve Modules. Please Check Channel Username / Id. Make Sure You Are On That Channel`")
+        return
+    yesm = 0
+    nom = 0
+    len_p = int(a_plugins.total)
+    if len_p == 0:
+        await event.edit("**No PLugins Found To Load !**")
+        return
+    for sed in a_plugins:
+        try:
+            downloaded_file_name = await borg.download_media(sed, "fridaybot/modules/")
+            if "(" not in downloaded_file_name:
+                path1 = Path(downloaded_file_name)
+                shortname = path1.stem
+                load_module(shortname.replace(".py", ""))
+            else:
+                nom += 1
+                os.remove(downloaded_file_name)
+        except:
+                nom += 1
+                pass
+    yesm = len_p - nom
+    return yesm, nom, len_p
 
 def time_formatter(milliseconds: int) -> str:
     """Inputs time in milliseconds, to get beautified time,
