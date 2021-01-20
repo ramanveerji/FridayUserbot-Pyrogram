@@ -1,5 +1,5 @@
 # Originally By X-TRA TG
-# ©FRIDAYUSERBOT@2020
+# ©FRIDAYUSERBOT@2020-2021
 """COMMAND : .kill"""
 
 from telethon import events
