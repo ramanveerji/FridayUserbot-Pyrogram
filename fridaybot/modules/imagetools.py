@@ -258,7 +258,7 @@ async def lolmetrg(event):
 async def lolmetrg(event):
     await event.edit("`Making Comment`")
     sed = await event.get_reply_message()
-    hmm_s = await borg(GetFullUserRequest(sed.sender_id))
+    hmm_s = await event.client(GetFullUserRequest(sed.sender_id))
     if not hmm_s.profile_photo:
         imglink = 'https://telegra.ph/file/b9684cda357dfbe6f5748.jpg'
     elif hmm_s.profile_photo:
@@ -276,6 +276,7 @@ async def lolmetrg(event):
     r = requests.get(lolul)
     open("ytc.png", "wb").write(r.content)
     lolbruh = "ytc.png"
+    await event.delete()
     await borg.send_file(
         event.chat_id, lolbruh, caption="`Hmm Nice.`", reply_to=sed
     )
