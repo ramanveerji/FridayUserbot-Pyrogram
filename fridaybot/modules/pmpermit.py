@@ -41,7 +41,7 @@ USER_BOT_NO_WARN = (
 )
 if Var.PRIVATE_GROUP_ID is not None:
     
-    @bot.on(events.NewMessage(outgoing=True))
+    @borg.on(events.NewMessage(outgoing=True))
     async def auto_approve_for_out_going(event):
         if event.fwd_from:
             return
@@ -187,7 +187,7 @@ if Var.PRIVATE_GROUP_ID is not None:
         else:
             await event.edit(APPROVED_PMs)
 
-    @bot.on(events.NewMessage(incoming=True))
+    @borg.on(events.NewMessage(incoming=True))
     async def on_new_private_message(event):
         if event.sender_id == bot.uid:
             return
