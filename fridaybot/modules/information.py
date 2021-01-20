@@ -1,5 +1,6 @@
 import html
-
+from fridaybot.modules.sql_helper.gmute_sql import is_gmuted
+from fridaybot.modules.sql_helper.mute_sql import is_muted, mute, unmute
 from telethon.tl.functions.photos import GetUserPhotosRequest
 from telethon.tl.functions.users import GetFullUserRequest
 from telethon.tl.types import MessageEntityMentionName
@@ -46,6 +47,14 @@ async def _(event):
         dc_id = "Unknown."
         str(e)
     shazam = replied_user_profile_photos_count
+    if is_gmuted(user_id):
+        is_gbanned = "This User Is Gbanned"
+    elif not is_gmuted(user_id):
+        is_gbanned = False
+    if is_muted(user_id, "gmute"):
+        is_gmutted = "User is Tapped."
+    elif not is_muted(user_id, "gmute"):
+        is_gmutted = False
     caption = f"""<b>INFO<b>
 <b>Telegram ID</b>: <code>{user_id}</code>
 <b>Permanent Link</b>: <a href='tg://user?id={user_id}'>Click Here</a>
@@ -58,6 +67,8 @@ async def _(event):
 <b>VERIFIED</b>: <code>{replied_user.user.verified}</code>
 <b>IS A BOT</b>: <code>{replied_user.user.bot}</code>
 <b>Groups in Common</b>: <code>{common_chats}</code>
+<b>Is Gbanned</b>: <code>{is_gbanned}</code>
+<b>Is Gmutted</b>: <code>{is_gmutted}</code>
 """
     message_id_to_reply = event.message.reply_to_msg_id
     if not message_id_to_reply:
