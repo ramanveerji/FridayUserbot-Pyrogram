@@ -147,9 +147,10 @@ async def get_all_modules(event, borg, channel_id):
                                 )
                 os.remove(downloaded_file_name)
         except:
-                await event.edit("**Failed To Install :** `{}`".format(os.path.basename(downloaded_file_name)
+                 await event.edit("**Failed To Install :** `{}`".format(os.path.basename(downloaded_file_name)
                                                               )
                                 )
+                os.remove(downloaded_file_name)
                 nom += 1
                 pass
     yesm = len_p - nom
