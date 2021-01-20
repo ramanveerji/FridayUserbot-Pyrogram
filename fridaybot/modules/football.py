@@ -28,7 +28,7 @@ async def _(event):
     
     appo = Config.FOOTBALL_API_KEY
     url = "https://api-football-beta.p.rapidapi.com/standings"
-    querystring = {"season":"2020-2021","league":"39"}
+    querystring = {"season":"2020","league":"39"}
     headers = {'x-rapidapi-key': appo,'x-rapidapi-host': "api-football-beta.p.rapidapi.com"}
     response = requests.request("GET", url, headers=headers, params=querystring)
     a = response.json()
