@@ -48,7 +48,7 @@ if Var.PRIVATE_GROUP_ID is not None:
         if not event.is_private:
             return
         chat_ids = event.chat_id
-        sender = await event.client(GetFullUserRequest(event.chat_id))
+        sender = await event.client(GetFullUserRequest(await event.get_input_chat()))
         first_name = sender.user.first_name
         if chat_ids == bot.uid:
             return
@@ -71,7 +71,7 @@ if Var.PRIVATE_GROUP_ID is not None:
         if event.fwd_from:
             return
         if event.is_private:
-            replied_user = await event.client(GetFullUserRequest(event.chat_id))
+            replied_user = await event.client(GetFullUserRequest(await event.get_input_chat()))
             firstname = replied_user.user.first_name
             if not pmpermit_sql.is_approved(event.chat_id):
                 if event.chat_id in PM_WARNS:
@@ -111,7 +111,7 @@ if Var.PRIVATE_GROUP_ID is not None:
     async def approve_p_m(event):
         if event.fwd_from:
             return
-        replied_user = await event.client(GetFullUserRequest(event.chat_id))
+        replied_user = await event.client(GetFullUserRequest(await event.get_input_chat()))
         firstname = replied_user.user.first_name
         if event.is_private:
             if pmpermit_sql.is_approved(event.chat_id):
@@ -124,7 +124,7 @@ if Var.PRIVATE_GROUP_ID is not None:
         if event.fwd_from:
             return
         if event.is_private:
-            replied_user = await event.client(GetFullUserRequest(event.chat_id))
+            replied_user = await event.client(GetFullUserRequest(await event.get_input_chat()))
             firstname = replied_user.user.first_name
             if pmpermit_sql.is_approved(event.chat_id):
                 pmpermit_sql.disapprove(event.chat_id)
@@ -200,7 +200,7 @@ if Var.PRIVATE_GROUP_ID is not None:
         chat_ids = event.sender_id
         if USER_BOT_NO_WARN == message_text:
             return
-        sender = await event.client(GetFullUserRequest(event.sender_id))
+        sender = await event.client(GetFullUserRequest(chat_ids))
         if chat_ids == bot.uid:
             return
         if sender.user.bot:
