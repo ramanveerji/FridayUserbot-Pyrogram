@@ -85,6 +85,7 @@ async def download(target_file):
     if not os.path.isdir(TEMP_DOWNLOAD_DIRECTORY):
         os.makedirs(TEMP_DOWNLOAD_DIRECTORY)
     if input_str:
+        url = input_str
         a = urlparse(url)
         file_name = os.path.basename(a.path)
         downloaded_file_name = TEMP_DOWNLOAD_DIRECTORY + "" + file_name
