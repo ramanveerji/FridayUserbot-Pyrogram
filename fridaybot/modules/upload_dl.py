@@ -81,54 +81,9 @@ def time_formatter(milliseconds: int) -> str:
 async def download(target_file):
     friday = await edit_or_reply(target_file, "`Processing ...`")
     await friday.edit("Processing using fridaybot server ( ◜‿◝ )♡")
-    input_str = target_file.text.split(" ", maxsplit=1)[1]
     if not os.path.isdir(TEMP_DOWNLOAD_DIRECTORY):
         os.makedirs(TEMP_DOWNLOAD_DIRECTORY)
-    if input_str:
-        url = input_str
-        a = urlparse(url)
-        file_name = os.path.basename(a.path)
-        downloaded_file_name = TEMP_DOWNLOAD_DIRECTORY + "" + file_name
-        downloader = SmartDL(url, downloaded_file_name, progress_bar=False)
-        downloader.start(blocking=False)
-        c_time = time.time()
-        display_message = None
-        while not downloader.isFinished():
-            status = downloader.get_status().capitalize()
-            total_length = downloader.filesize if downloader.filesize else None
-            downloaded = downloader.get_dl_size()
-            now = time.time()
-            diff = now - c_time
-            percentage = downloader.get_progress() * 100
-            downloader.get_speed()
-            round(diff) * 1000
-            progress_str = "[{0}{1}] {2}%".format(
-                "".join(["▰" for i in range(math.floor(percentage / 10))]),
-                "".join(["▱" for i in range(10 - math.floor(percentage / 10))]),
-                round(percentage, 2),
-            )
-            estimated_total_time = downloader.get_eta(human=True)
-            try:
-                current_message = f"{status}..\
-                \n**Downloading File**\
-                \nURL: {url}\
-                \nFile Name: {file_name}\
-                \n{progress_str}\
-                \n{humanbytes(downloaded)} of {humanbytes(total_length)}\
-                \nETA: {estimated_total_time}"
-
-                if round(diff % 10.00) == 0 and current_message != display_message:
-                    await friday.edit(current_message)
-                    display_message = current_message
-            except Exception as e:
-                pass
-        if downloader.isSuccessful():
-            await friday.edit(
-                "Downloaded to `{}` successfully !!".format(downloaded_file_name)
-            )
-        else:
-            await friday.edit("Incorrect URL\n{}".format(url))
-    elif target_file.reply_to_msg_id:
+    if target_file.reply_to_msg_id:
         try:
             c_time = time.time()
             downloaded_file_name = await target_file.client.download_media(
@@ -402,7 +357,51 @@ async def uploadas(uas_event):
     else:
         await uas_event.edit("404: File Not Found")
 
-
+@borg.on(friday_on_cmd(pattern='smartdl'))
+async def lul(event):
+    input_str = event.text.split(" ", maxsplit=1)[1]
+    mone = await event.edit("**Processing..**")
+    start = datetime.now()
+    url = input_str
+    file_name = os.path.basename(os.path.basename(url.path))
+    to_download_directory = Config.TMP_DOWNLOAD_DIRECTORY
+    downloaded_file_name = os.path.join(to_download_directory, file_name)
+    downloader = SmartDL(url, downloaded_file_name, progress_bar=False)
+    downloader.start(blocking=False)
+    display_message = ""
+    c_time = time.time()
+    while not downloader.isFinished():
+        total_length = downloader.filesize if downloader.filesize else None
+        downloaded = downloader.get_dl_size()
+        now = time.time()
+        diff = now - c_time
+        percentage = downloader.get_progress() * 100
+        speed = downloader.get_speed()
+        elapsed_time = round(diff) * 1000
+        progress_str = "[{0}{1}]\nProgress: {2}%".format(
+                ''.join(["█" for i in range(math.floor(percentage / 5))]),
+                ''.join(["░" for i in range(20 - math.floor(percentage / 5))]),
+        round(percentage, 2))
+        estimated_total_time = downloader.get_eta(human=True)
+        try:
+            current_message = f"trying to download\n"
+            current_message += f"URL: {url}\n"
+            current_message += f"File Name: {file_name}\n"
+            current_message += f"{progress_str}\n"
+            current_message += f"{humanbytes(downloaded)} of {humanbytes(total_length)}\n"
+            current_message += f"ETA: {estimated_total_time}"
+            if round(diff % 10.00) == 0 and current_message != display_message:
+                await mone.edit(current_message)
+                display_message = current_message
+        except Exception as e:
+            logger.info(str(e))
+    end = datetime.now()
+    ms = (end - start).seconds
+    if downloader.isSuccessful():
+        await mone.edit("Downloaded to `{}` in {} seconds.".format(downloaded_file_name, ms))
+    else:
+        await mone.edit("Incorrect URL\n {}".format(input_str))
+    
 CMD_HELP.update(
     {
         "download": ".dl <link|filename> or reply to media\
