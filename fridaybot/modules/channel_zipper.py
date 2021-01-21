@@ -12,6 +12,7 @@
 #    along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 import shutil
+import os
 import uuid
 from fridaybot.utils import friday_on_cmd
 
