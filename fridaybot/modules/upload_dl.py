@@ -360,11 +360,12 @@ async def uploadas(uas_event):
 
 @borg.on(friday_on_cmd(pattern='smartdl'))
 async def lul(event):
-    input_str = event.text.split(" ", maxsplit=1)[1]
+    input_str = event.pattern_match.group(1)
     mone = await event.edit("**Processing..**")
     start = datetime.now()
-    url = urlparse(input_str)
-    file_name = os.path.basename(url.path)
+    url = input_str
+    a = urlparse(input_str)
+    file_name = os.path.basename(a.path)
     to_download_directory = Config.TMP_DOWNLOAD_DIRECTORY
     downloaded_file_name = os.path.join(to_download_directory, file_name)
     downloader = SmartDL(url, downloaded_file_name, progress_bar=False)
