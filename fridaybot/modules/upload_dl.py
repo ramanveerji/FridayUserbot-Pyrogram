@@ -1,7 +1,4 @@
-# © By StarkGang™ And IndianBot™
-# For F.r.i.d.a.y And Indianbot ™
-""" Userbot module which contains everything related to \
-    downloading/uploading from/to the server. """
+# @UniBorg
 
 import asyncio
 import json
@@ -79,16 +76,15 @@ def time_formatter(milliseconds: int) -> str:
     return tmp[:-2]
 
 
-@friday.on(friday_on_cmd(pattern="download(?: |$)(.*)", outgoing=True))
+@friday.on(friday_on_cmd(pattern="download(?: |$)(.*)"))
 @friday.on(sudo_cmd(pattern="download(?: |$)(.*)", allow_sudo=True))
 async def download(target_file):
-    """ For .dl command, download files to the fridaybot's server. """
     friday = await edit_or_reply(target_file, "`Processing ...`")
     await friday.edit("Processing using fridaybot server ( ◜‿◝ )♡")
-    input_str = target_file.pattern_match.group(1)
+    input_str = target_file.text.split(" ", maxsplit=1)[1]
     if not os.path.isdir(TEMP_DOWNLOAD_DIRECTORY):
         os.makedirs(TEMP_DOWNLOAD_DIRECTORY)
-    if "|" in input_str:
+    if input_str:
         url, file_name = input_str.split("|")
         url = url.strip()
         # https://stackoverflow.com/a/761825/4723940
@@ -120,7 +116,7 @@ async def download(target_file):
             estimated_total_time = downloader.get_eta(human=True)
             try:
                 current_message = f"{status}..\
-                \nFOR : F.R.I.D.A.Y™ AND INDIANBOT™\
+                \n**Downloading File**\
                 \nURL: {url}\
                 \nFile Name: {file_name}\
                 \n{progress_str}\
@@ -131,7 +127,7 @@ async def download(target_file):
                     await friday.edit(current_message)
                     display_message = current_message
             except Exception as e:
-                LOGS.info(str(e))
+                pass
         if downloader.isSuccessful():
             await friday.edit(
                 "Downloaded to `{}` successfully !!".format(downloaded_file_name)
@@ -144,7 +140,7 @@ async def download(target_file):
             downloaded_file_name = await target_file.client.download_media(
                 await target_file.get_reply_message(),
                 TEMP_DOWNLOAD_DIRECTORY,
-                progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
+                progress_callback=lambda d, t: asyncio.get_target_file_loop().create_task(
                     progress(d, t, target_file, c_time, "Downloading...")
                 ),
             )
