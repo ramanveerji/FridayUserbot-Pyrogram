@@ -6,7 +6,7 @@ import math
 import os
 import subprocess
 import time
-
+from urllib.parse import urlparse
 from hachoir.metadata import extractMetadata
 from hachoir.parser import createParser
 from pySmartDL import SmartDL
@@ -85,15 +85,8 @@ async def download(target_file):
     if not os.path.isdir(TEMP_DOWNLOAD_DIRECTORY):
         os.makedirs(TEMP_DOWNLOAD_DIRECTORY)
     if input_str:
-        url, file_name = input_str.split("|")
-        url = url.strip()
-        # https://stackoverflow.com/a/761825/4723940
-        file_name = file_name.strip()
-        head, tail = os.path.split(file_name)
-        if head:
-            if not os.path.isdir(os.path.join(TEMP_DOWNLOAD_DIRECTORY, head)):
-                os.makedirs(os.path.join(TEMP_DOWNLOAD_DIRECTORY, head))
-                file_name = os.path.join(head, tail)
+        a = urlparse(url)
+        file_name = os.path.basename(a.path)
         downloaded_file_name = TEMP_DOWNLOAD_DIRECTORY + "" + file_name
         downloader = SmartDL(url, downloaded_file_name, progress_bar=False)
         downloader.start(blocking=False)
@@ -140,7 +133,7 @@ async def download(target_file):
             downloaded_file_name = await target_file.client.download_media(
                 await target_file.get_reply_message(),
                 TEMP_DOWNLOAD_DIRECTORY,
-                progress_callback=lambda d, t: asyncio.get_target_file_loop().create_task(
+                progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
                     progress(d, t, target_file, c_time, "Downloading...")
                 ),
             )
