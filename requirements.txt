@@ -86,3 +86,4 @@ password_strength
 pyjokes
 cryptocompare
 googletrans
+pdf2docx
