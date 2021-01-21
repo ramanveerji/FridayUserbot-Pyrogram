@@ -21,7 +21,7 @@ async def _(event):
       cr = (Hitler[1])
       ve = (Hitler[2])
     except:
-      await event.edit("Input Not Proper. Give Input in the form of ```.bible bookName:chapter:verse ")
+      await event.edit("Input Not Proper. Give Input in the form of `.bible bookName:chapter:verse` ")
     try:
       url = f"https://bible-api.com/{book.strip()}+{cr.strip()}:{ve.strip()}"
     
