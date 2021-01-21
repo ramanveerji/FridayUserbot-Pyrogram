@@ -381,8 +381,8 @@ async def lul(event):
         speed = downloader.get_speed()
         elapsed_time = round(diff) * 1000
         progress_str = "[{0}{1}]\nProgress: {2}%".format(
-                ''.join(["█" for i in range(math.floor(percentage / 5))]),
-                ''.join(["░" for i in range(20 - math.floor(percentage / 5))]),
+                ''.join(["▰" for i in range(math.floor(percentage / 5))]),
+                ''.join(["▱" for i in range(20 - math.floor(percentage / 5))]),
         round(percentage, 2))
         estimated_total_time = downloader.get_eta(human=True)
         try:
@@ -400,7 +400,26 @@ async def lul(event):
     end = datetime.now()
     ms = (end - start).seconds
     if downloader.isSuccessful():
-        await mone.edit("Downloaded to `{}` in {} seconds.".format(downloaded_file_name, ms))
+        c_time = time.time()
+        lul = await mone.edit("Downloaded to `{}` in {} seconds.".format(downloaded_file_name, ms))
+        await borg.send_file(event.chat_id,
+                        downloaded_file_name,
+                        caption=file_name,
+                        force_document=False,
+                        allow_cache=False,
+                        progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
+                            progress(
+                                d,
+                                t,
+                                event,
+                                c_time,
+                                "Uploading in Progress.......",
+                                downloaded_file_name,
+                            )
+                        ),
+                    )
+        await lul.delete()
+        os.remove(downloaded_file_name)
     else:
         await mone.edit("Incorrect URL\n {}".format(input_str))
     
