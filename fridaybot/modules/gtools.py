@@ -106,7 +106,7 @@ async def ungbun(event):
 @friday.on(ChatAction)
 async def starky(event):
     if event.user_joined:
-        if is_admin(event):
+        if await is_admin(event):
             sadly = await event.get_user()
             if gban_sql.is_gbanned(sadly.id):
                 try:
@@ -118,7 +118,7 @@ async def starky(event):
 @friday.on(NewMessage)
 async def mi(event):
     sed = event.sender_id
-    if is_admin(event):
+    if await is_admin(event):
         if gban_sql.is_gbanned(sed):
             try:
                 await event.client.edit_permissions(event.chat_id, sed, view_messages=False)
