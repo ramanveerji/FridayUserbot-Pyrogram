@@ -541,3 +541,15 @@ async def get_all_admin_chats(event):
                 pass
     return lul_stark
                   
+async def is_admin(event):
+    chat = await event.get_chat()
+    admin = chat.admin_rights
+    creator = chat.creator
+    if admin or creator:
+        is_mod = True
+    else:
+        is_mod = False
+    return is_mod
+                  
+                  
+                  
