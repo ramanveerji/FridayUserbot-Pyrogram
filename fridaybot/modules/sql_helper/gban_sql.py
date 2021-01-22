@@ -41,6 +41,14 @@ def gban_data(user_id: int):
         return int(s__.user_id), s__.reason
     finally:
         SESSION.close()
+        
+def is_gbanned(user_id: int):
+    try:
+        s__ = SESSION.query(Gban).get(str(user_id))
+        if s__:
+            return s__.reason
+    finally:
+        SESSION.close()
 
 def ungban_user(user_id):
     ungbanner = SESSION.query(Gban).get(str(user_id))
