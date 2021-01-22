@@ -18,61 +18,16 @@ import uuid
 
 if not os.path.isdir(Config.TMP_DOWNLOAD_DIRECTORY):
   os.makedirs(Config.TMP_DOWNLOAD_DIRECTORY)
-
-@friday.on(friday_on_cmd(pattern="p2dcl(?: |$)(.*)"))
-async def starky(event):
-    un = event.pattern_match.group(1)
-    rndm = uuid.uuid4().hex
-    frid = uuid.uuid4().hex
-    diro = f"./{rndm}/"
-    dirb = f"./{frid}/"
-    os.makedirs(diro)
-    os.makedirs(dirb)
-    media_count = 0
-    text_count = 0
-    if un:
-        chnnl = un
-    else:
-        chnnl = event.chat_id
-    await event.edit(f"**Fetching All Files From This Channel**")
-    try:
-        chnnl_msgs = await borg.get_messages(chnnl, limit=3000, search=".pdf")
-    except:
-        await event.edit("**Unable To fetch Messages !** \n`Please, Check Channel Details And IF THere Are Any Media :/`")
-        return
-    total = int(chnnl_msgs.total)
-    await event.edit(f"**Downloading {total} Pdf's**")
-    for d in chnnl_msgs:
-        if d.media:
-            media_count += 1
-            await borg.download_media(d.media, diro)
-        else:
-            pass
-    await event.edit(f"**Total PDF :** `{total}` \n**Downloaded PDF :** `{media_count}` \n**Now Converting Files.**")
-    Azx = glob.glob(f"{diro}*.pdf")
-    for friday in Azx:
-        res = uuid.uuid4().hex
-        pdf_file = friday
-        docx_file = f'{dirb}{str(res)}.docx'
-        parse(pdf_file, docx_file, start=0, end=None)
-    await event.edit(f"**Total PDF :** `{total}` \n**Downloaded PDF :** `{media_count}` \n**Now Zipping Files.**")
-    shutil.make_archive(f"FridayConverter", "zip", dirb)
-    await borg.send_file(event.chat_id, "FridayConverter.zip", caption=f"**Total PDF :** `{total}` \n**Downloaded PDF :** `{media_count}` \n**By @fridayot**")
-    os.remove("FridayConverter.zip")
-    shutil.rmtree(dirb)
-    shutil.rmtree(diro)
-
   
 @friday.on(friday_on_cmd(pattern=r"pdf2docx"))
-@friday.on(sudo_cmd(pattern=r"pdf2docx", allow_sudo=True))
 async def hmm(event):
     if not event.reply_to_msg_id:
-        await event.reply("Reply to any Pdf File.")
+        await event.edit("Reply to any Pdf File.")
         return
-    hmmu = await event.reply("hmm... Please Wait...🚶")
+    hmmu = await event.edit("hmm... Please Wait...🚶")
     lol = await event.get_reply_message()
     starky = await borg.download_media(lol.media, Config.TMP_DOWNLOAD_DIRECTORY)
-    hmmu = await event.reply("hmm... Please Wait..")
+    hmmu = await event.edit("hmm... Please Wait..")
     pdf_file = starky
     docx_file = './fridaybot/DOWNLOADS/FRIDAYOT.docx'
     parse(pdf_file, docx_file, start=0, end=None)
