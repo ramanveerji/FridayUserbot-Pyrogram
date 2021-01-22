@@ -1,5 +1,5 @@
 from fridaybot.function import get_all_admin_chats
-from fridaybot.modules.sql_helper import gban_sql as stark_sql
+from fridaybot.modules.sql_helper import gban_sql
 from fridaybot.utils import friday_on_cmd
 from telethon.tl.types import (
     ChannelParticipantsAdmins,
