@@ -29,26 +29,26 @@ async def gbun(event):
     sucess = 0
     bad = 0
     user, reason = await get_user_from_event(event)
-    if not user:
+    if not user.id:
         await event.edit("`Mention A User To Gban`")
         return
     if not reason:
         hmm_r = "#GBanned"
     elif reason:
         hmm_r = reason
-    if user == bot.uid:
+    if user.id == bot.uid:
         await event.edit("**I Can't Gban You Master :(**")
         return
-    if gban_sql.is_gbanned(user):
+    if gban_sql.is_gbanned(user.id):
         await event.edit("**This User Is Already Gbanned. No Point In Gbanning Him Again !**")
         return
-    gban_sql.gban_user(user, hmm_r)
+    gban_sql.gban_user(user.id, hmm_r)
     chat_s = await get_all_admin_chats(event)
     len_s = len(chat_s)
     await event.edit(f"**GBanning !** [{user.first_name}](tg://user?id={user.id}) **in {len_s} Chats!**")
     for stark_s in chat_s:
         try:
-          await event.client.edit_permissions(stark_s, user, view_messages=False)
+          await event.client.edit_permissions(stark_s, user.id, view_messages=False)
           sucess += 1
         except:
           bad += 0
@@ -61,22 +61,22 @@ async def ungbun(event):
     sucess = 0
     bad = 0
     user, reason = await get_user_from_event(event)
-    if not user:
+    if not user.id:
         await event.edit("`Mention A User To Un-Gban`")
         return
-    if user == bot.uid:
+    if user.id == bot.uid:
         await event.edit("**I Can't Un-Gban You Master :(**")
         return
-    if not gban_sql.is_gbanned(user):
+    if not gban_sql.is_gbanned(user.id):
         await event.edit("**This User Is Not Gbanned. No Point In Un-Gbanning !**")
         return
-    gban_sql.ungban_user(user)
+    gban_sql.ungban_user(user.id)
     chat_s = await get_all_admin_chats(event)
     len_s = len(chat_s)
     await event.edit(f"**Un-GBanning !** [{user.first_name}](tg://user?id={user.id}) **in {len_s} Chats!**")
     for stark_s in chat_s:
         try:
-          await event.client.edit_permissions(stark_s, user, view_messages=True)
+          await event.client.edit_permissions(stark_s, user.id, view_messages=True)
           sucess += 1
         except:
           bad += 0
