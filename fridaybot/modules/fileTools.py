@@ -48,14 +48,14 @@ async def starky(event):
             await borg.download_media(d.media, diro)
         else:
             pass
-    await event.edit(f"**Total Media :** `{total}` \n**Downloaded Media :** `{media_count}` \n**Total Texts :** `{text_count}` \n**Now Converting Files.**")
+    await event.edit(f"**Total PDF :** `{total}` \n**Downloaded PDF :** `{media_count}` \n**Now Converting Files.**")
     Azx = glob.glob(f"{diro}*.pdf")
     for friday in Azx:
-      N = 9
-      res =''.join(random.choices(string.ascii_uppercase+string.digits, k = N))
-      pdf_file = friday
-      docx_file = f'{dirb}{str(res)}.docx'
-      parse(pdf_file, docx_file, start=0, end=None)
+        res = uuid.uuid4().hex
+        pdf_file = friday
+        docx_file = f'{dirb}{str(res)}.docx'
+        parse(pdf_file, docx_file, start=0, end=None)
+    await event.edit(f"**Total PDF :** `{total}` \n**Downloaded PDF :** `{media_count}` \n**Now Zipping Files.**")
     shutil.make_archive(f"FridayConverter", "zip", dirb)
     await borg.send_file(event.chat_id, "FridayConverter.zip", caption=f"**Total PDF :** `{total}` \n**Downloaded PDF :** `{media_count}` \n**By @fridayot**")
     os.remove("FridayConverter.zip")
