@@ -53,3 +53,13 @@ async def starky(event):
     os.remove(f"{chnnl}.zip")
     shutil.rmtree(dir)
             
+
+
+
+CMD_HELP.update(
+    {
+        "channel_zipper": "**Channel Zipper**\
+\n\n**Syntax : **`.chnnlzip <channel username>`\
+\n**Usage :** Zips All The Files/images/messages in the channel."
+    }
+)
