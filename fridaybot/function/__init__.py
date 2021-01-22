@@ -527,7 +527,7 @@ async def _ytdl(url, is_it, event, tgbot):
         os.remove(f"{ytdl_data['id']}.mp4")
                   
 async def get_all_admin_chats(event):
-    lul_stark = 
+    lul_stark = []
     all_chats = [
         d.entity.id
             for d in await event.client.get_dialogs()
