@@ -39,7 +39,7 @@ async def gbun(event):
     if user == bot.uid:
         await event.edit("**I Can't Gban You Master :(**")
         return
-    if gban_sql.is_banned:
+    if gban_sql.is_gbanned:
         await event.edit("**This User Is Already Gbanned. No Point In Gbanning Him Again !**")
         return
     gban_sql.gban_user(user, hmm_r)
@@ -67,7 +67,7 @@ async def ungbun(event):
     if user == bot.uid:
         await event.edit("**I Can't Un-Gban You Master :(**")
         return
-    if not gban_sql.is_banned:
+    if not gban_sql.is_gbanned:
         await event.edit("**This User Is Not Gbanned. No Point In Un-Gbanning Him Again !**")
         return
     gban_sql.ungban_user(user)
