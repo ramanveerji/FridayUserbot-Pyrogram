@@ -68,7 +68,7 @@ async def ungbun(event):
         await event.edit("**I Can't Un-Gban You Master :(**")
         return
     if not gban_sql.is_gbanned(user):
-        await event.edit("**This User Is Not Gbanned. No Point In Un-Gbanning Him Again !**")
+        await event.edit("**This User Is Not Gbanned. No Point In Un-Gbanning !**")
         return
     gban_sql.ungban_user(user)
     chat_s = await get_all_admin_chats(event)
@@ -87,7 +87,7 @@ async def get_user_from_event(event):
     """ Get the user from argument or replied message. """
     args = event.pattern_match.group(1).split(" ", 1)
     extra = None
-    if event.reply_to_msg_id:
+    elif event.reply_to_msg_id:
         previous_message = await event.get_reply_message()
         user_obj = await event.client.get_entity(previous_message.sender_id)
         extra = event.pattern_match.group(1)
@@ -110,12 +110,16 @@ async def get_user_from_event(event):
                 user_id = probable_user_mention_entity.user_id
                 user_obj = await event.client.get_entity(user_id)
                 return user_obj
+        
         try:
             user_obj = await event.client.get_entity(user)
         except (TypeError, ValueError) as err:
             await event.edit(str(err))
             return None
-
+    elif event.is_private:
+        hmm = await event.get_input_chat()
+        user_obj = await event.client.get_entity(hmm)
+        extra = event.pattern_match.group(1)
     return user_obj, extra
 
 
