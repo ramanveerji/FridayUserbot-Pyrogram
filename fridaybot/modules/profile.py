@@ -21,12 +21,14 @@ async def _(event):
     elif event.is_private:
         id_s = await event.get_input_chat()
     user_s = await event.client.get_entity(id_s)
-    if not user_s.last_name:
-        user_s.last_name = " "
+    if user_s.last_name is None:
+        sed_m = " "
+    else:
+        sed_m = user_s.last_name
     await event.client(functions.contacts.AddContactRequest(
         id=id_s, 
         first_name=user_s.first_name, 
-        last_name=user_s.last_name, 
+        last_name=sed_m, 
         phone='123456', 
         add_phone_privacy_exception=True)) 
     star = await event.edit("**Added To Contacts SucessFully**")
