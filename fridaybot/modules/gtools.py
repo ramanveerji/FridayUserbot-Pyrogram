@@ -65,6 +65,9 @@ async def gbun(event):
         return
     gban_sql.gban_user(user.id, hmm_r)
     chat_s = await get_all_admin_chats(event)
+    if len(chat_s) == 0:
+        await event.edit("**You Need To Be Admin In Atleast 1 Group To Perform this Action**")
+        return
     len_s = len(chat_s)
     await event.edit(f"**GBanning !** [{user.first_name}](tg://user?id={user.id}) **in {len_s} Chats!**")
     for stark_s in chat_s:
@@ -73,7 +76,7 @@ async def gbun(event):
           sucess += 1
         except:
           bad += 0
-    await event.edit(f"**GBanned !**[{user.first_name}](tg://user?id={user.id}) **in {len_s} Chats!**")
+    await event.edit(f"**GBanned !**[{user.first_name}](tg://user?id={user.id}) **in {sucess} Chats!**")
     
           	
 @friday.on(friday_on_cmd(pattern='ungban(?: |$)(.*)'))
@@ -93,6 +96,9 @@ async def ungbun(event):
         return
     gban_sql.ungban_user(user.id)
     chat_s = await get_all_admin_chats(event)
+    if len(chat_s) == 0:
+        await event.edit("**You Need To Be Admin In Atleast 1 Group To Perform this Action**")
+        return
     len_s = len(chat_s)
     await event.edit(f"**Un-GBanning !** [{user.first_name}](tg://user?id={user.id}) **in {len_s} Chats!**")
     for stark_s in chat_s:
@@ -101,7 +107,7 @@ async def ungbun(event):
           sucess += 1
         except:
           bad += 0
-    await event.edit(f"**Un-GBanned !**[{user.first_name}](tg://user?id={user.id}) **in {len_s} Chats!**")
+    await event.edit(f"**Un-GBanned !**[{user.first_name}](tg://user?id={user.id}) **in {sucess} Chats!**")
 
 @friday.on(ChatAction)
 async def starky(event):
