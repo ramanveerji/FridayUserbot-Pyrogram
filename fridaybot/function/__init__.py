@@ -529,7 +529,7 @@ async def _ytdl(url, is_it, event, tgbot):
 async def get_all_admin_chats(event):
     lul_stark = []
     all_chats = [
-        d.entity.id
+        d.entity
             for d in await event.client.get_dialogs()
             if (d.is_group or d.is_channel)
         ]
