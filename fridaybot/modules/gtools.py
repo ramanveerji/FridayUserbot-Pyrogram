@@ -143,7 +143,7 @@ async def get_user_from_event(event):
         previous_message = await event.get_reply_message()
         user_obj = await event.client.get_entity(previous_message.sender_id)
         extra = event.pattern_match.group(1)
-    elif args:
+    elif len(args[0]) > 0:
         user = args[0]
         if len(args) == 2:
             extra = args[1]
@@ -170,7 +170,11 @@ async def get_user_from_event(event):
             return None
     elif event.is_private:
         hmm = await event.get_input_chat()
-        user_obj = await event.client.get_entity(hmm)
+        try:
+            user_obj = await event.client.get_entity(hmm)
+        except (TypeError, ValueError) as err:
+            await event.edit(str(err))
+            return None
         extra = event.pattern_match.group(1)
     return user_obj, extra
 
