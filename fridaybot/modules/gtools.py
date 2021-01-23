@@ -44,7 +44,7 @@ from telethon.tl.functions.channels import (
 )
 
 
-@friday.on(friday_on_cmd(pattern='(?: |$)(.*)'))
+@friday.on(friday_on_cmd(pattern='gban(?: |$)(.*)'))
 async def gbun(event):
     await event.edit("**GBanning User**")
     sucess = 0
