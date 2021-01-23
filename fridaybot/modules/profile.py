@@ -3,7 +3,7 @@
 .pname <Name>
 .ppic"""
 import os
-
+import asyncio
 from telethon.tl import functions
 from uniborg.util import friday_on_cmd
 from fridaybot import CMD_HELP
