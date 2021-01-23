@@ -122,7 +122,6 @@ async def mi(event):
         if gban_sql.is_gbanned(sed):
             try:
                 await event.client.edit_permissions(event.chat_id, sed, view_messages=False)
-                await event.reply(f"**#GBanned-User** \nUserID : {sed} \nReason : {gban_sql.is_gbanned(sed)}")
             except:
                 pass
             
