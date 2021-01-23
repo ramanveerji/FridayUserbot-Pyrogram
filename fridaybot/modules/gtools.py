@@ -44,7 +44,7 @@ from telethon.tl.functions.channels import (
 )
 
 
-@friday.on(friday_on_cmd(pattern='gban (.*)'))
+@friday.on(friday_on_cmd(pattern='(?: |$)(.*)'))
 async def gbun(event):
     await event.edit("**GBanning User**")
     sucess = 0
@@ -76,7 +76,7 @@ async def gbun(event):
     await event.edit(f"**GBanned !**[{user.first_name}](tg://user?id={user.id}) **in {len_s} Chats!**")
     
           	
-@friday.on(friday_on_cmd(pattern='ungban (.*)'))
+@friday.on(friday_on_cmd(pattern='ungban(?: |$)(.*)'))
 async def ungbun(event):
     await event.edit("**Un-GBanning User**")
     sucess = 0
@@ -106,7 +106,7 @@ async def ungbun(event):
 @friday.on(ChatAction)
 async def starky(event):
     if event.user_joined:
-        if await is_admin(event):
+        if await is_admin(event, bot.uid):
             sadly = await event.get_user()
             if gban_sql.is_gbanned(sadly.id):
                 try:
@@ -118,7 +118,7 @@ async def starky(event):
 @friday.on(NewMessage)
 async def mi(event):
     sed = event.sender_id
-    if await is_admin(event):
+    if await is_admin(event, bot.uid):
         if gban_sql.is_gbanned(sed):
             try:
                 await event.client.edit_permissions(event.chat_id, sed, view_messages=False)
