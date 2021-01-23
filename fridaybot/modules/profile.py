@@ -19,7 +19,7 @@ async def _(event):
     elif event.pattern_match.group(1):
         id_s = event.pattern_match.group(1)
     elif event.is_private:
-        id_s = event.get_input_chat()
+        id_s = await event.get_input_chat()
     user_s = await event.client.get_entity(id_s)
     await event.client(functions.contacts.AddContactRequest(
         id=id_s, 
