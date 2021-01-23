@@ -120,6 +120,8 @@ async def starky(event):
 async def mi(event):
     sed = event.sender_id
     hmm = await bot.get_me()
+    if event.is_private:
+        return
     if await is_admin(event, hmm.id):
         if gban_sql.is_gbanned(sed):
             try:
