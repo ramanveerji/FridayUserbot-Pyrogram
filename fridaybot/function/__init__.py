@@ -541,11 +541,9 @@ async def get_all_admin_chats(event):
             pass
     return lul_stark
                   
-async def is_admin(event):
-    chat = await event.get_chat()
-    admin = chat.admin_rights
-    creator = chat.creator
-    if admin or creator:
+async def is_admin(event, user):
+    sed = await event.client.get_permissions(event.chat_id, user)
+    if sed.is_admin:
         is_mod = True
     else:
         is_mod = False
