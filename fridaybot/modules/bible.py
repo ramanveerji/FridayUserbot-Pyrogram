@@ -2,26 +2,26 @@ from telethon import events
 from telethon.errors.rpcerrorlist import YouBlockedUserError
 
 from fridaybot import CMD_HELP
-from fridaybot.utils import edit_or_reply, sudo_cmd, admin_cmd
-
+from fridaybot.utils import edit_or_reply, friday_on_cmd, sudo_cmd
 import json
 from fridaybot import CMD_HELP
 import requests
 
-@friday.on(admin_cmd(pattern="bible (.*)"))
+@friday.on(friday_on_cmd(pattern="bible ?(.*)"))
+@friday.on(sudo_cmd(pattern="bible ?(.*)", allow_sudo=True))
 async def _(event):
     if event.fwd_from:
         return
     input_str = event.pattern_match.group(1)
     if input_str is None:
-      await event.edit("Input Not Found. 🤦")
+      await edit_or_reply(event, "Input Not Found. 🤦")
     try:
       Hitler = input_str.split(":",2)
       book = (Hitler[0])
       cr = (Hitler[1])
       ve = (Hitler[2])
     except:
-      await event.edit("Input Not Proper. Give Input in the form of `.bible bookName:chapter:verse` ")
+      await edit_or_reply(event, "Input Not Proper. Give Input in the form of `.bible bookName:chapter:verse` ")
     try:
       url = f"https://bible-api.com/{book.strip()}+{cr.strip()}:{ve.strip()}"
     
@@ -59,10 +59,9 @@ Get Your Fridaybot From @FRIDAYOT</u></b>
         parse_mode="HTML",
         silent=True,
       )
-      await event.delete()
     
     except:
-      await event.edit("Given Text is Invalid. 🤦")
+      await edit_or_reply("Given Text is Invalid. 🤦")
     
 
 
