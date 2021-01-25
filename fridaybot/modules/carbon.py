@@ -9,7 +9,7 @@ import os
 import random
 from time import sleep
 from urllib.parse import quote_plus
-
+from fridaybot.utils import friday_on_cmd
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.keys import Keys
@@ -21,7 +21,7 @@ CARBONLANG = "auto"
 LANG = "en"
 
 
-@register(outgoing=True, pattern="^.carbon")
+@friday.on(friday_on_cmd(pattern="carbon"))
 async def carbon_api(e):
     if not e.text[0].isalpha() and e.text[0] not in ("/", "#", "@", "!"):
 
