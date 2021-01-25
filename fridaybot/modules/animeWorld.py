@@ -39,8 +39,8 @@ async def _(event):
     url4 = search[3].url
     title5 = search[4].title
     url5 = search[4].url
-
-    await edit_or_reply(event, f"<b><u>Anime Search Complete</b></u> \n\n\n<b>Title</b>:-  <code>{title1}</code> \n<b>URL Link</b>:- {url1}\n\n<b>Title</b>:-  <code>{title2}</code> \n<b>URL Link</b>:- {url2}\n\n<b>Title</b>:-  <code>{title3}</code>\n<b>URL Link</b>:- {url3}\n\n<b>Title</b>:-  <code>{title4}</code> \n<b>URL Link</b>:- {url4}\n\n<b>Title</b>:-  <code>{title5}</code> \n<b>URL Link</b>:- {url5}\n\n<b>Links Gathered By Friday\nGet Your Own Friday From @FRIDAYCHAT</b>", parse_mode="HTML",)
+    NopZ = f"<b><u>Anime Search Complete</b></u> \n\n\n<b>Title</b>:-  <code>{title1}</code> \n<b>URL Link</b>:- {url1}\n\n<b>Title</b>:-  <code>{title2}</code> \n<b>URL Link</b>:- {url2}\n\n<b>Title</b>:-  <code>{title3}</code>\n<b>URL Link</b>:- {url3}\n\n<b>Title</b>:-  <code>{title4}</code> \n<b>URL Link</b>:- {url4}\n\n<b>Title</b>:-  <code>{title5}</code> \n<b>URL Link</b>:- {url5}\n\n<b>Links Gathered By Friday\nGet Your Own Friday From @FRIDAYCHAT</b>"
+    await await borg.send_message(event.chat_id, NopZ, parse_mode="HTML",)
     await ommhg.delete()
 
 
@@ -139,7 +139,7 @@ CMD_HELP.update(
 \n**Usage :** Gives manga information.\
 \n\n**Syntax : **`.anime <Amime Name:site Name>`\
 \n**Usage :** Automatically Gets Streaming Link Of The Anime.\
-\n**Example :** `.anime one piece:twist.moe`\
+\n**Example :** `.anime one piece:animeonline360`\
 \n**Note** :** Get Site names list from [Here](https://devsexpoanime.netlify.app/)."
     }
 )
