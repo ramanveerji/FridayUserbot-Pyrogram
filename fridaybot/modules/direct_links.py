@@ -16,6 +16,7 @@ from bs4 import BeautifulSoup
 from humanize import naturalsize
 
 from fridaybot import CMD_HELP
+from fridaybot.utils import friday_on_cmd
 from fridaybot.events import register
 
 
@@ -42,7 +43,7 @@ def subprocess_run(cmd):
     return talk
 
 
-@register(outgoing=True, pattern=r"^\.direct(?: |$)([\s\S]*)")
+@friday.on(friday_on_cmd(pattern=r"direct(?: |$)([\s\S]*)"))
 async def direct_link_generator(request):
     """ direct links generator """
     await request.edit("`Processing...`")
