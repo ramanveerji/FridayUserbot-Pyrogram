@@ -1,9 +1,9 @@
 import io
 import sys
 import traceback
+from fridaybot.utils import friday_on_cmd
 
-
-@command(pattern="^.exec")
+@friday.on(friday_on_cmd(pattern="exec"))
 async def _(event):
     if event.fwd_from:
         return
@@ -12,13 +12,11 @@ async def _(event):
     reply_to_id = event.message.id
     if event.reply_to_msg_id:
         reply_to_id = event.reply_to_msg_id
-
     old_stderr = sys.stderr
     old_stdout = sys.stdout
     redirected_output = sys.stdout = io.StringIO()
     redirected_error = sys.stderr = io.StringIO()
     stdout, stderr, exc = None, None, None
-
     try:
         await aexec(cmd, event)
     except Exception:
