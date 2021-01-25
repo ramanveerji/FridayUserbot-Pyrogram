@@ -19,15 +19,16 @@ from bs4 import BeautifulSoup
 from urllib.request import Request, urlopen, urlretrieve
 from uniborg.util import friday_on_cmd
 from fridaybot import CMD_HELP
-from fridaybot.utils import admin_cmd
+from fridaybot.utils import edit_or_reply, friday_on_cmd, sudo_cmd
 
-@friday.on(admin_cmd(pattern="book (.*)"))
+@friday.on(friday_on_cmd(pattern="book ?(.*)"))
+@friday.on(sudo_cmd(pattern="book ?(.*)", allow_sudo=True))
 async def _(event):
     if event.fwd_from:
         return
     input_str = event.pattern_match.group(1)
     lool = 0
-    await event.edit("searching for the book...")
+    KkK = await edit_or_reply(event, "searching for the book...")
     lin = "https://b-ok.cc/s/"
     text = input_str
     link = lin+text
@@ -40,7 +41,7 @@ async def _(event):
     for nb in total.descendants:
       nbx = nb.replace("(", "").replace(")", "")
     if nbx == "0":
-        await event.edit("No Books Found with that name.")
+        await edit_or_reply(event, "No Books Found with that name.")
     else:
 
         for tr in soup.find_all('td'):
@@ -61,7 +62,7 @@ async def _(event):
         
         await borg.send_file(event.chat_id, "book.txt", caption=f"**BOOKS GATHERED SUCCESSFULLY!\n\nBY FRIDAY. GET YOUR OWN FRIDAY FROM @FRIDAYCHAT.**")
         os.remove("book.txt")
-        await event.delete()
+        await KkK.delete()
         
 
 
