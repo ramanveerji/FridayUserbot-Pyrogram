@@ -20,7 +20,7 @@ sedprint = logging.getLogger("PLUGINS")
 cmdhandler = Config.COMMAND_HAND_LER
 bothandler = Config.BOT_HANDLER
 TOTAL_USERS = list(Config.SUDO_USERS)
-TOTAL_USERS.append(bot.uid)
+TOTAL_USERS.append(await bot.get_me().id)
 
 def command(**args):
     args["func"] = lambda e: e.via_bot_id is None
