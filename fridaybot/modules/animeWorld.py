@@ -1,21 +1,24 @@
 from anime_downloader.sites import get_anime_class
 
 from fridaybot import CMD_HELP
-from fridaybot.utils import admin_cmd
+from fridaybot.utils import friday_on_cmd
+from fridaybot.utils import edit_or_reply, friday_on_cmd, sudo_cmd
+
 from mal import AnimeSearch, Anime, MangaSearch, Manga
 
-@friday.on(admin_cmd(pattern="anime (.*)"))
+@friday.on(friday_on_cmd(pattern="anime ?(.*)"))
+@friday.on(sudo_cmd(pattern="anime ?(.*)", allow_sudo=True))
 async def _(event):
     if event.fwd_from:
         return
     input_str = event.pattern_match.group(1)
-    ommhg = await event.reply("Searching For Anime.....")
+    ommhg = await edit_or_reply(event, "Searching For Anime.....")
     lmao = input_str.split(":", 1)
     try:
        site = lmao[1]
     except:
        site = "animeonline360"
-       await event.reply("Please Provide Site Name From Next Time. Now Continuing With Default Site.")
+       await edit_or_reply(event, "Please Provide Site Name From Next Time. Now Continuing With Default Site.")
 
     lol = lmao[0]
     why = site.lower()
@@ -37,19 +40,17 @@ async def _(event):
     title5 = search[4].title
     url5 = search[4].url
 
-    await event.edit(
-        f"<b><u>Anime Search Complete</b></u> \n\n\n<b>Title</b>:-  <code>{title1}</code> \n<b>URL Link</b>:- {url1}\n\n<b>Title</b>:-  <code>{title2}</code> \n<b>URL Link</b>:- {url2}\n\n<b>Title</b>:-  <code>{title3}</code>\n<b>URL Link</b>:- {url3}\n\n<b>Title</b>:-  <code>{title4}</code> \n<b>URL Link</b>:- {url4}\n\n<b>Title</b>:-  <code>{title5}</code> \n<b>URL Link</b>:- {url5}\n\n<b>Links Gathered By Friday\nGet Your Own Friday From @FRIDAYCHAT</b>",
-        parse_mode="HTML",
-    )
+    await edit_or_reply(event, f"<b><u>Anime Search Complete</b></u> \n\n\n<b>Title</b>:-  <code>{title1}</code> \n<b>URL Link</b>:- {url1}\n\n<b>Title</b>:-  <code>{title2}</code> \n<b>URL Link</b>:- {url2}\n\n<b>Title</b>:-  <code>{title3}</code>\n<b>URL Link</b>:- {url3}\n\n<b>Title</b>:-  <code>{title4}</code> \n<b>URL Link</b>:- {url4}\n\n<b>Title</b>:-  <code>{title5}</code> \n<b>URL Link</b>:- {url5}\n\n<b>Links Gathered By Friday\nGet Your Own Friday From @FRIDAYCHAT</b>", parse_mode="HTML",)
     await ommhg.delete()
 
 
-@friday.on(admin_cmd(pattern="ainfo (.*)"))
+@friday.on(friday_on_cmd(pattern="ainfo ?(.*)"))
+@friday.on(sudo_cmd(pattern="ainfo ?(.*)", allow_sudo=True))
 async def _(event):
     if event.fwd_from:
         return
     input_str = event.pattern_match.group(1)
-    await event.edit("Please Wait....🚶‍♂️🚶‍♂️🚶‍♂️")
+    Zp = await edit_or_reply(event, "Please Wait....🚶‍♂️🚶‍♂️🚶‍♂️")
     search = AnimeSearch(input_str)
     ID = search.results[0].mal_id
     anime = Anime(ID)
@@ -82,15 +83,16 @@ favorites:- {anime.favorites}</b>
         force_document=False,
         silent=True,
     )
-    await event.delete()
+    await Zp.delete()
 
 
-@friday.on(admin_cmd(pattern="manga (.*)"))
+@friday.on(friday_on_cmd(pattern="manga ?(.*)"))
+@friday.on(sudo_cmd(pattern="manga ?(.*)", allow_sudo=True))
 async def _(event):
     if event.fwd_from:
         return
     input_str = event.pattern_match.group(1)
-    await event.edit("Please Wait....🚶‍♂️🚶‍♂️🚶‍♂️")
+    LeO = await edit_or_reply("Please Wait....🚶‍♂️🚶‍♂️🚶‍♂️")
     search = MangaSearch(input_str)
     ID = search.results[0].mal_id
     manga = Manga(ID)
@@ -123,7 +125,7 @@ favorites:- {manga.favorites}</b>
         force_document=False,
         silent=True,
     )
-    await event.delete()
+    await LeO.delete()
 
 
 
