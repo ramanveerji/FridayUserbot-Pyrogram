@@ -31,43 +31,42 @@ def download_video(quality, url, filename):
 async def _(event):
     if event.fwd_from:
         return
-    while True:
-        url = event.pattern_match.group(1)
-        x = re.match(r'^(https:|)[/][/]www.([^/]+[.])*facebook.com', url)
+    url = event.pattern_match.group(1)
+    x = re.match(r'^(https:|)[/][/]www.([^/]+[.])*facebook.com', url)
 
-        if x:
-            html = requests.get(url).content.decode('utf-8')
-        else:
-            await event.edit("This Video Is Either Private Or URL Is Invalid. Exiting... ")
-            return
+    if x:
+        html = requests.get(url).content.decode('utf-8')
+    else:
+        await event.edit("This Video Is Either Private Or URL Is Invalid. Exiting... ")
+        return
 
-        _qualityhd = re.search('hd_src:"https', html)
-        _qualitysd = re.search('sd_src:"https', html)
-        _hd = re.search('hd_src:null', html)
-        _sd = re.search('sd_src:null', html)
+    _qualityhd = re.search('hd_src:"https', html)
+    _qualitysd = re.search('sd_src:"https', html)
+    _hd = re.search('hd_src:null', html)
+    _sd = re.search('sd_src:null', html)
 
-        list = []
-        _thelist = [_qualityhd, _qualitysd, _hd, _sd]
-        for id,val in enumerate(_thelist):
-            if val != None:
-                list.append(id)
-        filename = datetime.strftime(datetime.now(), '%Y-%m-%d-%H-%M-%S')
+    list = []
+    _thelist = [_qualityhd, _qualitysd, _hd, _sd]
+    for id,val in enumerate(_thelist):
+        if val != None:
+            list.append(id)
+    filename = datetime.strftime(datetime.now(), '%Y-%m-%d-%H-%M-%S')
 
-        main(url, filename)
-        await event.edit("Video Downloaded Successfully. Starting To Upload.")
+    main(url, filename)
+    await event.edit("Video Downloaded Successfully. Starting To Upload.")
         
-        kk = f"{filename}.mp4"
-        caption= f"Facebook Video Successfully by Fridaybot.\nGet Your Fridaybot From @Fridayot."
+    kk = f"{filename}.mp4"
+    caption= f"Facebook Video Successfully by Fridaybot.\nGet Your Fridaybot From @Fridayot."
         
-        await borg.send_message(
-          event.chat_id,
-          caption,
-          parse_mode="HTML",
-          file=kk,
-          force_document=False,
-          silent=True,
-        )
-        os.system(f"rm {kk}")
+    await borg.send_message(
+      event.chat_id,
+      caption,
+      parse_mode="HTML",
+      file=kk,
+      force_document=False,
+      silent=True,
+    )
+    os.system(f"rm {kk}")
 
 
 CMD_HELP.update(
