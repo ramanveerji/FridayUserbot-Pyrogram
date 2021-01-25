@@ -1,18 +1,16 @@
 """
-for bot credits to @pureindialover
+By @Spechide // @UnIboRG
 """
 
 from telethon.tl import functions
-
+from fridaybot.utils import friday_on_cmd
 from fridaybot import CMD_HELP
 from fridaybot.events import register
 
 
-@register(outgoing=True, pattern="^.create (b|g|c)(?: |$)(.*)")
+@friday.on(friday_on_cmd(pattern="create (b|g|c)(?: |$)(.*)"))
 async def telegraphs(grop):
-
     """ For .create command, Creating New Group & Channel """
-
     if not grop.text[0].isalpha() and grop.text[0] not in ("/", "#", "@", "!"):
 
         if grop.fwd_from:
