@@ -24,7 +24,7 @@ from telethon.tl.types import (
 
 from fridaybot import CMD_HELP
 from fridaybot.events import register
-
+from fridaybot.utils import friday_on_cmd
 
 def parse_arguments(message: str, valid: List[str]) -> (dict, str):
     options = {}
@@ -285,7 +285,7 @@ class TGDoc:
         return "\n\n".join([str(section) for section in self.sections])
 
 
-@register(pattern=r"^\.u(?:ser)?(\s+[\S\s]+|$)", outgoing=True)
+@friday.on(friday_on_cmd(pattern=r"u(?:ser)?(\s+[\S\s]+|$)"))
 async def who(event: NewMessage.Event):
     """ For .user command, get info about a user. """
     if event.fwd_from:
