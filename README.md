@@ -52,7 +52,7 @@
 Simply clone the repository and run the main file:
 ```sh
 # Install Git First.
-git clone https://github.com/starkGang/FridayUserbot
+git clone https://github.com/DevsExpo/FridayUserbot
 # Open Git Cloned File
 cd FridayUserbot
 # Config Virtual Env
