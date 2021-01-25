@@ -25,7 +25,7 @@ async def _(event):
     
     url = "https://thispersondoesnotexist.com/image"
     response = requests.get(url)
-    await event.edit("Creating a fake face for you... 🌚")
+    poppy = await edit_or_reply(event, "Creating a fake face for you... 🌚")
     if response.status_code == 200:
       with open("FRIDAYOT.jpg", 'wb') as f:
         f.write(response.content)
@@ -33,7 +33,7 @@ async def _(event):
     captin = f"Fake Image By Friday.\nGet Your Own Friday From @FRIDAYCHAT."
     fole = "FRIDAYOT.jpg"
     await borg.send_file(event.chat_id, fole, caption=captin)
-    await event.delete()
+    await poppy.delete()
     os.system("rm /root/fridaybot/FRIDAYOT.jpg ")
 
 
