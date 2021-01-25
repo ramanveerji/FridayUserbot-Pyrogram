@@ -6,13 +6,12 @@ from datetime import datetime
 from PIL import Image, ImageDraw, ImageFont
 from pySmartDL import SmartDL
 from telethon.tl import functions
-
+from fridaybot.utils import friday_on_cmd
 from fridaybot import CMD_HELP
 
 FONT_FILE_TO_USE = "Fonts/digital.ttf"
 
-
-@command(pattern="^.autopic", outgoing=True)
+@friday.on(friday_on_cmd(pattern="autopic"))
 async def autopic(event):
     downloaded_file_name = "fridaybot/original_pic.png"
     downloader = SmartDL(
