@@ -61,7 +61,7 @@ Get Your Fridaybot From @FRIDAYOT</u></b>
       )
     
     except:
-      await edit_or_reply("Given Text is Invalid. 🤦")
+      await edit_or_reply(event, "Given Text is Invalid. 🤦")
     
 
 
