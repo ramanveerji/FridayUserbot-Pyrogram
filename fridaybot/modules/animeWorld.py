@@ -40,7 +40,7 @@ async def _(event):
     title5 = search[4].title
     url5 = search[4].url
     NopZ = f"<b><u>Anime Search Complete</b></u> \n\n\n<b>Title</b>:-  <code>{title1}</code> \n<b>URL Link</b>:- {url1}\n\n<b>Title</b>:-  <code>{title2}</code> \n<b>URL Link</b>:- {url2}\n\n<b>Title</b>:-  <code>{title3}</code>\n<b>URL Link</b>:- {url3}\n\n<b>Title</b>:-  <code>{title4}</code> \n<b>URL Link</b>:- {url4}\n\n<b>Title</b>:-  <code>{title5}</code> \n<b>URL Link</b>:- {url5}\n\n<b>Links Gathered By Friday\nGet Your Own Friday From @FRIDAYCHAT</b>"
-    await await borg.send_message(event.chat_id, NopZ, parse_mode="HTML",)
+    await borg.send_message(event.chat_id, NopZ, parse_mode="HTML",)
     await ommhg.delete()
 
 
