@@ -6,6 +6,7 @@ import os
 from fridaybot import CMD_HELP, sclient
 from fridaybot.utils import edit_or_reply, friday_on_cmd, sudo_cmd, admin_cmd
 
+fridaythumb = "./resources/IMG_20200929_103719_628.jpg"
 
 
 def main(url, filename):
@@ -61,10 +62,11 @@ async def _(event):
     await borg.send_message(
       event.chat_id,
       caption,
+      thumb=fridaythumb,
       parse_mode="HTML",
       file=kk,
-      force_document=False,
-      silent=True,
+      force_document=True,
+      allow_cache=False,
     )
     os.system(f"rm {kk}")
 
