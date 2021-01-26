@@ -602,7 +602,7 @@ async def inline_id_handler(event: events.InlineQuery.Event):
     link = "https://api.deezer.com/search?q=" + input_str
     data = await fetch_json(link)
     for match in data["data"]:
-        titl_s = (f"Title : {match['title']} \nLink : {match["link"]} \nArtist : {match['artist']['name']}")
+        titl_s = (f"Title : {match['title']} \nLink : {match['link']} \nArtist : {match['artist']['name']}")
         results.append(
             await event.builder.article(
                     title=match['title'],
