@@ -604,13 +604,17 @@ async def inline_id_handler(event):
     data_s = requests.get(url=link).text
     data = json.loads(data_s)
     for match in data["data"]:
+            if not match["cover_medium"]:
+                als = "https://www.designfreelogoonline.com/wp-content/uploads/2019/02/00305-music-04.png"
+            else:
+                als = match["cover_medium"]
             results += (
                 builder.article(
                     title=match["title"],
                     text=match["link"],
                     description=f"Artist: {match['artist']['name']}",
                     thumb=InputWebDocument(
-                        url=match["cover_medium"],
+                        url=als,
                         size=0,
                         mime_type="image/jpeg",
                         attributes=[],
