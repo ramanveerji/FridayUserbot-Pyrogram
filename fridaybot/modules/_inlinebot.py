@@ -604,7 +604,6 @@ async def inline_id_handler(event):
     data_s = requests.get(url=link).text
     me = json.loads(data_s)
     sad = me['data']
-    logger.info(data_s['data'])
     for match in range(10):
         titl_s = (f"Title : {sad[match]['title']} \nLink : {sad[match]['link']} \nArtist : {sad[match]['artist']['name']}")
         results.append(
