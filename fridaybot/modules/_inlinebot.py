@@ -600,7 +600,7 @@ async def inline_id_handler(event):
         return
     results = []
     input_str = event.pattern_match.group(1)
-    link = f"https://api.deezer.com/search?q={input_str}"
+    link = f"https://api.deezer.com/search?q={input_str}&limit=7"
     dato = requests.get(url=link).json()
     #data_s = json.loads(data_s)
     for match in dato.get("data"):
