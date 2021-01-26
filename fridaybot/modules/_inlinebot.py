@@ -608,7 +608,7 @@ async def inline_id_handler(event):
                 builder.article(
                     title=match["title"],
                     text=match["link"],
-                    description=f"Artist: {match['artist']['name']}\nTracks: {match['nb_tracks']}",
+                    description=f"Artist: {match['artist']['name']}",
                     thumb=InputWebDocument(
                         url=match["cover_medium"],
                         size=0,
