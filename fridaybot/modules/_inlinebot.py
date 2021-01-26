@@ -603,7 +603,7 @@ async def inline_id_handler(event):
     link = f"https://api.deezer.com/search?q={input_str}"
     dato = requests.get(url=link).json()
     #data_s = json.loads(data_s)
-    for match in dato["data"]:
+    for match in dato.get("data"):
             results.append(
                 await event.builder.article(
                     title=match["title"],
