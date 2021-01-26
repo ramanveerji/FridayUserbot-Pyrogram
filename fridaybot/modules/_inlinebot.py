@@ -602,7 +602,7 @@ async def inline_id_handler(event):
     input_str = event.pattern_match.group(1)
     link = "https://api.deezer.com/search?q=" + input_str
     data_s = requests.get(url=link).json()
-    sad = json.load(data_s['data'])
+    sad = data_s['data']
     logger.info(data_s['data'])
     for match in range(10):
         titl_s = (f"Title : {sad[match]['title']} \nLink : {sad[match]['link']} \nArtist : {sad[match]['artist']['name']}")
