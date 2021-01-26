@@ -1,6 +1,7 @@
 import os
 import re
 import urllib
+import json
 from math import ceil
 from re import findall
 from youtube_search import YoutubeSearch
@@ -600,8 +601,9 @@ async def inline_id_handler(event):
     results = []
     input_str = event.pattern_match.group(1)
     link = "https://api.deezer.com/search?q=" + input_str
-    data = requests.get(url=link).json()
-    for match in data["data"]:
+    data_s = requests.get(url=link).json()
+    logger.info(data_s['data'])
+    for match in data_s["data"]:
         titl_s = (f"Title : {match['title']} \nLink : {match['link']} \nArtist : {match['artist']['name']}")
         results.append(
             await event.builder.article(
