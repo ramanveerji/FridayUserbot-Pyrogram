@@ -601,9 +601,9 @@ async def inline_id_handler(event):
     results = []
     input_str = event.pattern_match.group(1)
     link = f"https://api.deezer.com/search?q={input_str}"
-    data = requests.get(url=link).json()
+    dato = requests.get(url=link).json()
     #data_s = json.loads(data_s)
-    for match in data["data"]:
+    for match in dato["data"]:
             results.append(
                 await event.builder.article(
                     title=match["title"],
