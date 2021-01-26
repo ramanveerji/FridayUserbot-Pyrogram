@@ -200,7 +200,12 @@ if Var.PRIVATE_GROUP_ID is not None:
         chat_ids = event.sender_id
         if USER_BOT_NO_WARN == message_text:
             return
-        sender = await event.client(GetFullUserRequest(chat_ids))
+        # low Level Hacks
+        if event.sender_id == event.chat_id:
+            pass
+        else:
+            return
+        sender = await event.client(GetFullUserRequest(await event.get_input_chat()))
         if chat_ids == bot.uid:
             return
         if sender.user.bot:
