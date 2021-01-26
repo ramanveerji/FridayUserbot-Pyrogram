@@ -603,7 +603,7 @@ async def inline_id_handler(event: events.InlineQuery.Event):
     data = await fetch_json(link)
     for match in data["data"]:
         titl_s = (f"Title : {match['title']} \nLink : {match['link']} \nArtist : {match['artist']['name']}")
-        results.append(
+        results += (
             await event.builder.article(
                     title=match['title'],
                     text=titl_s,
@@ -616,4 +616,7 @@ async def inline_id_handler(event: events.InlineQuery.Event):
                     ),
                 ),
             )
-    await event.answer([results])
+    try:              
+        await event.answer([results])
+    except TypeError:
+        pass
