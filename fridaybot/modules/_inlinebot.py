@@ -611,12 +611,7 @@ async def inline_id_handler(event):
                         title=sad[match]['title'],
                         text=titl_s,
                         description=f"Artist: {sad[match]['artist']['name']}\nAlbum: {sad[match]['album']['title']}",
-                        thumb=InputWebDocument(
-                        url=sad[match]["album"]["cover_medium"],
-                        size=0,
-                        mime_type="image/jpeg",
-                        attributes=[],
-                    ),
                 )
             )
-    await event.answer([results])
+    if results:
+        await event.answer([results])
