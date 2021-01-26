@@ -609,7 +609,7 @@ async def inline_id_handler(event):
         results.append(
             await event.builder.article(
                         title=sad[match]['title'],
-                        text=titl_s,
+                        text=sad[match]['url'],
                         description=f"Artist: {sad[match]['artist']['name']}\nAlbum: {sad[match]['album']['title']}",
                 )
             )
