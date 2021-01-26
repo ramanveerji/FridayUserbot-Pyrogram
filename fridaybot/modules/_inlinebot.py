@@ -600,18 +600,22 @@ async def inline_id_handler(event):
         return
     results = []
     input_str = event.pattern_match.group(1)
-    link = "https://api.deezer.com/search?q=" + input_str
+    link = f"https://api.deezer.com/search?q={input_str}&limit=5"
     data_s = requests.get(url=link).text
-    me = json.loads(data_s)
-    sad = me['data']
-    for match in range(10):
-        titl_s = (f"Title : {sad[match]['title']} \nLink : {sad[match]['link']} \nArtist : {sad[match]['artist']['name']}")
-        results.append(
-            await event.builder.article(
-                        title=sad[match]['title'],
-                        text=sad[match]['url'],
-                        description=f"Artist: {sad[match]['artist']['name']}\nAlbum: {sad[match]['album']['title']}",
-                )
+    data = json.loads(data_s)
+    for match in data["data"]:
+            s += (
+                builder.article(
+                    title=match["title"],
+                    text=match["link"],
+                    description=f"Artist: {match['artist']['name']}\nTracks: {match['nb_tracks']}",
+                    thumb=InputWebDocument(
+                        url=match["cover_medium"],
+                        size=0,
+                        mime_type="image/jpeg",
+                        attributes=[],
+                    ),
+                ),
             )
     if results:
         await event.answer([results])
