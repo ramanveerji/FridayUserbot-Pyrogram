@@ -619,4 +619,7 @@ async def inline_id_handler(event):
             )
     if results:
         logger.info(results)
-        await event.answer([results])
+        try:
+            await event.answer([results])
+        except TypeError:
+            pass
