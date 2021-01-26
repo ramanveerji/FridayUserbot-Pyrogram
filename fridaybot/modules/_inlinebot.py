@@ -5,7 +5,7 @@ from math import ceil
 from re import findall
 from youtube_search import YoutubeSearch
 from search_engine_parser import GoogleSearch
-from fridaybot.function import _ytdl
+from fridaybot.function import _ytdl, fetch_json
 from urllib.parse import quote
 import requests
 from telethon import Button, custom, events, functions
@@ -13,6 +13,8 @@ from youtubesearchpython import VideosSearch
 from fridaybot import ALIVE_NAME, CMD_HELP, CMD_LIST
 from fridaybot.modules import inlinestats
 from pornhub_api import PornhubApi
+from telethon.tl.types import BotInlineResult, InputBotInlineMessageMediaAuto, DocumentAttributeImageSize, InputWebDocument, InputBotInlineResult
+from telethon.tl.functions.messages import SetInlineBotResultsRequest
 PMPERMIT_PIC = os.environ.get("PMPERMIT_PIC", None)
 if PMPERMIT_PIC is None:
     WARN_PIC = "https://telegra.ph/file/53aed76a90e38779161b1.jpg"
@@ -584,3 +586,34 @@ Year: {}""".format(
             text=f"No Results Found !"
         )
         await event.answer([resultm])
+        
+@tgbot.on(events.InlineQuery(pattern=r"deezer (.*)"))
+async def inline_id_handler(event: events.InlineQuery.Event):
+    builder = event.builder
+    if event.query.user_id != bot.uid:
+        resultm = builder.article(
+            title="- Not Allowded -",
+            text=f"You Can't Use This Bot. \nDeploy Friday To Get Your Own Assistant, Repo Link [Here](https://github.com/StarkGang/FridayUserbot)",
+        )
+        await event.answer([resultm])
+        return
+    results = []
+    input_str = event.pattern_match.group(1)
+    link = "https://api.deezer.com/search?q=" + input_str
+    data = await fetch_json(link)
+    for match in data["data"]:
+        titl_s = (f"Title : {match['title']} \nLink : {match["link"]} \nArtist : {match['artist']['name']}")
+        results.append(
+            await event.builder.article(
+                    title=match['title'],
+                    text=titl_s,
+                    description=f"Artist: {match['artist']['name']}\nAlbum: {match['album']['title']}",
+                    thumb=InputWebDocument(
+                        url=match["album"]["cover_medium"],
+                        size=0,
+                        mime_type="image/jpeg",
+                        attributes=[],
+                    ),
+                ),
+            )
+    await event.answer([results])
