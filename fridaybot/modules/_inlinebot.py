@@ -602,16 +602,17 @@ async def inline_id_handler(event):
     input_str = event.pattern_match.group(1)
     link = "https://api.deezer.com/search?q=" + input_str
     data_s = requests.get(url=link).json()
+    sad = json.load(data_s['data'])
     logger.info(data_s['data'])
-    for match in data_s["data"]:
-        titl_s = (f"Title : {match['title']} \nLink : {match['link']} \nArtist : {match['artist']['name']}")
+    for match in range(10):
+        titl_s = (f"Title : {sad[match]['title']} \nLink : {sad[match]['link']} \nArtist : {sad[match]['artist']['name']}")
         results.append(
             await event.builder.article(
-                        title=match['title'],
+                        title=sad[match]['title'],
                         text=titl_s,
-                        description=f"Artist: {match['artist']['name']}\nAlbum: {match['album']['title']}",
+                        description=f"Artist: {sad[match]['artist']['name']}\nAlbum: {sad[match]['album']['title']}",
                         thumb=InputWebDocument(
-                        url=match["album"]["cover_medium"],
+                        url=sad[match]["album"]["cover_medium"],
                         size=0,
                         mime_type="image/jpeg",
                         attributes=[],
