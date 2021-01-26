@@ -587,8 +587,8 @@ Year: {}""".format(
         )
         await event.answer([resultm])
         
-@tgbot.on(events.InlineQuery(pattern=r"deezer (.*)"))
-async def inline_id_handler(event: events.InlineQuery.Event):
+@tgbot.on(events.InlineQuery(pattern=r"deezer ?(.*)"))
+async def inline_id_handler(event):
     builder = event.builder
     if event.query.user_id != bot.uid:
         resultm = builder.article(
@@ -600,21 +600,21 @@ async def inline_id_handler(event: events.InlineQuery.Event):
     results = []
     input_str = event.pattern_match.group(1)
     link = "https://api.deezer.com/search?q=" + input_str
-    data = await fetch_json(link)
+    data = requests.get(url=link).json()
     for match in data["data"]:
         titl_s = (f"Title : {match['title']} \nLink : {match['link']} \nArtist : {match['artist']['name']}")
-        results += (
+        results.append(
             await event.builder.article(
-                    title=match['title'],
-                    text=titl_s,
-                    description=f"Artist: {match['artist']['name']}\nAlbum: {match['album']['title']}",
-                    thumb=InputWebDocument(
+                        title=match['title'],
+                        text=titl_s,
+                        description=f"Artist: {match['artist']['name']}\nAlbum: {match['album']['title']}",
+                        thumb=InputWebDocument(
                         url=match["album"]["cover_medium"],
                         size=0,
                         mime_type="image/jpeg",
                         attributes=[],
                     ),
-                ),
+                )
             )
     try:              
         await event.answer([results])
