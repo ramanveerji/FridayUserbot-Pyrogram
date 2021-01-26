@@ -609,9 +609,9 @@ async def inline_id_handler(event):
             else:
                 als = match["cover_medium"]
             results += (
-                builder.article(
-                    title=match["title"],
-                    text=match["link"],
+                await event.builder.article(
+                    title=match.get("title", "Un-Known"),
+                    text=match.get("link", "Un-Known"),
                     description=f"Artist: {match['artist']['name']}",
                     thumb=InputWebDocument(
                         url=als,
