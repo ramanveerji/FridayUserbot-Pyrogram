@@ -608,7 +608,7 @@ async def inline_id_handler(event):
                 als = "https://www.designfreelogoonline.com/wp-content/uploads/2019/02/00305-music-04.png"
             else:
                 als = match["cover_medium"]
-            results += (
+            results.append(
                 await event.builder.article(
                     title=match.get("title", "Un-Known"),
                     text=match.get("link", "Un-Known"),
@@ -622,4 +622,5 @@ async def inline_id_handler(event):
                 ),
             )
     if results:
+        logger.info(results)
         await event.answer([results])
