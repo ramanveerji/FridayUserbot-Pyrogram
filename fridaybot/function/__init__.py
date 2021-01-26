@@ -39,11 +39,14 @@ import telethon
 from telethon import Button, custom, events, functions
 from pymediainfo import MediaInfo
 from telethon.tl.types import MessageMediaPhoto
-
+from typing import Union
+SIZE_UNITS = ["B", "KB", "MB", "GB", "TB", "PB"]
 BASE_URL = "https://isubtitles.org"
 from fridaybot.Configs import Config
 import zipfile
 import os
+import aiohttp
+
 
 sedpath = Config.TMP_DOWNLOAD_DIRECTORY
 from fridaybot import logging
@@ -51,8 +54,46 @@ from fridaybot import logging
 logger = logging.getLogger("[--WARNING--]")
 if not os.path.isdir(sedpath):
     os.makedirs(sedpath)
+    
+# Deethon // @aykxt
+session = aiohttp.ClientSession()
+
+async def fetch_json(link):
+    async with session.get(link) as resp:
+        return await resp.json()
+    
+
+def get_readable_file_size(size_in_bytes: Union[int, float]) -> str:
+    if size_in_bytes is None:
+        return "0B"
+    index = 0
+    while size_in_bytes >= 1024:
+        size_in_bytes /= 1024
+        index += 1
+    try:
+        return f"{round(size_in_bytes, 2)}{SIZE_UNITS[index]}"
+    except IndexError:
+        return "File too large"
 
 
+def get_readable_time(secs: float) -> str:
+    result = ""
+    (days, remainder) = divmod(secs, 86400)
+    days = int(days)
+    if days != 0:
+        result += f"{days}d"
+    (hours, remainder) = divmod(remainder, 3600)
+    hours = int(hours)
+    if hours != 0:
+        result += f"{hours}h"
+    (minutes, seconds) = divmod(remainder, 60)
+    minutes = int(minutes)
+    if minutes != 0:
+        result += f"{minutes}m"
+    seconds = int(seconds)
+    result += f"{seconds}s"
+    return result
+    
 # Thanks To Userge-X
 async def runcmd(cmd: str) -> Tuple[str, str, int, int]:
     """ run command in terminal """
