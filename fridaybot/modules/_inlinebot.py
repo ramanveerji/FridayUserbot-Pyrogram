@@ -604,7 +604,7 @@ async def inline_id_handler(event):
     data_s = requests.get(url=link).text
     data = json.loads(data_s)
     for match in data["data"]:
-            if not match["cover_medium"]:
+            if not match.get("cover_medium"):
                 als = "https://www.designfreelogoonline.com/wp-content/uploads/2019/02/00305-music-04.png"
             else:
                 als = match["cover_medium"]
