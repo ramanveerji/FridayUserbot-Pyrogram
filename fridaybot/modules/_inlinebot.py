@@ -616,7 +616,4 @@ async def inline_id_handler(event):
                     ),
                 )
             )
-    try:              
-        await event.answer([results])
-    except TypeError:
-        pass
+    await event.answer([results])
