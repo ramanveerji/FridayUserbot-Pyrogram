@@ -604,10 +604,11 @@ async def inline_id_handler(event):
     dato = requests.get(url=link).json()
     #data_s = json.loads(data_s)
     for match in dato.get("data"):
+            hmm_m = (f"Title : {match["title"]} \nLink : {match["link"]} \nBy : {match['artist']['name']}")
             results.append(
                 await event.builder.article(
                     title=match["title"],
-                    text=match["link"],
+                    text=hmm_m,
                     description=f"Artist: {match['artist']['name']}\nAlbum: {match['album']['title']}",
                     thumb=InputWebDocument(
                         url=match["album"]["cover_medium"],
