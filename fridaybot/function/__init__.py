@@ -566,6 +566,12 @@ async def _ytdl(url, is_it, event, tgbot):
             text=f"{ytdl_data['title']} \n**Uploaded Using @FRidayOt**"
         )
         os.remove(f"{ytdl_data['id']}.mp4")
+
+
+async def _deezer_dl(son, full, event, tgbot):
+
+
+
                   
 async def get_all_admin_chats(event):
     lul_stark = []
