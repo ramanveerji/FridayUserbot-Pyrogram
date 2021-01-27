@@ -598,7 +598,7 @@ Get Your Friday From @FridayOT"""
         )
     await event.edit(
             file=hmmo,
-            text=f" {urlhp.get("title")} \n**Uploaded Using @FRidayOt**"
+            text=f"""{urlhp.get("title")} \n**Uploaded Using @FRidayOt**"""
     )
     os.remove(sname)
 
