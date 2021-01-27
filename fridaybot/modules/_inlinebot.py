@@ -4,6 +4,7 @@ import urllib
 import json
 from math import ceil
 from re import findall
+import requests
 from youtube_search import YoutubeSearch
 from search_engine_parser import GoogleSearch
 from fridaybot.function import _ytdl, fetch_json
@@ -604,6 +605,7 @@ async def inline_id_handler(event):
     dato = requests.get(url=link).json()
     #data_s = json.loads(data_s)
     for match in dato.get("data"):
+            
             hmm_m = (f"Title : {match['title']} \nLink : {match['link']} \nDuration : {match['duration']} seconds \nBy : {match['artist']['name']}")
             results.append(
                 await event.builder.article(
