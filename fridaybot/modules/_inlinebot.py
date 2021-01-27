@@ -7,7 +7,7 @@ from re import findall
 import requests
 from youtube_search import YoutubeSearch
 from search_engine_parser import GoogleSearch
-from fridaybot.function import _ytdl, fetch_json
+from fridaybot.function import _ytdl, fetch_json, _deezer_dl
 from urllib.parse import quote
 import requests
 from telethon import Button, custom, events, functions
@@ -167,7 +167,7 @@ async def rip(event):
         text = f"Please Get Your Own Friday And Don't Waste My Resources"
         await event.answer(text, alert=True)
         return
-    ok = await _ytdl(sun, event, tgbot)
+    ok = await _deezer_dl(sun, event, tgbot)
 
 
     
