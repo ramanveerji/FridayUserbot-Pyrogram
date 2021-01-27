@@ -568,7 +568,7 @@ async def _ytdl(url, is_it, event, tgbot):
         os.remove(f"{ytdl_data['id']}.mp4")
 
 
-async def _deezer_dl(son, word, event, tgbot):
+async def _deezer_dl(word, event, tgbot):
     await event.edit("`Ok Downloading This Audio - Please Wait.` \n**Powered By @FridayOT**")
     link = f"https://api.deezer.com/search?q={word}&limit=1"
     dato = requests.get(url=link).json()
@@ -576,7 +576,7 @@ async def _deezer_dl(son, word, event, tgbot):
     urlhp= (match[0])
     urlp = urlhp.get("link")
     polu = urlhp.get("artist")
-    replo = son[29:]
+    replo = urlp[29:]
     urlp = f"https://starkapi.herokuapp.com/deezer/{replo}"
     datto = requests.get(url=urlp).json()
     mus = datto.get("url")
