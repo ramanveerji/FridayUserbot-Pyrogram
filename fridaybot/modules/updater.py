@@ -124,7 +124,7 @@ async def update(event, repo, ups_rem, ac_br):
         repo.git.reset("--hard", "FETCH_HEAD")
     await update_requirements()
     await event.edit(
-        "**Soft Update Sucessfull, Please Wait For Some Time To Get This Process Completed.**"
+        "**Soft Update Successful, Please Wait For Some Time To Get This Process Completed.**"
     )
     # Spin a new instance of bot
     args = [sys.executable, "-m", "fridaybot"]
