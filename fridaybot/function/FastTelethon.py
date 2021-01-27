@@ -5,26 +5,30 @@
 import asyncio
 import hashlib
 import inspect
-import logging
-import os
-from collections import defaultdict
-from typing import Optional, List, AsyncGenerator, Union, Awaitable, DefaultDict, Tuple, BinaryIO
-
 import math
-from telethon import utils, helpers, TelegramClient
+import os
+import logging
+from collections import defaultdict
+from typing import (AsyncGenerator, Awaitable, BinaryIO, DefaultDict, List,
+                    Optional, Tuple, Union)
+
+from telethon import TelegramClient, helpers, utils
 from telethon.crypto import AuthKey
 from telethon.network import MTProtoSender
-from telethon.tl.functions.auth import ExportAuthorizationRequest, ImportAuthorizationRequest
-from telethon.tl.functions.upload import (GetFileRequest, SaveFilePartRequest,
-                                          SaveBigFilePartRequest)
-from telethon.tl.types import (Document, InputFileLocation, InputDocumentFileLocation,
-                               InputPhotoFileLocation, InputPeerPhotoFileLocation, TypeInputFile,
-                               InputFileBig, InputFile)
+from telethon.tl.functions.auth import (ExportAuthorizationRequest,
+                                        ImportAuthorizationRequest)
+from telethon.tl.functions.upload import (GetFileRequest,
+                                          SaveBigFilePartRequest,
+                                          SaveFilePartRequest)
+from telethon.tl.types import (Document, InputDocumentFileLocation, InputFile,
+                               InputFileBig, InputFileLocation,
+                               InputPeerPhotoFileLocation,
+                               InputPhotoFileLocation, TypeInputFile)
 
-log: logging.Logger = logging.getLogger("telethon")
-logging.basicConfig(level=logging.WARNING)
 TypeLocation = Union[Document, InputDocumentFileLocation, InputPeerPhotoFileLocation,
                      InputFileLocation, InputPhotoFileLocation]
+
+logger = logging.getLogger(__name__)
 
 
 def stream_file(file_to_stream: BinaryIO, chunk_size=1024):
@@ -87,8 +91,8 @@ class UploadSender:
 
     async def _next(self, data: bytes) -> None:
         self.request.bytes = data
-        log.debug(f"Sending file part {self.request.file_part}/{self.part_count}"
-                  f" with {len(data)} bytes")
+        logger.debug(f"Sending file part {self.request.file_part}/{self.part_count}"
+                     f" with {len(data)} bytes")
         await self.sender.send(self.request)
         self.request.file_part += self.stride
 
@@ -175,7 +179,7 @@ class ParallelTransferrer:
                                                      loggers=self.client._log,
                                                      proxy=self.client._proxy))
         if not self.auth_key:
-            log.debug(f"Exporting auth to DC {self.dc_id}")
+            logger.debug(f"Exporting auth to DC {self.dc_id}")
             auth = await self.client(ExportAuthorizationRequest(self.dc_id))
             req = self.client._init_with(ImportAuthorizationRequest(
                 id=auth.id, bytes=auth.bytes
@@ -187,7 +191,7 @@ class ParallelTransferrer:
     async def init_upload(self, file_id: int, file_size: int, part_size_kb: Optional[float] = None,
                           connection_count: Optional[int] = None) -> Tuple[int, int, bool]:
         connection_count = connection_count or self._get_connection_count(file_size)
-        print("init_upload count is ", connection_count)
+        logger.debug(f"init_upload count is {connection_count}")
         part_size = (part_size_kb or utils.get_appropriated_part_size(file_size)) * 1024
         part_count = (file_size + part_size - 1) // part_size
         is_large = file_size > 10 * 1024 * 1024
@@ -205,12 +209,11 @@ class ParallelTransferrer:
                        part_size_kb: Optional[float] = None,
                        connection_count: Optional[int] = None) -> AsyncGenerator[bytes, None]:
         connection_count = connection_count or self._get_connection_count(file_size)
-        print("download count is ", connection_count)
 
         part_size = (part_size_kb or utils.get_appropriated_part_size(file_size)) * 1024
         part_count = math.ceil(file_size / part_size)
-        log.debug("Starting parallel download: "
-                  f"{connection_count} {part_size} {part_count} {file!s}")
+        logger.debug("Starting parallel download: "
+                     f"{connection_count} {part_size} {part_count} {file!s}")
         await self._init_download(connection_count, file, part_count, part_size)
 
         part = 0
@@ -224,9 +227,9 @@ class ParallelTransferrer:
                     break
                 yield data
                 part += 1
-                log.debug(f"Part {part} downloaded")
+                logger.debug(f"Part {part} downloaded")
 
-        log.debug("Parallel download finished, cleaning up connections")
+        logger.debug("Parallel download finished, cleaning up connections")
         await self._cleanup()
 
 
@@ -235,7 +238,8 @@ parallel_transfer_locks: DefaultDict[int, asyncio.Lock] = defaultdict(lambda: as
 
 async def _internal_transfer_to_telegram(client: TelegramClient,
                                          response: BinaryIO,
-                                         progress_callback: callable
+                                         progress_callback: callable,
+                                         file_name: str
                                          ) -> Tuple[TypeInputFile, int]:
     file_id = helpers.generate_random_long()
     file_size = os.path.getsize(response.name)
@@ -267,16 +271,16 @@ async def _internal_transfer_to_telegram(client: TelegramClient,
         await uploader.upload(bytes(buffer))
     await uploader.finish_upload()
     if is_large:
-        return InputFileBig(file_id, part_count, "upload"), file_size
+        return InputFileBig(file_id, part_count, file_name), file_size
     else:
-        return InputFile(file_id, part_count, "upload", hash_md5.hexdigest()), file_size
+        return InputFile(file_id, part_count, file_name, hash_md5.hexdigest()), file_size
 
 
 async def download_file(client: TelegramClient,
-                                        location: TypeLocation,
-                                        out: BinaryIO,
-                                        progress_callback: callable = None
-                                        ) -> BinaryIO:
+                        location: TypeLocation,
+                        out: BinaryIO,
+                        progress_callback: callable = None
+                        ) -> BinaryIO:
     size = location.size
     dc_id, location = utils.get_input_location(location)
     # We lock the transfers because telegram has connection count limits
@@ -293,9 +297,8 @@ async def download_file(client: TelegramClient,
 
 
 async def upload_file(client: TelegramClient,
-                                        file: BinaryIO,
-                                        progress_callback: callable = None,
-
-                                        ) -> TypeInputFile:
-    res = (await _internal_transfer_to_telegram(client, file, progress_callback))[0]
+                      file: BinaryIO,
+                      file_name: str,
+                      progress_callback: callable = None) -> TypeInputFile:
+    res = (await _internal_transfer_to_telegram(client, file, progress_callback, file_name))[0]
     return res
