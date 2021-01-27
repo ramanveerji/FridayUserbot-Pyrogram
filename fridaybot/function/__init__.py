@@ -568,7 +568,40 @@ async def _ytdl(url, is_it, event, tgbot):
         os.remove(f"{ytdl_data['id']}.mp4")
 
 
-async def _deezer_dl(son, full, event, tgbot):
+async def _deezer_dl(son, event, tgbot):
+    await event.edit("`Ok Downloading This Audio - Please Wait.` \n**Powered By @FridayOT**")
+    replo = son
+    urlp = f"https://starkapi.herokuapp.com/deezer/{replo}"
+    datto = requests.get(url=urlp).json()
+    mus = datto.get("url")
+    sname = f'''{urlhp.get("title")}.mp3'''
+    doc = requests.get(mus)
+    with open(sname, 'wb') as f:
+      f.write(doc.content)
+    car = f"""
+**Song Name :** {urlhp.get("title")}
+**Duration :** {urlhp.get('duration')} Seconds
+**Artist :** {polu.get("name")}
+
+Music Downloaded And Uploaded By Friday Userbot
+
+Get Your Friday From @FridayOT"""
+    await event.edit("Song Downloaded.  Waiting To Upload. 🥳🤗")
+    c_time = time.time()
+    hmmo = await tgbot.upload_file(
+            file=sname,
+            progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
+                progress(
+                    d, t, event, c_time, "**Uploading Video To TG**", sname
+                )
+            ),
+        )
+        await event.edit(
+            file=hmmo,
+            text=f" {urlhp.get("title")} \n**Uploaded Using @FRidayOt**"
+        )
+        os.remove(sname)
+
 
 
 
