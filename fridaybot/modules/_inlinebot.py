@@ -619,7 +619,6 @@ async def inline_id_handler(event):
     #data_s = json.loads(data_s)
     for match in dato.get("data"):
             urlp = match.get("link")
-            mo = urlp[29:]
             hmm_m = (f"Title : {match['title']} \nLink : {match['link']} \nDuration : {match['duration']} seconds \nBy : {match['artist']['name']}")
             results.append(
                 await event.builder.article(
@@ -633,7 +632,7 @@ async def inline_id_handler(event):
                         attributes=[],
                     ),
                     buttons=[
-                       [custom.Button.inline("Download Audio - mp3", data=f"deezer_dl_{mo}")],
+                       [custom.Button.inline("Download Audio - mp3", data=f"deezer_dl_{urlp}")],
                        [Button.switch_inline("Search Again", query="deezer ", same_peer=True)],
                     ]
                 ),
