@@ -104,6 +104,7 @@ Get Your Friday From @FridayOT"""
     await ommhg.edit("Song Downloaded.  Waiting To Upload. 🥳🤗")
     c_time = time.time()
     uploaded_file = await upload_file(
+        	file_name=str(urlhp.get("title")),
             client=borg,
             file=open(sname, 'rb'),
             progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
@@ -119,8 +120,7 @@ Get Your Friday From @FridayOT"""
             caption=car,
             attributes=[
                 DocumentAttributeAudio(
-                    duration=int(urlhp.get('duration')),
-                    title=str(urlhp.get("title")),
+                    duration=int(urlhp.get('duration'))
                     performer=str(polu.get("name")),
                 )
             ],
