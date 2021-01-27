@@ -608,7 +608,7 @@ Get Your Friday From @FridayOT"""
     
     await event.edit(
             file=uploaded_file,
-            text=f"""{urlhp.get("title")} \n**Uploaded Using @FRidayOt**"""
+            text= car,
     )
     os.remove(sname)
 
