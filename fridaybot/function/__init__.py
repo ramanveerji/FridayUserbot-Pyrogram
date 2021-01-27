@@ -116,15 +116,15 @@ async def progress(current, total, event, start, type_of_ps, file_name=None):
     """Generic progress_callback for uploads and downloads."""
     now = time.time()
     diff = now - start
-    if round(diff % 10.00) == 0 or current != total:
+    if round(diff % 10.00) == 0 or current == total:
         percentage = current * 100 / total
         speed = current / diff
         elapsed_time = round(diff) * 1000
         time_to_completion = round((total - current) / speed) * 1000
         estimated_total_time = elapsed_time + time_to_completion
-        progress_str = "[{0}{1}] {2}%\n".format(
-            "".join(["■" for i in range(math.floor(percentage / 5))]),
-            "".join(["▢" for i in range(20 - math.floor(percentage / 5))]),
+        progress_str = "{0}{1} {2}%\n".format(
+            "".join(["▰" for i in range(math.floor(percentage / 10))]),
+            "".join(["▱" for i in range(10 - math.floor(percentage / 10))]),
             round(percentage, 2),
         )
         tmp = progress_str + "{0} of {1}\nETA: {2}".format(
@@ -136,7 +136,6 @@ async def progress(current, total, event, start, type_of_ps, file_name=None):
             )
         else:
             await event.edit("{}\n{}".format(type_of_ps, tmp))
-
 
 def humanbytes(size):
     """Input size in bytes,
@@ -606,34 +605,9 @@ Get Your Friday From @FridayOT"""
                 )
             ),
         )
-
-    await event.client.send_file(
-            event.chat_id,
-            uploaded_file,
-            supports_streaming=True,
-            caption=car,
-            thumb=thums,
-            attributes=[
-                DocumentAttributeAudio(
-                    duration=int(urlhp.get('duration')),
-                    title=str(urlhp.get("title")),
-                    performer=str(polu.get("name")),
-                )
-            ],
-        )
     
-
-
-    hmmo = await tgbot.upload_file(
-            file=sname,
-            progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
-                progress(
-                    d, t, event, c_time, "**Uploading Video To TG**", sname
-                )
-            ),
-        )
     await event.edit(
-            file=hmmo,
+            file=uploaded_file,
             text=f"""{urlhp.get("title")} \n**Uploaded Using @FRidayOt**"""
     )
     os.remove(sname)
