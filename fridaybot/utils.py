@@ -206,7 +206,7 @@ def admin_cmd(pattern=None, **args):
         del args["allow_edited_updates"]
     # check if the plugin should listen for outgoing 'messages'
     def decorator(func):
-        bot.add_event_handler(func, events.MessageEdited(**args))
+        bot.add_event_handler(func, events.NewMessage(**args))
         if client2:
             client2.add_event_handler(func, events.NewMessage(**args))
         if client3:
@@ -254,7 +254,7 @@ def friday_on_cmd(pattern=None, **args):
         del args["allow_edited_updates"]
     # check if the plugin should listen for outgoing 'messages'
     def decorator(func):
-        bot.add_event_handler(func, events.MessageEdited(**args))
+        bot.add_event_handler(func, events.NewMessage(**args))
         if client2:
             client2.add_event_handler(func, events.NewMessage(**args))
         if client3:
