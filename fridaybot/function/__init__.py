@@ -46,6 +46,7 @@ from fridaybot.Configs import Config
 import zipfile
 import os
 import aiohttp
+from fridaybot.function.FastTelethon import upload_file
 
 
 sedpath = Config.TMP_DOWNLOAD_DIRECTORY
@@ -594,6 +595,33 @@ Music Downloaded And Uploaded By Friday Userbot
 Get Your Friday From @FridayOT"""
     await event.edit("Song Downloaded.  Waiting To Upload. 🥳🤗")
     c_time = time.time()
+    uploaded_file = await upload_file(
+        	file_name=sname,
+            client=borg,
+            file=open(sname, 'rb'),
+            progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
+                progress(
+                    d, t, event, c_time, "Uploading..", sname
+                )
+            ),
+        )
+
+    await event.client.send_file(
+            event.chat_id,
+            uploaded_file,
+            supports_streaming=True,
+            caption=car,
+            attributes=[
+                DocumentAttributeAudio(
+                    duration=int(urlhp.get('duration')),
+                    title=str(urlhp.get("title")),
+                    performer=str(polu.get("name")),
+                )
+            ],
+        )
+    
+
+
     hmmo = await tgbot.upload_file(
             file=sname,
             progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
