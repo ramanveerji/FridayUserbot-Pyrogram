@@ -82,6 +82,7 @@ async def _(event):
     match = dato.get("data")
     urlhp= (match[0])
     urlp = urlhp.get("link")
+    thums = urlhp["album"]["cover_medium"]
     polu = urlhp.get("artist")
     replo = urlp[29:]
     urlp = f"https://starkapi.herokuapp.com/deezer/{replo}"
@@ -118,9 +119,11 @@ Get Your Friday From @FridayOT"""
             uploaded_file,
             supports_streaming=True,
             caption=car,
+            thumb=thums,
             attributes=[
                 DocumentAttributeAudio(
                     duration=int(urlhp.get('duration')),
+                    title=str((urlhp.get("title")),
                     performer=str(polu.get("name")),
                 )
             ],
