@@ -120,7 +120,7 @@ Get Your Friday From @FridayOT"""
             caption=car,
             attributes=[
                 DocumentAttributeAudio(
-                    duration=int(urlhp.get('duration'))
+                    duration=int(urlhp.get('duration')),
                     performer=str(polu.get("name")),
                 )
             ],
