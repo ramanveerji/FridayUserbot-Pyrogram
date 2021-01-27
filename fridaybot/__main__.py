@@ -5,14 +5,19 @@ from sys import argv
 import telethon.utils
 from telethon import TelegramClient
 
-from fridaybot import bot
+from fridaybot import bot, client2, client3
 from fridaybot.Configs import Config
 from fridaybot.utils import load_module, start_assistant
 from var import Var
 
 sed = logging.getLogger("Friday")
 
-
+def multiple_client():
+    if client2:
+        client2.start()
+    if client3:
+        cleint3.start
+        
 async def add_bot(bot_token):
     await bot.start(bot_token)
     bot.me = await bot.get_me()
@@ -27,9 +32,11 @@ else:
         bot.tgbot = TelegramClient(
             "TG_BOT_TOKEN", api_id=Var.APP_ID, api_hash=Var.API_HASH
         ).start(bot_token=Var.TG_BOT_TOKEN_BF_HER)
+        multiple_client()
         bot.loop.run_until_complete(add_bot(Var.TG_BOT_USER_NAME_BF_HER))
     else:
         bot.start()
+        multiple_client()
 
 
 import glob
