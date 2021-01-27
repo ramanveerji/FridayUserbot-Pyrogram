@@ -3,7 +3,7 @@ from fridaybot.utils import friday_on_cmd
 from fridaybot.utils import edit_or_reply, friday_on_cmd, sudo_cmd
 import asyncio
 import math
-import os
+from fridaybot.function.FastTelethon import upload_file
 import time
 from telethon.tl.types import DocumentAttributeAudio
 import os
@@ -103,11 +103,18 @@ Music Downloaded And Uploaded By Friday Userbot
 Get Your Friday From @FridayOT"""
     await ommhg.edit("Song Downloaded.  Waiting To Upload. 🥳🤗")
     c_time = time.time()
-    
-    
+    uploaded_file = await upload_file(
+            client=borg,
+            file=open(sname, 'rb'),
+            progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
+                progress(
+                    d, t, event, c_time, "Uploading..", sname
+                )
+            ),
+        )
     await event.client.send_file(
             event.chat_id,
-            sname,
+            uploaded_file,
             supports_streaming=True,
             caption=car,
             attributes=[
@@ -117,11 +124,6 @@ Get Your Friday From @FridayOT"""
                     performer=str(polu.get("name")),
                 )
             ],
-            progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
-                progress(
-                    d, t, event, c_time, "Uploading..", sname
-                )
-            ),
         )
     
     
