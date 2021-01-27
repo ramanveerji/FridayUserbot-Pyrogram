@@ -76,15 +76,14 @@ def command(**args):
             del args["allow_edited_updates"]
 
         def decorator(func):
-            if allow_edited_updates:
+            if not disable_edited:
                 bot.add_event_handler(func, events.MessageEdited(**args))
             bot.add_event_handler(func, events.NewMessage(**args))
             try:
                 LOAD_PLUG[file_test].append(func)
-            except:
+            except Exception:
                 LOAD_PLUG.update({file_test: [func]})
             return func
-
         return decorator
 
 
@@ -205,14 +204,7 @@ def admin_cmd(pattern=None, **args):
         args["allow_edited_updates"]
         del args["allow_edited_updates"]
     # check if the plugin should listen for outgoing 'messages'
-    def decorator(func):
-        bot.add_event_handler(func, events.NewMessage(**args))
-        if client2:
-            client2.add_event_handler(func, events.NewMessage(**args))
-        if client3:
-            client3.add_event_handler(func, events.NewMessage(**args))
-        return func
-    return decorator
+    return events.NewMessage(**args)
 
 def friday_on_cmd(pattern=None, **args):
     args["func"] = lambda e: e.via_bot_id is None
@@ -252,15 +244,7 @@ def friday_on_cmd(pattern=None, **args):
     if "allow_edited_updates" in args and args["allow_edited_updates"]:
         args["allow_edited_updates"]
         del args["allow_edited_updates"]
-    # check if the plugin should listen for outgoing 'messages'
-    def decorator(func):
-        bot.add_event_handler(func, events.NewMessage(**args))
-        if client2:
-            client2.add_event_handler(func, events.NewMessage(**args))
-        if client3:
-            client3.add_event_handler(func, events.NewMessage(**args))
-        return func
-    return decorator
+    return events.NewMessage(**args)
 
 
 """ Userbot module for managing events.
