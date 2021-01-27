@@ -8,7 +8,6 @@ import time
 from telethon.tl.types import DocumentAttributeAudio
 import os
 import requests
-fridaythumb = "./resources/IMG_20200929_103719_628.jpg"
 
 
 async def progress(current, total, event, start, type_of_ps, file_name=None):
@@ -78,7 +77,7 @@ async def _(event):
         return
     input_str = event.pattern_match.group(1)
     link = f"https://api.deezer.com/search?q={input_str}&limit=1"
-    ommhg = await edit_or_reply(event, "Searching For The Song")
+    ommhg = await edit_or_reply(event, "Searching For The Song 🧐🔍")
     dato = requests.get(url=link).json()
     match = dato.get("data")
     urlhp= (match[0])
