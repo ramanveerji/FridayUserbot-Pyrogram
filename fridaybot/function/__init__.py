@@ -581,6 +581,7 @@ async def _deezer_dl(word, event, tgbot):
     urlp = f"https://starkapi.herokuapp.com/deezer/{replo}"
     datto = requests.get(url=urlp).json()
     mus = datto.get("url")
+    thums = urlhp["album"]["cover_medium"]
     sname = f'''{urlhp.get("title")}.mp3'''
     doc = requests.get(mus)
     with open(sname, 'wb') as f:
@@ -597,7 +598,7 @@ Get Your Friday From @FridayOT"""
     c_time = time.time()
     uploaded_file = await upload_file(
         	file_name=sname,
-            client=borg,
+            client=tgbot,
             file=open(sname, 'rb'),
             progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
                 progress(
@@ -611,6 +612,7 @@ Get Your Friday From @FridayOT"""
             uploaded_file,
             supports_streaming=True,
             caption=car,
+            thumb=thums,
             attributes=[
                 DocumentAttributeAudio(
                     duration=int(urlhp.get('duration')),
