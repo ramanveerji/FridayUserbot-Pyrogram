@@ -157,6 +157,19 @@ async def rip(event):
         return
     is_it = True
     ok = await _ytdl(link_s, is_it, event, tgbot)
+
+
+@tgbot.on(events.callbackquery.CallbackQuery(data=re.compile(b"deezer_dl_(.*)")))
+async def rip(event):
+    sun = event.data_match.group(1).decode("UTF-8")
+
+    if event.query.user_id != bot.uid:
+        text = f"Please Get Your Own Friday And Don't Waste My Resources"
+        await event.answer(text, alert=True)
+        return
+    ok = await _ytdl(sun, event, tgbot)
+
+
     
 @tgbot.on(events.callbackquery.CallbackQuery(data=re.compile(b"yt_vid_(.*)")))
 async def rip(event):
@@ -605,7 +618,8 @@ async def inline_id_handler(event):
     dato = requests.get(url=link).json()
     #data_s = json.loads(data_s)
     for match in dato.get("data"):
-            
+            urlp = match.get("link")
+            mo = urlp[29:]
             hmm_m = (f"Title : {match['title']} \nLink : {match['link']} \nDuration : {match['duration']} seconds \nBy : {match['artist']['name']}")
             results.append(
                 await event.builder.article(
@@ -618,6 +632,10 @@ async def inline_id_handler(event):
                         mime_type="image/jpeg",
                         attributes=[],
                     ),
+                    buttons=[
+                       [custom.Button.inline("Download Audio - mp3", data=f"deezer_dl_{mo}")],
+                       [Button.switch_inline("Search Again", query="deezer ", same_peer=True)],
+                    ]
                 ),
             )
     if results:
