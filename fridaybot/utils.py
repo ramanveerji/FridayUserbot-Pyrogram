@@ -6,7 +6,7 @@ from pathlib import Path
 
 from telethon import events
 
-from fridaybot import CMD_LIST, LOAD_PLUG, SUDO_LIST, bot
+from fridaybot import CMD_LIST, LOAD_PLUG, SUDO_LIST, bot, client2, client3
 from fridaybot.Configs import Config
 from fridaybot.wraptools import (
     am_i_admin,
@@ -204,11 +204,15 @@ def admin_cmd(pattern=None, **args):
     if "allow_edited_updates" in args and args["allow_edited_updates"]:
         args["allow_edited_updates"]
         del args["allow_edited_updates"]
-
     # check if the plugin should listen for outgoing 'messages'
-
-    return events.NewMessage(**args)
-
+    def decorator(func):
+        bot.add_event_handler(func, events.MessageEdited(**args))
+        if client2:
+            client2.add_event_handler(func, events.NewMessage(**args))
+        if client3:
+            client3.add_event_handler(func, events.NewMessage(**args))
+        return func
+    return decorator
 
 def friday_on_cmd(pattern=None, **args):
     args["func"] = lambda e: e.via_bot_id is None
@@ -248,10 +252,15 @@ def friday_on_cmd(pattern=None, **args):
     if "allow_edited_updates" in args and args["allow_edited_updates"]:
         args["allow_edited_updates"]
         del args["allow_edited_updates"]
-
     # check if the plugin should listen for outgoing 'messages'
-
-    return events.NewMessage(**args)
+    def decorator(func):
+        bot.add_event_handler(func, events.MessageEdited(**args))
+        if client2:
+            client2.add_event_handler(func, events.NewMessage(**args))
+        if client3:
+            client3.add_event_handler(func, events.NewMessage(**args))
+        return func
+    return decorator
 
 
 """ Userbot module for managing events.
