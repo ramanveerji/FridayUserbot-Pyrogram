@@ -8,7 +8,7 @@ import time
 from telethon.tl.types import DocumentAttributeAudio
 import os
 import requests
-
+import wget
 
 async def progress(current, total, event, start, type_of_ps, file_name=None):
     """Generic progress_callback for uploads and downloads."""
@@ -83,6 +83,7 @@ async def _(event):
     urlhp= (match[0])
     urlp = urlhp.get("link")
     thums = urlhp["album"]["cover_medium"]
+    thum_f = wget.download(thums, out=Config.TMP_DOWNLOAD_DIRECTORY)
     polu = urlhp.get("artist")
     replo = urlp[29:]
     urlp = f"https://starkapi.herokuapp.com/deezer/{replo}"
@@ -119,7 +120,7 @@ Get Your Friday From @FridayOT"""
             uploaded_file,
             supports_streaming=True,
             caption=car,
-            thumb=thums,
+            thumb=thum_f,
             attributes=[
                 DocumentAttributeAudio(
                     duration=int(urlhp.get('duration')),
@@ -133,4 +134,5 @@ Get Your Friday From @FridayOT"""
     
     
     os.remove(sname)
+    os.remove(thum_f)
     await event.delete()
