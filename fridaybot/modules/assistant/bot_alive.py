@@ -11,7 +11,12 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-
+from fridaybot.Configs import Config
+import time
+from telethon import __version__ as tv
+import sys
+import platform
+from git import Repo
 from fridaybot import ALIVE_NAME
 from fridaybot.modules import currentversion
 
@@ -19,8 +24,8 @@ DEFAULTUSER = str(ALIVE_NAME) if ALIVE_NAME else "Unknown"
 PM_IMG = "https://telegra.ph/file/22535f8051a58af113586.jpg"
 pm_caption = "➥ **ASSISTANT IS:** `ONLINE`\n\n"
 pm_caption += "➥ **SYSTEMS STATS**\n"
-pm_caption += "➥ **Telethon Version:** `1.15.0` \n"
-pm_caption += "➥ **Python:** `3.7.4` \n"
+pm_caption += f"➥ **Telethon Version:** `{tv}` \n"
+pm_caption += f"➥ **Python:** `{platform.python_version()}` \n"
 pm_caption += "➥ **Database Status:**  `Functional`\n"
 pm_caption += "➥ **Current Branch** : `master`\n"
 pm_caption += f"➥ **Version** : `{currentversion}`\n"
