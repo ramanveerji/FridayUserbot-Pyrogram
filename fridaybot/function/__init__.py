@@ -120,6 +120,8 @@ async def progress(current, total, event, start, type_of_ps, file_name=None):
         percentage = current * 100 / total
         speed = current / diff
         elapsed_time = round(diff) * 1000
+        if elapsed_time == 0:
+            return
         time_to_completion = round((total - current) / speed) * 1000
         estimated_total_time = elapsed_time + time_to_completion
         progress_str = "{0}{1} {2}%\n".format(
@@ -132,7 +134,7 @@ async def progress(current, total, event, start, type_of_ps, file_name=None):
         )
         if file_name:
             await event.edit(
-                "{}\nFile Name: `{}`\n{}".format(type_of_ps, file_name, tmp)
+                "{}\n**File Name:** `{}`\n{}".format(type_of_ps, file_name, tmp)
             )
         else:
             await event.edit("{}\n{}".format(type_of_ps, tmp))
@@ -608,7 +610,7 @@ Get Your Friday From @FridayOT"""
     
     await event.edit(
             file=uploaded_file,
-            text= car,
+            text=f"""{urlhp.get("title")} \n**Uploaded Using @FRidayOt**"""
     )
     os.remove(sname)
 
