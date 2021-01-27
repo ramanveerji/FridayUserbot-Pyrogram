@@ -123,9 +123,10 @@ Get Your Friday From @FridayOT"""
             attributes=[
                 DocumentAttributeAudio(
                     duration=int(urlhp.get('duration')),
-                    title=str((urlhp.get("title")),
+                    title=str(urlhp.get("title")),
                     performer=str(polu.get("name")),
                 )
+                
             ],
         )
     
