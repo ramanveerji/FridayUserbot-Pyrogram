@@ -621,16 +621,11 @@ async def inline_id_handler(event):
             urlp = match.get("link")
             hmm_m = (f"Title : {match['title']} \nLink : {match['link']} \nDuration : {match['duration']} seconds \nBy : {match['artist']['name']}")
             results.append(
-                await event.builder.article(
+                await event.builder.document(
+                    file=match["album"]["cover_medium"],
                     title=match["title"],
                     text=hmm_m,
                     description=f"Artist: {match['artist']['name']}\nAlbum: {match['album']['title']}",
-                    thumb=InputWebDocument(
-                        url=match["album"]["cover_medium"],
-                        size=0,
-                        mime_type="image/jpeg",
-                        attributes=[],
-                    ),
                     buttons=[
                        [custom.Button.inline("Download Audio - mp3", data=f"deezer_dl_{match['title']}")],
                        [Button.switch_inline("Search Again", query="deezer ", same_peer=True)],
