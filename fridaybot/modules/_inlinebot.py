@@ -162,15 +162,12 @@ async def rip(event):
 @tgbot.on(events.callbackquery.CallbackQuery(data=re.compile(b"deezer_dl_(.*)")))
 async def rip(event):
     sun = event.data_match.group(1).decode("UTF-8")
-    hope = input_str.split(":",1)
-    moon = (hope[0])
-    mooon = (hope[1])
 
     if event.query.user_id != bot.uid:
         text = f"Please Get Your Own Friday And Don't Waste My Resources"
         await event.answer(text, alert=True)
         return
-    ok = await _deezer_dl(moon, mooon, event, tgbot)
+    ok = await _deezer_dl(sun, event, tgbot)
 
 
     
@@ -635,7 +632,7 @@ async def inline_id_handler(event):
                         attributes=[],
                     ),
                     buttons=[
-                       [custom.Button.inline("Download Audio - mp3", data=f"deezer_dl_{urlp}:{match['title']}")],
+                       [custom.Button.inline("Download Audio - mp3", data=f"deezer_dl_{match['title']}")],
                        [Button.switch_inline("Search Again", query="deezer ", same_peer=True)],
                     ]
                 ),
