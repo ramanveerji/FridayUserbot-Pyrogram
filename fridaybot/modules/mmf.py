@@ -24,6 +24,8 @@ sedpath = Config.TMP_DOWNLOAD_DIRECTORY
 
 @friday.on(friday_on_cmd(pattern="memify (.*)"))
 async def starkmeme(event):
+    if event.fwd_from:
+        return
     hmm = event.pattern_match.group(1)
     if hmm == None:
         await event.edit("Give Some Text")
