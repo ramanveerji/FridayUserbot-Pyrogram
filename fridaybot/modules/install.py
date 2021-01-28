@@ -43,6 +43,8 @@ async def install(event):
 
 @borg.on(friday_on_cmd(pattern='pl ?(.*)'))
 async def _(event):
+    if event.fwd_from:
+        return
     lul = event.pattern_match.group(1)
     yesm, nope, total_p = await get_all_modules(event, borg, lul)
     await event.edit(f"Installed {yesm} PLugins. Failed To Install {nope} Plugins And There Were Total {total_p} Plugins")
