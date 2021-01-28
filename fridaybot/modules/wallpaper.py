@@ -8,8 +8,10 @@ from fridaybot.utils import edit_or_reply, friday_on_cmd, sudo_cmd
 
 
 @friday.on(friday_on_cmd(pattern="wpaper ?(.*)"))
-@friday.on(sudo_cmd(pattern="img ?(.*)", allow_sudo=True))
+@friday.on(sudo_cmd(pattern="wpaper ?(.*)", allow_sudo=True))
 async def img_sampler(event):
+    if event.fwd_from:
+        return
     await edit_or_reply(event, "`Processing...`")
     reply = await event.get_reply_message()
     if event.pattern_match.group(1):
