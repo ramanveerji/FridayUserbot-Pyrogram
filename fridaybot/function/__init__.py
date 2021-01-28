@@ -579,25 +579,19 @@ async def _ytdl(url, is_it, event, tgbot):
 
 async def _deezer_dl(word, event, tgbot):
     await event.edit("`Ok Downloading This Audio - Please Wait.` \n**Powered By @FridayOT**")
-    link = f"https://api.deezer.com/search?q={word}&limit=1"
-    dato = requests.get(url=link).json()
-    match = dato.get("data")
-    urlhp= (match[0])
-    urlp = urlhp.get("link")
-    polu = urlhp.get("artist")
-    replo = urlp[29:]
-    urlp = f"https://starkapi.herokuapp.com/deezer/{replo}"
+    urlp = f"https://starkapi.herokuapp.com/deezer/{word}"
     datto = requests.get(url=urlp).json()
     mus = datto.get("url")
-    thums = urlhp["album"]["cover_medium"]
-    sname = f'''{urlhp.get("title")}.mp3'''
+    mello = datto.get("artist")
+    #thums = urlhp["album"]["cover_medium"]
+    sname = f'''{datto.get("title")}.mp3'''
     doc = requests.get(mus)
     with open(sname, 'wb') as f:
       f.write(doc.content)
     car = f"""
-**Song Name :** {urlhp.get("title")}
-**Duration :** {urlhp.get('duration')} Seconds
-**Artist :** {polu.get("name")}
+**Song Name :** {datto.get("title")}
+**Duration :** {datto.get('duration')} Seconds
+**Artist :** {mello}
 
 Music Downloaded And Uploaded By Friday Userbot
 
