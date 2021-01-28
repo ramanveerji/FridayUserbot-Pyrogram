@@ -12,7 +12,7 @@ from urllib.parse import quote
 import requests
 from telethon import Button, custom, events, functions
 from youtubesearchpython import VideosSearch
-from fridaybot import ALIVE_NAME, CMD_HELP, CMD_LIST, client1, client2, bot as client3
+from fridaybot import ALIVE_NAME, CMD_HELP, CMD_LIST, client2 as client1, client3 as client2, bot as client3
 from fridaybot.modules import inlinestats
 from pornhub_api import PornhubApi
 from telethon.tl.types import BotInlineResult, InputBotInlineMessageMediaAuto, DocumentAttributeImageSize, InputWebDocument, InputBotInlineResult
