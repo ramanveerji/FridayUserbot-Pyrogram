@@ -150,11 +150,14 @@ async def all_pro_s(Config, client2, client3, bot):
         lmao_s = []
     else:
         lmao_s = list(Config.SUDO_USERS)
-    lmao_s.append(await bot.get_me().id)
+    sed1 = await bot.get_me()
+    lmao_s.append(sed1.id)
     if client2:
-        lmao_s.append(await client2.get_me().id)
+        sed2 = await client2.get_me()
+        lmao_s.append(sed2.id)
     if client3:
-        lmao_s.append(await client3.get_me().id)
+        sed3 = await client3.get_me()
+        lmao_s.append(sed3.id)
     return lmao_s
 
 def humanbytes(size):
