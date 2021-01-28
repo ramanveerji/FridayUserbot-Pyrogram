@@ -184,8 +184,10 @@ async def get_curr_track(lfmbio):
     RUNNING = False
 
 
-@register(outgoing=True, pattern=r"^.lastbio (\S*)")
+@friday.on(friday_on_cmd(pattern=r"lastbio (\S*)"))
 async def lastbio(lfmbio):
+    if lfmbio.fwd_from:
+        return
     if not lfmbio.text[0].isalpha() and lfmbio.text[0] not in ("/", "#", "@", "!"):
         arg = lfmbio.pattern_match.group(1)
         global LASTFMCHECK
@@ -209,7 +211,7 @@ async def lastbio(lfmbio):
             await lfmbio.edit(LFM_BIO_ERR)
 
 
-@register(outgoing=True, pattern=r"^.lastlog (\S*)")
+@borg.on(friday_on_cmd(pattern=r"lastlog (\S*)"))
 async def lastlog(lstlog):
     if not lstlog.text[0].isalpha() and lstlog.text[0] not in ("/", "#", "@", "!"):
         arg = lstlog.pattern_match.group(1)
