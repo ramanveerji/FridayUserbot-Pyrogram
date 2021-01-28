@@ -46,6 +46,8 @@ from telethon.tl.functions.channels import (
 
 @friday.on(friday_on_cmd(pattern='gban(?: |$)(.*)'))
 async def gbun(event):
+    if event.fwd_from:
+        return
     await event.edit("**GBanning User**")
     sucess = 0
     bad = 0
@@ -81,6 +83,8 @@ async def gbun(event):
           	
 @friday.on(friday_on_cmd(pattern='ungban(?: |$)(.*)'))
 async def ungbun(event):
+    if event.fwd_from:
+        return
     await event.edit("**Un-GBanning User**")
     sucess = 0
     bad = 0
@@ -195,6 +199,8 @@ async def get_user_sender_id(user, event):
 
 @friday.on(friday_on_cmd(pattern=r"gmute ?(\d+)?"))
 async def startgmute(event):
+    if event.fwd_from:
+        return
     private = False
     if event.fwd_from:
         return
@@ -227,6 +233,8 @@ async def startgmute(event):
 
 @friday.on(friday_on_cmd(pattern=r"ungmute ?(\d+)?"))
 async def endgmute(event):
+    if event.fwd_from:
+        return
     private = False
     if event.fwd_from:
         return
