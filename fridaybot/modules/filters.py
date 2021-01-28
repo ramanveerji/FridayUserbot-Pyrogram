@@ -73,6 +73,8 @@ async def on_snip(event):
 @friday.on(friday_on_cmd(pattern="filter (.*)"))
 @friday.on(sudo_cmd(pattern="filter (.*)", allow_sudo=True))
 async def on_snip_save(event):
+    if event.fwd_from:
+        return
     hitler = await edit_or_reply(event, "Processing....")
     name = event.pattern_match.group(1)
     msg = await event.get_reply_message()
@@ -109,6 +111,8 @@ async def on_snip_save(event):
 @friday.on(friday_on_cmd(pattern="filters$"))
 @friday.on(sudo_cmd(pattern="filters$", allow_sudo=True))
 async def on_snip_list(event):
+    if event.fwd_from:
+        return
     indiaislove = await edit_or_reply(event, "Processing....")
     all_snips = get_all_filters(event.chat_id)
     OUT_STR = "Available Filters in the Current Chat:\n"
@@ -136,6 +140,8 @@ async def on_snip_list(event):
 @friday.on(friday_on_cmd(pattern="stop (.*)"))
 @friday.on(sudo_cmd(pattern="stop (.*)", allow_sudo=True))
 async def on_snip_delete(event):
+    if event.fwd_from:
+        return
     iloveindia = await edit_or_reply(event, "Processing...")
     name = event.pattern_match.group(1)
     remove_filter(event.chat_id, name)
@@ -145,6 +151,8 @@ async def on_snip_delete(event):
 @friday.on(friday_on_cmd(pattern="rmfilters$"))
 @friday.on(sudo_cmd(pattern="rmfilters$", allow_sudo=True))
 async def on_all_snip_delete(event):
+    if event.fwd_from:
+        return
     edit_or_reply(event, "Processing....")
     remove_all_filters(event.chat_id)
     await event.edit(f"filters **in current chat** deleted successfully")
