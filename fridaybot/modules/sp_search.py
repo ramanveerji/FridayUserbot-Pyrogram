@@ -14,7 +14,8 @@ from uniborg.util import friday_on_cmd
 @friday.on(friday_on_cmd(pattern="sch ?(.*)", allow_sudo=True))
 async def sp_search(event):
     search_str = event.pattern_match.group(1)
-
+    if event.fwd_from:
+        return
     await event.edit("**Searching for " + search_str + " ...**")
 
     command = "sp --json " + search_str + " > out.json"
