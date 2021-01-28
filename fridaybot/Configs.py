@@ -55,7 +55,7 @@ if ENV:
         PRIVATE_GROUP_BOT_API_ID = int(
             os.environ.get("PRIVATE_GROUP_BOT_API_ID", False)
         )
-        DISABLE_MARKDOWN = os.environ.get("DISABLE_MARKDOWN, False)
+        DISABLE_MARKDOWN = os.environ.get("DISABLE_MARKDOWN", False)
         #
         # DO NOT EDIT BELOW THIS LINE IF YOU DO NOT KNOW WHAT YOU ARE DOING
         # TG API limit. A message can have maximum 4096 characters!
