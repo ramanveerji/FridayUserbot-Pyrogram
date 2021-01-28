@@ -90,6 +90,8 @@ def time_formatter(milliseconds: int) -> str:
 @friday.on(friday_on_cmd(pattern="yt(a|v) (.*)"))
 @friday.on(sudo_cmd(pattern="yt(a|v) (.*)", allow_sudo=True))
 async def download_video(v_url):
+    if v_url.fwd_from:
+        return
     """ For .ytdl command, download media from YouTube and many other sites. """
     url = v_url.pattern_match.group(2)
     type = v_url.pattern_match.group(1).lower()
