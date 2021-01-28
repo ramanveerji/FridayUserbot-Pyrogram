@@ -55,6 +55,8 @@ pq={
 
 @friday.on(friday_on_cmd(pattern="cz5$"))
 async def zee5(event):
+    if event.fwd_from:
+        return
     await event.edit('`Checking Your Combos. This May Take Time Depending On No of Combos.`')
     stark_dict = []
     hits_dict = []
@@ -94,6 +96,8 @@ async def zee5(event):
 
 @friday.on(friday_on_cmd(pattern="cnd$"))
 async def vypr(event):
+    if event.fwd_from:
+        return
     await event.edit('`Checking Your Combos. This May Take Time Depending On No of Combos.`')
     stark_dict = []
     hits_dict = []
@@ -138,6 +142,8 @@ async def vypr(event):
    
 @friday.on(friday_on_cmd(pattern="cvx$"))
 async def vortex(event):
+    if event.fwd_from:
+        return
     await event.edit('`Checking Your Combos. This May Take Time Depending On No of Combos.`')
     stark_dict = []
     hits_dict = []
@@ -182,6 +188,8 @@ async def vortex(event):
 
 @friday.on(friday_on_cmd(pattern="cvr$"))
 async def vortex(event):
+    if event.fwd_from:
+        return
     await event.edit('`Checking Your Combos. This May Take Time Depending On No of Combos.`')
     stark_dict = []
     hits_dict = []
@@ -277,6 +285,8 @@ async def _(event):
 
 @friday.on(friday_on_cmd(pattern="cvt$"))
 async def voot(event):
+    if event.fwd_from:
+        return
     await event.edit('`Checking Your Combos. This May Take Time Depending On No of Combos.`')
     normal_dict = []
     good_dict = []
@@ -340,6 +350,8 @@ async def voot(event):
 
 @friday.on(friday_on_cmd(pattern="cab$"))
 async def altbalaji(event):
+    if event.fwd_from:
+        return
     await event.edit('`Checking Your Combos. This May Take Time Depending On No of Combos.`')
     stark_dict = []
     hits_dict = []
@@ -382,6 +394,8 @@ async def altbalaji(event):
 
 @friday.on(friday_on_cmd(pattern="cab$"))
 async def altbalaji(event):
+    if event.fwd_from:
+        return
     await event.edit('`Checking Your Combos. This May Take Time Depending On No of Combos.`')
     normal_list = []
     hits_dict = []
