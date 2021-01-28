@@ -24,9 +24,11 @@ async def lol_s(client):
     
 def multiple_client():
     if client2:
+        sed.info("Starting Client 2")
         client2.start()
         client2.loop.run_until_complete(lol_s(client2))
     if client3:
+        sed.info("Starting Client 3")
         cleint3.start
         client3.loop.run_until_complete(lol_s(client3))
 
@@ -55,8 +57,10 @@ for name in files:
         shortname = path1.stem
         load_module(shortname.replace(".py", ""))
         if client2:
+            sed.info("Loading Modules For Client 2")
             load_module_dclient(shortname.replace(".py", ""), client2)
         if client3:
+            sed.info("Loading Modules For Client 3")
             load_module_dclient(shortname.replace(".py", ""), client3)
 
 if Config.ENABLE_ASSISTANTBOT == "ENABLE":
