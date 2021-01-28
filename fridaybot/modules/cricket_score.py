@@ -22,6 +22,8 @@ from fridaybot.utils import friday_on_cmd
 
 @friday.on(friday_on_cmd(pattern="cs"))
 async def _(event):
+    if event.fwd_from:
+        return
     score_page = "http://static.cricinfo.com/rss/livescores.xml"
     page = urllib.request.urlopen(score_page)
     soup = BeautifulSoup(page, "html.parser")
