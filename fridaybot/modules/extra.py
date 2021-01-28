@@ -10,6 +10,8 @@ from fridaybot.utils import friday_on_cmd
 
 @friday.on(friday_on_cmd("leave$"))
 async def leave(e):
+    if e.fwd_from:
+        return
     if not e.text[0].isalpha() and e.text[0] not in ("/", "#", "@", "!"):
         await e.edit("`I iz Leaving dis Lol Group kek!`")
         time.sleep(3)
@@ -22,6 +24,8 @@ async def leave(e):
 @friday.on(friday_on_cmd(";__;$"))
 # @register(outgoing=True, pattern="^;__;$")
 async def fun(e):
+    if e.fwd_from:
+        return
     t = ";__;"
     for j in range(10):
         t = t[:-1] + "_;"
@@ -31,6 +35,8 @@ async def fun(e):
 @friday.on(friday_on_cmd("yo$"))
 # @register(outgoing=True, pattern="^yo$")
 async def Ooo(e):
+    if e.fwd_from:
+        return
     t = "yo"
     for j in range(15):
         t = t[:-1] + "oo"
@@ -40,6 +46,8 @@ async def Ooo(e):
 @friday.on(friday_on_cmd("Oof$"))
 # @register(outgoing=True, pattern="^Oof$")
 async def Oof(e):
+    if e.fwd_from:
+        return
     t = "Oof"
     for j in range(15):
         t = t[:-1] + "of"
@@ -49,6 +57,8 @@ async def Oof(e):
 @friday.on(friday_on_cmd("ccry$"))
 # @register(outgoing=True, pattern="^.cry$")
 async def cry(e):
+    if e.fwd_from:
+        return
     if not e.text[0].isalpha() and e.text[0] not in ("/", "#", "@", "!"):
         await e.edit("(;´༎ຶД༎ຶ)")
 
@@ -56,6 +66,8 @@ async def cry(e):
 @friday.on(friday_on_cmd("fp$"))
 # @register(outgoing=True, pattern="^.fp$")
 async def facepalm(e):
+    if e.fwd_from:
+        return
     if not e.text[0].isalpha() and e.text[0] not in ("/", "#", "@", "!"):
         await e.edit("🤦‍♂")
 
@@ -75,6 +87,8 @@ async def _(event):
 @friday.on(friday_on_cmd("source$"))
 # @register(outgoing=True, pattern="^.source$")
 async def source(e):
+    if e.fwd_from:
+        return
     if not e.text[0].isalpha() and e.text[0] not in ("/", "#", "@", "!"):
         await e.edit("https://github.com/StarkGang/FridayUserbot")
 
@@ -82,6 +96,8 @@ async def source(e):
 @friday.on(friday_on_cmd("readme$"))
 # @register(outgoing=True, pattern="^.readme$")
 async def reedme(e):
+    if e.fwd_from:
+        return
     if not e.text[0].isalpha() and e.text[0] not in ("/", "#", "@", "!"):
         await e.edit("https://github.com/StarkGang/FRIDAYUSERBOT/blob/master/README.md")
 
