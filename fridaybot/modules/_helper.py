@@ -4,6 +4,8 @@ from fridaybot.utils import friday_on_cmd
 
 @borg.on(friday_on_cmd(pattern="help ?(.*)"))
 async def cmd_list(event):
+    if event.fwd_from:
+        return
     if not event.text[0].isalpha() and event.text[0] not in ("/", "#", "@", "!"):
         tgbotusername = Var.TG_BOT_USER_NAME_BF_HER
         input_str = event.pattern_match.group(1)
