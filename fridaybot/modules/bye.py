@@ -15,6 +15,8 @@ from fridaybot.utils import friday_on_cmd, sudo_cmd
 @friday.on(friday_on_cmd("bye"))
 @friday.on(sudo_cmd("bye", allow_sudo=True))
 async def leave(e):
+    if event.fwd_from:
+        return
     if not e.text[0].isalpha() and e.text[0] not in ("/", "#", "@", "!"):
         time.sleep(3)
         if e.is_group:
