@@ -19,6 +19,8 @@ from fridaybot import CMD_HELP
 
 @friday.on(friday_on_cmd(pattern="chnnlzip(?: |$)(.*)"))
 async def starky(event):
+    if event.fwd_from:
+        return
     un = event.pattern_match.group(1)
     rndm = uuid.uuid4().hex
     dir = f"./{rndm}/"
