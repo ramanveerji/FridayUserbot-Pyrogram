@@ -92,7 +92,7 @@ async def _(event):
     match = dato.get("data")
     urlhp= (match[0])
     urlp = urlhp.get("link")
-    thums = urlhp["album"]["cover_medium"]
+    thums = urlhp["album"]["cover_big"]
     thum_f = wget.download(thums, out=Config.TMP_DOWNLOAD_DIRECTORY)
     polu = urlhp.get("artist")
     replo = urlp[29:]
