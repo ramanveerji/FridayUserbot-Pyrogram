@@ -41,7 +41,11 @@ def multiple_client():
         except:
             lmaobruh = True
             sed.info("Client 3 Failed To Load.")
-    return lmaobruh, sedbruh    
+    if not client2:
+        sedbruh = None
+    if not client3:
+        lmaobruh = None
+    return sedbruh, lmaobruh    
 
 if len(argv) not in (1, 3, 4):
     bot.disconnect()
