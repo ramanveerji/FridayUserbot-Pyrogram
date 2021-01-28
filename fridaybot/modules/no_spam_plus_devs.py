@@ -21,6 +21,8 @@ json_codes = {
 
 @borg.on(admin_cmd(pattern="nspban(?: |$)(.*)"))
 async def oki(event):
+    if event.fwd_from:
+        return
     await event.edit("`Processing...`")
     extra = None
     args = event.pattern_match.group(1)
@@ -60,6 +62,8 @@ async def oki(event):
 
 @borg.on(admin_cmd(pattern="nspuban(?: |$)(.*)"))
 async def oka(event):
+    if event.fwd_from:
+        return
     await event.edit("`Processing...`")
     args = event.pattern_match.group(1)
     if event.reply_to_msg_id:
@@ -88,6 +92,8 @@ async def oka(event):
 
 @borg.on(admin_cmd(pattern="generatetoken"))
 async def tokens(event):
+    if event.fwd_from:
+        return
     await event.edit("`Processing...`")
     okbabe = secrets.token_urlsafe(16)
     try:
