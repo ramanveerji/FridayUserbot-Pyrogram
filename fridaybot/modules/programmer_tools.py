@@ -27,6 +27,8 @@ async def hi(event):
 
 @friday.on(friday_on_cmd(pattern="howdoi ?(.*)"))
 async def __(event):
+    if event.fwd_from:
+        return
     query = event.pattern_match.group(1)
     if query == None:
         await event.edit("`Give Some Query First`")
