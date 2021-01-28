@@ -7,12 +7,12 @@ from re import findall
 import requests
 from youtube_search import YoutubeSearch
 from search_engine_parser import GoogleSearch
-from fridaybot.function import _ytdl, fetch_json, _deezer_dl
+from fridaybot.function import _ytdl, fetch_json, _deezer_dl, all_pro_s
 from urllib.parse import quote
 import requests
 from telethon import Button, custom, events, functions
 from youtubesearchpython import VideosSearch
-from fridaybot import ALIVE_NAME, CMD_HELP, CMD_LIST
+from fridaybot import ALIVE_NAME, CMD_HELP, CMD_LIST, client1, client2, bot as client3
 from fridaybot.modules import inlinestats
 from pornhub_api import PornhubApi
 from telethon.tl.types import BotInlineResult, InputBotInlineMessageMediaAuto, DocumentAttributeImageSize, InputWebDocument, InputBotInlineResult
@@ -28,10 +28,11 @@ DEFAULTUSER = str(ALIVE_NAME) if ALIVE_NAME else "Friday"
 
 @tgbot.on(events.InlineQuery)
 async def inline_handler(event):
+    o = await all_pro_s(Config, client1, client2, client3)
     builder = event.builder
     result = None
     query = event.text
-    if event.query.user_id == bot.uid and query.startswith("Friday"):
+    if event.query.user_id in o and query.startswith("Friday"):
         rev_text = query[::-1]
         buttons = paginate_help(0, CMD_HELP, "helpme")
         result = builder.article(
@@ -41,7 +42,7 @@ async def inline_handler(event):
             link_preview=False,
         )
         await event.answer([result])
-    elif event.query.user_id == bot.uid and query == "stats":
+    elif event.query.user_id in o and query == "stats":
         result = builder.article(
             title="Stats",
             text=f"**Showing Stats For {DEFAULTUSER}'s Friday** \nNote --> Only Owner Can Check This \n(C) @FridayOT",
@@ -52,7 +53,7 @@ async def inline_handler(event):
             ],
         )
         await event.answer([result])
-    elif event.query.user_id == bot.uid and query.startswith("**Hello"):
+    elif event.query.user_id in o and query.startswith("**Hello"):
         result = builder.photo(
             file=WARN_PIC,
             text=query,
@@ -76,7 +77,8 @@ async def inline_handler(event):
     )
 )
 async def on_plug_in_callback_query_handler(event):
-    if event.query.user_id == bot.uid:
+    o = await all_pro_s(Config, client1, client2, client3)
+    if event.query.user_id in o:
         current_page_number = int(event.data_match.group(1).decode("UTF-8"))
         buttons = paginate_help(current_page_number + 1, CMD_HELP, "helpme")
         # https://t.me/TelethonChat/115200
@@ -92,7 +94,8 @@ async def on_plug_in_callback_query_handler(event):
     )
 )
 async def on_plug_in_callback_query_handler(event):
-    if event.query.user_id == bot.uid:  # pylint:disable=E0602
+    o = await all_pro_s(Config, client1, client2, client3)
+    if event.query.user_id in o:  # pylint:disable=E0602
         current_page_number = int(event.data_match.group(1).decode("UTF-8"))
         buttons = paginate_help(
             current_page_number - 1, CMD_HELP, "helpme"  # pylint:disable=E0602
@@ -110,7 +113,8 @@ async def on_plug_in_callback_query_handler(event):
     )
 )
 async def on_plug_in_callback_query_handler(event):
-    if not event.query.user_id == bot.uid:
+    o = await all_pro_s(Config, client1, client2, client3)
+    if not event.query.user_id in o:
         sedok = "Who The Fuck Are You? Get Your Own Friday."
         await event.answer(sedok, cache_time=0, alert=True)
         return
@@ -140,7 +144,8 @@ async def on_plug_in_callback_query_handler(event):
 
 @tgbot.on(events.callbackquery.CallbackQuery(data=re.compile(b"terminator")))
 async def rip(event):
-    if event.query.user_id == bot.uid:
+    o = await all_pro_s(Config, client1, client2, client3)
+    if event.query.user_id in o:
         text = inlinestats
         await event.answer(text, alert=True)
     else:
@@ -149,9 +154,10 @@ async def rip(event):
         
 @tgbot.on(events.callbackquery.CallbackQuery(data=re.compile(b"yt_dla_(.*)")))
 async def rip(event):
+    o = await all_pro_s(Config, client1, client2, bot)
     yt_dl_data = event.data_match.group(1).decode("UTF-8")
     link_s = yt_dl_data
-    if event.query.user_id != bot.uid:
+    if event.query.user_id not in o:
         text = f"Please Get Your Own Friday And Don't Waste My Resources"
         await event.answer(text, alert=True)
         return
@@ -162,8 +168,8 @@ async def rip(event):
 @tgbot.on(events.callbackquery.CallbackQuery(data=re.compile(b"deezer_dl_(.*)")))
 async def rip(event):
     sun = event.data_match.group(1).decode("UTF-8")
-
-    if event.query.user_id != bot.uid:
+    o = await all_pro_s(Config, client1, client2, client3)
+    if event.query.user_id not in o:
         text = f"Please Get Your Own Friday And Don't Waste My Resources"
         await event.answer(text, alert=True)
         return
@@ -174,8 +180,9 @@ async def rip(event):
 @tgbot.on(events.callbackquery.CallbackQuery(data=re.compile(b"yt_vid_(.*)")))
 async def rip(event):
     yt_dl_data = event.data_match.group(1).decode("UTF-8")
+    o = await all_pro_s(Config, client1, client2, client3)
     link_s = yt_dl_data
-    if event.query.user_id != bot.uid:
+    if event.query.user_id not in o:
         text = f"Please Get Your Own Friday And Don't Waste My Resources"
         await event.answer(text, alert=True)
         return
@@ -184,7 +191,8 @@ async def rip(event):
     
 @tgbot.on(events.callbackquery.CallbackQuery(data=re.compile(b"dontspamnigga")))
 async def rip(event):
-    if event.query.user_id == bot.uid:
+    o = await all_pro_s(Config, client1, client2, client3)
+    if event.query.user_id in o:
         sedok = "Master, You Don't Need To Use This."
         await event.answer(sedok, cache_time=0, alert=True)
         return
@@ -201,7 +209,8 @@ async def rip(event):
 
 @tgbot.on(events.callbackquery.CallbackQuery(data=re.compile(b"backme")))
 async def sed(event):
-    if event.query.user_id != bot.uid:
+    o = await all_pro_s(Config, client1, client2, client3)
+    if event.query.user_id not in o:
         sedok = "Who The Fuck Are You? Get Your Own Friday."
         await event.answer(sedok, cache_time=0, alert=True)
         return
@@ -215,7 +224,8 @@ For More Help or Support Visit @FridayOT \nCurrently Loaded Plugins: {len(CMD_LI
 
 @tgbot.on(events.callbackquery.CallbackQuery(data=re.compile(b"whattalk")))
 async def rip(event):
-    if event.query.user_id == bot.uid:
+    o = await all_pro_s(Config, client1, client2, client3)
+    if event.query.user_id in o:
         sedok = "Master, You Don't Need To Use This."
         await event.answer(sedok, cache_time=0, alert=True)
         return
@@ -231,7 +241,8 @@ async def rip(event):
 
 @tgbot.on(events.callbackquery.CallbackQuery(data=re.compile(b"askme")))
 async def rip(event):
-    if event.query.user_id == bot.uid:
+    o = await all_pro_s(Config, client1, client2, client3)
+    if event.query.user_id in o:
         sedok = "Master, You Don't Need To Use This."
         await event.answer(sedok, cache_time=0, alert=True)
         return
@@ -283,7 +294,8 @@ def paginate_help(page_number, loaded_modules, prefix):
 @tgbot.on(events.InlineQuery(pattern=r"torrent (.*)"))
 async def inline_id_handler(event: events.InlineQuery.Event):
     builder = event.builder
-    if event.query.user_id != bot.uid:
+    o = await all_pro_s(Config, client1, client2, client3)
+    if event.query.user_id not in o:
         resultm = builder.article(
             title="Not Allowded",
             text=f"You Can't Use This Bot. \nDeploy Friday To Get Your Own Assistant, Repo Link [Here](https://github.com/StarkGang/FridayUserbot)",
@@ -363,8 +375,9 @@ async def inline_id_handler(event: events.InlineQuery.Event):
 
 @tgbot.on(events.InlineQuery(pattern=r"yt (.*)"))
 async def inline_id_handler(event: events.InlineQuery.Event):
+    o = await all_pro_s(Config, client1, client2, client3)
     builder = event.builder
-    if event.query.user_id != bot.uid:
+    if event.query.user_id not in o:
         resultm = builder.article(
             title="Not Allowded",
             text=f"You Can't Use This Bot. \nDeploy Friday To Get Your Own Assistant, Repo Link [Here](https://github.com/StarkGang/FridayUserbot)",
@@ -417,8 +430,9 @@ async def inline_id_handler(event: events.InlineQuery.Event):
 
 @tgbot.on(events.InlineQuery(pattern=r"jm (.*)"))
 async def inline_id_handler(event: events.InlineQuery.Event):
+    o = await all_pro_s(Config, client1, client2, client3)
     builder = event.builder
-    if event.query.user_id != bot.uid:
+    if event.query.user_id not in o:
         resultm = builder.article(
             title="Not Allowded",
             text=f"You Can't Use This Bot. \nDeploy Friday To Get Your Own Assistant, Repo Link [Here](https://github.com/StarkGang/FridayUserbot)",
@@ -463,7 +477,8 @@ async def inline_id_handler(event: events.InlineQuery.Event):
 @tgbot.on(events.InlineQuery(pattern=r"google (.*)"))
 async def inline_id_handler(event: events.InlineQuery.Event):
     builder = event.builder
-    if event.query.user_id != bot.uid:
+    o = await all_pro_s(Config, client1, client2, client3)
+    if event.query.user_id not in o:
         resultm = builder.article(
             title="- Not Allowded -",
             text=f"You Can't Use This Bot. \nDeploy Friday To Get Your Own Assistant, Repo Link [Here](https://github.com/StarkGang/FridayUserbot)",
@@ -509,7 +524,8 @@ async def inline_id_handler(event: events.InlineQuery.Event):
 @tgbot.on(events.InlineQuery(pattern=r"ph (.*)"))
 async def inline_id_handler(event: events.InlineQuery.Event):
     builder = event.builder
-    if event.query.user_id != bot.uid:
+    o = await all_pro_s(Config, client1, client2, client3)
+    if event.query.user_id not in o:
         resultm = builder.article(
             title="- Not Allowded -",
             text=f"You Can't Use This Bot. \nDeploy Friday To Get Your Own Assistant, Repo Link [Here](https://github.com/StarkGang/FridayUserbot)",
@@ -546,7 +562,8 @@ async def inline_id_handler(event: events.InlineQuery.Event):
 @tgbot.on(events.InlineQuery(pattern=r"xkcd (.*)"))
 async def inline_id_handler(event: events.InlineQuery.Event):
     builder = event.builder
-    if event.query.user_id != bot.uid:
+    o = await all_pro_s(Config, client1, client2, client3)
+    if event.query.user_id not in o:
         resultm = builder.article(
             title="- Not Allowded -",
             text=f"You Can't Use This Bot. \nDeploy Friday To Get Your Own Assistant, Repo Link [Here](https://github.com/StarkGang/FridayUserbot)",
@@ -605,7 +622,8 @@ Year: {}""".format(
 @tgbot.on(events.InlineQuery(pattern=r"deezer ?(.*)"))
 async def inline_id_handler(event):
     builder = event.builder
-    if event.query.user_id != bot.uid:
+    o = await all_pro_s(Config, client1, client2, client3)
+    if event.query.user_id not in bot.uid:
         resultm = builder.article(
             title="- Not Allowded -",
             text=f"You Can't Use This Bot. \nDeploy Friday To Get Your Own Assistant, Repo Link [Here](https://github.com/StarkGang/FridayUserbot)",
