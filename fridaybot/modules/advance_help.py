@@ -5,6 +5,8 @@ from fridaybot.utils import friday_on_cmd, sudo_cmd
 @friday.on(sudo_cmd(pattern="ahelp ?(.*)", allow_sudo=True))
 @friday.on(friday_on_cmd(pattern="ahelp ?(.*)"))
 async def _(event):
+    if event.fwd_from:
+        return
     args = event.pattern_match.group(1).lower()
     if args:
         if args in CMD_HELP:
