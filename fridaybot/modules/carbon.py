@@ -23,7 +23,7 @@ LANG = "en"
 
 @friday.on(friday_on_cmd(pattern="carbon"))
 async def carbon_api(e):
-    if event.fwd_from:
+    if e.fwd_from:
         return
     if not e.text[0].isalpha() and e.text[0] not in ("/", "#", "@", "!"):
 
