@@ -30,6 +30,8 @@ loggy_grp = Config.PRIVATE_GROUP_ID
 
 @friday.on(friday_on_cmd(pattern="badd ?(.*)"))
 async def _(event):
+    if event.fwd_from:
+        return
     input_chnnl = event.pattern_match.group(1)
     sed = 0
     oks = 0
@@ -72,6 +74,8 @@ async def _(event):
 
 @friday.on(friday_on_cmd(pattern="brm ?(.*)"))
 async def _(event):
+    if event.fwd_from:
+        return
     input_chnnl = event.pattern_match.group(1)
     all_chnnl = get_all_chnnl()
     if input_chnnl == "all":
@@ -97,6 +101,8 @@ async def _(event):
 
 @friday.on(friday_on_cmd(pattern="broadcast"))
 async def _(event):
+    if event.fwd_from:
+        return
     await event.edit("**Fine. Broadcasting in Progress. Kindly Wait !**")
     sedpath = Config.TMP_DOWNLOAD_DIRECTORY
     all_chnnl = get_all_chnnl()
@@ -148,6 +154,8 @@ async def _(event):
 
 @friday.on(friday_on_cmd(pattern="bforward"))
 async def _(event):
+    if event.fwd_from:
+        return
     all_chnnl = get_all_chnnl()
     if len(all_chnnl) == 0:
         await event.edit("No Channel Or Group Found On Database. Please Check Again")
@@ -183,6 +191,8 @@ async def _(event):
 
 @friday.on(friday_on_cmd(pattern="bstat"))
 async def _(event):
+    if event.fwd_from:
+        return
     total_chnnl = get_all_chnnl()
     chnnl_list = ""
     for starked in total_chnnl:
