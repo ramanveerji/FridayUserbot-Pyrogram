@@ -17,7 +17,6 @@ from fridaybot import (
     CMD_HELP,
     DEFAULT_BIO,
     LASTFM_USERNAME,
-    bot,
     lastfm,
 )
 from fridaybot.events import register
