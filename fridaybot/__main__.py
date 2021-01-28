@@ -67,9 +67,9 @@ for name in files:
         path1 = Path(f.name)
         shortname = path1.stem
         load_module(shortname.replace(".py", ""))
-        if failed2 is True:
+        if not failed2:
             load_module_dclient(shortname.replace(".py", ""), client2)
-        if not failed3 is True:
+        if not failed3:
             load_module_dclient(shortname.replace(".py", ""), client3)
 
 if Config.ENABLE_ASSISTANTBOT == "ENABLE":
