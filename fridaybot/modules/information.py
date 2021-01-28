@@ -5,13 +5,31 @@ from telethon.tl.functions.photos import GetUserPhotosRequest
 from telethon.tl.functions.users import GetFullUserRequest
 from telethon.tl.types import MessageEntityMentionName
 from telethon.utils import get_input_location
-
+from telethon.tl.functions.messages import GetCommonChatsRequest
+from telethon.tl.functions.users import GetFullUserRequest
 from fridaybot import CMD_HELP, sclient
 from fridaybot.utils import edit_or_reply, friday_on_cmd, sudo_cmd
 
-
-@friday.on(friday_on_cmd("info ?(.*)"))
-@friday.on(sudo_cmd("info ?(.*)", allow_sudo=True))
+@friday.on(friday_on_cmd("showcc(?: |$)(.*)"))
+async def _(event):
+    user_s, error = await get_full_user(event)
+    if user_s is None:
+        await event.edit("`Something Went Really Wrong !`")
+        return
+    if user_s.common_chats_count == 0:
+        await event.edit("**No Chats in Common !**")
+        return
+    sed = await event.client(GetCommonChatsRequest(user_id=user_s.user.id, max_id=0, limit=100))
+    lol = f"User-ID : {user_s.user.id} \nFirst-Name : {user_s.user.first_name} \nTotal Groups In Common : {user_s.common_chats_count} \n\n"
+    for stark in sed.chats:
+        try:
+            lol += f"Chat ID : {stark.id} \nChat Name : {stark.title} \nChat-UserName : {stark.username} \n\n"
+        except:
+            lol += f"Chat ID : {stark.id} \nChat Name : {stark.title} \n\n"
+    await event.edit(lol) 
+    
+@friday.on(friday_on_cmd("info(?: |$)(.*)"))
+@friday.on(sudo_cmd("info(?: |$)(.*)", allow_sudo=True))
 async def _(event):
     if event.fwd_from:
         return
