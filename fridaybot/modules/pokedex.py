@@ -27,7 +27,7 @@ async def _(event):
     pokemon = r
     if pokemon.get("error") is not None:
           kk = f"""
-Error:   pokemon.get("error")"""
+Error:   {pokemon.get("error")}"""
           ommhg = await edit_or_reply(event, kk)
           return
     name = str(pokemon.get("name"))
