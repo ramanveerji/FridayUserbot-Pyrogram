@@ -18,7 +18,7 @@ async def add_bot(bot_token):
     bot.me = await bot.get_me()
     bot.uid = telethon.utils.get_peer_id(bot.me)
     
-aysnc def lol_s(client)
+async def lol_s(client)
     client.me = await client.get_me()
     client.uid = telethon.utils.get_peer_id(client.me)
     
