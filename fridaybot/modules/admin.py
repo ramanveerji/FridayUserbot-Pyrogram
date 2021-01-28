@@ -84,6 +84,8 @@ UNMUTE_RIGHTS = ChatBannedRights(until_date=None, send_messages=False)
 @borg.on(admin_cmd(pattern=r"setgpic"))
 @errors_handler
 async def set_group_photo(gpic):
+    if event.fwd_from:
+        return
     """ For .setgpic command, changes the picture of a group """
     if not gpic.is_group:
         await gpic.edit("`I don't think this is a group.`")
@@ -123,6 +125,8 @@ async def set_group_photo(gpic):
 @borg.on(admin_cmd(pattern=r"promote(?: |$)(.*)"))
 @errors_handler
 async def promote(promt):
+    if event.fwd_from:
+        return
     """ For .promote command, promotes the replied/tagged person """
     # Get targeted chat
     chat = await promt.get_chat()
@@ -177,6 +181,8 @@ async def promote(promt):
 @borg.on(admin_cmd(pattern=r"demote(?: |$)(.*)"))
 @errors_handler
 async def demote(dmod):
+    if event.fwd_from:
+        return
     """ For .demote command, demotes the replied/tagged person """
     # Admin right check
     chat = await dmod.get_chat()
@@ -230,6 +236,8 @@ async def demote(dmod):
 @borg.on(admin_cmd(pattern=r"ban(?: |$)(.*)"))
 @errors_handler
 async def ban(bon):
+    if event.fwd_from:
+        return
     """ For .ban command, bans the replied/tagged person """
     # Here laying the sanity check
     chat = await bon.get_chat()
@@ -285,6 +293,8 @@ async def ban(bon):
 @borg.on(admin_cmd(pattern=r"unban(?: |$)(.*)"))
 @errors_handler
 async def nothanos(unbon):
+    if event.fwd_from:
+        return
     """ For .unban command, unbans the replied/tagged person """
     # Here laying the sanity check
     chat = await unbon.get_chat()
@@ -324,6 +334,8 @@ async def nothanos(unbon):
 @borg.on(admin_cmd(pattern=r"mute(?: |$)(.*)"))
 @errors_handler
 async def spider(spdr):
+    if event.fwd_from:
+        return
     """
     This function is basically muting peeps
     """
@@ -386,6 +398,8 @@ async def spider(spdr):
 @borg.on(admin_cmd(pattern=r"unmute(?: |$)(.*)"))
 @errors_handler
 async def unmoot(unmot):
+    if event.fwd_from:
+        return
     """ For .unmute command, unmute the replied/tagged person """
     # Admin or creator check
     chat = await unmot.get_chat()
@@ -437,6 +451,8 @@ async def unmoot(unmot):
 @borg.on(admin_cmd(pattern=r"adminlist"))
 @errors_handler
 async def get_admin(show):
+    if event.fwd_from:
+        return
     """ For .admins command, list all of the admins of the chat. """
     info = await show.client.get_entity(show.chat_id)
     title = info.title if info.title else "this chat"
@@ -460,6 +476,8 @@ async def get_admin(show):
 @borg.on(admin_cmd(pattern=r"pin(?: |$)(.*)"))
 @errors_handler
 async def pin(msg):
+    if event.fwd_from:
+        return
     """ For .pin command, pins the replied/tagged message on the top the chat. """
     # Admin or creator check
     chat = await msg.get_chat()
@@ -507,6 +525,8 @@ async def pin(msg):
 @borg.on(admin_cmd(pattern=r"kick(?: |$)(.*)"))
 @errors_handler
 async def kick(usr):
+    if event.fwd_from:
+        return
     """ For .kick command, kicks the replied/tagged person from the group. """
     # Admin or creator check
     chat = await usr.get_chat()
@@ -552,6 +572,8 @@ async def kick(usr):
 @borg.on(admin_cmd(pattern=r"users ?(.*)"))
 @errors_handler
 async def get_users(show):
+    if event.fwd_from:
+        return
     """ For .users command, list all of the users in a chat. """
     info = await show.client.get_entity(show.chat_id)
     title = info.title if info.title else "this chat"
@@ -596,6 +618,8 @@ async def get_users(show):
 
 @borg.on(admin_cmd(pattern="zombies(?: |$)(.*)"))
 async def rm_deletedacc(show):
+    if event.fwd_from:
+        return
     con = show.pattern_match.group(1).lower()
     del_u = 0
     del_status = "`No deleted accounts found, Group is clean`"
