@@ -53,6 +53,8 @@ async def on_snip(event):
 
 @friday.on(friday_on_cmd("snips (.*)"))
 async def on_snip_save(event):
+    if event.fwd_from:
+        return
     name = event.pattern_match.group(1)
     msg = await event.get_reply_message()
     if msg:
@@ -86,6 +88,8 @@ async def on_snip_save(event):
 
 @friday.on(friday_on_cmd("snipl"))
 async def on_snip_list(event):
+    if event.fwd_from:
+        return
     all_snips = get_all_snips()
     OUT_STR = "Available Snips:\n"
     if len(all_snips) > 0:
@@ -111,6 +115,8 @@ async def on_snip_list(event):
 
 @friday.on(friday_on_cmd("snipd (\S+)"))
 async def on_snip_delete(event):
+    if event.fwd_from:
+        return
     name = event.pattern_match.group(1)
     remove_snip(name)
     await event.edit("snip #{} deleted successfully".format(name))
