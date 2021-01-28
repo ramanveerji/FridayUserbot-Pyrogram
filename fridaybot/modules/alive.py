@@ -68,7 +68,14 @@ async def friday(alive):
                   "➥ **Check Stats By Doing** `.stat`. \n\n"
                   "[🇮🇳 Deploy FridayUserbot 🇮🇳](https://telegra.ph/FRIDAY-06-15)")
     
-    await borg.send_file(alive.chat_id, PM_IMG, caption=pm_caption)
+    await borg.send_message(
+        event.chat_id,
+        pm_caption,
+        reply_to=message_id_to_reply,
+        file=PM_IMG,
+        force_document=False,
+        silent=True,
+    )
     await alive.delete()
 
 
