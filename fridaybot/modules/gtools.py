@@ -21,6 +21,8 @@ from fridaybot.modules.sql_helper.mute_sql import is_muted, mute, unmute
 from fridaybot.utils import friday_on_cmd
 from fridaybot.function import get_all_admin_chats, is_admin
 from fridaybot.modules.sql_helper import gban_sql
+from fridaybot import client2, client3, bot as client4
+from fridaybot.function import all_pro_s
 from telethon.events import ChatAction, NewMessage
 from telethon.tl.types import (
     ChannelParticipantsAdmins,
@@ -48,6 +50,7 @@ from telethon.tl.functions.channels import (
 async def gbun(event):
     if event.fwd_from:
         return
+    o = await all_pro_s(Config, client2, client3, client4)
     await event.edit("**GBanning User**")
     sucess = 0
     bad = 0
@@ -59,7 +62,7 @@ async def gbun(event):
         hmm_r = "#GBanned"
     elif reason:
         hmm_r = reason
-    if user.id == bot.uid:
+    if user.id in o:
         await event.edit("**I Can't Gban You Master :(**")
         return
     if gban_sql.is_gbanned(user.id):
@@ -88,11 +91,12 @@ async def ungbun(event):
     await event.edit("**Un-GBanning User**")
     sucess = 0
     bad = 0
+    o = await all_pro_s(Config, client2, client3, client4)
     user, reason = await get_user_from_event(event)
     if not user.id:
         await event.edit("`Mention A User To Un-Gban`")
         return
-    if user.id == bot.uid:
+    if user.id in o:
         await event.edit("**I Can't Un-Gban You Master :(**")
         return
     if not gban_sql.is_gbanned(user.id):
