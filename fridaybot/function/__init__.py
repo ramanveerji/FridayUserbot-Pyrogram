@@ -145,6 +145,17 @@ async def progress(current, total, event, start, type_of_ps, file_name=None):
                 await event.edit("{}\n{}".format(type_of_ps, tmp))
             except:
                 pass
+async def all_pro_s(Config, client2, client3, bot):
+    if not Config.SUDO_USERS:
+        lmao_s = []
+    else:
+        lmao_s = list(Config.SUDO_USERS)
+    lmao_s.append(await bot.get_me().id)
+    if client2:
+        lmao_s.append(await client2.get_me().id)
+    if client3:
+        lmao_s.append(await client3.get_me().id)
+    return lmao_s
 
 def humanbytes(size):
     """Input size in bytes,
