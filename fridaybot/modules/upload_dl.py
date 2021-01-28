@@ -80,6 +80,8 @@ def time_formatter(milliseconds: int) -> str:
 @friday.on(friday_on_cmd(pattern="download(?: |$)(.*)"))
 @friday.on(sudo_cmd(pattern="download(?: |$)(.*)", allow_sudo=True))
 async def download(target_file):
+    if target_file.fwd_from:
+        return
     friday = await edit_or_reply(target_file, "`Processing ...`")
     await friday.edit("Processing using fridaybot server ( ◜‿◝ )♡")
     if not os.path.isdir(TEMP_DOWNLOAD_DIRECTORY):
@@ -106,6 +108,8 @@ async def download(target_file):
 
 @friday.on(friday_on_cmd(pattern=r"uploadir (.*)"))
 async def uploadir(udir_event):
+    if udir_event.fwd_from:
+        return
     """ For .uploadir command, allows you to upload everything from a folder in the server"""
     input_str = udir_event.pattern_match.group(1)
     if os.path.exists(input_str):
@@ -192,6 +196,8 @@ async def uploadir(udir_event):
 
 @friday.on(friday_on_cmd(pattern=r"upload (.*)"))
 async def upload(u_event):
+    if u_event.fwd_from:
+        return
     """ For .upload command, allows you to upload a file from the fridaybot's server """
     await u_event.edit("Processing ...")
     input_str = u_event.pattern_match.group(1)
@@ -268,6 +274,8 @@ def extract_w_h(file):
 
 @friday.on(friday_on_cmd(pattern=r"uploadas(stream|vn|all) (.*)"))
 async def uploadas(uas_event):
+    if uas_event.fwd_from:
+        return
     """ For .uploadas command, allows you to specify some arguments for upload. """
     await uas_event.edit("Processing ...")
     type_of_upload = uas_event.pattern_match.group(1)
@@ -360,6 +368,8 @@ async def uploadas(uas_event):
 
 @borg.on(friday_on_cmd(pattern='smartdl ?(.*)'))
 async def lul(event):
+    if event.fwd_from:
+        return
     input_str = event.pattern_match.group(1)
     mone = await event.edit("**Processing..**")
     start = datetime.now()
