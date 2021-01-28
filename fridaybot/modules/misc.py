@@ -16,6 +16,8 @@ from fridaybot.events import register
 
 @friday.on(friday_on_cmd(pattern="random"))
 async def randomise(items):
+    if items.fwd_from:
+        return
     """ For .random command, get a random item from the list of items. """
     if not items.text[0].isalpha() and items.text[0] not in ("/", "#", "@", "!"):
         itemo = (items.text[8:]).split()
@@ -30,6 +32,8 @@ async def randomise(items):
 
 @friday.on(friday_on_cmd(pattern="sleep( [0-9]+)?$"))
 async def sleepybot(time):
+    if time.fwd_from:
+        return
     """ For .sleep command, let the fridaybot snooze for a few second. """
     message = time.text
     if not message[0].isalpha() and message[0] not in ("/", "#", "@", "!"):
