@@ -1,7 +1,7 @@
 from telethon.events import ChatAction
 from telethon import events
 from telethon.tl.functions.users import GetFullUserRequest
-from fridaybot import bot, sclient
+from fridaybot import sclient
 from fridaybot.Configs import Config
 
 
