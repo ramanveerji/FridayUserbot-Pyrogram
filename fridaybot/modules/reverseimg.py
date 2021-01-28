@@ -16,7 +16,7 @@ import requests
 from bs4 import BeautifulSoup
 from PIL import Image
 
-from fridaybot import CMD_HELP, bot
+from fridaybot import CMD_HELP
 from fridaybot.utils import errors_handler, register, friday_on_cmd
 
 opener = urllib.request.build_opener()
