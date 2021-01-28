@@ -14,6 +14,8 @@ GENIUS = os.environ.get("GENIUS_API_TOKEN", None)
 @friday.on(friday_on_cmd(outgoing=True, pattern="lyrics (.*)"))
 @friday.on(sudo_cmd(pattern="lyrics (.*)", allow_sudo=True))
 async def _(event):
+    if event.fwd_from:
+        return
     await edit_or_reply(event, "Searching For Lyrics.....")
     reply_to_id = event.message.id
     if event.reply_to_msg_id:
@@ -55,6 +57,8 @@ async def _(event):
 
 @friday.on(friday_on_cmd(outgoing=True, pattern="glyrics(?: |$)(.*)"))
 async def lyrics(lyric):
+    if lyric.fwd_from:
+        return
     if r"-" in lyric.text:
         pass
     else:
