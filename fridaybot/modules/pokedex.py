@@ -22,7 +22,7 @@ async def _(event):
     if event.fwd_from:
         return
     input_str = event.pattern_match.group(1)
-    url = https://starkapi.herokuapp.com/pokedex/{input_str}
+    url = f"https://starkapi.herokuapp.com/pokedex/{input_str}"
     r = requests.get(url).json
     pokemon = r
     try:
