@@ -13,6 +13,8 @@ FONT_FILE_TO_USE = "Fonts/digital.ttf"
 
 @friday.on(friday_on_cmd(pattern="autopic"))
 async def autopic(event):
+    if event.fwd_from:
+        return
     downloaded_file_name = "fridaybot/original_pic.png"
     downloader = SmartDL(
         Var.DOWNLOAD_PFP_URL_CLOCK, downloaded_file_name, progress_bar=False
