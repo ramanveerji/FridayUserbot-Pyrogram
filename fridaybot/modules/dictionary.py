@@ -53,7 +53,6 @@ CMD_HELP.update(
     {
     "dictionary": "**Dictionary**\
 \n\n**Syntax : **`.meaning <Word>`\
-\n**Usage :** Gives meaning of the word.\
-\n**Example :** `.anime one piece:twist.moe`"
+\n**Usage :** Gives meaning of the word."
     }
 )
