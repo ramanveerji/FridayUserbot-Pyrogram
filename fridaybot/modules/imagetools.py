@@ -36,6 +36,8 @@ if not os.path.isdir(sedpath):
 @friday.on(friday_on_cmd(pattern=r"cit"))
 @friday.on(sudo_cmd(pattern=r"cit", allow_sudo=True))
 async def hmm(event):
+    if event.fwd_from:
+        return
     if not event.reply_to_msg_id:
         await event.reply("Reply to any Image.")
         return
@@ -81,6 +83,8 @@ async def hmm(event):
 @friday.on(friday_on_cmd(pattern=r"nst"))
 @friday.on(sudo_cmd(pattern=r"nst", allow_sudo=True))
 async def hmm(event):
+    if event.fwd_from:
+        return
     life = Config.DEEP_API_KEY
     if life == None:
         life = "quickstart-QUdJIGlzIGNvbWluZy4uLi4K"
@@ -110,6 +114,8 @@ async def hmm(event):
 @friday.on(friday_on_cmd(pattern=r"thug"))
 @friday.on(sudo_cmd(pattern=r"thug", allow_sudo=True))
 async def iamthug(event):
+    if event.fwd_from:
+        return
     if not event.reply_to_msg_id:
         await event.reply("Reply to any Image.")
         return
@@ -140,6 +146,8 @@ async def iamthug(event):
 
 @friday.on(friday_on_cmd(pattern=r"msk ?(.*)"))
 async def iamnone(event):
+    if event.fwd_from:
+        return
     if not event.reply_to_msg_id:
         await event.reply("Reply to any Image.")
         return
@@ -173,6 +181,8 @@ async def iamnone(event):
 @friday.on(friday_on_cmd(pattern=r"tni"))
 @friday.on(sudo_cmd(pattern=r"tni", allow_sudo=True))
 async def toony(event):
+    if event.fwd_from:
+        return
     if not event.reply_to_msg_id:
         await event.reply("Reply to any Image.")
         return
@@ -199,6 +209,8 @@ async def toony(event):
 @friday.on(friday_on_cmd(pattern=r"tig"))
 @friday.on(sudo_cmd(pattern=r"tig", allow_sudo=True))
 async def lolmetrg(event):
+    if event.fwd_from:
+        return
     await event.edit("`Triggered This Image`")
     sed = await event.get_reply_message()
     img = await convert_to_image(event, borg)
@@ -218,6 +230,8 @@ async def lolmetrg(event):
 @friday.on(friday_on_cmd(pattern=r"geyuser"))
 @friday.on(sudo_cmd(pattern=r"geyuser", allow_sudo=True))
 async def lolmetrg(event):
+    if event.fwd_from:
+        return
     await event.edit("`Meking This Guy Gey.`")
     sed = await event.get_reply_message()
     img = await convert_to_image(event, borg)
@@ -237,6 +251,8 @@ async def lolmetrg(event):
 @friday.on(friday_on_cmd(pattern=r"pix"))
 @friday.on(sudo_cmd(pattern=r"pix", allow_sudo=True))
 async def lolmetrg(event):
+    if event.fwd_from:
+        return
     await event.edit("`Pixing This Image.`")
     sed = await event.get_reply_message()
     img = await convert_to_image(event, borg)
@@ -256,6 +272,8 @@ async def lolmetrg(event):
 @friday.on(friday_on_cmd(pattern=r"ytc"))
 @friday.on(sudo_cmd(pattern=r"ytc", allow_sudo=True))
 async def lolmetrg(event):
+    if event.fwd_from:
+        return
     await event.edit("`Making Comment`")
     sed = await event.get_reply_message()
     hmm_s = await event.client(GetFullUserRequest(sed.sender_id))
@@ -287,6 +305,8 @@ async def lolmetrg(event):
 @friday.on(friday_on_cmd(pattern=r"jail"))
 @friday.on(sudo_cmd(pattern=r"jail", allow_sudo=True))
 async def hmm(event):
+    if event.fwd_from:
+        return
     if not event.reply_to_msg_id:
         await event.reply("Reply to any Image.")
         return
@@ -317,6 +337,8 @@ async def hmm(event):
 @friday.on(friday_on_cmd(pattern=r"greyscale"))
 @friday.on(sudo_cmd(pattern=r"greyscale", allow_sudo=True))
 async def hmm(event):
+    if event.fwd_from:
+        return
     if not event.reply_to_msg_id:
         await event.reply("Reply to any Image.")
         return
@@ -343,6 +365,8 @@ async def hmm(event):
 @friday.on(friday_on_cmd(pattern=r"fgs ?(.*)"))
 @friday.on(sudo_cmd(pattern=r"fgs ?(.*)", allow_sudo=True))
 async def img(event):
+    if event.fwd_from:
+        return
     text = event.pattern_match.group(1)
     if not text:
         await event.edit("No input found!")
@@ -372,6 +396,8 @@ async def img(event):
 @friday.on(friday_on_cmd(pattern=r"lg"))
 @friday.on(sudo_cmd(pattern=r"lg", allow_sudo=True))
 async def lottiepie(event):
+    if event.fwd_from:
+        return
     await event.edit("`Prooooooccccesssssssinggggg.....`")
     message = await event.get_reply_message()
     if message.media and message.media.document:
@@ -402,6 +428,8 @@ async def lottiepie(event):
 @friday.on(friday_on_cmd(pattern=r"ph ?(.*)"))
 @friday.on(sudo_cmd(pattern=r"ph ?(.*)", allow_sudo=True))
 async def img(event):
+    if event.fwd_from:
+        return
     text = event.pattern_match.group(1)
     if not text:
         await event.edit("No input found!  --__--")
@@ -438,6 +466,8 @@ async def img(event):
 @friday.on(friday_on_cmd(pattern=r"spin ?(.*)"))
 @friday.on(sudo_cmd(pattern=r"spin ?(.*)", allow_sudo=True))
 async def spinshit(message):
+    if event.fwd_from:
+        return
     reply = await message.get_reply_message()
     lmaodict = {"1": 1, "2": 3, "3": 6, "4": 12, "5": 24, "6": 60}
     lolshit = message.pattern_match.group(1)
@@ -489,6 +519,8 @@ async def spinshit(message):
 @friday.on(friday_on_cmd(pattern=r"lnews ?(.*)"))
 @friday.on(sudo_cmd(pattern=r"lnews ?(.*)", allow_sudo=True))
 async def hmm(event):
+    if event.fwd_from:
+        return
     text = event.pattern_match.group(1)
     if not text:
         await event.reply("No input found!  --__--")
