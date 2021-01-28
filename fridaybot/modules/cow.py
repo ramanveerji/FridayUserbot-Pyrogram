@@ -9,7 +9,7 @@ from telethon import events
 from fridaybot import CMD_HELP
 
 
-@friday.on(events.NewMessage(pattern=r"^.(\w+)say (.*)", outgoing=True))
+@friday.on(friday_on_cmd(pattern=r"(\w+)say (.*)"))
 async def univsaye(cowmsg):
     if cowmsg.fwd_from:
         return
