@@ -28,8 +28,8 @@ def multiple_client():
         try:
             client2.start()
             client2.loop.run_until_complete(lol_s(client2))
-         except:
-            sed.info("Client 2 Failed To Load.")
+        except:
+            sed.info("Client 2 Failed To Load. Check Your String.")
     if client3:
         sed.info("Starting Client 3")
         try:
