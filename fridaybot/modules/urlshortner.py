@@ -7,6 +7,8 @@ from fridaybot.utils import friday_on_cmd, sudo_cmd
 @friday.on(friday_on_cmd(pattern="urlshort (.*)"))
 @friday.on(sudo_cmd(pattern="urlshort (.*)", allow_sudo=True))
 async def vom(event):
+    if event.fwd_from:
+        return
     try:
         link = event.pattern_match.group(1)
         sed = pyshorteners.Shortener()
