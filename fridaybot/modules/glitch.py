@@ -31,6 +31,8 @@ if not os.path.isdir(sedpath):
 @friday.on(friday_on_cmd(pattern=r"glitch"))
 @friday.on(sudo_cmd(pattern=r"glitch", allow_sudo=True))
 async def glitch(event):
+    if event.fwd_from:
+        return
     sed = await event.get_reply_message()
     okbruh = await event.edit("`Gli, Glitchiiingggg.....`")
     if isinstance(sed.media, MessageMediaPhoto):
