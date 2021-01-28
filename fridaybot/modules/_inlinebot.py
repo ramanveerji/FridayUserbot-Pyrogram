@@ -623,7 +623,7 @@ Year: {}""".format(
 async def inline_id_handler(event):
     builder = event.builder
     o = await all_pro_s(Config, client1, client2, client3)
-    if event.query.user_id not in bot.uid:
+    if event.query.user_id not in o:
         resultm = builder.article(
             title="- Not Allowded -",
             text=f"You Can't Use This Bot. \nDeploy Friday To Get Your Own Assistant, Repo Link [Here](https://github.com/StarkGang/FridayUserbot)",
