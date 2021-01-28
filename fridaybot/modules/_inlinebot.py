@@ -622,7 +622,7 @@ async def inline_id_handler(event):
             hmm_m = (f"Title : {match['title']} \nLink : {match['link']} \nDuration : {match['duration']} seconds \nBy : {match['artist']['name']}")
             results.append(
                 await event.builder.document(
-                    file=match["album"]["cover_medium"],
+                    file=match["album"]["cover_big"],
                     title=match["title"],
                     text=hmm_m,
                     description=f"Artist: {match['artist']['name']}\nAlbum: {match['album']['title']}",
