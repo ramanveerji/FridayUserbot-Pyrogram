@@ -49,8 +49,10 @@ LastLog = False
 # ================================================
 
 
-@register(outgoing=True, pattern="^.lastfm$")
+@friday.on(friday_on_cmd(pattern="lastfm$"))
 async def last_fm(lastFM):
+    if lastFM.fwd_from:
+        return
     """ For .lastfm command, fetch scrobble data from last.fm. """
     if not lastFM.text[0].isalpha() and lastFM.text[0] not in ("/", "#", "@", "!"):
         await lastFM.edit("Processing...")
@@ -184,8 +186,6 @@ async def get_curr_track(lfmbio):
 
 @register(outgoing=True, pattern=r"^.lastbio (\S*)")
 async def lastbio(lfmbio):
-    if lfmbio.fwd_from:
-        return
     if not lfmbio.text[0].isalpha() and lfmbio.text[0] not in ("/", "#", "@", "!"):
         arg = lfmbio.pattern_match.group(1)
         global LASTFMCHECK
@@ -211,8 +211,6 @@ async def lastbio(lfmbio):
 
 @register(outgoing=True, pattern=r"^.lastlog (\S*)")
 async def lastlog(lstlog):
-    if lstlog.fwd_from:
-        return
     if not lstlog.text[0].isalpha() and lstlog.text[0] not in ("/", "#", "@", "!"):
         arg = lstlog.pattern_match.group(1)
         global LastLog
