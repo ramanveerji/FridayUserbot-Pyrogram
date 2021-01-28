@@ -4,7 +4,7 @@ from collections import deque
 
 from telethon.tl.functions.channels import LeaveChannelRequest
 
-from fridaybot import CMD_HELP, bot
+from fridaybot import CMD_HELP
 from fridaybot.utils import friday_on_cmd
 
 
