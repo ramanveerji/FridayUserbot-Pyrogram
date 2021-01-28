@@ -6,6 +6,9 @@ from fridaybot import CMD_HELP
 async def _s(event):
     if event.fwd_from:
         return
+    if not event.is_group:
+        await event.edit("This Command is Meant To Be Used in Pvt Chats")
+        return
     user, reason = await get_user_from_event(event)
     sed = await friday.get_permissions(event.chat_id, user.id)
     if sed.is_admin:
@@ -42,6 +45,9 @@ async def _s(event):
 async def _(event):
     if event.fwd_from:
         return
+    if not event.is_group:
+        await event.edit("This Command is Meant To Be Used in Pvt Chats")
+        return
     user, reason = await get_user_from_event(event)
     sed = await friday.get_permissions(event.chat_id, user.id)
     if sed.is_admin:
@@ -58,6 +64,9 @@ async def _(event):
 @friday.on(friday_on_cmd(pattern="allwarns(?: |$)(.*)"))
 async def __(event):
     if event.fwd_from:
+        return
+    if not event.is_group:
+        await event.edit("This Command is Meant To Be Used in Pvt Chats")
         return
     user, reason = await get_user_from_event(event)
     result = sql.get_warns(user.id, event.chat_id)
@@ -87,6 +96,9 @@ async def __(event):
 async def m_(event):
     if event.fwd_from:
         return
+    if not event.is_group:
+        await event.edit("This Command is Meant To Be Used in Pvt Chats")
+        return
     args = event.pattern_match.group(1)
     if args:
         if args.isdigit():
@@ -105,6 +117,9 @@ async def m_(event):
 @friday.on(friday_on_cmd(pattern="wap ?(.*)"))
 async def m_(event):
     if event.fwd_from:
+        return
+    if not event.is_group:
+        await event.edit("This Command is Meant To Be Used in Pvt Chats")
         return
     args = event.pattern_match.group(1)
     if args:
