@@ -37,6 +37,8 @@ async def get_tz(con):
 
 @friday.on(friday_on_cmd(pattern="weather(?: |$)(.*)"))
 async def get_weather(weather):
+    if weather.fwd_from:
+        return
     """ For .weather command, gets the current weather of a city. """
 
     if not OWM_API:
