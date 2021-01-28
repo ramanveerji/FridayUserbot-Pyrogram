@@ -81,7 +81,7 @@ UNMUTE_RIGHTS = ChatBannedRights(until_date=None, send_messages=False)
 
 
 # @register(outgoing=True, pattern="^.setevent$")
-@borg.on(admin_cmd(pattern=r"setevent"))
+@borg.on(admin_cmd(pattern=r"setgpic$"))
 @errors_handler
 async def set_group_photo(event):
     if event.fwd_from:
