@@ -8,6 +8,8 @@ from fridaybot.utils import edit_or_reply, friday_on_cmd, sudo_cmd
 @friday.on(friday_on_cmd(pattern=r"govtjob"))
 @friday.on(sudo_cmd(pattern="govtjob", allow_sudo=True))
 async def _(givejob):
+    if givejob.fwd_from:
+        return
 
     res = ""
 
