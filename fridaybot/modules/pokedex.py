@@ -25,12 +25,11 @@ async def _(event):
     url = f"https://starkapi.herokuapp.com/pokedex/{input_str}"
     r = requests.get(url).json()
     pokemon = r
-    try:
-       if pokemon.get("error") is not None:
-          ommhg = await edit_or_reply(event, "Searching For Anime.....")
+    if pokemon.get("error") is not None:
+          kk = f"""
+Error:   pokemon.get("error")"""
+          ommhg = await edit_or_reply(event, kk)
           return
-    except:
-       pass
     name = str(pokemon.get("name"))
     number = str(pokemon.get("number"))
     species = str(pokemon.get("species"))
