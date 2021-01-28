@@ -11,6 +11,8 @@ from fridaybot import CMD_HELP
 @friday.on(friday_on_cmd("ttt ?(.*)"))
 @friday.on(sudo_cmd("ttt ?(.*)", allow_sudo=True))
 async def noobishere(event):
+    if event.fwd_from:
+        return
     reply_to_id = event.message.id
     if event.reply_to_msg_id:
         reply_to_id = event.reply_to_msg_id
@@ -37,6 +39,8 @@ async def noobishere(event):
 @friday.on(friday_on_cmd("tweet ?(.*)"))
 @friday.on(sudo_cmd("tweet ?(.*)", allow_sudo=True))
 async def noobishere(event):
+    if event.fwd_from:
+        return
     reply_to_id = event.message.id
     text = event.pattern_match.group(1)
     input_str = event.pattern_match.group(1)
