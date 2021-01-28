@@ -25,6 +25,8 @@ from uniborg.util import friday_on_cmd
 @friday.on(friday_on_cmd(pattern=r"nsfw"))
 @friday.on(sudo_cmd(pattern=r"nsfw", allow_sudo=True))
 async def nsfw(event):
+    if event.fwd_from:
+        return
     url = "https://nsfw-categorize.it/api/upload"
     await event.edit("`Processing..`")
     sed = await event.get_reply_message()
