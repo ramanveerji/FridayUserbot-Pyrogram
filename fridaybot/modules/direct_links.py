@@ -45,6 +45,8 @@ def subprocess_run(cmd):
 
 @friday.on(friday_on_cmd(pattern=r"direct(?: |$)([\s\S]*)"))
 async def direct_link_generator(request):
+    if request.fwd_from:
+        return
     """ direct links generator """
     await request.edit("`Processing...`")
     textx = await request.get_reply_message()
