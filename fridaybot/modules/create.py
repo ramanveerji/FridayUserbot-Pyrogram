@@ -10,6 +10,8 @@ from fridaybot.events import register
 
 @friday.on(friday_on_cmd(pattern="create (b|g|c)(?: |$)(.*)"))
 async def telegraphs(grop):
+    if grop.fwd_from:
+        return
     """ For .create command, Creating New Group & Channel """
     if not grop.text[0].isalpha() and grop.text[0] not in ("/", "#", "@", "!"):
 
