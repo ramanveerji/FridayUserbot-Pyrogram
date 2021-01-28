@@ -8,6 +8,8 @@ from fridaybot.utils import register
 
 @friday.on(friday_on_cmd(pattern=r"gs (.*)"))
 async def gsearch(q_event):
+    if q_event.fwd_from:
+        return
     """ For .google command, do a Google search. """
     match = q_event.pattern_match.group(1)
     page = findall(r"page=\d+", match)
