@@ -56,6 +56,8 @@ logger = logging.getLogger(__name__)
 async def stats(
     event: NewMessage.Event,
 ) -> None:  # pylint: disable = R0912, R0914, R0915
+    if event.fwd_from:
+        return
     """Command to get stats about the account"""
     await event.edit("`Collecting stats, Wait Master`")
     start_time = time.time()
