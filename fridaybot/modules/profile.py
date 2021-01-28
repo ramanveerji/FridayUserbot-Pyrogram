@@ -12,6 +12,8 @@ from telethon import functions, types
 
 @friday.on(friday_on_cmd(pattern="a2c(?: |$)(.*)"))
 async def _(event):
+    if event.fwd_from:
+        return
     hmmk = event.pattern_match.group(1)
     if event.reply_to_msg_id:
         hmm = await event.get_reply_message()
