@@ -47,6 +47,8 @@ PM_IMG = Config.ALIVE_IMAGE
 @friday.on(friday_on_cmd(pattern=r"alive"))
 @friday.on(sudo_cmd(pattern=r"alive", allow_sudo=True))
 async def friday(alive):
+    if event.fwd_from:
+        return
     await alive.get_chat()
     uptime = get_readable_time((time.time() - Lastupdate))
     repo = Repo()
