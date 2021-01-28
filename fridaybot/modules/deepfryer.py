@@ -44,6 +44,8 @@ if not os.path.isdir(sedpath):
 
 @friday.on(friday_on_cmd(pattern="deepfry(?: |$)(.*)"))
 async def deepfryer(event):
+    if event.fwd_from:
+        return
     try:
         frycount = int(event.pattern_match.group(1))
         if frycount < 1:
