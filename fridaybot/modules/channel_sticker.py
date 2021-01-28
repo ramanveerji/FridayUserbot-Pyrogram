@@ -26,6 +26,8 @@ lulstark = [".", ",", "!", "'"]
 
 @friday.on(admin_cmd(pattern="scs$"))
 async def _m(event):
+    if event.fwd_from:
+        return
     await event.edit("`Processing..`")
     id_s = event.chat_id
     lmao = await event.get_reply_message()
@@ -55,6 +57,8 @@ async def _m(event):
 
 @friday.on(admin_cmd(pattern="rcs$"))
 async def _m(event):
+    if event.fwd_from:
+        return
     await event.edit("`Processing..`")
     id_s = event.chat_id
     if is_data_indb(id_s):
@@ -66,6 +70,8 @@ async def _m(event):
 
 @friday.on(admin_cmd(pattern="ccs$"))
 async def _m(event):
+    if event.fwd_from:
+        return
     await event.edit("`Processing..`")
     id_s = event.chat_id
     if is_data_indb(id_s):
@@ -78,6 +84,8 @@ async def _m(event):
 
 @bot.on(events.NewMessage)
 async def lul(event):
+    if event.fwd_from:
+        return
     lsb = event.chat_id
     id_s = event.chat_id
     if is_data_indb(event.chat_id):
