@@ -15,9 +15,11 @@ import requests
 
 from fridaybot import CMD_HELP
 from fridaybot.utils import admin_cmd
+from fridaybot.utils import edit_or_reply, friday_on_cmd, sudo_cmd
 
 
-@friday.on(admin_cmd(pattern="pokedex (.*)"))
+@friday.on(friday_on_cmd(pattern="pokedex ?(.*)"))
+@friday.on(sudo_cmd(pattern="pokedex ?(.*)", allow_sudo=True))
 async def _(event):
     if event.fwd_from:
         return
