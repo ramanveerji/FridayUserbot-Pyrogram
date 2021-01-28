@@ -178,7 +178,8 @@ def load_module_dclient(shortname, client):
         mod.tgbot = bot.tgbot
         mod.Var = Var
         mod.command = command
-        mod.logger = logging.getLogger(shortname)
+        sedlu = str(shortname) + "- MClient -"
+        mod.logger = logging.getLogger(sedlu)
         # support for uniborg
         sys.modules["uniborg.util"] = fridaybot.utils
         sys.modules["friday.util"] = fridaybot.utils
