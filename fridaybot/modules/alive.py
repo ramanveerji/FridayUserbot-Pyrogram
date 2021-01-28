@@ -69,9 +69,9 @@ async def friday(alive):
                   "[🇮🇳 Deploy FridayUserbot 🇮🇳](https://telegra.ph/FRIDAY-06-15)")
     
     await borg.send_message(
-        event.chat_id,
+        alive.chat_id,
         pm_caption,
-        reply_to=message_id_to_reply,
+        reply_to=alive.message.reply_to_msg_id,
         file=PM_IMG,
         force_document=False,
         silent=True,
