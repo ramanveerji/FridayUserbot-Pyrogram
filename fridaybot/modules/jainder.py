@@ -8,7 +8,7 @@ from telethon import events
 from fridaybot import CMD_HELP
 
 
-@friday.on(events.NewMessage(pattern=r"\.jainder(.*)", outgoing=True))
+@friday.on(friday_on_cmd(pattern=r"jainder(.*)"))
 async def _(event):
     if event.fwd_from:
         return
