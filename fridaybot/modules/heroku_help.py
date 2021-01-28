@@ -15,6 +15,8 @@ heroku_api = "https://api.heroku.com"
 @friday.on(friday_on_cmd(pattern="(logs|log)"))
 @friday.on(sudo_cmd(pattern="(logs|log)", allow_sudo=True))
 async def giblog(event):
+    if event.fwd_from:
+        return
     herokuHelper = HerokuHelper(Var.HEROKU_APP_NAME, Var.HEROKU_API_KEY)
     logz = herokuHelper.getLog()
     with open("logs.txt", "w") as log:
@@ -27,6 +29,8 @@ async def giblog(event):
 @friday.on(friday_on_cmd(pattern="(rerun|restarts)"))
 @friday.on(sudo_cmd(pattern="(restart|restarts)", allow_sudo=True))
 async def restart_me(event):
+    if event.fwd_from:
+        return
     herokuHelper = HerokuHelper(Var.HEROKU_APP_NAME, Var.HEROKU_API_KEY)
     await event.edit("`App is Restarting. This is May Take Upto 10Min.`")
     herokuHelper.restart()
@@ -35,6 +39,8 @@ async def restart_me(event):
 @friday.on(friday_on_cmd(pattern="usage$"))
 @friday.on(sudo_cmd(pattern="usage$", allow_sudo=True))
 async def dyno_usage(dyno):
+    if dyno.fwd_from:
+        return
     """
     Get your account Dyno Usage
     """
@@ -102,6 +108,8 @@ async def dyno_usage(dyno):
     sudo_cmd(pattern="(set|get|del) var(?: |$)(.*)(?: |$)([\s\S]*)", allow_sudo=True)
 )
 async def variable(var):
+    if var.fwd_from:
+        return
     """
     Manage most of ConfigVars setting, set new var, get current var,
     or delete var...
@@ -191,6 +199,8 @@ async def variable(var):
 
 @friday.on(friday_on_cmd(pattern="shp ?(.*)"))
 async def lel(event):
+    if event.fwd_from:
+        return
     cpass, npass = event.pattern_match.group(1).split(" ", 1)
     await event.edit("`Changing You Pass`")
     accountm = Heroku.account()
@@ -200,6 +210,8 @@ async def lel(event):
 
 @friday.on(friday_on_cmd(pattern="acolb (.*)"))
 async def sf(event):
+    if event.fwd_from:
+        return
     hmm = event.pattern_match.group(1)
     app = Heroku.app(Var.HEROKU_APP_NAME)
     collaborator = app.add_collaborator(user_id_or_email=hmm, silent=0)
@@ -208,6 +220,8 @@ async def sf(event):
 
 @friday.on(friday_on_cmd(pattern="tfa (.*)"))
 async def l(event):
+    if event.fwd_from:
+        return
     hmm = event.pattern_match.group(1)
     app = Heroku.app(Var.HEROKU_APP_NAME)
     transfer = app.create_transfer(recipient_id_or_name=hmm)
@@ -215,6 +229,8 @@ async def l(event):
 
 @friday.on(friday_on_cmd(pattern="exit$"))
 async def killdyno(event):
+    if event.fwd_from:
+        return
     app = Heroku.app(Var.HEROKU_APP_NAME)
     await event.edit("`Dyno Is Off. Manually Turn it On Later`")
     app.kill_dyno("worker.1")
