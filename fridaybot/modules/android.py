@@ -23,6 +23,8 @@ DEVICES_DATA = (
 @friday.on(friday_on_cmd(outgoing=True, pattern="magisk$"))
 @friday.on(sudo_cmd(pattern="magisk$", allow_sudo=True))
 async def magisk(request):
+    if event.fwd_from:
+        return
     """ magisk latest releases """
     magisk_dict = {
         "Stable": "https://raw.githubusercontent.com/topjohnwu/magisk_files/master/stable.json",
@@ -44,6 +46,8 @@ async def magisk(request):
 @friday.on(friday_on_cmd(outgoing=True, pattern=r"device(?: |$)(\S*)"))
 @friday.on(sudo_cmd(pattern="device(?: |$)(\S*)", allow_sudo=True))
 async def device_info(request):
+    if event.fwd_from:
+        return
     """ get android device basic info from its codename """
     textx = await request.get_reply_message()
     codename = request.pattern_match.group(1)
@@ -79,6 +83,8 @@ async def device_info(request):
 )
 @friday.on(sudo_cmd(pattern="codename(?: |)([\S]*)(?: |)([\s\S]*)", allow_sudo=True))
 async def codename_info(request):
+    if event.fwd_from:
+        return
     """ search for android codename """
     textx = await request.get_reply_message()
     brand = request.pattern_match.group(1).lower()
@@ -124,6 +130,8 @@ async def codename_info(request):
 @friday.on(friday_on_cmd(outgoing=True, pattern=r"specs(?: |)([\S]*)(?: |)([\s\S]*)"))
 @friday.on(sudo_cmd(pattern="specs(?: |)([\S]*)(?: |)([\s\S]*)", allow_sudo=True))
 async def devices_specifications(request):
+    if event.fwd_from:
+        return
     """ Mobile devices specifications """
     textx = await request.get_reply_message()
     brand = request.pattern_match.group(1).lower()
@@ -187,6 +195,8 @@ async def devices_specifications(request):
 @friday.on(friday_on_cmd(outgoing=True, pattern=r"twrp(?: |$)(\S*)"))
 @friday.on(sudo_cmd(pattern="twrp(?: |$)(\S*)", allow_sudo=True))
 async def twrp(request):
+    if event.fwd_from:
+        return
     """ get android device twrp """
     textx = await request.get_reply_message()
     device = request.pattern_match.group(1)
