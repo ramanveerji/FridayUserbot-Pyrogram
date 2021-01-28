@@ -538,16 +538,14 @@ async def _ytdl(url, is_it, event, tgbot):
         return
     c_time = time.time()
     if song:
-        await event.edit(
-            f"**Uploading Audio**\
-        \n**Title :** `{ytdl_data['title']}`\
-        \n**Video Uploader :** `{ytdl_data['uploader']}`"
-        )
-        lol_m = await tgbot.upload_file(
-            file=f"{ytdl_data['id']}.mp3",
+        file_stark = f"{ytdl_data['title']}.mp3"
+        lol_m = await upload_file(
+            file_name=file_stark,
+            client=tgbot,
+            file=open(file_stark, 'rb'),
             progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
                 progress(
-                    d, t, event, c_time, "**Uploading Audio To TG**", f"{ytdl_data['title']}.mp3"
+                    d, t, event, c_time, "Uploading Youtube Audio..", file_stark
                 )
             ),
         )
@@ -555,26 +553,24 @@ async def _ytdl(url, is_it, event, tgbot):
             file=lol_m,
             text=f"{ytdl_data['title']} \n**Uploaded Using @FRidayOt**"
         )
-        os.remove(f"{ytdl_data['id']}.mp3")
+        os.remove(file_stark)
     elif video:
-        await event.edit(
-            f"**Uploading Video**\
-        \n**Title :** `{ytdl_data['title']}`\
-        \n**Video Uploader :** `{ytdl_data['uploader']}`"
-        )
-        hmmo = await tgbot.upload_file(
-            file=f"{ytdl_data['id']}.mp4",
+        file_stark = f"{ytdl_data['title']}.mp4"
+        lol_m = await upload_file(
+            file_name=file_stark,
+            client=tgbot,
+            file=open(file_stark, 'rb'),
             progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
                 progress(
-                    d, t, event, c_time, "**Uploading Video To TG**", f"{ytdl_data['title']}.mp4"
+                    d, t, event, c_time, "Uploading Youtube Video..", file_stark
                 )
             ),
         )
         await event.edit(
-            file=hmmo,
+            file=lol_m,
             text=f"{ytdl_data['title']} \n**Uploaded Using @FRidayOt**"
         )
-        os.remove(f"{ytdl_data['id']}.mp4")
+        os.remove(file_stark)
 
 
 async def _deezer_dl(word, event, tgbot):
