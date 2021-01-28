@@ -11,7 +11,7 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-from pokedex import pokedex
+import requests
 
 from fridaybot import CMD_HELP
 from fridaybot.utils import admin_cmd
@@ -22,9 +22,15 @@ async def _(event):
     if event.fwd_from:
         return
     input_str = event.pattern_match.group(1)
-    pokedx = pokedex.Pokedex()
-    pokemen = pokedx.get_pokemon_by_name(input_str)
-    pokemon = pokemen[0]
+    url = https://starkapi.herokuapp.com/pokedex/{input_str}
+    r = requests.get(url).json
+    pokemon = r
+    try:
+       if pokemon.get("error") is not None:
+          ommhg = await edit_or_reply(event, "Searching For Anime.....")
+          return
+    except:
+       pass
     name = str(pokemon.get("name"))
     number = str(pokemon.get("number"))
     species = str(pokemon.get("species"))
