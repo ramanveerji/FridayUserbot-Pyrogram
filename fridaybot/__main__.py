@@ -42,9 +42,9 @@ def multiple_client():
             lmaobruh = True
             sed.info("Client 3 Failed To Load.")
     if not client2:
-        sedbruh = None
+        sedbruh = True
     if not client3:
-        lmaobruh = None
+        lmaobruh = True
     return sedbruh, lmaobruh    
 
 if len(argv) not in (1, 3, 4):
