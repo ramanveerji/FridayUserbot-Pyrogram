@@ -12,17 +12,23 @@ from var import Var
 
 sed = logging.getLogger("Friday")
 
-def multiple_client():
-    if client2:
-        client2.start()
-    if client3:
-        cleint3.start
         
 async def add_bot(bot_token):
     await bot.start(bot_token)
     bot.me = await bot.get_me()
     bot.uid = telethon.utils.get_peer_id(bot.me)
-
+    
+aysnc def lol_s(client)
+    client.me = await client.get_me()
+    client.uid = telethon.utils.get_peer_id(client.me)
+    
+def multiple_client():
+    if client2:
+        client2.start()
+        client2.loop.run_until_complete(lol_s(client2))
+    if client3:
+        cleint3.start
+        client3.loop.run_until_complete(lol_s(client3))
 
 if len(argv) not in (1, 3, 4):
     bot.disconnect()
