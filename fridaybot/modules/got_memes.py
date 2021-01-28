@@ -12,7 +12,7 @@ from telethon import events
 from fridaybot import CMD_HELP
 
 
-@friday.on(events.NewMessage(pattern=r"\.gotm", outgoing=True))
+@friday.on(friday_on_cmd(pattern=r"gotm"))
 async def _(event):
 
     if event.fwd_from:
