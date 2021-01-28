@@ -23,7 +23,7 @@ async def _(event):
         return
     input_str = event.pattern_match.group(1)
     url = f"https://starkapi.herokuapp.com/pokedex/{input_str}"
-    r = requests.get(url).json
+    r = requests.get(url).json()
     pokemon = r
     try:
        if pokemon.get("error") is not None:
