@@ -14,6 +14,8 @@ if not os.path.isdir(sedpath):
 @friday.on(friday_on_cmd(pattern=r"stegano ?(.*)"))
 @friday.on(sudo_cmd(pattern=r"stegano ?(.*)", allow_sudo=True))
 async def hmm(event):
+    if event.fwd_from:
+        return
     if not event.reply_to_msg_id:
         await event.reply("Reply to any Image.")
         return
@@ -48,6 +50,8 @@ async def hmm(event):
 @friday.on(friday_on_cmd(pattern=r"unstegano"))
 @friday.on(sudo_cmd(pattern=r"unstegano", allow_sudo=True))
 async def hmm(event):
+    if event.fwd_from:
+        return
     if not event.reply_to_msg_id:
         await event.reply("Reply to any Image.")
         return
