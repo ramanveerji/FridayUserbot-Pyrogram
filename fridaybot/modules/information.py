@@ -20,12 +20,12 @@ async def _(event):
         await event.edit("**No Chats in Common !**")
         return
     sed = await event.client(GetCommonChatsRequest(user_id=user_s.user.id, max_id=0, limit=100))
-    lol = f"User-ID : {user_s.user.id} \nFirst-Name : {user_s.user.first_name} \nTotal Groups In Common : {user_s.common_chats_count} \n\n"
+    lol = f"**User-ID :** `{user_s.user.id}` \n**First-Name :** `{user_s.user.first_name}` \n**Total Groups In Common :** `{user_s.common_chats_count}` \n\n"
     for stark in sed.chats:
         try:
-            lol += f"Chat ID : {stark.id} \nChat Name : {stark.title} \nChat-UserName : {stark.username} \n\n"
+            lol += f"**Chat ID :** `{stark.id}` \n**Chat Name :** `{stark.title}` \n**Chat-UserName :** `{stark.username}` \n\n"
         except:
-            lol += f"Chat ID : {stark.id} \nChat Name : {stark.title} \n\n"
+            lol += f"**Chat ID :** `{stark.id}` \n**Chat Name :** `{stark.title}` \n\n"
     await event.edit(lol) 
     
 @friday.on(friday_on_cmd("info(?: |$)(.*)"))
