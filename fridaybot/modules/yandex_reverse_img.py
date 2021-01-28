@@ -12,6 +12,8 @@ if not os.path.isdir(sedpath):
 @friday.on(friday_on_cmd(pattern=r"yandex"))
 @friday.on(sudo_cmd(pattern=r"yandex", allow_sudo=True))
 async def hmm(event):
+    if event.fwd_from:
+        return
     if not event.reply_to_msg_id:
         await event.reply("Reply to any Image.")
         return
