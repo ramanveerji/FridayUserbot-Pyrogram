@@ -21,6 +21,8 @@ if not os.path.isdir(Config.TMP_DOWNLOAD_DIRECTORY):
   
 @friday.on(friday_on_cmd(pattern=r"pdf2docx"))
 async def hmm(event):
+    if event.fwd_from:
+        return
     if not event.reply_to_msg_id:
         await event.edit("Reply to any Pdf File.")
         return
