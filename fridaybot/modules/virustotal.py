@@ -80,6 +80,8 @@ if not os.path.isdir(sedpath):
 @friday.on(friday_on_cmd(pattern="vt(?: |$)(.*)", outgoing=True))
 @friday.on(sudo_cmd(pattern="vt(?: |$)(.*)", allow_sudo=True))
 async def download(target_file):
+    if target_file.fwd_from:
+        return
     friday = await edit_or_reply(target_file, "`Processing ...`")
     if Config.VIRUSTOTAL_API_KEY is None:
         await friday.edit(
