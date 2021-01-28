@@ -23,6 +23,8 @@ from fridaybot.utils import edit_or_reply, friday_on_cmd, sudo_cmd
 @friday.on(friday_on_cmd(pattern="gps ?(.*)"))
 @friday.on(sudo_cmd(pattern="gps ?(.*)", allow_sudo=True))
 async def gps(event):
+    if event.fwd_from:
+        return
     starkislub = await edit_or_reply(event, "Processing")
     if event.fwd_from:
         return
