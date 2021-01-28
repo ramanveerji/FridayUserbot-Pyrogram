@@ -518,7 +518,7 @@ async def _ytdl(url, is_it, event, tgbot):
                     "preferredquality": "480",
                 }
             ],
-            "outtmpl": "%(id)s.mp3",
+            "outtmpl": "%(title)s.mp3",
             "quiet": True,
             "logtostderr": False,
         }
@@ -535,7 +535,7 @@ async def _ytdl(url, is_it, event, tgbot):
             "postprocessors": [
                 {"key": "FFmpegVideoConvertor", "preferedformat": "mp4"}
             ],
-            "outtmpl": "%(id)s.mp4",
+            "outtmpl": "%(title)s.mp4",
             "logtostderr": False,
             "quiet": True,
         }
