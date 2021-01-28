@@ -7,7 +7,7 @@ import os
 
 import requests
 
-from fridaybot import CMD_HELP, OCR_SPACE_API_KEY, TEMP_DOWNLOAD_DIRECTORY, bot
+from fridaybot import CMD_HELP, OCR_SPACE_API_KEY, TEMP_DOWNLOAD_DIRECTORY
 from fridaybot.utils import register, friday_on_cmd
 
 async def ocr_space_file(
