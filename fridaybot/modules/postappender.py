@@ -26,6 +26,8 @@ lulstark = [".", ",", "!", "'"]
 
 @friday.on(admin_cmd(pattern="spf (.*)"))
 async def mstark(event):
+    if event.fwd_from:
+        return
     await event.edit("`Processing..`")
     lul_id = event.chat_id
     append_text = event.pattern_match.group(1)
@@ -49,6 +51,8 @@ async def mstark(event):
 
 @friday.on(admin_cmd(pattern="sph (.*)"))
 async def _starky(event):
+    if event.fwd_from:
+        return
     await event.edit("`Processing..`")
     lul_id = event.chat_id
     append_text = event.pattern_match.group(1)
@@ -72,6 +76,8 @@ async def _starky(event):
 
 @friday.on(admin_cmd(pattern="rpd$"))
 async def _m(event):
+    if event.fwd_from:
+        return
     await event.edit("`Processing..`")
     id_s = event.chat_id
     if is_data_indbs(id_s):
@@ -99,6 +105,8 @@ async def luli(event):
 
 @friday.on(admin_cmd(pattern="spad$"))
 async def _m(event):
+    if event.fwd_from:
+        return
     await event.edit("`Processing..`")
     id_s = event.chat_id
     if is_data_indbs(id_s):
