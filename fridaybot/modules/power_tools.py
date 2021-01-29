@@ -10,7 +10,9 @@ import sys
 from fridaybot.function.heroku_helper import HerokuHelper
 from fridaybot import CMD_HELP
 from fridaybot.utils import friday_on_cmd
-
+import heroku3
+import requests
+Heroku = heroku3.from_key(Var.HEROKU_API_KEY)
 
 @friday.on(friday_on_cmd("restart"))
 async def _(event):
@@ -31,8 +33,8 @@ async def _(event):
         return
     await event.edit("Turning off ...Manually turn me on later")
     if Var.HEROKU_API_KEY:
-        herokuHelper = HerokuHelper(Var.HEROKU_APP_NAME, Var.HEROKU_API_KEY)
-        herokuHelper.shutdown()
+        app = Heroku.app(Var.HEROKU_APP_NAME)
+        app.dynos['worker.1'].kill()
     else:
         await bot.disconnect()
         sys.exit(0)
