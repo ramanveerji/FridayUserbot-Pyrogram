@@ -58,6 +58,7 @@ if ENV:
         DISABLE_MARKDOWN = os.environ.get("DISABLE_MARKDOWN", False)
         # Load Spammy Plugins, Which can be harmful.
         LOAD_OTHER_PLUGINS = os.environ.get("LOAD_OTHER_PLUGINS", False)
+        LOAD_OTHER_PLUGINS_CHNNL = os.environ.get("LOAD_OTHER_PLUGINS_CHNNL", "@fridayotherplugins")
         #
         # DO NOT EDIT BELOW THIS LINE IF YOU DO NOT KNOW WHAT YOU ARE DOING
         # TG API limit. A message can have maximum 4096 characters!
