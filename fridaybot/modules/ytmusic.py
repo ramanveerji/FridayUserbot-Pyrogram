@@ -3,7 +3,26 @@ import os
 
 import wget
 from youtubesearchpython import SearchVideos
+import asyncio
+import math
+import os
+import time
 
+from telethon.tl.types import DocumentAttributeAudio
+from uniborg.util import edit_or_reply, friday_on_cmd, sudo_cmd
+from youtube_dl import YoutubeDL
+from youtube_dl.utils import (
+    ContentTooShortError,
+    DownloadError,
+    ExtractorError,
+    GeoRestrictedError,
+    MaxDownloadsReached,
+    PostProcessingError,
+    UnavailableVideoError,
+    XAttrMetadataError,
+)
+from fridaybot.funtion import progress, humanbytes, time_formatter
+from fridaybot.function.FastTelethon import upload_file
 from fridaybot import CMD_HELP
 from fridaybot.Configs import Config
 from fridaybot.utils import edit_or_reply, friday_on_cmd, sudo_cmd
@@ -31,26 +50,57 @@ async def _(event):
         os.makedirs("./music/")
     path = Config.TMP_DOWNLOAD_DIRECTORY
     sedlyf = wget.download(kekme, out=path)
-    stark = (
-        f'youtube-dl --force-ipv4 -q -o "./music/%(title)s.%(ext)s" --extract-audio --audio-format mp3 --audio-quality 128k '
-        + mo
-    )
-    os.system(stark)
-    await asyncio.sleep(4)
-    km = f"./music/{thum}.mp3"
-    if os.path.exists(km):
-        await myself_stark.edit("`Song Downloaded Sucessfully. Let Me Upload it Here.`")
-    else:
-        await myself_stark.edit("`SomeThing Went Wrong. Try Again After Sometime..`")
+    opts = {
+            "format": "bestaudio",
+            "addmetadata": True,
+            "key": "FFmpegMetadata",
+            "writethumbnail": True,
+            "prefer_ffmpeg": True,
+            "geo_bypass": True,
+            "nocheckcertificate": True,
+            "postprocessors": [
+                {
+                    "key": "FFmpegExtractAudio",
+                    "preferredcodec": "mp3",
+                    "preferredquality": "480",
+                }
+            ],
+            "outtmpl": "%(title)s.mp3",
+            "quiet": True,
+            "logtostderr": False,
+        }
+    try:
+        with YoutubeDL(opts) as ytdl:
+            ytdl_data = ytdl.extract_info(url)
+    except Exception as e:
+        await event.edit(f"**Failed To Download** \n**Error :** `{str(e)}`")
+        return
+    file_stark = f"{ytdl_data['title']}.mp3"
+    lol_m = await upload_file(
+            file_name=file_stark,
+            client=borg,
+            file=open(file_stark, 'rb'),
+            progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
+                progress(
+                    d, t, event, c_time, "Uploading Your Song!", file_stark
+                )
+            ),
+        )
     capy = f"**Song Name ➠** `{thum}` \n**Requested For ➠** `{urlissed}` \n**Channel ➠** `{thums}` \n**Link ➠** `{mo}`"
     await borg.send_file(
         event.chat_id,
-        km,
+        lol_m,
         force_document=False,
         allow_cache=False,
         caption=capy,
         thumb=sedlyf,
-        performer=thums,
+        attributes=[
+                DocumentAttributeAudio(
+                    duration=int(ytdl_data["duration"]),
+                    title=str(ytdl_data["title"]),
+                    performer=str(ytdl_data["uploader"]),
+                )
+            ],
         supports_streaming=True,
     )
     await myself_stark.edit("`Song Uploaded. By (C) @FridayOT`")
