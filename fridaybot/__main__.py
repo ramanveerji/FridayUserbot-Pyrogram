@@ -89,20 +89,11 @@ for name in files:
     with open(name) as f:
         path1 = Path(f.name)
         shortname = path1.stem
-        try:
-            load_module(shortname.replace(".py", ""))
-        except:
-            sed.info(f"Failed To Load : " + str(shortname.replace(".py", "")))    
+        load_module(shortname.replace(".py", ""))    
         if failed2 is None:
-            try:
-                load_module_dclient(shortname.replace(".py", ""), client2)
-            except:
-                sed.info(f"Failed To Load : " + str(shortname.replace(".py", "")))
+            load_module_dclient(shortname.replace(".py", ""), client2)
         if failed3 is None:
-            try:
-                load_module_dclient(shortname.replace(".py", ""), client3)
-            except:
-                sed.info(f"Failed To Load : " + str(shortname.replace(".py", "")))
+            load_module_dclient(shortname.replace(".py", ""), client3)
 
 if Config.ENABLE_ASSISTANTBOT == "ENABLE":
     path = "fridaybot/modules/assistant/*.py"
