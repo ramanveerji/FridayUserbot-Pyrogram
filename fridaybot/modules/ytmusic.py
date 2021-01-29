@@ -76,6 +76,7 @@ async def _(event):
     except Exception as e:
         await event.edit(f"**Failed To Download** \n**Error :** `{str(e)}`")
         return
+    c_time = time.time()
     file_stark = f"{ytdl_data['title']}.mp3"
     lol_m = await upload_file(
             file_name=file_stark,
