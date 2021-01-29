@@ -56,6 +56,8 @@ if ENV:
             os.environ.get("PRIVATE_GROUP_BOT_API_ID", False)
         )
         DISABLE_MARKDOWN = os.environ.get("DISABLE_MARKDOWN", False)
+        # Load Spammy Plugins, Which can be harmful.
+        LOAD_OTHER_PLUGINS = os.environ.get("LOAD_OTHER_PLUGINS", False)
         #
         # DO NOT EDIT BELOW THIS LINE IF YOU DO NOT KNOW WHAT YOU ARE DOING
         # TG API limit. A message can have maximum 4096 characters!
