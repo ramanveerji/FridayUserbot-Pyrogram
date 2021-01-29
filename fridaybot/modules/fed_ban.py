@@ -20,7 +20,7 @@ from fridaybot.modules.sql_helper.feds_sql import (
 )
 import asyncio
 from fridaybot.utils import friday_on_cmd
-
+from fridaybot import CMD_HELP
 chnnl_grp = Config.FBAN_GROUP
 
 
