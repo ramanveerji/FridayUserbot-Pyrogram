@@ -48,7 +48,7 @@ def multiple_client():
         lmaobruh = True
     return sedbruh, lmaobruh    
 
-async def get_other_plugins(Config, client_s):
+async def get_other_plugins(Config, client_s, sed):
     try:
         a_plugins = await client_s.get_messages(
             entity=Config.LOAD_OTHER_PLUGINS_CHNNL,
@@ -78,8 +78,8 @@ else:
         bot.start()
         failed2, failed3 = multiple_client()
 
-if Config.LOAD_OTHER_PLUGINS is True:
-        bot.loop.run_until_complete(get_other_plugins(Config, bot))
+if Config.LOAD_OTHER_PLUGINS:
+        bot.loop.run_until_complete(get_other_plugins(Config, bot, sed))
         
 import glob
 
