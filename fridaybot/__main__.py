@@ -7,6 +7,7 @@ from telethon import TelegramClient
 
 from fridaybot import bot, client2, client3
 from fridaybot.Configs import Config
+from telethon.tl.types import InputMessagesFilterDocument
 from fridaybot.utils import load_module, start_assistant, load_module_dclient
 from var import Var
 
