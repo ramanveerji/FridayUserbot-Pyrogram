@@ -62,6 +62,7 @@ async def get_other_plugins(Config, client_s):
     sed.info(f"Downloading. {int(a_plugins.total)} Plugins !")
     for keky in a_plugins:
         await client_s.download_media(keky.media, "fridaybot/modules/")
+    sed.info("Extra Plugins Downloaded.")
 
 if len(argv) not in (1, 3, 4):
     bot.disconnect()
@@ -77,9 +78,8 @@ else:
         bot.start()
         failed2, failed3 = multiple_client()
 
-if Config.LOAD_OTHER_PLUGINS:
+if Config.LOAD_OTHER_PLUGINS is True:
         bot.loop.run_until_complete(get_other_plugins(Config, bot))
-        sed.info("Extra Plugins Downloaded.")
         
 import glob
 
