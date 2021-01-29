@@ -106,7 +106,7 @@ async def _(event):
         supports_streaming=True,
     )
     await myself_stark.edit("`Song Uploaded. By (C) @FridayOT`")
-    for files in (sedlyf, km):
+    for files in (sedlyf, file_stark):
         if files and os.path.exists(files):
             os.remove(files)
 
