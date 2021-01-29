@@ -47,6 +47,21 @@ def multiple_client():
         lmaobruh = True
     return sedbruh, lmaobruh    
 
+async def get_other_plugins(Config, client_s):
+    try:
+        a_plugins = await client_s.get_messages(
+            entity=Config.LOAD_OTHER_PLUGINS_CHNNL,
+            filter=InputMessagesFilterDocument,
+            limit=None,
+            search=".py",
+        )
+    except:
+        sed.info("Failed To Other Modules :(")
+        return
+    sed.info(f"Downloading. {int(a_plugins.total)} Plugins !")
+    for keky in a_plugins:
+        await client_s.download_media(keky.media, "fridaybot/modules/")
+
 if len(argv) not in (1, 3, 4):
     bot.disconnect()
 else:
@@ -61,7 +76,10 @@ else:
         bot.start()
         failed2, failed3 = multiple_client()
 
-
+if Config.LOAD_OTHER_PLUGINS:
+        bot.loop.run_until_complete(get_other_plugins(Config, bot))
+        sed.info("Extra Plugins Downloaded.")
+        
 import glob
 
 path = "fridaybot/modules/*.py"
