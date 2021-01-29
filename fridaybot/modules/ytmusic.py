@@ -49,6 +49,7 @@ async def _(event):
     if not os.path.isdir("./music/"):
         os.makedirs("./music/")
     path = Config.TMP_DOWNLOAD_DIRECTORY
+    url = mo
     sedlyf = wget.download(kekme, out=path)
     opts = {
             "format": "bestaudio",
