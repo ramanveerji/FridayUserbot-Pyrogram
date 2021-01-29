@@ -89,6 +89,7 @@ async def _(event):
             ),
         )
     capy = f"**Song Name ➠** `{thum}` \n**Requested For ➠** `{urlissed}` \n**Channel ➠** `{thums}` \n**Link ➠** `{mo}`"
+    await event.delete()
     await borg.send_file(
         event.chat_id,
         lol_m,
@@ -105,7 +106,6 @@ async def _(event):
             ],
         supports_streaming=True,
     )
-    await myself_stark.edit("`Song Uploaded. By (C) @FridayOT`")
     for files in (sedlyf, file_stark):
         if files and os.path.exists(files):
             os.remove(files)
