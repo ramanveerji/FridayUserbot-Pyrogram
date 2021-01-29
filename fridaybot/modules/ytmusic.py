@@ -21,7 +21,7 @@ from youtube_dl.utils import (
     UnavailableVideoError,
     XAttrMetadataError,
 )
-from fridaybot.funtion import progress, humanbytes, time_formatter
+from fridaybot.function import progress, humanbytes, time_formatter
 from fridaybot.function.FastTelethon import upload_file
 from fridaybot import CMD_HELP
 from fridaybot.Configs import Config
