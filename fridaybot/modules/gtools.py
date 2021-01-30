@@ -51,19 +51,19 @@ async def gbun(event):
     if event.fwd_from:
         return
     o = await all_pro_s(Config, client2, client3, client4)
-    await event.edit("**GBanning User**")
+    await event.edit("**GBanning This User !**")
     sucess = 0
     bad = 0
     user, reason = await get_user_from_event(event)
     if not user.id:
-        await event.edit("`Mention A User To Gban`")
+        await event.edit("`Kindly, Mention A User To Gban`")
         return
     if not reason:
         hmm_r = "#GBanned"
     elif reason:
         hmm_r = reason
     if user.id in o:
-        await event.edit("**I Can't Gban You Master :(**")
+        await event.edit("**I Can't Gban You Master / Sudo Users :(**")
         return
     if gban_sql.is_gbanned(user.id):
         await event.edit("**This User Is Already Gbanned. No Point In Gbanning Him Again !**")
@@ -71,17 +71,17 @@ async def gbun(event):
     gban_sql.gban_user(user.id, hmm_r)
     chat_s = await get_all_admin_chats(event)
     if len(chat_s) == 0:
-        await event.edit("**You Need To Be Admin In Atleast 1 Group To Perform this Action**")
+        await event.edit("**You Need To Be Admin In Atleast 1 Group To Perform this Action !**")
         return
     len_s = len(chat_s)
-    await event.edit(f"**GBanning !** [{user.first_name}](tg://user?id={user.id}) **in {len_s} Chats!**")
+    await event.edit(f"**Trying To GBan !** [{user.first_name}](tg://user?id={user.id}) **in {len_s} Chats!**")
     for stark_s in chat_s:
         try:
           await event.client.edit_permissions(stark_s, user.id, view_messages=False)
           sucess += 1
         except:
           bad += 0
-    await event.edit(f"**GBanned !**[{user.first_name}](tg://user?id={user.id}) **in {sucess} Chats!**")
+    await event.edit(f"**GBanned Successfully !**[{user.first_name}](tg://user?id={user.id}) **in {sucess} Chats!**")
     
           	
 @friday.on(friday_on_cmd(pattern='ungban(?: |$)(.*)'))
