@@ -382,6 +382,9 @@ async def fetch_feds(event, borg):
             await response.click(0)
             fedfile = await bot_conv.get_response()
             await asyncio.sleep(2)
+            if "You can only use fed commands once every 5 minutes" in fedfile.text:
+                await event.edit("`Try again after 5 mins.`")
+                return
             if fedfile.media:
                 downloaded_file_name = await borg.download_media(fedfile.media, "fedlist.txt")
                 await asyncio.sleep(1)
