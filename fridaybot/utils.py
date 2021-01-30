@@ -6,7 +6,7 @@ from pathlib import Path
 
 from telethon import events
 
-from fridaybot import CMD_LIST, LOAD_PLUG, SUDO_LIST, bot, client2, client3
+from fridaybot import CMD_LIST, LOAD_PLUG, SUDO_LIST, bot, client2, client3, CMD_HELP
 from fridaybot.Configs import Config
 from fridaybot.wraptools import (
     am_i_admin,
@@ -131,6 +131,7 @@ def load_module(shortname):
         mod.admin_cmd = friday_on_cmd
         mod.sudo_cmd = sudo_cmd
         mod.friday_on_cmd = friday_on_cmd
+        mod.CMD_HELP = CMD_HELP
         mod.Config = Config
         mod.ignore_grp = ignore_grp()
         mod.ignore_pm = ignore_pm()
@@ -198,6 +199,7 @@ def load_module_dclient(shortname, client):
         mod.ignore_fwd = ignore_fwd()
         mod.borg = client
         mod.friday = client
+        mod.CMD_HELP = CMD_HELP
         # support for paperplaneextended
         sys.modules["fridaybot.events"] = fridaybot.utils
         spec.loader.exec_module(mod)
