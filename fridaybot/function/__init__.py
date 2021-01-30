@@ -6,7 +6,7 @@ import hachoir
 import asyncio
 import os
 from pathlib import Path
-
+import wget
 from fridaybot.utils import load_module
 from telethon.tl.types import DocumentAttributeAudio
 from youtube_dl import YoutubeDL
