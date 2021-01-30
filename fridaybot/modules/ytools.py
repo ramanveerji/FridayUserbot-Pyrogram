@@ -134,23 +134,18 @@ async def _(event):
     url = mo
     sedlyf = wget.download(kekme, out=path)
     opts = {
-            "format": "bestaudio",
+            "format": "best",
             "addmetadata": True,
             "key": "FFmpegMetadata",
-            "writethumbnail": True,
             "prefer_ffmpeg": True,
             "geo_bypass": True,
             "nocheckcertificate": True,
             "postprocessors": [
-                {
-                    "key": "FFmpegExtractAudio",
-                    "preferredcodec": "mp3",
-                    "preferredquality": "480",
-                }
+                {"key": "FFmpegVideoConvertor", "preferedformat": "mp4"}
             ],
             "outtmpl": "%(title)s.mp4",
-            "quiet": True,
             "logtostderr": False,
+            "quiet": True,
         }
     try:
         with YoutubeDL(opts) as ytdl:
