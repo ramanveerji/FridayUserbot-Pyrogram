@@ -118,7 +118,7 @@ async def on_plug_in_callback_query_handler(event):
         sedok = "Who The Fuck Are You? Get Your Own Friday."
         await event.answer(sedok, cache_time=0, alert=True)
         return
-    plugin_name = event.data_match.group(1).decode("UTF-8")
+    plugin_name, page_number = event.data_match.group(1).decode("UTF-8").split("|", 1)
     if plugin_name in CMD_HELP:
         help_string = f"**💡 PLUGIN NAME 💡 :** `{plugin_name}` \n{CMD_HELP[plugin_name]}"
     reply_pop_up_alert = help_string
@@ -133,12 +133,12 @@ async def on_plug_in_callback_query_handler(event):
         await event.edit(
             f"Pasted {plugin_name} to {url}",
             link_preview=False,
-            buttons=[[custom.Button.inline("Go Back", data="backme")]],
+            buttons=[[custom.Button.inline("Go Back", data=f"backme_{page_number}")]],
         )
     else:
         await event.edit(
             message=reply_pop_up_alert,
-            buttons=[[custom.Button.inline("Go Back", data="backme")]],
+            buttons=[[custom.Button.inline("Go Back", data=f"backme_{page_number}")]],
         )
 
 
@@ -207,8 +207,9 @@ async def rip(event):
             f"Hello, A Noob [Nibba](tg://user?id={him_id}) Selected Probhited Option, Therefore Blocked."
     )
 
-@tgbot.on(events.callbackquery.CallbackQuery(data=re.compile(b"backme")))
+@tgbot.on(events.callbackquery.CallbackQuery(data=re.compile(b"backme_(.*)")))
 async def sed(event):
+    sedm = event.data_match.group(1).decode("UTF-8")
     o = await all_pro_s(Config, client1, client2, client3)
     if event.query.user_id not in o:
         sedok = "Who The Fuck Are You? Get Your Own Friday."
@@ -216,7 +217,7 @@ async def sed(event):
         return
     await event.answer("Back", cache_time=0, alert=False)
     # This Is Copy of Above Code. (C) @SpEcHiDe
-    buttons = paginate_help(0, CMD_HELP, "helpme")
+    buttons = paginate_help(sedm, CMD_HELP, "helpme")
     sed = f"""Friday Userbot Modules Are Listed Here !\n
 For More Help or Support Visit @FridayOT \nCurrently Loaded Plugins: {len(CMD_LIST)}"""
     await event.edit(message=sed, buttons=buttons)
@@ -266,7 +267,7 @@ def paginate_help(page_number, loaded_modules, prefix):
     helpable_modules = sorted(helpable_modules)
     modules = [
         custom.Button.inline(
-            "{} {} {}".format("✘", x, "✘"), data="us_plugin_{}".format(x)
+            "{} {} {}".format("✘", x, "✘"), data="us_plugin_{}|{}".format(x, page_number)
         )
         for x in helpable_modules
     ]
