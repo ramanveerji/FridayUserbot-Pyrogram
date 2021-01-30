@@ -209,7 +209,7 @@ async def rip(event):
 
 @tgbot.on(events.callbackquery.CallbackQuery(data=re.compile(b"backme_(.*)")))
 async def sed(event):
-    sedm = event.data_match.group(1).decode("UTF-8")
+    sedm = int(event.data_match.group(1).decode("UTF-8"))
     o = await all_pro_s(Config, client1, client2, client3)
     if event.query.user_id not in o:
         sedok = "Who The Fuck Are You? Get Your Own Friday."
