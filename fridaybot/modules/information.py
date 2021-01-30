@@ -1,5 +1,5 @@
 import html
-from fridaybot.modules.sql_helper.gmute_sql import is_gmuted
+from fridaybot.modules.sql_helper.gban_sql import is_gbanned
 from fridaybot.modules.sql_helper.mute_sql import is_muted, mute, unmute
 from telethon.tl.functions.photos import GetUserPhotosRequest
 from telethon.tl.functions.users import GetFullUserRequest
@@ -65,10 +65,10 @@ async def _(event):
         dc_id = "Unknown."
         str(e)
     shazam = replied_user_profile_photos_count
-    if is_gmuted(user_id):
-        is_gbanned = "This User Is Gbanned"
+    if is_gbanned(user_id):
+        is_gbanned_s = f"This User Is Gbanned For Reason : {is_gbanned}"
     elif not is_gmuted(user_id):
-        is_gbanned = False
+        is_gbanned_s = False
     if is_muted(user_id, "gmute"):
         is_gmutted = "User is Tapped."
     elif not is_muted(user_id, "gmute"):
@@ -85,7 +85,7 @@ async def _(event):
 <b>VERIFIED</b>: <code>{replied_user.user.verified}</code>
 <b>IS A BOT</b>: <code>{replied_user.user.bot}</code>
 <b>Groups in Common</b>: <code>{common_chats}</code>
-<b>Is Gbanned</b>: <code>{is_gbanned}</code>
+<b>Is Gbanned</b>: <code>{is_gbanned_s}</code>
 <b>Is Gmutted</b>: <code>{is_gmutted}</code>
 """
     message_id_to_reply = event.message.reply_to_msg_id
