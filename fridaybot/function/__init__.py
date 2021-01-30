@@ -66,7 +66,7 @@ async def fetch_json(link):
         return await resp.json()
     
 def add_details(file_name, title, artist, img):
-    audiofile = eyed3.load(file_name)
+    audiofile = eyed3.load(open(file_name, "rb"))
     audiofile.tag.artist = artist
     audiofile.tag.title = title
     audiofile.tag.images.set(3, open(img,'rb').read(), 'image/jpeg')
