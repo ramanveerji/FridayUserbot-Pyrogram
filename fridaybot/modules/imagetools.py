@@ -466,7 +466,7 @@ async def img(event):
 @friday.on(friday_on_cmd(pattern=r"spin ?(.*)"))
 @friday.on(sudo_cmd(pattern=r"spin ?(.*)", allow_sudo=True))
 async def spinshit(message):
-    if event.fwd_from:
+    if message.fwd_from:
         return
     reply = await message.get_reply_message()
     lmaodict = {"1": 1, "2": 3, "3": 6, "4": 12, "5": 24, "6": 60}
