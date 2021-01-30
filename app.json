@@ -18,11 +18,6 @@
       "description": "Setting this to ANYTHING will enable heroku.",
       "value": "ANYTHING"
     },
-    "TEMP_DOWNLOAD_DIRECTORY": {
-      "description": "Where downloaded files will go.",
-      "value": "./fridaybot/DOWNLOADS/",
-      "required": false
-    },
     "ALIVE_NAME": {
       "description": "Enter Username Here ",
       "value": ""
@@ -55,16 +50,6 @@
     "TESSDATA_PREFIX": {
       "description": "Pytesserct Path. Don't Edit Until You Know What Are You Doing..",
       "value": "./.apt/usr/share/tesseract-ocr/4.00/tessdata"
-    },
-    "GITHUB_ACCESS_TOKEN": {
-      "description": "Your Github Access Token for GitHub Commit Plugin. Google 'Github access token' to find more About It.",
-      "value": "",
-      "required": false
-    },
-    "GIT_REPO_NAME": {
-      "description": "Your repo name Example: Midhunkm1294/FridayUserbot, but GITHUB_ACCESS_TOKEN must be setup first.",
-      "value": "",
-      "required": false
     },
     "LYDIA_API_KEY": {
       "description": "Needed for Lydia AI. Follow https://telegra.ph/Lydia-09-05 to get your API.",
