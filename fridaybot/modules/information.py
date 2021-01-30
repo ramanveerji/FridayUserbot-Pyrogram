@@ -67,7 +67,7 @@ async def _(event):
     shazam = replied_user_profile_photos_count
     if is_gbanned(user_id):
         is_gbanned_s = f"This User Is Gbanned For Reason : {is_gbanned}"
-    elif not is_gmuted(user_id):
+    elif not is_gbanned(user_id):
         is_gbanned_s = False
     if is_muted(user_id, "gmute"):
         is_gmutted = "User is Tapped."
