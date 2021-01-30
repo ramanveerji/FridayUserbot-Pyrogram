@@ -366,11 +366,11 @@ async def uploadas(uas_event):
     else:
         await uas_event.edit("404: File Not Found")
 
-@borg.on(friday_on_cmd(pattern='smartdl ?(.*)'))
+@borg.on(friday_on_cmd(pattern='smartdl'))
 async def lul(event):
     if event.fwd_from:
         return
-    input_str = event.pattern_match.group(1)
+    input_str = event.raw_text.split(" ", maxsplit=1)[1]
     mone = await event.edit("**Processing..**")
     start = datetime.now()
     url = input_str
