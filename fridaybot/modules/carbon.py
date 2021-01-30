@@ -68,28 +68,10 @@ async def carbon_api(e):
             "params": {"behavior": "allow", "downloadPath": download_path},
         }
         driver.execute("send_command", params)
-        driver.find_element_by_xpath(
-            "/html/body/div[1]/main/div[3]/div[2]/div[1]/div[1]/div/span[2]"
-        ).click()
-        if skeme != None:
-            k_skeme = driver.find_element_by_xpath(
-                "/html/body/div[1]/main/div[3]/div[2]/div[1]/div[1]/div/span[2]/input"
-            )
-            k_skeme.send_keys(skeme)
-            k_skeme.send_keys(Keys.DOWN)
-            k_skeme.send_keys(Keys.ENTER)
-        else:
-            color_scheme = str(random.randint(1, 29))
-            driver.find_element_by_id(("downshift-0-item-" + color_scheme)).click()
-        driver.find_element_by_id("export-menu").click()
-        driver.find_element_by_xpath("//button[contains(text(),'4x')]").click()
-        driver.find_element_by_xpath("//button[contains(text(),'PNG')]").click()
+        driver.find_element_by_xpath("//button[contains(text(),'Export')]").click()
         await e.edit("`Processing..\n75%`")
         # Waiting for downloading
         sleep(2.5)
-        color_name = driver.find_element_by_xpath(
-            "/html/body/div[1]/main/div[3]/div[2]/div[1]/div[1]/div/span[2]/input"
-        ).get_attribute("value")
         await e.edit("`Done Dana Done...\n100%`")
         file = "./carbon.png"
         await e.edit("`Uploading..`")
