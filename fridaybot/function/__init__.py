@@ -371,9 +371,7 @@ async def fetch_feds(event, borg):
     async with borg.conversation("@MissRose_bot") as bot_conv:
         await bot_conv.send_message("/start")
         await bot_conv.send_message("/myfeds")
-        await asyncio.sleep(3)
         response = await bot_conv.get_response(timeout=300)
-        await asyncio.sleep(3)
         if "You can only use fed commands once every 5 minutes" in response.text:
             await event.edit("`Try again after 5 mins.`")
             return
@@ -381,13 +379,11 @@ async def fetch_feds(event, borg):
             await event.edit(
                 "`Boss, You Real Peru. You Are Admin in So Many Feds. WoW!`"
             )
-            await asyncio.sleep(2)
             await response.click(0)
-            await asyncio.sleep(6)
             fedfile = await bot_conv.get_response()
             await asyncio.sleep(2)
             if fedfile.media:
-                downloaded_file_name = await borg.download_media(fedfile, "fedlist.txt")
+                downloaded_file_name = await borg.download_media(fedfile.media, "fedlist.txt")
                 await asyncio.sleep(1)
                 file = open(downloaded_file_name, "r")
                 lines = file.readlines()
@@ -396,7 +392,6 @@ async def fetch_feds(event, borg):
                         fedList.append(line[:36])
                     except BaseException:
                         pass
-                # CleanUp
                 os.remove(downloaded_file_name)
         else:
             In = False
