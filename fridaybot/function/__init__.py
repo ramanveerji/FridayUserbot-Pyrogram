@@ -28,6 +28,7 @@ import re
 import shlex
 import subprocess
 import time
+import eyed3
 from os.path import basename
 from typing import List, Optional, Tuple
 import webbrowser
@@ -64,7 +65,13 @@ async def fetch_json(link):
     async with session.get(link) as resp:
         return await resp.json()
     
-
+def add_details(file_name, title, artist, img):
+    audiofile = eyed3.load(file_name)
+    audiofile.tag.artist = artist
+    audiofile.tag.title = title
+    audiofile.tag.images.set(3, open(img,'rb').read(), 'image/jpeg')
+    audiofile.tag.save()
+    
 def get_readable_file_size(size_in_bytes: Union[int, float]) -> str:
     if size_in_bytes is None:
         return "0B"
