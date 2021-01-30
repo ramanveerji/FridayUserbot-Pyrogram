@@ -71,6 +71,7 @@ def add_details(file_name, title, artist, img):
     audiofile.tag.title = title
     audiofile.tag.images.set(3, open(img,'rb').read(), 'image/jpeg')
     audiofile.tag.save()
+    return file_name
     
 def get_readable_file_size(size_in_bytes: Union[int, float]) -> str:
     if size_in_bytes is None:
@@ -560,7 +561,10 @@ async def _ytdl(url, is_it, event, tgbot):
         return
     c_time = time.time()
     if song:
-        file_stark = f"{ytdl_data['title']}.mp3"
+        kekme = (f"https://img.youtube.com/vi/{ytdl_data['id']}/hqdefault.jpg")
+        file_starky = f"{ytdl_data['title']}.mp3"
+        img = wget.download(kekme, out=Config.TMP_DOWNLOAD_DIRECTORY)
+        file_stark = add_details(file_starky, ytdl_data['title'], ytdl_data['uploader'], img)
         lol_m = await upload_file(
             file_name=file_stark,
             client=tgbot,
