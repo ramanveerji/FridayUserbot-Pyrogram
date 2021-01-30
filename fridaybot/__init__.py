@@ -26,6 +26,7 @@ sedprint = logging.getLogger("WARNING")
 from var import Var
 
 
+# All Clients - 3
 
 if Var.STRING_SESSION:
     session_name = str(Var.STRING_SESSION)
@@ -186,6 +187,9 @@ CUSTOM_BOTSTART = {}
 ISAFK = False
 AFKREASON = None
 # End of PaperPlaneExtended Support Vars
+
+# Download Colorization Model
+
 link = "https://people.eecs.berkeley.edu/~rich.zhang/projects/2016_colorization/files/demo_v2/colorization_release_v2.caffemodel"
 km = "./resources/imgcolour/colorization_release_v2.caffemodel"
 pathz = "./resources/imgcolour/"
@@ -195,8 +199,10 @@ else:
     try:
         sedlyf = wget.download(link, out=pathz)
     except:
-        sedprint.info("I Wasn't Able To Download Cafee Model. Skipping")
-
+        sedprint.info("I Wasn't Able To Download Cafee Model. Skipping.")
+        
+        
+# Nospam+ Client
 if Config.NOSPAMPLUS_TOKEN == None:
     sclient = None
     sedprint.info("[Warning] - NoSpamPlusToken is None")
@@ -206,3 +212,12 @@ else:
     except Exception as e:
         sclient = None
         sedprint.info("[Warning] - " + str(e))
+
+# Avoid Doing This Again And Again In Plugins.        
+try:
+    if not os.path.isdir(Config.TMP_DOWNLOAD_DIRECTORY):
+        os.makedirs(Config.TMP_DOWNLOAD_DIRECTORY)
+    if not os.path.isdir(TEMP_DOWNLOAD_DIRECTORY):
+        os.makedirs(TMP_DOWNLOAD_DIRECTORY)
+except:
+    pass
