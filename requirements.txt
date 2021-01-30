@@ -2,6 +2,7 @@ Pillow
 deezer-python
 google-trans-new
 nospamplus
+eyed3
 pymediainfo
 apscheduler
 git+https://github.com/gleitz/howdoi
