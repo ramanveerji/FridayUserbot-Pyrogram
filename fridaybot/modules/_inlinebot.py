@@ -198,15 +198,15 @@ async def rip(event):
         return
     await event.get_chat()
     him_id = event.query.user_id
-    text1 = "You Have Chosed A Probhited Option. Therefore, You Have Been Blocked By UserBot. 🇮🇳"
-    await event.edit("Choice Not Accepted ❌")
-    await borg.send_message(event.query.user_id, text1)
+    text1 = "**You Have Chosed A Probhited Option. Therefore, You Have Been Blocked By UserBot.**"
+    await event.edit(text1)
     await borg(functions.contacts.BlockRequest(event.query.user_id))
+    PM_E = f"**#PMEVENT** \nUser ID : {him_id} \n**This User Choose Probhited Option, So Has Been Blocked !** \n[Contact Him](tg://user?id={him_id})"
     await borg.send_message(
-            LOG_CHAT,
-            f"Hello, A Noob [Nibba](tg://user?id={him_id}) Selected Probhited Option, Therefore Blocked."
-    )
-
+        LOG_CHAT,
+        message=PM_E)
+    
+    
 @tgbot.on(events.callbackquery.CallbackQuery(data=re.compile(b"backme_(.*)")))
 async def sed(event):
     sedm = int(event.data_match.group(1).decode("UTF-8"))
@@ -232,12 +232,11 @@ async def rip(event):
         return
     await event.get_chat()
     him_id = event.query.user_id
-    await event.edit("Choice Accepted ✔️")
-    text2 = "Ok. Please Wait Until My Master Approves. Don't Spam Or Try Anything Stupid. \nThank You For Contacting Me."
-    await borg.send_message(event.query.user_id, text2)
+    await event.edit("Ok. Please Wait Until My Master Approves. Don't Spam Or Try Anything Stupid. \nThank You For Contacting Me.")
+    PM_E = f"**#PMEVENT** \nUser ID : {him_id} \n**This User Wanted To Talk To You.** \n[Contact Him](tg://user?id={him_id})"
     await borg.send_message(
         LOG_CHAT,
-        message=f"Hello, A [New User](tg://user?id={him_id}). Wants To Talk With You.")
+        message=PM_E)
 
 
 @tgbot.on(events.callbackquery.CallbackQuery(data=re.compile(b"askme")))
@@ -249,12 +248,11 @@ async def rip(event):
         return
     await event.get_chat()
     him_id = event.query.user_id
-    await event.edit("Choice Accepted ✔️")
-    text3 = "Ok, Wait. You can Ask After Master Approves You. Kindly, Wait."
-    await borg.send_message(event.query.user_id, text3)
+    await event.edit("Ok, Wait. You can Ask After Master Approves You. Kindly, Wait.")
+    PM_E = f"**#PMEVENT** \nUser ID : {him_id} \n**This User Wanted To Ask You Something** \n[Contact Him](tg://user?id={him_id})"
     await borg.send_message(
         LOG_CHAT,
-        message=f"Hello, A [New User](tg://user?id={him_id}). Wants To Ask You Something.")
+        message=PM_E)
 
 
 def paginate_help(page_number, loaded_modules, prefix):
