@@ -3,8 +3,9 @@ import os
 from telethon.tl.types import ChatBannedRights
 
 ENV = bool(os.environ.get("ENV", False))
-
-if ENV:
+if not ENV:
+    from local_config import Development as Config
+elif ENV:
     class Config(object):
         LOGGER = True
         APP_ID = int(os.environ.get("APP_ID", 6))
