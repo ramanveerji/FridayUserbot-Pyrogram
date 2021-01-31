@@ -82,7 +82,6 @@ UNMUTE_RIGHTS = ChatBannedRights(until_date=None, send_messages=False)
 
 # @register(outgoing=True, pattern="^.setevent$")
 @borg.on(admin_cmd(pattern=r"setgpic$"))
-@errors_handler
 async def set_group_photo(event):
     if event.fwd_from:
         return
@@ -123,7 +122,6 @@ async def set_group_photo(event):
 
 # @register(outgoing=True, pattern="^.promote(?: |$)(.*)")
 @borg.on(admin_cmd(pattern=r"promote(?: |$)(.*)"))
-@errors_handler
 async def promote(event):
     if event.fwd_from:
         return
@@ -179,7 +177,6 @@ async def promote(event):
 
 # @register(outgoing=True, pattern="^.demote(?: |$)(.*)")
 @borg.on(admin_cmd(pattern=r"demote(?: |$)(.*)"))
-@errors_handler
 async def demote(event):
     if event.fwd_from:
         return
@@ -234,7 +231,6 @@ async def demote(event):
 
 # @register(outgoing=True, pattern="^.ban(?: |$)(.*)")
 @borg.on(admin_cmd(pattern=r"ban(?: |$)(.*)"))
-@errors_handler
 async def ban(event):
     if event.fwd_from:
         return
@@ -291,7 +287,6 @@ async def ban(event):
 
 # @register(outgoing=True, pattern="^.unban(?: |$)(.*)")
 @borg.on(admin_cmd(pattern=r"unban(?: |$)(.*)"))
-@errors_handler
 async def nothanos(event):
     if event.fwd_from:
         return
@@ -332,7 +327,6 @@ async def nothanos(event):
 
 
 @borg.on(admin_cmd(pattern=r"mute(?: |$)(.*)"))
-@errors_handler
 async def spider(event):
     if event.fwd_from:
         return
@@ -396,7 +390,6 @@ async def spider(event):
 
 # @register(outgoing=True, pattern="^.unmute(?: |$)(.*)")
 @borg.on(admin_cmd(pattern=r"unmute(?: |$)(.*)"))
-@errors_handler
 async def unmoot(event):
     if event.fwd_from:
         return
@@ -449,7 +442,6 @@ async def unmoot(event):
 
 # @register(outgoing=True, pattern="^.adminlist$")
 @borg.on(admin_cmd(pattern=r"adminlist"))
-@errors_handler
 async def get_admin(event):
     if event.fwd_from:
         return
@@ -474,7 +466,6 @@ async def get_admin(event):
 
 # @register(outgoing=True, pattern="^.pin(?: |$)(.*)")
 @borg.on(admin_cmd(pattern=r"pin(?: |$)(.*)"))
-@errors_handler
 async def pin(event):
     if event.fwd_from:
         return
@@ -523,7 +514,6 @@ async def pin(event):
 
 # @register(outgoing=True, pattern="^.kick(?: |$)(.*)")
 @borg.on(admin_cmd(pattern=r"kick(?: |$)(.*)"))
-@errors_handler
 async def kick(event):
     if event.fwd_from:
         return
@@ -570,7 +560,6 @@ async def kick(event):
 
 # @register(outgoing=True, pattern="^.users ?(.*)")
 @borg.on(admin_cmd(pattern=r"users ?(.*)"))
-@errors_handler
 async def get_users(event):
     if event.fwd_from:
         return
