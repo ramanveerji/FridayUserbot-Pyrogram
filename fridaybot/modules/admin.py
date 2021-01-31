@@ -32,7 +32,7 @@ from telethon.tl.types import (
 )
 
 from fridaybot import BOTLOG, BOTLOG_CHATID, CMD_HELP
-from fridaybot.utils import admin_cmd, errors_handler, sudo_cmd
+from fridaybot.utils import friday_on_cmd, sudo_cmd
 
 # =================== CONSTANT ===================
 PP_TOO_SMOL = "`The image is too small`"
@@ -81,7 +81,7 @@ UNMUTE_RIGHTS = ChatBannedRights(until_date=None, send_messages=False)
 
 
 # @register(outgoing=True, pattern="^.setevent$")
-@borg.on(admin_cmd(pattern=r"setgpic$"))
+@friday.on(friday_on_cmd(pattern="setgpic$"))
 async def set_group_photo(event):
     if event.fwd_from:
         return
@@ -94,11 +94,9 @@ async def set_group_photo(event):
     admin = chat.admin_rights
     creator = chat.creator
     photo = None
-
     if not admin and not creator:
         await event.edit(NO_ADMIN)
         return
-
     if replyevent and replyevent.media:
         if isinstance(replyevent.media, MessageMediaPhoto):
             photo = await event.client.download_media(message=replyevent.photo)
@@ -121,7 +119,7 @@ async def set_group_photo(event):
 
 
 # @register(outgoing=True, pattern="^.promote(?: |$)(.*)")
-@borg.on(admin_cmd(pattern=r"promote(?: |$)(.*)"))
+@friday.on(friday_on_cmd(pattern=r"promote(?: |$)(.*)"))
 async def promote(event):
     if event.fwd_from:
         return
@@ -176,7 +174,7 @@ async def promote(event):
 
 
 # @register(outgoing=True, pattern="^.demote(?: |$)(.*)")
-@borg.on(admin_cmd(pattern=r"demote(?: |$)(.*)"))
+@friday.on(friday_on_cmd(pattern=r"demote(?: |$)(.*)"))
 async def demote(event):
     if event.fwd_from:
         return
@@ -230,7 +228,7 @@ async def demote(event):
 
 
 # @register(outgoing=True, pattern="^.ban(?: |$)(.*)")
-@borg.on(admin_cmd(pattern=r"ban(?: |$)(.*)"))
+@friday.on(friday_on_cmd(pattern=r"ban(?: |$)(.*)"))
 async def ban(event):
     if event.fwd_from:
         return
@@ -286,7 +284,7 @@ async def ban(event):
 
 
 # @register(outgoing=True, pattern="^.unban(?: |$)(.*)")
-@borg.on(admin_cmd(pattern=r"unban(?: |$)(.*)"))
+@friday.on(friday_on_cmd(pattern=r"unban(?: |$)(.*)"))
 async def nothanos(event):
     if event.fwd_from:
         return
@@ -326,7 +324,7 @@ async def nothanos(event):
         await event.edit("`Uh oh my unban logic broke!`")
 
 
-@borg.on(admin_cmd(pattern=r"mute(?: |$)(.*)"))
+@friday.on(friday_on_cmd(pattern=r"mute(?: |$)(.*)"))
 async def spider(event):
     if event.fwd_from:
         return
@@ -389,7 +387,7 @@ async def spider(event):
 
 
 # @register(outgoing=True, pattern="^.unmute(?: |$)(.*)")
-@borg.on(admin_cmd(pattern=r"unmute(?: |$)(.*)"))
+@friday.on(friday_on_cmd(pattern=r"unmute(?: |$)(.*)"))
 async def unmoot(event):
     if event.fwd_from:
         return
@@ -441,7 +439,7 @@ async def unmoot(event):
 
 
 # @register(outgoing=True, pattern="^.adminlist$")
-@borg.on(admin_cmd(pattern=r"adminlist"))
+@friday.on(friday_on_cmd(pattern=r"adminlist"))
 async def get_admin(event):
     if event.fwd_from:
         return
@@ -465,7 +463,7 @@ async def get_admin(event):
 
 
 # @register(outgoing=True, pattern="^.pin(?: |$)(.*)")
-@borg.on(admin_cmd(pattern=r"pin(?: |$)(.*)"))
+@friday.on(friday_on_cmd(pattern=r"pin(?: |$)(.*)"))
 async def pin(event):
     if event.fwd_from:
         return
@@ -513,7 +511,7 @@ async def pin(event):
 
 
 # @register(outgoing=True, pattern="^.kick(?: |$)(.*)")
-@borg.on(admin_cmd(pattern=r"kick(?: |$)(.*)"))
+@friday.on(friday_on_cmd(pattern=r"kick(?: |$)(.*)"))
 async def kick(event):
     if event.fwd_from:
         return
@@ -559,7 +557,7 @@ async def kick(event):
 
 
 # @register(outgoing=True, pattern="^.users ?(.*)")
-@borg.on(admin_cmd(pattern=r"users ?(.*)"))
+@friday.on(friday_on_cmd(pattern=r"users ?(.*)"))
 async def get_users(event):
     if event.fwd_from:
         return
@@ -605,7 +603,7 @@ async def get_users(event):
         remove("userslist.txt")
 
 
-@borg.on(admin_cmd(pattern="zombies(?: |$)(.*)"))
+@friday.on(friday_on_cmd(pattern="zombies(?: |$)(.*)"))
 async def rm_deletedacc(event):
     if event.fwd_from:
         return
