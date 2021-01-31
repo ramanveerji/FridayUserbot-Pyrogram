@@ -2,9 +2,9 @@
 
 import heroku3
 
-from var import Var
+from fridaybot.Configs import Config
 
-herokuclient = heroku3.from_key(Var.HEROKU_API_KEY)
+herokuclient = heroku3.from_key(Config.HEROKU_API_KEY)
 
 
 class HerokuHelper:
@@ -23,7 +23,7 @@ class HerokuHelper:
     def getLog(self):
         return self.app.get_log()
 
-    def addEnvVar(self, key, value):
+    def addEnvConfig(self, key, value):
         self.app.config()[key] = value
 
     def restart(self):

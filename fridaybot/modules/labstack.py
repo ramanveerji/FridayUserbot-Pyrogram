@@ -26,7 +26,7 @@ async def labstack(event):
         filebase = input_str
     elif reply:
         filebase = await event.client.download_media(
-            reply.media, Var.TEMP_DOWNLOAD_DIRECTORY
+            reply.media, Config.TEMP_DOWNLOAD_DIRECTORY
         )
     else:
         await event.edit(

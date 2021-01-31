@@ -15,9 +15,9 @@ import requests
 
 from fridaybot import CMD_HELP
 from fridaybot.utils import edit_or_reply, friday_on_cmd, sudo_cmd
-from var import Var
+from fridaybot.Configs import Config
 
-newslog = Var.NEWS_CHANNEL_ID
+newslog = Config.NEWS_CHANNEL_ID
 
 
 @friday.on(friday_on_cmd("news (.*)"))
@@ -25,7 +25,7 @@ newslog = Var.NEWS_CHANNEL_ID
 async def _(event):
     if event.fwd_from:
         return
-    if Var.NEWS_CHANNEL_ID is None:
+    if Config.NEWS_CHANNEL_ID is None:
         await edit_or_reply(
             event, "`Please ADD NEWS_CHANNEL_ID For This Module To Work`"
         )

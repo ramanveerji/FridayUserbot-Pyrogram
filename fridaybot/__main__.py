@@ -9,7 +9,7 @@ from fridaybot import bot, client2, client3
 from fridaybot.Configs import Config
 from telethon.tl.types import InputMessagesFilterDocument
 from fridaybot.utils import load_module, start_assistant, load_module_dclient
-from var import Var
+from fridaybot.Configs import Config
 
 sed = logging.getLogger("Friday")
 
@@ -68,12 +68,12 @@ if len(argv) not in (1, 3, 4):
     bot.disconnect()
 else:
     bot.tgbot = None
-    if Var.TG_BOT_USER_NAME_BF_HER is not None:
+    if Config.TG_BOT_USER_NAME_BF_HER is not None:
         bot.tgbot = TelegramClient(
-            "TG_BOT_TOKEN", api_id=Var.APP_ID, api_hash=Var.API_HASH
-        ).start(bot_token=Var.TG_BOT_TOKEN_BF_HER)
+            "TG_BOT_TOKEN", api_id=Config.APP_ID, api_hash=Config.API_HASH
+        ).start(bot_token=Config.TG_BOT_TOKEN_BF_HER)
         failed2, failed3 = multiple_client()
-        bot.loop.run_until_complete(add_bot(Var.TG_BOT_USER_NAME_BF_HER))
+        bot.loop.run_until_complete(add_bot(Config.TG_BOT_USER_NAME_BF_HER))
     else:
         bot.start()
         failed2, failed3 = multiple_client()

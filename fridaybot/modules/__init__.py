@@ -1,10 +1,10 @@
 from fridaybot.Configs import Config
 from fridaybot.utils import friday_on_cmd
-from var import Var
+from fridaybot.Configs import Config
 issudousing = Config.SUDO_USERS
 islogokay = Config.PRIVATE_GROUP_ID
-isdbfine = Var.DB_URI
-isherokuokay = Var.HEROKU_APP_NAME
+isdbfine = Config.DB_URI
+isherokuokay = Config.HEROKU_APP_NAME
 gdriveisshit = Config.AUTH_TOKEN_DATA
 wttrapi = Config.OPEN_WEATHER_MAP_APPID
 rmbg = Config.REM_BG_API_KEY

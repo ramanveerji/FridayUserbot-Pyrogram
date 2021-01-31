@@ -17,7 +17,7 @@ async def _(event):
         file_name = input_str
     else:
         reply = await event.get_reply_message()
-        file_name = await borg.download_media(reply.media, Var.TEMP_DOWNLOAD_DIRECTORY)
+        file_name = await borg.download_media(reply.media, Config.TEMP_DOWNLOAD_DIRECTORY)
     CMD_WEB = {
         "anonfiles": 'curl -F "file=@{}" https://anonfiles.com/api/upload',
         "transfer": 'curl --upload-file "{}" https://transfer.sh/{os.path.basename(file_name)}',

@@ -19,14 +19,14 @@ from coffeehouse.lydia import LydiaAI
 from telethon import events
 from fridaybot.utils import admin_cmd
 from fridaybot import CMD_HELP
-from var import Var
+from fridaybot.Configs import Config
 
 # Non-SQL Mode
 ACC_LYDIA = {}
 SESSION_ID = {}
 
-if Var.LYDIA_API_KEY:
-    api_key = Var.LYDIA_API_KEY
+if Config.LYDIA_API_KEY:
+    api_key = Config.LYDIA_API_KEY
     api_client = API(api_key)
     lydia = LydiaAI(api_client)
 

@@ -80,7 +80,7 @@ python3 -m fridaybot
 
 
 
-# Mandatory Vars
+# Mandatory Configs
 ```
 [+] Only two of the environment variables are mandatory.
 
