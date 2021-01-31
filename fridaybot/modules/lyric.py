@@ -70,7 +70,7 @@ async def lyrics(lyric):
 
     if GENIUS is None:
         await lyric.edit(
-            "`Provide genius access token to config.py or Heroku Var first kthxbye!`"
+            "`Provide genius access token to config.py or Heroku Config first kthxbye!`"
         )
     else:
         genius = lyricsgenius.Genius(GENIUS)

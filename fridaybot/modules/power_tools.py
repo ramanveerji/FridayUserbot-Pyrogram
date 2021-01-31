@@ -12,15 +12,15 @@ from fridaybot import CMD_HELP
 from fridaybot.utils import friday_on_cmd
 import heroku3
 import requests
-Heroku = heroku3.from_key(Var.HEROKU_API_KEY)
+Heroku = heroku3.from_key(Config.HEROKU_API_KEY)
 
 @friday.on(friday_on_cmd("restart"))
 async def _(event):
     if event.fwd_from:
         return
     await event.edit("**Restarted ! If You Want To Check If I am Alive, Do** `.ping` !")
-    if Var.HEROKU_API_KEY:
-        herokuHelper = HerokuHelper(Var.HEROKU_APP_NAME, Var.HEROKU_API_KEY)
+    if Config.HEROKU_API_KEY:
+        herokuHelper = HerokuHelper(Config.HEROKU_APP_NAME, Config.HEROKU_API_KEY)
         herokuHelper.restart()
     else:
         await borg.disconnect()
@@ -32,8 +32,8 @@ async def _(event):
     if event.fwd_from:
         return
     await event.edit("Turning off ...Manually turn me on later")
-    if Var.HEROKU_API_KEY:
-        app = Heroku.app(Var.HEROKU_APP_NAME)
+    if Config.HEROKU_API_KEY:
+        app = Heroku.app(Config.HEROKU_APP_NAME)
         app.dynos['worker.1'].kill()
     else:
         await bot.disconnect()

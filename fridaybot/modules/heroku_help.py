@@ -8,7 +8,7 @@ import requests
 from fridaybot.function.heroku_helper import HerokuHelper
 from fridaybot.utils import edit_or_reply, friday_on_cmd, sudo_cmd
 
-Heroku = heroku3.from_key(Var.HEROKU_API_KEY)
+Heroku = heroku3.from_key(Config.HEROKU_API_KEY)
 heroku_api = "https://api.heroku.com"
 
 
@@ -17,12 +17,12 @@ heroku_api = "https://api.heroku.com"
 async def giblog(event):
     if event.fwd_from:
         return
-    herokuHelper = HerokuHelper(Var.HEROKU_APP_NAME, Var.HEROKU_API_KEY)
+    herokuHelper = HerokuHelper(Config.HEROKU_APP_NAME, Config.HEROKU_API_KEY)
     logz = herokuHelper.getLog()
     with open("logs.txt", "w") as log:
         log.write(logz)
     await borg.send_file(
-        event.chat_id, "logs.txt", caption=f"**Logs Of {Var.HEROKU_APP_NAME}**"
+        event.chat_id, "logs.txt", caption=f"**Logs Of {Config.HEROKU_APP_NAME}**"
     )
 
 
@@ -31,7 +31,7 @@ async def giblog(event):
 async def restart_me(event):
     if event.fwd_from:
         return
-    herokuHelper = HerokuHelper(Var.HEROKU_APP_NAME, Var.HEROKU_API_KEY)
+    herokuHelper = HerokuHelper(Config.HEROKU_APP_NAME, Config.HEROKU_API_KEY)
     await event.edit("`App is Restarting. This is May Take Upto 10Min.`")
     herokuHelper.restart()
 
@@ -53,7 +53,7 @@ async def dyno_usage(dyno):
     user_id = Heroku.account().id
     headers = {
         "User-Agent": useragent,
-        "Authorization": f"Bearer {Var.HEROKU_API_KEY}",
+        "Authorization": f"Bearer {Config.HEROKU_API_KEY}",
         "Accept": "application/vnd.heroku+json; version=3.account-quotas",
     }
     path = "/accounts/" + user_id + "/actions/get-quota"
@@ -91,7 +91,7 @@ async def dyno_usage(dyno):
     return await edit_or_reply(
         dyno,
         "**Dyno Usage Data**:\n\n"
-        f"✗ **APP NAME =>** `{Var.HEROKU_APP_NAME}` \n"
+        f"✗ **APP NAME =>** `{Config.HEROKU_APP_NAME}` \n"
         f"✗ **Usage in Hours And Minutes =>** `{AppHours}h`  `{AppMinutes}m`"
         f"✗ **Usage Percentage =>** [`{AppPercentage} %`]\n"
         "\n\n"
@@ -111,11 +111,11 @@ async def variable(var):
     if var.fwd_from:
         return
     """
-    Manage most of ConfigVars setting, set new var, get current var,
+    Manage most of ConfigConfigs setting, set new var, get current var,
     or delete var...
     """
-    if Var.HEROKU_APP_NAME is not None:
-        app = Heroku.app(Var.HEROKU_APP_NAME)
+    if Config.HEROKU_APP_NAME is not None:
+        app = Heroku.app(Config.HEROKU_APP_NAME)
     else:
         return await edit_or_reply(
             var, "`[HEROKU]:" "\nPlease setup your` **HEROKU_APP_NAME**"
@@ -130,11 +130,11 @@ async def variable(var):
             if variable in heroku_var:
                 return await edit_or_reply(
                     var,
-                    "**ConfigVars**:" f"\n\n`{variable} = {heroku_var[variable]}`\n",
+                    "**ConfigConfigs**:" f"\n\n`{variable} = {heroku_var[variable]}`\n",
                 )
             else:
                 return await edit_or_reply(
-                    var, "**ConfigVars**:" f"\n\n`Error:\n-> {variable} don't exists`"
+                    var, "**ConfigConfigs**:" f"\n\n`Error:\n-> {variable} don't exists`"
                 )
         except IndexError:
             configs = prettyjson(heroku_var.to_dict(), indent=2)
@@ -152,7 +152,7 @@ async def variable(var):
                 else:
                     await edit_or_reply(
                         var,
-                        "`[HEROKU]` ConfigVars:\n\n"
+                        "`[HEROKU]` ConfigConfigs:\n\n"
                         "================================"
                         f"\n```{result}```\n"
                         "================================",
@@ -163,14 +163,14 @@ async def variable(var):
         await edit_or_reply(var, "`Setting information...`")
         variable = var.pattern_match.group(2)
         if not variable:
-            return await edit_or_reply(var, ">`.set var <ConfigVars-name> <value>`")
+            return await edit_or_reply(var, ">`.set var <ConfigConfigs-name> <value>`")
         value = var.pattern_match.group(3)
         if not value:
             variable = variable.split()[0]
             try:
                 value = var.pattern_match.group(2).split()[1]
             except IndexError:
-                return await edit_or_reply(var, ">`.set var <ConfigVars-name> <value>`")
+                return await edit_or_reply(var, ">`.set var <ConfigConfigs-name> <value>`")
         await asyncio.sleep(1.5)
         if variable in heroku_var:
             await edit_or_reply(
@@ -187,7 +187,7 @@ async def variable(var):
             variable = var.pattern_match.group(2).split()[0]
         except IndexError:
             return await edit_or_reply(
-                var, "`Please specify ConfigVars you want to delete`"
+                var, "`Please specify ConfigConfigs you want to delete`"
             )
         await asyncio.sleep(1.5)
         if variable in heroku_var:
@@ -213,7 +213,7 @@ async def sf(event):
     if event.fwd_from:
         return
     hmm = event.pattern_match.group(1)
-    app = Heroku.app(Var.HEROKU_APP_NAME)
+    app = Heroku.app(Config.HEROKU_APP_NAME)
     collaborator = app.add_collaborator(user_id_or_email=hmm, silent=0)
     await event.edit("`Sent Invitation To Accept Your Collab`")
 
@@ -223,7 +223,7 @@ async def l(event):
     if event.fwd_from:
         return
     hmm = event.pattern_match.group(1)
-    app = Heroku.app(Var.HEROKU_APP_NAME)
+    app = Heroku.app(Config.HEROKU_APP_NAME)
     transfer = app.create_transfer(recipient_id_or_name=hmm)
 
 
@@ -231,7 +231,7 @@ async def l(event):
 async def killdyno(event):
     if event.fwd_from:
         return
-    app = Heroku.app(Var.HEROKU_APP_NAME)
+    app = Heroku.app(Config.HEROKU_APP_NAME)
     await event.edit("`Dyno Is Off. Manually Turn it On Later`")
     app.kill_dyno("worker.1")
 

@@ -17,12 +17,12 @@ from git.exc import GitCommandError, InvalidGitRepositoryError, NoSuchPathError
 
 from fridaybot import CMD_HELP
 from fridaybot.utils import friday_on_cmd
-from var import Var
+from var import Config
 
 UPSTREAM_REPO_URL = Config.UPSTREAM_REPO
 UPSTREAM_REPO_BRANCH = "master"
-HEROKU_APP_NAME = Var.HEROKU_APP_NAME
-HEROKU_API_KEY = Var.HEROKU_API_KEY
+HEROKU_APP_NAME = Config.HEROKU_APP_NAME
+HEROKU_API_KEY = Config.HEROKU_API_KEY
 requirements_path = path.join(
     path.dirname(path.dirname(path.dirname(__file__))), "requirements.txt"
 )

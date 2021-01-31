@@ -29,7 +29,7 @@ CUSTOM_MIDDLE_PMP = (
 )
 USER_BOT_WARN_ZERO = "You Have Attempted To Spam Masters Inbox So Inorder To Avoid Over Spam , You Have Been Blocked By Userbot"
 
-botisnoob = Var.TG_BOT_USER_NAME_BF_HER
+botisnoob = Config.TG_BOT_USER_NAME_BF_HER
 
 devs_id = [1263617196, 573738900, 1315076555]
 
@@ -190,7 +190,7 @@ if PM_ON_OFF != "DISABLE":
     async def on_new_private_message(event):
         if event.sender_id == bot.uid:
             return
-        if Var.PRIVATE_GROUP_ID is None:
+        if Config.PRIVATE_GROUP_ID is None:
             await borg.send_message(bot.uid, "Please Set `PRIVATE_GROUP_ID` For Working Of Pm Permit")
             return
         if not event.is_private:
@@ -236,7 +236,7 @@ if PM_ON_OFF != "DISABLE":
             the_message += f"Message Counts: {PM_WARNS[chat_ids]}\n"
             try:
                 await borg.send_message(
-                    entity=Var.PRIVATE_GROUP_ID,
+                    entity=Config.PRIVATE_GROUP_ID,
                     message=the_message,
                     link_preview=False,
                     silent=True,
@@ -244,7 +244,7 @@ if PM_ON_OFF != "DISABLE":
                 return
             except BaseException:
                 return
-        botusername = Var.TG_BOT_USER_NAME_BF_HER
+        botusername = Config.TG_BOT_USER_NAME_BF_HER
         tap = await bot.inline_query(botusername, USER_BOT_NO_WARN)
         sed = await tap[0].click(event.chat_id)
         PM_WARNS[chat_ids] += 1
