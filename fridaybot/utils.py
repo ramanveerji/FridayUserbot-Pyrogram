@@ -119,6 +119,7 @@ def load_module(shortname):
         mod.bot = bot
         mod.tgbot = bot.tgbot
         mod.Config = Config
+        mod.Var = Config
         mod.command = command
         mod.logger = logging.getLogger(shortname)
         # support for uniborg
@@ -178,6 +179,7 @@ def load_module_dclient(shortname, client):
         mod.bot = client
         mod.tgbot = bot.tgbot
         mod.Config = Config
+        mod.Var = Config
         mod.command = command
         sedlu = str(shortname) + "- MClient -"
         mod.logger = logging.getLogger(sedlu)
