@@ -17,7 +17,7 @@ from git.exc import GitCommandError, InvalidGitRepositoryError, NoSuchPathError
 
 from fridaybot import CMD_HELP
 from fridaybot.utils import friday_on_cmd
-from var import Config
+from fridaybot.Configs import Config
 
 UPSTREAM_REPO_URL = Config.UPSTREAM_REPO
 UPSTREAM_REPO_BRANCH = "master"

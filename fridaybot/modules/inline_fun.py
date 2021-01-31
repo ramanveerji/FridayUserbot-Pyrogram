@@ -1,6 +1,6 @@
 from fridaybot import CMD_HELP
 from fridaybot.utils import friday_on_cmd
-from var import Config
+from fridaybot.Configs import Config
 
 
 @friday.on(friday_on_cmd(pattern="stat$"))

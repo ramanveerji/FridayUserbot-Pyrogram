@@ -19,7 +19,7 @@ from coffeehouse.lydia import LydiaAI
 from telethon import events
 from fridaybot.utils import admin_cmd
 from fridaybot import CMD_HELP
-from var import Config
+from fridaybot.Configs import Config
 
 # Non-SQL Mode
 ACC_LYDIA = {}

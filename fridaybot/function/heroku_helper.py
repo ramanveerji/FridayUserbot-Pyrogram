@@ -2,7 +2,7 @@
 
 import heroku3
 
-from var import Config
+from fridaybot.Configs import Config
 
 herokuclient = heroku3.from_key(Config.HEROKU_API_KEY)
 

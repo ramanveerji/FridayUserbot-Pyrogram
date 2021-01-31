@@ -19,7 +19,7 @@ from telethon import events
 
 from fridaybot import bot
 from fridaybot.Configs import Config
-from var import Config
+from fridaybot.Configs import Config
 
 
 def ignore_fwd():

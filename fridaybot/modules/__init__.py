@@ -1,6 +1,6 @@
 from fridaybot.Configs import Config
 from fridaybot.utils import friday_on_cmd
-from var import Config
+from fridaybot.Configs import Config
 issudousing = Config.SUDO_USERS
 islogokay = Config.PRIVATE_GROUP_ID
 isdbfine = Config.DB_URI

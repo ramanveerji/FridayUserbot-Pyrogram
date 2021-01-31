@@ -17,13 +17,13 @@ from telegraph import Telegraph, exceptions, upload_file
 from telethon import TelegramClient
 from telethon.sessions import StringSession
 
-from var import Config
+from fridaybot.Configs import Config
 
 from .Configs import Config
 
 Lastupdate = time.time()
 sedprint = logging.getLogger("WARNING")
-from var import Config
+from fridaybot.Configs import Config
 
 
 # All Clients - 3

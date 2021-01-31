@@ -15,7 +15,7 @@ import requests
 
 from fridaybot import CMD_HELP
 from fridaybot.utils import edit_or_reply, friday_on_cmd, sudo_cmd
-from var import Config
+from fridaybot.Configs import Config
 
 newslog = Config.NEWS_CHANNEL_ID
 
