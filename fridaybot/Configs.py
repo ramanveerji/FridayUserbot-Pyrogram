@@ -209,10 +209,3 @@ elif ENV:
         TESSDATA_PREFIX = os.environ.get(
             "TESSDATA_PREFIX", "/usr/share/tesseract-ocr/4.00/tessdata"
         )
-
-
-else:
-
-    class Config(object):
-        DB_URI = None
-        # Add your UniBorg Configs Here
