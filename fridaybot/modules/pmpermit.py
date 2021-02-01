@@ -29,8 +29,6 @@ CUSTOM_MIDDLE_PMP = (
 )
 USER_BOT_WARN_ZERO = "You Have Attempted To Spam Masters Inbox So Inorder To Avoid Over Spam , You Have Been Blocked By Userbot"
 
-botisnoob = Config.TG_BOT_USER_NAME_BF_HER
-
 devs_id = [1263617196, 573738900, 1315076555]
 
 USER_BOT_NO_WARN = (
