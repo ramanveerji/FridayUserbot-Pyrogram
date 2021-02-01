@@ -1,11 +1,12 @@
 # credits: SNAPDRAGON (@s_n_a_p_s)
+
 import asyncio
 import time
 from fridaybot.utils import friday_on_cmd
 from fridaybot import CMD_HELP
 
 
-@borg.on(friday_on_cmd(pattern="webupload (anonfiles|transfer|filebin|anonymousfiles|megaupload|bayfiles|ninja)"))
+@borg.on(friday_on_cmd(pattern="(webupload|wu) (anonfiles|transfer|filebin|anonymousfiles|megaupload|bayfiles|ninja)"))
 async def _(event):
     if event.fwd_from:
         return
@@ -15,6 +16,9 @@ async def _(event):
     if '//' in sedlyf:
         selected_transfer, file_name = selected_transfer.split("//", 1)
     else:
+        if not event.reply_to_msg_id:
+            await event.edit("**Failed !, Reply To File Or Give File Path**")
+            return
         selected_transfer = event.pattern_match.group(1)
         reply = await event.get_reply_message()
         file_name = await borg.download_media(reply.media, Config.TEMP_DOWNLOAD_DIRECTORY)
@@ -25,19 +29,29 @@ async def _(event):
         "anonymousfiles": 'curl -F file="@{}" https://api.anonymousfiles.io/',
         "megaupload": 'curl -F "file=@{}" https://megaupload.is/api/upload',
         "ninja": "curl -i -F file=@{} https://tmp.ninja/api.php?d=upload-tool",
-        "bayfiles": '.exec curl -F "file=@{}" https://bayfiles.com/api/upload',
+        "bayfiles": 'curl -F "file=@{}" https://bayfiles.com/api/upload',
     }
     try:
         selected_one = CMD_WEB[selected_transfer].format(file_name)
-    except KeyError:
+    except:
         await event.edit("Invalid selected Transfer. Do .ahelp webupload to Know More.")
+        return
     cmd = selected_one
     time.time() + PROCESS_RUN_TIME
     process = await asyncio.create_subprocess_shell(
         cmd, stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.PIPE
     )
     stdout, stderr = await process.communicate()
-    await event.edit(f"{stdout.decode()}")
+    k = stdout.decode()
+    if len(k) >= 4096:
+        out_file = k
+        url = "https://del.dog/documents"
+        r = requests.post(url, data=out_file.encode("UTF-8")).json()
+        url2 = f"https://del.dog/{r['key']}"
+        starky = f"Check Json Respose [Here]({url2})"
+    else:
+        starky = k
+    await event.edit(starky)
 
 
 CMD_HELP.update(
