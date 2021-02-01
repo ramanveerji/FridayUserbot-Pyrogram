@@ -34,7 +34,7 @@ async def add_bot(bot_token):
 async def check_inline_on_warner(ws):
     w_s = await ws.get_me()
     if not w_s.bot_inline_placeholder:
-        sed.info("Warning : We Have Detected That You Have Not Turned On Inline For Your Assistant Bot, Please Go To @BotFather To Enable This.")
+        sed.info("Warning : We Have Detected That You Have Not Turned On Inline Mode For Your Assistant Bot, Please Go To @BotFather And Enable This.")
     return
 
 async def lol_s(client):
