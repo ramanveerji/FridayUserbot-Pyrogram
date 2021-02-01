@@ -447,7 +447,18 @@ async def altbalaji(event):
         event.chat_id, "hits.txt", caption=f"**!ALTBALAJI HITS!** \n**HITS :** `{hits}` \n**BAD :** `{bads}`"
     )
     os.remove("hits.txt")
-
+	
+@friday.on(friday_on_cmd(pattern="combogen"))
+async def byekanger(event):
+    url = "http://devsexpo.me/combogen/"
+    sed = requests.get(url=url).json()
+    sedjson = f"""<b>ComBo Generated</b>
+<b>Email :</b> <code>{sed['email']}</code>
+<b>Password :</b> <code>{sed['pass']}</code>
+<b>Combo :</b> <code>{sed['combo']}</code>
+"""
+    await event.edit(sedjson, parse_mode="HTML")
+    	
 CMD_HELP.update(
     {
         "cracking_tools": "**Cracking Tools**\
