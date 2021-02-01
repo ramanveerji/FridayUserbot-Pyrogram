@@ -188,30 +188,25 @@ if PM_ON_OFF != "DISABLE":
 
     @borg.on(events.NewMessage(incoming=True))
     async def on_new_private_message(event):
+        if not event.is_private:
+            return
         if event.sender_id == bot.uid:
             return
         if Config.PRIVATE_GROUP_ID is None:
             await borg.send_message(bot.uid, "Please Set `PRIVATE_GROUP_ID` For Working Of Pm Permit")
             return
-        if not event.is_private:
-            return
         message_text = event.message.raw_text
         chat_ids = event.sender_id
         if USER_BOT_NO_WARN == message_text:
             return
-        # low Level Hacks
-        if event.sender_id == event.chat_id:
-            pass
-        else:
-            return
-        sender = await event.client(GetFullUserRequest(await event.get_input_chat()))
+        sender = await event.client.get_entity(await event.get_input_chat())
         if chat_ids == bot.uid:
             return
-        if sender.user.bot:
+        if sender.bot:
             return
         if event.sender_id in devs_id:
             return
-        if sender.user.verified:
+        if sender.verified:
             return
         if PM_ON_OFF == "DISABLE":
             return
@@ -244,7 +239,8 @@ if PM_ON_OFF != "DISABLE":
                 return
             except BaseException:
                 return
-        botusername = Config.TG_BOT_USER_NAME_BF_HER
+        trap_m = await tgbot.get_me()
+        botusername = trap_m.username
         tap = await bot.inline_query(botusername, USER_BOT_NO_WARN)
         sed = await tap[0].click(event.chat_id)
         PM_WARNS[chat_ids] += 1
