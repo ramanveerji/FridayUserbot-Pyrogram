@@ -462,7 +462,7 @@ async def lol_kangers(event):
     if lmao['success'] is False:
         await event.edit("Task Failed Due To " + str(lmao['error']))
         return
-    await event.edit("Direct Link Fetched \nURL : " + str(lmao['url']) + f" You Can Download This By Doing `.ytv {str(lmao['url'])}`")
+    await event.edit("Direct Link Fetched \nURL : " + str(lmao['url']))
         
         
 CMD_HELP.update(
