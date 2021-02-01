@@ -158,7 +158,9 @@ async def on_afk(event):
         msg = None
         message_to_reply = (f"I Am **[AFK]** Right Now. \n**Last Seen :** `{total_afk_time}`\n**Reason** : `{reason}`" if reason else f"I Am **[AFK]** Right Now. \n**Last Seen :** `{total_afk_time}`")
         msg = await event.reply(message_to_reply)
-        await asyncio.sleep(5)
+        await asyncio.sleep(10)
+        # Spechide Bad
+        await msg.delete()
         if event.chat_id in last_afk_message:  # pylint:disable=E0602
             await last_afk_message[event.chat_id].delete()  # pylint:disable=E0602
         last_afk_message[event.chat_id] = msg  # pylint:disable=E0602
