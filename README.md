@@ -88,6 +88,9 @@ python3 -m fridaybot
 
     [-] APP_ID:   You can get this value from https://my.telegram.org
     [-] API_HASH :   You can get this value from https://my.telegram.org
+    [-] STRING_SESSION : Your String Session, You can get this From Repl or BY running StringGen File Locally
+    [-] TG_BOT_TOKEN_BF_HER : Your Bot Token Obtained From @BotFather 
+    [-] PRIVATE_GROUP_ID : Id of group where you wanna log important logs, Private group is recommended for this
     
 [+] The fridaybot will not work without setting the mandatory vars.
 ```
