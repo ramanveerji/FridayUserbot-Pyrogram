@@ -11,11 +11,11 @@ async def _(event):
         return
     await event.edit("`Processing ...`")
     PROCESS_RUN_TIME = 100
-    input_str = event.pattern_match.group(1)
-    selected_transfer = event.pattern_match.group(2)
-    if input_str:
-        file_name = input_str
+    sedlyf = event.pattern_match.group(1)
+    if '//' in sedlyf:
+        selected_transfer, file_name = selected_transfer.split("//", 1)
     else:
+        selected_transfer = event.pattern_match.group(1)
         reply = await event.get_reply_message()
         file_name = await borg.download_media(reply.media, Config.TEMP_DOWNLOAD_DIRECTORY)
     CMD_WEB = {
@@ -43,7 +43,7 @@ async def _(event):
 CMD_HELP.update(
     {
         "webupload": "**Webupload**\
-\n\n**Syntax : **`.webupload --<anonfiles/transfer/filebin/anonymousfiles/megaupload/bayfiles><reply to the file you want to upload>`\
+\n\n**Syntax : **`.webupload <anonfiles/transfer/filebin/anonymousfiles/megaupload/bayfiles><reply to the file you want to upload>`\
 \n**Usage :** upload file in the website and provides Download link."
     }
 )
