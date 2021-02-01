@@ -5,7 +5,7 @@ from fridaybot.utils import friday_on_cmd
 from fridaybot import CMD_HELP
 
 
-@borg.on(friday_on_cmd(pattern="webupload ?(.+?|) (?:--)(anonfiles|transfer|filebin|anonymousfiles|megaupload|bayfiles|ninja)"))
+@borg.on(friday_on_cmd(pattern="webupload (anonfiles|transfer|filebin|anonymousfiles|megaupload|bayfiles|ninja)"))
 async def _(event):
     if event.fwd_from:
         return
