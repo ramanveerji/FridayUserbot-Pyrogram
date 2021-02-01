@@ -86,24 +86,28 @@ async def download(target_file):
     await friday.edit("Processing using fridaybot server ( ◜‿◝ )♡")
     if not os.path.isdir(TEMP_DOWNLOAD_DIRECTORY):
         os.makedirs(TEMP_DOWNLOAD_DIRECTORY)
-    if target_file.reply_to_msg_id:
-        try:
-            c_time = time.time()
-            downloaded_file_name = await target_file.client.download_media(
+    if not target_file.reply_to_msg_id:
+        await friday.edit("`Reply to a message to download to my local server.`")
+        return
+    sedd = await target_file.get_reply_message()
+    if not sedd.media:
+        await event.edit("`I Can Only Download Media As For Now.`")
+        return
+    try:
+        c_time = time.time()
+        downloaded_file_name = await target_file.client.download_media(
                 await target_file.get_reply_message(),
                 TEMP_DOWNLOAD_DIRECTORY,
                 progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
-                    progress(d, t, target_file, c_time, "Downloading...")
+                    progress(d, t, target_file, c_time, "Downloading This Media...")
                 ),
             )
-        except Exception as e:  # pylint:disable=C0103,W0703
-            await friday.edit(str(e))
-        else:
-            await friday.edit(
+    except Exception as e:  # pylint:disable=C0103,W0703
+        await friday.edit(str(e))
+    else:
+        await friday.edit(
                 "Downloaded to `{}` successfully !!".format(downloaded_file_name)
             )
-    else:
-        await friday.edit("Reply to a message to download to my local server.")
 
 
 @friday.on(friday_on_cmd(pattern=r"uploadir (.*)"))
