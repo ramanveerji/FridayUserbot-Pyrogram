@@ -3,6 +3,7 @@ from urllib.parse import urlparse
 import asyncio
 import json
 import math
+import requests
 import os
 import subprocess
 import time
