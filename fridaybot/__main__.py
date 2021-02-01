@@ -25,7 +25,6 @@ from fridaybot.utils import load_module, start_assistant, load_module_dclient
 from fridaybot.Configs import Config
 
 sed = logging.getLogger("Friday")
-
         
 async def add_bot(bot_token):
     await bot.start(bot_token)
@@ -91,9 +90,9 @@ else:
             "TG_BOT_TOKEN", api_id=Config.APP_ID, api_hash=Config.API_HASH
         ).start(bot_token=Config.TG_BOT_TOKEN_BF_HER)
         failed2, failed3 = multiple_client()
-        bot.loop.run_until_complete(add_bot("MyAssistantBot"))
+        bot.loop.run_until_complete(add_bot("RnJpZGF5VXNlckJvdCBpcyBCZXN0"))
     else:
-        bot.start()
+        bot.loop.run_until_complete(add_bot("RnJpZGF5VXNlckJvdCBpcyBCZXN0"))
         failed2, failed3 = multiple_client()
 
 if Config.LOAD_OTHER_PLUGINS:
