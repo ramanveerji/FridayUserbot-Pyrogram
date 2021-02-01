@@ -449,6 +449,8 @@ async def lul(event):
     
 @friday.on(friday_on_cmd(pattern="zeelink"))
 async def lol_kangers(event):
+    if event.fwd_from:
+        return
     input_str = event.raw_text.split(" ", maxsplit=1)[1]
     if 'zee' in input_str:
         url = "http://devsexpo.me/zee/"
