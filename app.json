@@ -31,7 +31,7 @@
       "value": ""
     },
     "PLUGIN_CHANNEL": {
-      "description": "Channel Where You Save Your Plugins",
+      "description": "Channel Where You Save Your Plugins.",
       "value": ""
     },
     "SUDO_USERS": {
@@ -40,7 +40,7 @@
       "required": false
     },
     "PRIVATE_GROUP_ID": {
-      "description": "A Group ID Where You Want Logging Feature",
+      "description": "A Group ID Where You Want To Log Important Logs.",
       "value": ""
     },
     "STRING_SESSION": {
@@ -48,11 +48,11 @@
       "value": ""
     },
     "TESSDATA_PREFIX": {
-      "description": "Pytesserct Path. Don't Edit Until You Know What Are You Doing..",
+      "description": "Pytesserct Path. Don't Edit Until You Know What Are You Doing. Just leave it As it is.",
       "value": "./.apt/usr/share/tesseract-ocr/4.00/tessdata"
     },
     "LYDIA_API_KEY": {
-      "description": "Needed for Lydia AI. Follow https://telegra.ph/Lydia-09-05 to get your API.",
+      "description": "Needed for Lydia AI. Follow https://telegra.ph/Lydia-09-05 to get your API. This is not Mandatory.",
       "value": "",
       "required": false
     },
@@ -61,15 +61,11 @@
       "value": ""
     },
     "HEROKU_APP_NAME": {
-      "description": "The Value of App Name you filled in right on top.Required for updater to work.",
+      "description": "Heroku App Name That You Filled Above.",
       "value": ""
     },
     "TG_BOT_TOKEN_BF_HER": {
-      "description": "Needed for inline buttons maker. Make a bot at @BotFather and get the token of your bot. Get it.",
-      "value": ""
-    },
-    "TG_BOT_USER_NAME_BF_HER": {
-      "description": "You Telegram Bot API Key Here. Needed For Help Module And Cbutton.",
+      "description": "Your Bot Token Obtained From @BotFather.",
       "value": ""
     },
     "DOWNLOAD_PFP_URL_CLOCK": {
