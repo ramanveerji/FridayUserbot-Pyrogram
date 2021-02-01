@@ -68,12 +68,12 @@ if len(argv) not in (1, 3, 4):
     bot.disconnect()
 else:
     bot.tgbot = None
-    if Config.TG_BOT_USER_NAME_BF_HER is not None:
+    if Config.TG_BOT_TOKEN_BF_HER is not None:
         bot.tgbot = TelegramClient(
             "TG_BOT_TOKEN", api_id=Config.APP_ID, api_hash=Config.API_HASH
         ).start(bot_token=Config.TG_BOT_TOKEN_BF_HER)
         failed2, failed3 = multiple_client()
-        bot.loop.run_until_complete(add_bot(Config.TG_BOT_USER_NAME_BF_HER))
+        bot.loop.run_until_complete(add_bot("MyAssistantBot"))
     else:
         bot.start()
         failed2, failed3 = multiple_client()
