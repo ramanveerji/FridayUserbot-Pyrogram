@@ -12,7 +12,7 @@ from hachoir.metadata import extractMetadata
 from hachoir.parser import createParser
 from pySmartDL import SmartDL
 from telethon.tl.types import DocumentAttributeVideo
-
+from fridaybot.function.FastTelethon import upload_file
 from fridaybot import CMD_HELP, LOGS, TEMP_DOWNLOAD_DIRECTORY
 from fridaybot.events import register
 from fridaybot.utils import edit_or_reply, friday_on_cmd, sudo_cmd
@@ -416,21 +416,21 @@ async def lul(event):
     if downloader.isSuccessful():
         c_time = time.time()
         lul = await mone.edit("Downloaded to `{}` in {} seconds.".format(downloaded_file_name, ms))
+        lol_m = await upload_file(
+            file_name=file_name,
+            client=borg,
+            file=open(downloaded_file_name, 'rb'),
+            progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
+                progress(
+                    d, t, event, c_time, "Uploading This File.", downloaded_file_name
+                )
+            ),
+        )
         await borg.send_file(event.chat_id,
-                        downloaded_file_name,
+                        lol_m,
                         caption=file_name,
                         force_document=False,
                         allow_cache=False,
-                        progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
-                            progress(
-                                d,
-                                t,
-                                event,
-                                c_time,
-                                "Uploading in Progress.......",
-                                downloaded_file_name,
-                            )
-                        ),
                     )
         await lul.delete()
         os.remove(downloaded_file_name)
