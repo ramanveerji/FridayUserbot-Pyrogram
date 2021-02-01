@@ -1,7 +1,7 @@
 import requests
 import html
 
-@friday.on(friday_on_cmd(pattern="analyse"))
+@friday.on(friday_on_cmd(pattern="scan"))
 async def mar(event):
     if event.fwd_from:
         return
