@@ -31,6 +31,12 @@ async def add_bot(bot_token):
     bot.me = await bot.get_me()
     bot.uid = telethon.utils.get_peer_id(bot.me)
     
+async def check_inline_on_warner(ws):
+    w_s = await ws.get_me()
+    if not w_s.bot_inline_placeholder:
+        sed.info("Warning : We Have Detected That You Have Not Turned On Inline For Your Assistant Bot, Please Go To @BotFather To Enable This.")
+    return
+
 async def lol_s(client):
     client.me = await client.get_me()
     client.uid = telethon.utils.get_peer_id(client.me)
@@ -135,6 +141,8 @@ if Config.ENABLE_ASSISTANTBOT == "ENABLE":
 else:
     sed.info("Friday Has Been Installed Sucessfully !")
     sed.info("You Can Visit @FridayOT For Any Support Or Doubts")
+        
+bot.tgbot.loop.run_until_complete(check_inline_on_warner(bot.tgbot))
 
 if len(argv) not in (1, 3, 4):
     bot.disconnect()
