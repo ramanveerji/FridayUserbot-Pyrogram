@@ -61,7 +61,12 @@ async def get_other_plugins(Config, client_s, sed):
         return
     sed.info(f"Downloading. {int(a_plugins.total)} Plugins !")
     for keky in a_plugins:
-        await client_s.download_media(keky.media, "fridaybot/modules/")
+        hmm = keky.media.document.attributes[-1].file_name
+        pathh = "fridaybot/modules/"
+        if os.path.exists(os.path.join(pathh, hmm)):
+            pass
+        else:
+            await client_s.download_media(keky.media, "fridaybot/modules/")
     sed.info("Extra Plugins Downloaded.")
 
 if len(argv) not in (1, 3, 4):
