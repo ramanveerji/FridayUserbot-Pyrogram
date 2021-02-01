@@ -30,7 +30,8 @@ async def add_bot(bot_token):
     await bot.start(bot_token)
     bot.me = await bot.get_me()
     bot.uid = telethon.utils.get_peer_id(bot.me)
-    
+   
+# Bleck Megic         
 async def check_inline_on_warner(ws):
     w_s = await ws.get_me()
     if not w_s.bot_inline_placeholder:
@@ -140,7 +141,7 @@ if Config.ENABLE_ASSISTANTBOT == "ENABLE":
     sed.info("Friday And Assistant Bot Have Been Installed Successfully !")
 else:
     sed.info("Friday Has Been Installed Sucessfully !")
-    sed.info("You Can Visit @FridayOT For Any Support Or Doubts")
+    sed.info("You Can Visit @FridayOT For Any Support Or Doubts.")
         
 bot.tgbot.loop.run_until_complete(check_inline_on_warner(bot.tgbot))
 
