@@ -1359,14 +1359,14 @@ async def download_video(v_url):
         await v_url.delete()
 
 
-@friday.on(friday_on_cmd(pattern=r"hola"))
+@friday.on(friday_on_cmd(pattern=r"hola$"))
 async def hi(event):
     if event.fwd_from:
         return
     await event.edit("╔┓┏╦━╦┓╔┓╔━━╗\n║┗┛║┗╣┃║┃║X X  ║\n║┏┓║┏╣┗╣┗╣╰╯║\n╚┛┗╩━╩━╩━╩━━╝")
 
 
-@friday.on(friday_on_cmd(pattern=r"plus"))
+@friday.on(friday_on_cmd(pattern=r"plus$"))
 async def hi(event):
     if event.fwd_from:
         return
@@ -1375,7 +1375,7 @@ async def hi(event):
     )
 
 
-@friday.on(friday_on_cmd(pattern=r"yes"))
+@friday.on(friday_on_cmd(pattern=r"yes$"))
 async def hi(event):
     if event.fwd_from:
         return
@@ -1384,7 +1384,7 @@ async def hi(event):
     )
 
 
-@friday.on(friday_on_cmd(pattern=r"lol"))
+@friday.on(friday_on_cmd(pattern=r"lol$"))
 async def hi(event):
     if event.fwd_from:
         return
@@ -1393,7 +1393,7 @@ async def hi(event):
     )
 
 
-@friday.on(friday_on_cmd(pattern=r"android"))
+@friday.on(friday_on_cmd(pattern=r"android$"))
 async def hi(event):
     if event.fwd_from:
         return
@@ -1402,7 +1402,7 @@ async def hi(event):
     )
 
 
-@friday.on(friday_on_cmd(pattern=r"hmm"))
+@friday.on(friday_on_cmd(pattern=r"hmm$"))
 async def hi(event):
     if event.fwd_from:
         return
@@ -1411,7 +1411,7 @@ async def hi(event):
     )
 
 
-@friday.on(friday_on_cmd(pattern=r"happybirthday"))
+@friday.on(friday_on_cmd(pattern=r"happybirthday$"))
 async def hi(event):
     if event.fwd_from:
         return
@@ -1420,7 +1420,7 @@ async def hi(event):
     )
 
 
-@friday.on(friday_on_cmd(pattern=r"WTF"))
+@friday.on(friday_on_cmd(pattern=r"WTF$"))
 async def hi(event):
     if event.fwd_from:
         return
@@ -1429,7 +1429,7 @@ async def hi(event):
     )
 
 
-@friday.on(friday_on_cmd(pattern=r"lmao"))
+@friday.on(friday_on_cmd(pattern=r"lmao$"))
 async def hi(event):
     if event.fwd_from:
         return
@@ -1438,7 +1438,7 @@ async def hi(event):
     )
 
 
-@friday.on(friday_on_cmd(pattern=r"no"))
+@friday.on(friday_on_cmd(pattern=r"no$"))
 async def hi(event):
     if event.fwd_from:
         return
