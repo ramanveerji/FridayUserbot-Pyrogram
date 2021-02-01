@@ -1,7 +1,7 @@
 import logging
 from pathlib import Path
 from sys import argv
-
+import os
 import telethon.utils
 from telethon import TelegramClient
 
