@@ -446,6 +446,24 @@ async def lul(event):
     else:
         await mone.edit("Incorrect URL\n {}".format(input_str))
     
+@friday.on(friday_on_cmd(pattern="zeelink"))
+async def lol_kangers(event):
+    input_str = event.raw_text.split(" ", maxsplit=1)[1]
+    if 'zee' in input_str:
+        url = "http://devsexpo.me/zee/"
+        sed = {
+        'url': input_str
+        }
+        lmao = requests.get(url=url, headers=sed).json()
+    else:
+        await event.edit("Only Zee Videos Supported.")
+        return
+    if lmao['success'] is False:
+        await event.edit("Task Failed Due To " + str(lmao['error']))
+        return
+    await event.edit("Direct Link Fetched \nURL : " + str(lmao['url']) + f" You Can Download This By Doing `.ytv {str(lmao['url'])}`")
+        
+        
 CMD_HELP.update(
     {
         "download": ".dl <link|filename> or reply to media\
