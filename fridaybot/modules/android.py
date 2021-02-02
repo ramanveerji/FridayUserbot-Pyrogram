@@ -1,7 +1,7 @@
 # Copyright (C) 2019 The Raphielscape Company LLC.
 # Licensed under the Raphielscape Public License, Version 1.c (the "License");
 # you may not use this file except in compliance with the License.
-# @MrConfused
+
 """ Userbot module containing commands related to android"""
 
 import json
@@ -23,7 +23,7 @@ DEVICES_DATA = (
 @friday.on(friday_on_cmd(outgoing=True, pattern="magisk$"))
 @friday.on(sudo_cmd(pattern="magisk$", allow_sudo=True))
 async def magisk(request):
-    if event.fwd_from:
+    if request.fwd_from:
         return
     """ magisk latest releases """
     magisk_dict = {
@@ -46,7 +46,7 @@ async def magisk(request):
 @friday.on(friday_on_cmd(outgoing=True, pattern=r"device(?: |$)(\S*)"))
 @friday.on(sudo_cmd(pattern="device(?: |$)(\S*)", allow_sudo=True))
 async def device_info(request):
-    if event.fwd_from:
+    if request.fwd_from:
         return
     """ get android device basic info from its codename """
     textx = await request.get_reply_message()
@@ -83,7 +83,7 @@ async def device_info(request):
 )
 @friday.on(sudo_cmd(pattern="codename(?: |)([\S]*)(?: |)([\s\S]*)", allow_sudo=True))
 async def codename_info(request):
-    if event.fwd_from:
+    if request.fwd_from:
         return
     """ search for android codename """
     textx = await request.get_reply_message()
@@ -130,7 +130,7 @@ async def codename_info(request):
 @friday.on(friday_on_cmd(outgoing=True, pattern=r"specs(?: |)([\S]*)(?: |)([\s\S]*)"))
 @friday.on(sudo_cmd(pattern="specs(?: |)([\S]*)(?: |)([\s\S]*)", allow_sudo=True))
 async def devices_specifications(request):
-    if event.fwd_from:
+    if request.fwd_from:
         return
     """ Mobile devices specifications """
     textx = await request.get_reply_message()
@@ -195,7 +195,7 @@ async def devices_specifications(request):
 @friday.on(friday_on_cmd(outgoing=True, pattern=r"twrp(?: |$)(\S*)"))
 @friday.on(sudo_cmd(pattern="twrp(?: |$)(\S*)", allow_sudo=True))
 async def twrp(request):
-    if event.fwd_from:
+    if request.fwd_from:
         return
     """ get android device twrp """
     textx = await request.get_reply_message()
