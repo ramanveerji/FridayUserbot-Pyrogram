@@ -556,6 +556,8 @@ async def hmm(event):
 
 @friday.on(friday_on_cmd(pattern="(flip|blur|tresh|hsv|lab)"))
 async def warnerstark_s(event):
+    if event.fwd_from:
+        return
     ws = event.pattern_match.group(1)
     img = await convert_to_image(event, borg)
     image = cv2.imread(img)
@@ -590,11 +592,22 @@ async def warnerstark_s(event):
         ok = sedpath + "/" + file_name
         cv2.imwrite(ok, lab)
         warnerstark = "Hehe, Lab"
+    await event.delete()
     await borg.send_file(event.chat_id, file=ok, caption=warnerstark)
     for files in (ok, img):
         if files and os.path.exists(files):
             os.remove(files)
      
+@friday.on(friday_on_cmd(pattern="aic$"))
+async def warnerstarkgang(event):
+    if event.fwd_from:
+        return
+    img = await convert_to_image(event, borg)
+    await event.edit("`Coverting This Media To Image Now.`")
+    so = "**Powered By @FridayOT**"
+    await event.delete()
+    await borg.send_file(event.chat_id, file=img, caption=so)
+    
 CMD_HELP.update(
     {
         "imagetools": "**imagetools**\
