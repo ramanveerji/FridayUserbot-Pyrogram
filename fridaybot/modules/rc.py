@@ -18,7 +18,7 @@ async def _(event):
     langs = ["c#", "vb.net", "f#", "java", "python", "c (gcc)", "c++ (gcc)", "php", "pascal", "objective-c", "haskell", "ruby", "perl", "lua", "nasm", "sql server", "javascript", "lisp", "prolog", "go", "scala", "scheme", "node.js", "python 3", "octave", "c (clang)", "c++ (clang)", "c++ (vc++)", "c (vc)", "d", "r", "tcl", "mysql", "postgresql", "oracle", "swift", "bash", "ada", "erlang", "elixir", "ocaml", "kotlin", "brainfuck", "fortran"]
     
     input_st = input_str
-    credits = "friday is the best"
+    credits = "friday is the best. By Friday. Get Your Friday From @FRIDAYOT."
     
     reply_message = await event.get_reply_message()
     co = credits
@@ -26,7 +26,7 @@ async def _(event):
     if input_st.lower() in langs:
       pass
     else:
-      ommhg = await edit_or_reply(event, "Language Not Found")
+      ommhg = await edit_or_reply(event, "Language Not Found. select a language from here. c#, vb.net, f#, java, python, c (gcc), c++ (gcc), php, pascal, objective-c, haskell, ruby, perl, lua, nasm, sql server, javascript, lisp, prolog, go, scala, scheme, node.js, python 3, octave, c (clang), c++ (clang), c++ (vc++), c (vc), d, r, tcl, mysql, postgresql, oracle, swift, bash, ada, erlang, elixir, ocaml, kotlin, brainfuck, fortran")")
       return
     
     kl = "flow language"
@@ -35,7 +35,7 @@ async def _(event):
     else:
       token = "5b5f0ad8-705a-4118-87d4-c0ca29939aeb"
     dat = {
-      "code":reply_message,
+      "code":reply_message.text,
       "lang":input_st,
       "token":token
     }
@@ -79,14 +79,3 @@ warnings : {warnings}
     
     ommhg = await edit_or_reply(event, Bobby)
     
-
-
-
-
-CMD_HELP.update(
-    {
-        "run_code": "**Run Code**\
-\n\n**Syntax : **`.rc <programming language> <reply to code>`\
-\n**Usage :** Runs The Code."
-    }
-)
