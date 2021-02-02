@@ -92,7 +92,16 @@ $ python(3) -m fridaybot
     [-] DATABASE_URL: Data Base Url, You Can Get this from Elephant Sql, Or You can even make a heroku app to get Free DataBase. 
 [+] The fridayUserbot will not work without setting the mandatory vars.
 ```
-
+## Example Of local_config File.
+```
+class Development(object):
+  APP_ID = 462568 
+  API_HASH = "eb06d4abfb49dc3eeb1aeb98ae0f581e"
+  STRING_SESSION = "ncdjkxasgcjsvdxjgsvdhgqwacshxfbcsahfxdcshadcvhqwvdugvd=="
+  TG_BOT_TOKEN_BF_HER = "1220575415:AAF2nMFubPxBvOHIUHIvJk-9"
+  PRIVATE_GROUP_ID = -100535552668
+  DATABASE_URL = "postgres://jchzxwhkwuhbldjnxqfp:142.compute1.amazonaws.com:5432/d14c1pas7r1clf"
+```
 
 
 # Licence
