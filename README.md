@@ -32,10 +32,13 @@
 * Multiple Client Support.
 * AssistantBot Support.
 * Channel Sticker / Post Appender Support.
-* Smart / Fast - Powered By FastTelethon.
-* Smart & Powerfull Tools.
+* Yet Fast - Powered By FastTelethon.
+* Smart & Powerful Tools.
 * Customizable.
 * Much Cleaner And Stable.
+* Daily Maintained.
+* NoSpam+ Support.
+
 
 # Deploying To Heroku
 
@@ -55,44 +58,33 @@
 
 
 
-# Hard Way (For Devs)
+# Self-hosting (For Devs)
 
-Simply clone the repository and run the main file:
+## Simply clone the repository and run the main file:
 ```sh
-# Install Git First.
-git clone https://github.com/DevsExpo/FridayUserbot
+# Install Git First // (Else You Can Download And Upload to Your Local Server)
+$ git clone https://github.com/DevsExpo/FridayUserbot
 # Open Git Cloned File
-cd FridayUserbot
-# Config Virtual Env
-virtualenv -p /usr/bin/python3 venv
-. ./venv/bin/activate
+$ cd FridayUserbot
+# Config Virtual Env (Skip is already Done.)
+$ virtualenv -p /usr/bin/python3 venv
+$ . ./venv/bin/activate
 # Install All Requirements 
-pip install -r requirements.txt
+$ pip(3) install -r requirements.txt
 # Create local_config.py with variables as given below
 # Start Bot 
-python3 -m fridaybot
+$ python(3) -m fridaybot
 ```
-
-
-
-
-
-
-
 
 # Mandatory Configs
 ```
-[+] Only two of the environment variables are mandatory.
-
-[+] This is because of telethon.errors.rpc_error_list.ApiIdPublishedFloodError
-
+[+] If You Running Friday On A Deploy Services With Config Env Support Like Heroku, Zeet.co, Please Set "ENV" To True , Else For Self Host Services Like Digital Ocean Just Make A Local Config And Put Vars Given Below.
     [-] APP_ID:   You can get this value from https://my.telegram.org
     [-] API_HASH :   You can get this value from https://my.telegram.org
     [-] STRING_SESSION : Your String Session, You can get this From Repl or BY running StringGen File Locally
     [-] TG_BOT_TOKEN_BF_HER : Your Bot Token Obtained From @BotFather 
     [-] PRIVATE_GROUP_ID : Id of group where you wanna log important logs, Private group is recommended for this
-    
-[+] The fridaybot will not work without setting the mandatory vars.
+[+] The fridayUserbot will not work without setting the mandatory vars.
 ```
 
 
@@ -102,7 +94,6 @@ python3 -m fridaybot
 * @Chsaiujwal
 * @Meisnub
 * @Midhun_xD
-
 
 
 # Licence
