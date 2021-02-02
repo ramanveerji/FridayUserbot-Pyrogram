@@ -114,7 +114,20 @@ if PM_ON_OFF != "DISABLE":
             if pmpermit_sql.is_approved(event.chat_id):
                 pmpermit_sql.disapprove(event.chat_id)
             await event.edit("Blocked [{}](tg://user?id={})".format(firstname, event.chat_id))
-            await borg(functions.contacts.BlockRequest(event.chat_id))
+            await event.client(functions.contacts.BlockRequest(event.chat_id))
+        elif event.is_group:
+            reply_s = await event.get_reply_message()
+            if not reply_s:
+                await event.edit('`Reply To User To Block Him !`')
+                return
+            replied_user = await event.client(GetFullUserRequest(reply_s.sender_id))
+            firstname = replied_user.user.first_name
+            if pmpermit_sql.is_approved(event.chat_id):
+                pmpermit_sql.disapprove(event.chat_id)
+            await event.edit("Blocked [{}](tg://user?id={})".format(firstname, reply_s.sender_id))
+            await event.client(functions.contacts.BlockRequest(reply_s.sender_id))
+            await asyncio.sleep(3)
+            await event.delete()
 
     @borg.on(friday_on_cmd(pattern="(da|disapprove)$"))
     async def dapprove(event):
