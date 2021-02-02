@@ -108,9 +108,9 @@ if PM_ON_OFF != "DISABLE":
     async def approve_p_m(event):
         if event.fwd_from:
             return
-        replied_user = await event.client(GetFullUserRequest(await event.get_input_chat()))
-        firstname = replied_user.user.first_name
         if event.is_private:
+            replied_user = await event.client(GetFullUserRequest(await event.get_input_chat()))
+            firstname = replied_user.user.first_name
             if pmpermit_sql.is_approved(event.chat_id):
                 pmpermit_sql.disapprove(event.chat_id)
             await event.edit("Blocked [{}](tg://user?id={})".format(firstname, event.chat_id))
