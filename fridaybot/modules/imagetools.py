@@ -457,6 +457,7 @@ async def img(event):
         if files and os.path.exists(files):
             os.remove(files)
         event.delete()
+        
 # Credits To These :
 # https://github.com/midnightmadwalk [TG: @MidnightMadwalk]
 # https://github.com/code-rgb [TG: @DeletedUser420]
@@ -552,8 +553,46 @@ async def hmm(event):
             os.remove(files)
 
 
-
-
+@friday.on(friday_on_cmd(pattern="(flip|blur|tresh|hsv|lab)"))
+async def warnerstark_s(event):
+    ws = event.pattern_match.group(1)
+    img = await convert_to_image(event, borg)
+    image = img
+    if ws == "flip":
+        flipped = cv2.flip(image, 0)
+        file_name = "Flipped.png"
+        ok = sedpath + "/" + file_name
+        cv2.imwrite(ok, flipped)
+        warnerstark = "Hehe, Flipped"
+    elif ws == "blur":
+        blurred = cv2.blur(image, (8,8))
+        file_name = "Blurred.png"
+        ok = sedpath + "/" + file_name
+        cv2.imwrite(ok, blurred)
+        warnerstark = "Hehe, Blurred"
+    elif ws == "tresh":
+        treshold, fridaydevs = cv2.threshold(image, 150, 225, cv2.THRESH_BINARY)
+        file_name = "Tresh.png"
+        ok = sedpath + "/" + file_name
+        cv2.imwrite(ok, fridaydevs)
+        warnerstark = "Hehe, TreshHolded."
+    elif ws == "hsv":
+        hsv = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
+        file_name = "Hsv.png"
+        ok = sedpath + "/" + file_name
+        cv2.imwrite(ok, hsv)
+        warnerstark = "Hehe, Hsv
+    elif ws == "lab":
+        lab = cv2.cvtColor(image, cv2.COLOR_BGR2LAB)
+        file_name = "Lab.png"
+        ok = sedpath + "/" + file_name
+        cv2.imwrite(ok, lab)
+        warnerstark = "Hehe, Lab"
+    await borg.send_file(ok, caption=warnerstark)
+    for files in (ok, img):
+        if files and os.path.exists(files):
+            os.remove(files)
+     
 CMD_HELP.update(
     {
         "imagetools": "**imagetools**\
