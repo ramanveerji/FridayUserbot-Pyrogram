@@ -79,6 +79,10 @@ def command(**args):
             if not allow_edited_updates:
                 bot.add_event_handler(func, events.MessageEdited(**args))
             bot.add_event_handler(func, events.NewMessage(**args))
+            if client2:
+                client2.add_event_handler(func, events.NewMessage(**args))
+            if client3:
+                client3.add_event_handler(func, events.NewMessage(**args))
             try:
                 LOAD_PLUG[file_test].append(func)
             except Exception:
@@ -359,13 +363,15 @@ def register(**args):
         if not disable_edited:
             bot.add_event_handler(func, events.MessageEdited(**args))
         bot.add_event_handler(func, events.NewMessage(**args))
+        if client2:
+            client2.add_event_handler(func, events.NewMessage(**args))
+        if client3:
+            client3.add_event_handler(func, events.NewMessage(**args))
         try:
             LOAD_PLUG[file_test].append(func)
         except Exception:
             LOAD_PLUG.update({file_test: [func]})
-
         return func
-
     return decorator
 
 
