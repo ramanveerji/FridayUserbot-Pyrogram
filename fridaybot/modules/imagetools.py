@@ -16,6 +16,7 @@ import os
 import wget
 from shutil import rmtree
 import cv2
+import cv2 as cv
 import numpy as np
 import requests
 from PIL import Image, ImageDraw, ImageFont
@@ -553,7 +554,7 @@ async def hmm(event):
             os.remove(files)
 
 
-@friday.on(friday_on_cmd(pattern="ido (flip|blur|tresh|hsv|lab)"))
+@friday.on(friday_on_cmd(pattern="(flip|blur|tresh|hsv|lab)"))
 async def warnerstark_s(event):
     ws = event.pattern_match.group(1)
     img = await convert_to_image(event, borg)
@@ -581,7 +582,7 @@ async def warnerstark_s(event):
         file_name = "Hsv.png"
         ok = sedpath + "/" + file_name
         cv2.imwrite(ok, hsv)
-        warnerstark = "Hehe, Hsv
+        warnerstark = "Hehe, Hsv"
     elif ws == "lab":
         lab = cv2.cvtColor(image, cv2.COLOR_BGR2LAB)
         file_name = "Lab.png"
