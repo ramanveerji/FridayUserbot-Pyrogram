@@ -24,7 +24,7 @@ from telethon.tl.types import InputMessagesFilterDocument
 from fridaybot.utils import load_module, start_assistant, load_module_dclient
 from fridaybot.Configs import Config
 
-sed = logging.getLogger("Friday")
+fridaydevs = logging.getLogger("Friday")
         
 async def add_bot(bot_token):
     await bot.start(bot_token)
@@ -35,7 +35,7 @@ async def add_bot(bot_token):
 async def check_inline_on_warner(ws):
     w_s = await ws.get_me()
     if not w_s.bot_inline_placeholder:
-        sed.info("Warning : We Have Detected That You Have Not Turned On Inline Mode For Your Assistant Bot, Please Go To @BotFather And Enable This.")
+        fridaydevs.info("Warning : We Have Detected That You Have Not Turned On Inline Mode For Your Assistant Bot, Please Go To @BotFather And Enable This.")
     return
 
 async def lol_s(client):
@@ -44,30 +44,30 @@ async def lol_s(client):
     
 def multiple_client():
     if client2:
-        sed.info("Starting Client 2")
+        fridaydevs.info("Starting Client 2")
         try:
-            sedbruh = None
+            warnerstark = None
             client2.start()
             client2.loop.run_until_complete(lol_s(client2))
         except:
-            sedbruh = True
-            sed.info("Client 2 Failed To Load. Check Your String.")
+            warnerstark = True
+            fridaydevs.info("Client 2 Failed To Load. Check Your String.")
     if client3:
-        sed.info("Starting Client 3")
+        fridaydevs.info("Starting Client 3")
         try:
-            lmaobruh = None
+            chsaiujwal = None
             cleint3.start
             client3.loop.run_until_complete(lol_s(client3))
         except:
-            lmaobruh = True
-            sed.info("Client 3 Failed To Load.")
+            chsaiujwal = True
+            fridaydevs.info("Client 3 Failed To Load.")
     if not client2:
-        sedbruh = True
+        warnerstark = True
     if not client3:
-        lmaobruh = True
-    return sedbruh, lmaobruh    
+        chsaiujwal = True
+    return warnerstark, chsaiujwal    
 
-async def get_other_plugins(Config, client_s, sed):
+async def get_other_plugins(Config, client_s, fridaydevs):
     try:
         a_plugins = await client_s.get_messages(
             entity=Config.LOAD_OTHER_PLUGINS_CHNNL,
@@ -76,17 +76,16 @@ async def get_other_plugins(Config, client_s, sed):
             search=".py",
         )
     except:
-        sed.info("Failed To Other Modules :(")
+        fridaydevs.info("Failed To Other Modules :(")
         return
-    sed.info(f"Downloading. {int(a_plugins.total)} Plugins !")
-    for keky in a_plugins:
-        hmm = keky.media.document.attributes[-1].file_name
+    for meisnub in a_plugins:
+        hmm = meisnub.media.document.attributes[-1].file_name
         pathh = "fridaybot/modules/"
         if os.path.exists(os.path.join(pathh, hmm)):
             pass
         else:
-            await client_s.download_media(keky.media, "fridaybot/modules/")
-    sed.info("Extra Plugins Downloaded.")
+            await client_s.download_media(meisnub.media, "fridaybot/modules/")
+    fridaydevs.info("Extra Plugins Downloaded.")
 
 if len(argv) not in (1, 3, 4):
     bot.disconnect()
@@ -103,7 +102,7 @@ else:
         failed2, failed3 = multiple_client()
 
 if Config.LOAD_OTHER_PLUGINS:
-        bot.loop.run_until_complete(get_other_plugins(Config, bot, sed))
+        bot.loop.run_until_complete(get_other_plugins(Config, bot, fridaydevs))
         
 import glob
 
@@ -116,9 +115,9 @@ for name in files:
         try:
             load_module(shortname.replace(".py", ""))    
         except Exception as e:
-            sed.info("------------------------")
-            sed.info("Failed To Load : " + str(shortname.replace(".py", "")) + f" Error : {str(e)}")
-            sed.info("------------------------")
+            fridaydevs.info("------------------------")
+            fridaydevs.info("Failed To Load : " + str(shortname.replace(".py", "")) + f" Error : {str(e)}")
+            fridaydevs.info("------------------------")
         if failed2 is None:
             try:
                 load_module_dclient(shortname.replace(".py", ""), client2)
@@ -138,10 +137,10 @@ if Config.ENABLE_ASSISTANTBOT == "ENABLE":
             path1 = Path(f.name)
             shortname = path1.stem
             start_assistant(shortname.replace(".py", ""))
-    sed.info("Friday And Assistant Bot Have Been Installed Successfully !")
+    fridaydevs.info("Friday And Assistant Bot Have Been Installed Successfully !")
 else:
-    sed.info("Friday Has Been Installed Sucessfully !")
-    sed.info("You Can Visit @FridayOT For Any Support Or Doubts.")
+    fridaydevs.info("Friday Has Been Installed Sucessfully !")
+    fridaydevs.info("You Can Visit @FridayOT For Any Support Or Doubts.")
         
 bot.tgbot.loop.run_until_complete(check_inline_on_warner(bot.tgbot))
 
