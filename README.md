@@ -89,6 +89,7 @@ $ python(3) -m fridaybot
     [-] STRING_SESSION : Your String Session, You can get this From Repl or BY running StringGen File Locally
     [-] TG_BOT_TOKEN_BF_HER : Your Bot Token Obtained From @BotFather 
     [-] PRIVATE_GROUP_ID : Id of group where you wanna log important logs, Private group is recommended for this
+    [-] DATABASE_URL: Data Base Url, You Can Get this from Elephant Sql, Or You can even make a heroku app to get Free DataBase. 
 [+] The fridayUserbot will not work without setting the mandatory vars.
 ```
 
