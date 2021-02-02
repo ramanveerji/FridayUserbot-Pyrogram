@@ -37,6 +37,33 @@ USER_BOT_NO_WARN = (
     "**I Request You To Choose A Reason You Have Came For** 👀 \n\n"
     f"**{CUSTOM_MIDDLE_PMP}**"
 )
+
+@borg.on(friday_on_cmd(pattern="block$"))
+async def approve_p_m(event):
+    if event.fwd_from:
+        return
+    if event.is_private:
+        replied_user = await event.client(GetFullUserRequest(await event.get_input_chat()))
+        firstname = replied_user.user.first_name
+        if pmpermit_sql.is_approved(event.chat_id):
+            pmpermit_sql.disapprove(event.chat_id)
+        await event.edit("Blocked [{}](tg://user?id={})".format(firstname, event.chat_id))
+        await event.client(functions.contacts.BlockRequest(event.chat_id))
+    elif event.is_group:
+        reply_s = await event.get_reply_message()
+        if not reply_s:
+            await event.edit('`Reply To User To Block Him !`')
+            return
+        replied_user = await event.client(GetFullUserRequest(reply_s.sender_id))
+        firstname = replied_user.user.first_name
+        if pmpermit_sql.is_approved(event.chat_id):
+            pmpermit_sql.disapprove(event.chat_id)
+        await event.edit("Blocked [{}](tg://user?id={})".format(firstname, reply_s.sender_id))
+        await event.client(functions.contacts.BlockRequest(reply_s.sender_id))
+        await asyncio.sleep(3)
+        await event.delete()
+        
+        
 if PM_ON_OFF != "DISABLE":
     @borg.on(events.NewMessage(outgoing=True))
     async def auto_approve_for_out_going(event):
@@ -103,31 +130,6 @@ if PM_ON_OFF != "DISABLE":
             elif pmpermit_sql.is_approved(reply_s.sender_id):
                 await event.edit('`User Already Approved !`')
                 await event.delete()
-                
-    @borg.on(friday_on_cmd(pattern="block$"))
-    async def approve_p_m(event):
-        if event.fwd_from:
-            return
-        if event.is_private:
-            replied_user = await event.client(GetFullUserRequest(await event.get_input_chat()))
-            firstname = replied_user.user.first_name
-            if pmpermit_sql.is_approved(event.chat_id):
-                pmpermit_sql.disapprove(event.chat_id)
-            await event.edit("Blocked [{}](tg://user?id={})".format(firstname, event.chat_id))
-            await event.client(functions.contacts.BlockRequest(event.chat_id))
-        elif event.is_group:
-            reply_s = await event.get_reply_message()
-            if not reply_s:
-                await event.edit('`Reply To User To Block Him !`')
-                return
-            replied_user = await event.client(GetFullUserRequest(reply_s.sender_id))
-            firstname = replied_user.user.first_name
-            if pmpermit_sql.is_approved(event.chat_id):
-                pmpermit_sql.disapprove(event.chat_id)
-            await event.edit("Blocked [{}](tg://user?id={})".format(firstname, reply_s.sender_id))
-            await event.client(functions.contacts.BlockRequest(reply_s.sender_id))
-            await asyncio.sleep(3)
-            await event.delete()
 
     @borg.on(friday_on_cmd(pattern="(da|disapprove)$"))
     async def dapprove(event):
