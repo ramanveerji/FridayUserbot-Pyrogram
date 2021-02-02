@@ -3,8 +3,8 @@ from fridaybot.utils import friday_on_cmd
 from fridaybot.utils import edit_or_reply, friday_on_cmd, sudo_cmd
 import requests
 
-@friday.on(friday_on_cmd(pattern="rc ?(.*)"))
-@friday.on(sudo_cmd(pattern="rc ?(.*)", allow_sudo=True))
+@friday.on(friday_on_cmd(pattern="runcode ?(.*)"))
+@friday.on(sudo_cmd(pattern="runcode ?(.*)", allow_sudo=True))
 async def _(event):
     if event.fwd_from:
         return
@@ -79,12 +79,3 @@ warnings : {warnings}
     
     ommhg = await edit_or_reply(event, Bobby)
     
-
-
-CMD_HELP.update(	
-    {	
-        "run_code": "**Run Code**\	
-\n\n**Syntax : **`.rc <programming language> <reply to code>`\	
-\n**Usage :** Runs The Code."	
-    }	
-)
