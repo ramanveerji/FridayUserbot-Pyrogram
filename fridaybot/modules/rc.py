@@ -79,3 +79,12 @@ warnings : {warnings}
     
     ommhg = await edit_or_reply(event, Bobby)
     
+
+
+CMD_HELP.update(	
+    {	
+        "run_code": "**Run Code**\	
+\n\n**Syntax : **`.rc <programming language> <reply to code>`\	
+\n**Usage :** Runs The Code."	
+    }	
+)
