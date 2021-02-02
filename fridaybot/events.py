@@ -15,7 +15,7 @@ from traceback import format_exc
 
 from telethon import events
 
-from fridaybot import LOGSPAMMER, PRIVATE_GROUP_ID, bot
+from fridaybot import LOGSPAMMER, PRIVATE_GROUP_ID, bot, client2 as starkclient, client3 as warnerclient
 
 
 def register(**args):
@@ -136,10 +136,13 @@ def register(**args):
                     remove("error.log")
             else:
                 pass
-
         if not disable_edited:
             bot.add_event_handler(wrapper, events.MessageEdited(**args))
         bot.add_event_handler(wrapper, events.NewMessage(**args))
+        if starkclient:
+            starkclient.add_event_handler(func, events.NewMessage(**args))
+        if warnerclient:
+            warnerclient.add_event_handler(func, events.NewMessage(**args))
         return wrapper
 
     return decorator
