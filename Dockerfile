@@ -5,6 +5,7 @@ RUN apt-get update && apt upgrade -y && apt-get install sudo -y
 
 RUN apt-get install -y\
     coreutils \
+    apt-utils \
     bash \
     bzip2 \
     curl \
