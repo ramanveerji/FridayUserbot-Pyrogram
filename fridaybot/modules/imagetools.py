@@ -22,7 +22,7 @@ import requests
 from PIL import Image, ImageDraw, ImageFont
 from telegraph import upload_file
 from fridaybot import CMD_HELP
-from fridaybot.function import convert_to_image, crop_vid, runcmd
+from fridaybot.function import convert_to_image, crop_vid, runcmd, tgs_to_gif
 from fridaybot.utils import friday_on_cmd, sudo_cmd
 import html
 from telethon.tl.functions.photos import GetUserPhotosRequest
@@ -608,6 +608,24 @@ async def warnerstarkgang(event):
     await event.delete()
     await borg.send_file(event.chat_id, file=img, caption=so)
     
+@friday.on(friday_on_cmd(pattern="tgstosticker(?: |$)(.*)"))
+async def warnerstarkgangz(event):
+    if event.fwd_from:
+        return
+    if not event.reply_to_msg_id:
+        await event.edit("`Please Reply To Tgs To Convert To Gif.`")
+        return
+    if event.pattern_match.group(1):
+        quality = event.pattern_match.group(1)
+    else:
+        quality = 512
+    hmm_ws = await event.get_reply_message()
+    warner_s = await friday.download_media(hmm_ws.media)
+    ok_stark = tgs_to_gif(warner_s, quality)
+    await event.edit("`Coverting This Tgs To Gif Now !`")
+    await event.delete()
+    await borg.send_file(event.chat_id, file=ok_stark)
+        
 CMD_HELP.update(
     {
         "imagetools": "**imagetools**\
