@@ -608,7 +608,7 @@ async def warnerstarkgang(event):
     await event.delete()
     await borg.send_file(event.chat_id, file=img, caption=so)
     
-@friday.on(friday_on_cmd(pattern="tgstosticker(?: |$)(.*)"))
+@friday.on(friday_on_cmd(pattern="tgstogif(?: |$)(.*)"))
 async def warnerstarkgangz(event):
     if event.fwd_from:
         return
@@ -624,7 +624,7 @@ async def warnerstarkgangz(event):
     warner_s = await friday.download_media(hmm_ws.media)
     ok_stark = tgs_to_gif(warner_s, quality)
     so = "**Powered By @FridayOT**"
-    await event.edit("`Coverting This Tgs To Gif Now !`")
+    await event.edit("`Converting This Tgs To Gif Now !`")
     await event.delete()
     await borg.send_file(event.chat_id, file=ok_stark, caption=so)
         
