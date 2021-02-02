@@ -559,6 +559,7 @@ async def warnerstark_s(event):
     ws = event.pattern_match.group(1)
     img = await convert_to_image(event, borg)
     image = cv2.imread(img)
+    await event.edit("`Processing..`")
     if ws == "flip":
         flipped = cv2.flip(image, 0)
         file_name = "Flipped.png"
@@ -589,7 +590,7 @@ async def warnerstark_s(event):
         ok = sedpath + "/" + file_name
         cv2.imwrite(ok, lab)
         warnerstark = "Hehe, Lab"
-    await borg.send_file(file=ok, caption=warnerstark)
+    await borg.send_file(event.chat_id, file=ok, caption=warnerstark)
     for files in (ok, img):
         if files and os.path.exists(files):
             os.remove(files)
