@@ -8,6 +8,8 @@ RUN apt-get install -y\
     apt-utils \
     bash \
     bzip2 \
+    build-essential \
+    cmake \
     curl \
     tesseract-ocr \
     tesseract-ocr-eng \
