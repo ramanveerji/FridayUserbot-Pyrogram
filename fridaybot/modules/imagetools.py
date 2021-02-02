@@ -589,7 +589,7 @@ async def warnerstark_s(event):
         ok = sedpath + "/" + file_name
         cv2.imwrite(ok, lab)
         warnerstark = "Hehe, Lab"
-    await borg.send_file(ok, caption=warnerstark)
+    await borg.send_file(file=ok, caption=warnerstark)
     for files in (ok, img):
         if files and os.path.exists(files):
             os.remove(files)
