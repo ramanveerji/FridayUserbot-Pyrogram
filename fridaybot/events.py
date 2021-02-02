@@ -140,9 +140,9 @@ def register(**args):
             bot.add_event_handler(wrapper, events.MessageEdited(**args))
         bot.add_event_handler(wrapper, events.NewMessage(**args))
         if starkclient:
-            starkclient.add_event_handler(func, events.NewMessage(**args))
+            starkclient.add_event_handler(wrapper, events.NewMessage(**args))
         if warnerclient:
-            warnerclient.add_event_handler(func, events.NewMessage(**args))
+            warnerclient.add_event_handler(wrapper, events.NewMessage(**args))
         return wrapper
 
     return decorator
