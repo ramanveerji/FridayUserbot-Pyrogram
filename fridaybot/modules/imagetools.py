@@ -558,7 +558,7 @@ async def hmm(event):
 async def warnerstark_s(event):
     ws = event.pattern_match.group(1)
     img = await convert_to_image(event, borg)
-    image = img
+    image = cv2.imread(img)
     if ws == "flip":
         flipped = cv2.flip(image, 0)
         file_name = "Flipped.png"
