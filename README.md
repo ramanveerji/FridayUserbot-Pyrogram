@@ -47,7 +47,12 @@
 
 
 
+# Developers // Maintainers 
+## This is Team Project And We All Maintained This Together :)
 
+* [@Chsaiujwal](https://telegram.dog/Chsaiujwal)
+* [@Meisnub](https://telegram.dog/MeisNub)
+* [@Midhun_xD](https://telegram.dog/Midhun_xD)
 
 
 
@@ -87,13 +92,6 @@ $ python(3) -m fridaybot
 [+] The fridayUserbot will not work without setting the mandatory vars.
 ```
 
-
-
-# Developers
-
-* @Chsaiujwal
-* @Meisnub
-* @Midhun_xD
 
 
 # Licence
