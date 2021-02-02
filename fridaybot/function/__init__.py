@@ -20,6 +20,7 @@ import asyncio
 import os
 from pathlib import Path
 import wget
+import lottie
 from fridaybot.utils import load_module
 from telethon.tl.types import DocumentAttributeAudio
 from youtube_dl import YoutubeDL
@@ -662,5 +663,11 @@ async def is_admin(event, user):
     else:
         is_mod = False
     return is_mod
-                  
-                  
+    
+# By @Krishna_Singhal 
+def tgs_to_gif(sticker_path: str, quality: int = 256) -> str:                  
+    dest = os.path.join(Config.TMP_DOWNLOAD_DIRECTORY, "animation.gif")
+    with open(dest, 'wb') as t_g:
+        lottie.exporters.gif.export_gif(lottie.parsers.tgs.parse_tgs(sticker_path), t_g, quality, 1)
+    os.remove(sticker_path)
+    return dest
