@@ -12,7 +12,7 @@ logger = Config.PRIVATE_GROUP_BOT_API_ID
 Heroku = heroku3.from_key(Config.HEROKU_API_KEY)
 
 if url:
-  async def foo():
+  async def tracker():
       page = requests.get(url, headers = headers)
       soup = BeautifulSoup(page.content, 'html.parser')
       title = soup.find(id = "productTitle").get_text()
@@ -30,8 +30,8 @@ if url:
           except:
             pass
       else:
-          return
+          logger.info("Test, Its working")
           
-  def foo_cb():
-      bot.loop.create_task(foo())
-  bot.loop.call_later(10 * 60, foo_cb)
+  def dummyfunc():
+      bot.loop.create_task(tracker())
+  bot.loop.call_later(10 * 60, dummyfunc)
