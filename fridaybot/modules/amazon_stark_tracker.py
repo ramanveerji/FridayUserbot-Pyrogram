@@ -21,6 +21,7 @@ from bs4 import BeautifulSoup
 async def _(event):
     if event.fwd_from:
         return
+    await event.edit("`Processing..`")
     headers = {"User-Agent": 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.138 Safari/537.36'}
     url = event.text.split(" ", maxsplit=1)[1]
     try:
@@ -30,7 +31,7 @@ async def _(event):
         price = soup.find(id = "priceblock_ourprice").get_text()
         title = title.strip()
         price = price[2:].split(',')
-        price = float("".join(price))
+        price = round(float("".join(price)))
     except:
         await event.edit("**Invalid Url !**")
         return
@@ -44,7 +45,16 @@ async def _(event):
 async def _(event):
     if event.fwd_from:
         return
+    await event.edit("`Processing..`")
     url = event.text.split(" ", maxsplit=1)[1]
+    if url == "all":
+        ws = get_all_urls()
+        for i in ws:
+            try:
+                rm_tracker(str(i))
+            except:
+                pass
+        await event.edit("Sucessfully Removed All Trackers")
     if not is_tracker_in_db(str(url)):
         await event.edit("**Tracker Not Found In Db**")
         return
@@ -52,6 +62,7 @@ async def _(event):
     await event.edit(f"**Sucessfully Removed From TrackerList**")
     
 async def track_amazon():
+    headers = {"User-Agent": 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.138 Safari/537.36'}
     ws = get_all_urls() 
     if len(ws) == 0:
         return
@@ -64,7 +75,7 @@ async def track_amazon():
             price = soup.find(id = "priceblock_ourprice").get_text()
             title = title.strip()
             price = price[2:].split(',')
-            price = float("".join(price))
+            price = round(float("".join(price)))
             if (price <= pm):
                 await borg.send_message(Config.PRIVATE_GROUP_ID, f"#Tracker - Price Reduced \nProduct Name : {title} \nCurrent price : {price}")
                 rm_tracker(str(url))
@@ -72,5 +83,5 @@ async def track_amazon():
                 pass
 
 scheduler = AsyncIOScheduler(timezone="Asia/Kolkata")
-scheduler.add_job(track_amazon, trigger="cron", hour=16, minute=10)
+scheduler.add_job(track_amazon, trigger="cron", hour=17, minute=10)
 scheduler.start()
