@@ -66,9 +66,9 @@ async def track_amazon():
     ws = get_all_urls() 
     if len(ws) == 0:
         return
-    kk, pp = get_all_tracker()
+    kk = get_all_tracker()
     for url in kk.amazon_url:
-        for pm in pp.budget:
+        for pm in kk.budget:
             page = requests.get(url, headers = headers)
             soup = BeautifulSoup(page.content, 'html.parser')
             title = soup.find(id = "productTitle").get_text()
