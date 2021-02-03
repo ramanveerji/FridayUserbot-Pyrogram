@@ -35,25 +35,25 @@ def add_new_tracker(budget: int, amazon_url):
     SESSION.commit()
 
 
-def get_all_tracker(budget: int):
+def get_all_tracker(amazon_url: str):
     try:
-        s__ = SESSION.query(Anp).get(str(budget))
+        s__ = SESSION.query(Anp).get(str(amazon_url))
         return int(s__.budget), s__.amazon_url
     finally:
         SESSION.close()
 
 
-def is_tracker_in_db(budget: int):
+def is_tracker_in_db(amazon_url: str):
     try:
-        s__ = SESSION.query(Anp).get(str(budget))
+        s__ = SESSION.query(Anp).get(str(amazon_url))
         if s__:
-            return s__.amazon_url
+            return int(s__.budget)
     finally:
         SESSION.close()
 
 
-def rm_tracker(budget):
-    warner = SESSION.query(Anp).get(str(budget))
+def rm_tracker(amazon_url: str):
+    warner = SESSION.query(Anp).get(str(amazon_url))
     if warner:
         SESSION.delete(warner)
         SESSION.commit()
