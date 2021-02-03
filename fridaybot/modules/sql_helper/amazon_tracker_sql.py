@@ -43,7 +43,8 @@ def get_tracker_info(amazon_url: str):
 def is_tracker_in_db(amazon_url: str):
     try:
         s__ = SESSION.query(Anp).get(str(amazon_url))
-        return int(s__.budget)
+        if s__:
+            return int(s__.budget)
     finally:
         SESSION.close()
         
