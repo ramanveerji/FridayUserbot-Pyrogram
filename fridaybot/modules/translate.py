@@ -69,21 +69,16 @@ async def _(event):
         lmao_bruh = text
         lmao = translator.detect(text)
         after_tr_text = lmao
-        source_lano = translator.detect[after_tr_text]
+        source_lano = translator.detect(text)
         try:
            source_lan = source_lano[1]
         except:
            source_lan = source_lano[0]
-        transl_lano = translator.detect[lan]
-        try:
-           transl_lan = transl_lano[1]
-        except:
-           transl_lan = transl_lano[0]
         output_str = f"""**TRANSLATED SUCCESSFULLY**
 **Source ({source_lan})**:
 `{text}`
 
-**Translation ({transl_lan})**:
+**Translation ({lan})**:
 `{translated}`"""
       
         if len(output_str) >= 4096:
