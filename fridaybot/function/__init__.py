@@ -671,3 +671,29 @@ def tgs_to_gif(sticker_path: str, quality: int = 256) -> str:
         lottie.exporters.gif.export_gif(lottie.parsers.tgs.parse_tgs(sticker_path), t_g, quality, 1)
     os.remove(sticker_path)
     return dest
+   
+# Ye Bhi Kang Karlega Kya? White eye madarchod   
+async def fetch_audio(event, ws):
+    if not event.reply_to_msg_id:
+        await event.edit("`Reply To A Video / Audio.`")
+        return
+    warner_stark = await event.get_reply_message()    
+    if not or warner_stark.audio or warner_stark.video:
+        await event.reply("`Format Not Supported`")
+        return
+    if warner_stark.video:
+        await event.edit("`Video Detected, Converting To Audio !`")
+        warner = await ws.download_media(warner_stark.media)
+        warner_bros = "friday.mp4"
+        os.rename(warner, warner_bros)
+        stark_cmd = f"ffmpeg -i {warner_bros} -map 0:a friday.mp3"
+        stdout, stderr = (await runcmd(cmd))[:2]
+        os.remove(warner)
+        final_warner = "friday.mp3"
+    elif warner_stark.audio:
+        warner = await ws.download_media(warner_stark.media)
+        final_warner = "friday.mp3"
+        os.rename(warner, final_warner)
+        os.remove(warner)
+    await event.edit("`Almost Done!`")    
+    return final_warner
