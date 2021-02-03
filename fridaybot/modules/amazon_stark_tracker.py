@@ -83,5 +83,5 @@ async def track_amazon():
                 pass
 
 scheduler = AsyncIOScheduler(timezone="Asia/Kolkata")
-scheduler.add_job(track_amazon, trigger="cron", hour=17, minute=28)
+scheduler.add_job(track_amazon, trigger="cron", hour=18, minute=20)
 scheduler.start()
