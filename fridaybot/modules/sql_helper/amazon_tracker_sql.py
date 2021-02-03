@@ -29,7 +29,7 @@ class Anp(BASE):
 Anp.__table__.create(checkfirst=True)
 
 def add_new_tracker(amazon_url, budget: int):
-    tracker_adder = Anp(str(url), str(budget))
+    tracker_adder = Anp(str(amazon_url), str(budget))
     SESSION.add(tracker_adder)
     SESSION.commit()
 
