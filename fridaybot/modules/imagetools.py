@@ -619,13 +619,13 @@ async def warnerstarkgangz(event):
         quality = event.pattern_match.group(1)
     else:
         quality = 512
-    await event.edit("`Processing..`")
+    kk = await event.edit("`Processing..`")
     hmm_ws = await event.get_reply_message()
     warner_s = await friday.download_media(hmm_ws.media)
     ok_stark = tgs_to_gif(warner_s, quality)
     so = "**Powered By @FridayOT**"
-    await event.edit("`Converting This Tgs To Gif Now !`")
-    await event.delete()
+    lol_m = await kk.edit("`Converting This Tgs To Gif Now !`")
+    await lol_m.delete()
     await borg.send_file(event.chat_id, file=ok_stark, caption=so)
         
 CMD_HELP.update(
