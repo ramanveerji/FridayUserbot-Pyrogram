@@ -27,6 +27,7 @@ elif ENV:
         PLUGIN_CHANNEL = int(os.environ.get("PLUGIN_CHANNEL", -100))
         PRIVATE_GROUP_BOT_API_ID = int(os.environ.get("PRIVATE_GROUP_BOT_API_ID", -100))
         NO_SONGS = bool(os.environ.get("NO_SONGS", False))
+        PING_SERVERS = bool(os.environ.get("PING_SERVERS", False))
         DOWNLOAD_PFP_URL_CLOCK = os.environ.get("DOWNLOAD_PFP_URL_CLOCK", None)
         G_DRIVE_CLIENT_ID = os.environ.get("G_DRIVE_CLIENT_ID", None)
         G_DRIVE_CLIENT_SECRET = os.environ.get("G_DRIVE_CLIENT_SECRET", None)
