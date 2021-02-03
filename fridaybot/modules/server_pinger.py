@@ -13,6 +13,7 @@
 
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 import requests
+import urllib.parse
 from fridaybot.modules.sql_helper import server_pinger_sql as warnerstark
 
 if Config.PING_SERVERS:
@@ -21,18 +22,20 @@ if Config.PING_SERVERS:
         if event.fwd_from:
             return
         await event.edit("`Processing..`")
-        url = event.text.split(" ", maxsplit=1)[1]
+        url_s = event.text.split(" ", maxsplit=1)[1]
+        url = parse.quote(url_s)
         if warnerstark.is_ping_indb(str(url)):
             await event.edit("**Server Already Found In Db !**")
             return
         warnerstark.add_ping(url)
         await event.edit(f"**URL :** `{url}` **Sucessfully Added To Db**")
-    @friday.on(friday_on_cmd(pattern="aping"))
+    @friday.on(friday_on_cmd(pattern="rping"))
     async def _(event):
         if event.fwd_from:
             return
         await event.edit("`Processing..`")
-        url = event.text.split(" ", maxsplit=1)[1]
+        url_s = event.text.split(" ", maxsplit=1)[1]
+        url = parse.quote(url_s)
         if not warnerstark.is_ping_indb(str(url)):
             await event.edit("**Server Not Found In Db !**")
             return
