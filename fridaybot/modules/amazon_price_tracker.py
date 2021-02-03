@@ -26,7 +26,7 @@ if url:
             app = Heroku.app(Config.HEROKU_APP_NAME)
             heroku_var = app.config()
             del heroku_var['AMAZON_TRACK_URL']
-            def heroku_var['BUDGET_AMAZON']
+            del heroku_var['BUDGET_AMAZON']
           except:
             pass
       else:
