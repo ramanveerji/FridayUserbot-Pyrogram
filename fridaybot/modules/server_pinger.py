@@ -22,7 +22,7 @@ if Config.PING_SERVERS:
         if event.fwd_from:
             return
         await event.edit("`Processing..`")
-        url_s = event.text.split(" ", maxsplit=1)[1]
+        url = event.text.split(" ", maxsplit=1)[1]
         if warnerstark.is_ping_indb(str(url)):
             await event.edit("**Server Already Found In Db !**")
             return
