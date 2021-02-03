@@ -29,14 +29,14 @@ class Anp(BASE):
 Anp.__table__.create(checkfirst=True)
 
 def add_new_tracker(amazon_url, budget: int):
-    tracker_adder = Anp(str(budget), amazon_url)
+    tracker_adder = Anp(str(url), str(budget))
     SESSION.add(tracker_adder)
     SESSION.commit()
 
 def get_tracker_info(amazon_url: str):
     try:
         s__ = SESSION.query(Anp).get(str(amazon_url))
-        return int(s__.budget), s__.amazon_url
+        return int(s__.budget), str(s__.amazon_url)
     finally:
         SESSION.close()
         
