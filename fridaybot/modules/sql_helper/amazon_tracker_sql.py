@@ -21,19 +21,17 @@ class Anp(BASE):
     amazon_url = Column(UnicodeText, primary_key=True)
     budget = Column(String(14))
 
-    def __init__(self, budget, amazon_url):
-        self.budget = budget
+    def __init__(self, amazon_url, budget):
         self.amazon_url = amazon_url
+        self.budget = budget
 
 
 Anp.__table__.create(checkfirst=True)
-
 
 def add_new_tracker(amazon_url, budget: int):
     tracker_adder = Anp(str(budget), amazon_url)
     SESSION.add(tracker_adder)
     SESSION.commit()
-
 
 def get_tracker_info(amazon_url: str):
     try:
@@ -50,10 +48,10 @@ def is_tracker_in_db(amazon_url: str):
         SESSION.close()
         
         
-def get_all_tracker():
-    stark, starky = SESSION.query(Anp).all()
+def get_all_urls():
+    stark = [r.amazon_url for r in SESSION.query(Anp).all()]
     SESSION.close()
-    return stark, starky
+    return stark
 
 
 def rm_tracker(amazon_url: str):
