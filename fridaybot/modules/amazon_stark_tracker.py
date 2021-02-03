@@ -1,3 +1,17 @@
+#    Copyright (C) Midhun KM 2020-2021
+#    This program is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU Affero General Public License as published by
+#    the Free Software Foundation, either version 3 of the License, or
+#
+#    This program is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU Affero General Public License for more details.
+#
+#    You should have received a copy of the GNU Affero General Public License
+#    along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from fridaybot.modules.sql_helper.amazon_tracker_sql import add_new_tracker, is_tracker_in_db, rm_tracker, get_tracker_info, rm_tracker, get_all_tracker, get_all_urls
 import requests
@@ -5,7 +19,7 @@ from bs4 import BeautifulSoup
 
 @friday.on(friday_on_cmd(pattern="amt"))
 async def _(event):
-    hmm = event.text.split(" ", maxsplit=1)[1]
+    url = event.text.split(" ", maxsplit=1)[1]
     try:
         page = requests.get(url, headers = headers)
         soup = BeautifulSoup(page.content, 'html.parser')
@@ -25,20 +39,20 @@ async def _(event):
     
 @friday.on(friday_on_cmd(pattern="rmt"))
 async def _(event):
-    hmm = event.text.split(" ", maxsplit=1)[1]
+    url = event.text.split(" ", maxsplit=1)[1]
     if not is_tracker_in_db(str(url)):
         await event.edit("**Tracker Not Found In Db**")
         return
     rm_tracker(str(url))
     await event.edit(f"**Sucessfully Removed From TrackerList**")
     
-ws = get_all_urls() 
-
-if len(ws) != 0:
-  async def track_amazon():
-      kk, pp = get_all_tracker()
-      for url.amazon_url in kk:
-          for pm.budget in pp:
+async def track_amazon():
+    ws = get_all_urls() 
+    if len(ws) == 0:
+        return
+    kk, pp = get_all_tracker()
+    for url in kk.amazon_url:
+        for pm in pp.budget:
             page = requests.get(url, headers = headers)
             soup = BeautifulSoup(page.content, 'html.parser')
             title = soup.find(id = "productTitle").get_text()
@@ -52,6 +66,6 @@ if len(ws) != 0:
             else:
                 pass
 
-  scheduler = AsyncIOScheduler(timezone="Asia/Kolkata")
-  scheduler.add_job(track_amazon, trigger="cron", hour=23, minute=59)
-  scheduler.start()
+scheduler = AsyncIOScheduler(timezone="Asia/Kolkata")
+scheduler.add_job(track_amazon, trigger="cron", hour=16, minute=10)
+scheduler.start()
