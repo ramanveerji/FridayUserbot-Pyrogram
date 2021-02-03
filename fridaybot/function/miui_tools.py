@@ -108,8 +108,6 @@ async def diff_miui_updates(new, old):
                     except KeyError:
                         # when a new device is added
                         changes.update({codename: [item]})
-    if changes:
-        DIFF_LOGGER.info(f"MIUI changes:\n{str(changes)}")
     return changes
     
     
