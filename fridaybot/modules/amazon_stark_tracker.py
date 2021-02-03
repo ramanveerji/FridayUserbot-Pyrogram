@@ -1,5 +1,5 @@
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
-from fridaybot.modules.sql_helper.amazon_tracker_sql import add_new_tracker, get_all_users, is_tracker_in_db, rm_tracker, get_tracker_info, rm_tracker
+from fridaybot.modules.sql_helper.amazon_tracker_sql import add_new_tracker, is_tracker_in_db, rm_tracker, get_tracker_info, rm_tracker, get_all_tracker, get_all_urls
 import requests
 from bs4 import BeautifulSoup
 
@@ -37,8 +37,8 @@ ws = get_all_urls()
 if len(ws) != 0:
   async def track_amazon():
       kk, pp = get_all_tracker()
-      for url in kk:
-          for pm in pp:
+      for url.amazon_url in kk:
+          for pm.budget in pp:
             page = requests.get(url, headers = headers)
             soup = BeautifulSoup(page.content, 'html.parser')
             title = soup.find(id = "productTitle").get_text()
