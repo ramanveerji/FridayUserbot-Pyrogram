@@ -14,6 +14,7 @@
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 import requests
 import urllib.parse
+from apscheduler.executors.pool import ThreadPoolExecutor, ProcessPoolExecutor
 from fridaybot.modules.sql_helper import server_pinger_sql as warnerstark
 
 if Config.PING_SERVERS:
@@ -58,6 +59,11 @@ if Config.PING_SERVERS:
         logger.info(f"Sucessfully Pinged {success_l} Urls Out Of {len(url_s)}")
     
     
-    scheduler = AsyncIOScheduler()
-    scheduler.add_job(ping_servers, 'interval', minutes=60)
+    scheduler = AsyncIOScheduler(
+        executors={
+        'threadpool': ThreadPoolExecutor(max_workers=9),
+        'processpool': ProcessPoolExecutor(max_workers=3)
+        }
+    )
+    scheduler.add_job(ping_servers, 'interval', minutes=60, executor='threadpool')
     scheduler.start()
