@@ -694,6 +694,9 @@ async def fetch_audio(event, ws):
         warner = await ws.download_media(warner_stark.media)
         final_warner = "friday.mp3"
         os.rename(warner, final_warner)
-        os.remove(warner)
+        try:
+           os.remove(warner)
+        except:
+           pass
     await event.edit("`Almost Done!`")    
     return final_warner
