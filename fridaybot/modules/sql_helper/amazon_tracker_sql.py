@@ -54,9 +54,9 @@ def get_all_urls():
     return stark
 
 def get_all_tracker():
-    s = SESSION.query(Anp).all()
+    s, w = SESSION.query(Anp).all()
     SESSION.close()
-    return s
+    return s, w
 
 
 def rm_tracker(amazon_url: str):
