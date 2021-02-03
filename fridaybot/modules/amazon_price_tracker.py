@@ -8,7 +8,7 @@ url = Config.AMAZON_TRACK_URL
 headers = {"User-Agent": 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.138 Safari/537.36'}
 from fridaybot import bot
 price_needed = Config.BUDGET_AMAZON
-logger = Config.PRIVATE_GROUP_BOT_API_ID
+loggerchat = Config.PRIVATE_GROUP_BOT_API_ID
 Heroku = heroku3.from_key(Config.HEROKU_API_KEY)
 
 if url:
@@ -21,7 +21,7 @@ if url:
       price = price[2:].split(',')
       price = float("".join(price))
       if(price <= price_needed):
-          await bot.send_message(logger, "The current price of " + title + " is Rs " + str(price)) 
+          await bot.send_message(loggerchat, "The current price of " + title + " is Rs " + str(price)) 
           try:
             app = Heroku.app(Config.HEROKU_APP_NAME)
             heroku_var = app.config()
