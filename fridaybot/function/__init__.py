@@ -35,6 +35,7 @@ from youtube_dl.utils import (
     XAttrMetadataError,
 )
 import asyncio
+from fridaybot.function.FastTelethon import download_file
 import json
 import math
 import os
@@ -673,30 +674,31 @@ def tgs_to_gif(sticker_path: str, quality: int = 256) -> str:
     return dest
    
 # Ye Bhi Kang Karlega Kya? White eye madarchod   
+
 async def fetch_audio(event, ws):
     if not event.reply_to_msg_id:
         await event.edit("`Reply To A Video / Audio.`")
         return
+    c_time = time.time()
     warner_stark = await event.get_reply_message()    
     if not warner_stark.audio or warner_stark.video:
-        await event.reply("`Format Not Supported`")
+        await event.edit("`Format Not Supported`")
         return
     if warner_stark.video:
         await event.edit("`Video Detected, Converting To Audio !`")
-        warner = await ws.download_media(warner_stark.media)
-        warner_bros = "friday.mp4"
-        os.rename(warner, warner_bros)
+        wst = open("friday.mp4", "wb")
+        warner_bros = await download_file(client=borg, location=warner_stark.media, out=wst, progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
+                    progress(d, t, event, c_time, "Downloading This Media...")
+                ),
+        )
         stark_cmd = f"ffmpeg -i {warner_bros} -map 0:a friday.mp3"
         stdout, stderr = (await runcmd(cmd))[:2]
-        os.remove(warner)
         final_warner = "friday.mp3"
     elif warner_stark.audio:
-        warner = await ws.download_media(warner_stark.media)
-        final_warner = "friday.mp3"
-        os.rename(warner, final_warner)
-        try:
-           os.remove(warner)
-        except:
-           pass
+        wst = open("friday.mp3", "wb")
+        final_warner = await download_file(client=borg, location=warner_stark.media, out=wst, progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
+                    progress(d, t, event, c_time, "Downloading This Media...")
+                ),
+        )
     await event.edit("`Almost Done!`")    
     return final_warner
