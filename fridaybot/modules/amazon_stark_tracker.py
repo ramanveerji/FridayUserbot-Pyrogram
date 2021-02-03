@@ -19,6 +19,9 @@ from bs4 import BeautifulSoup
 
 @friday.on(friday_on_cmd(pattern="amt"))
 async def _(event):
+    if event.fwd_from:
+        return
+    headers = {"User-Agent": 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.138 Safari/537.36'}
     url = event.text.split(" ", maxsplit=1)[1]
     try:
         page = requests.get(url, headers = headers)
@@ -39,6 +42,8 @@ async def _(event):
     
 @friday.on(friday_on_cmd(pattern="rmt"))
 async def _(event):
+    if event.fwd_from:
+        return
     url = event.text.split(" ", maxsplit=1)[1]
     if not is_tracker_in_db(str(url)):
         await event.edit("**Tracker Not Found In Db**")
