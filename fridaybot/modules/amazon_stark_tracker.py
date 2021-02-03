@@ -20,7 +20,7 @@ async def _(event):
     if is_tracker_in_db(str(url)):
         await event.edit("**Tracker Already Found In Db**")
         return
-    add_new_tracker(price, url)
+    add_new_tracker(url, price)
     await event.edit(f"Product Name : {title} \nCurrent Price : {price} \n**Added To TrackerList**")
     
 @friday.on(friday_on_cmd(pattern="rmt"))
