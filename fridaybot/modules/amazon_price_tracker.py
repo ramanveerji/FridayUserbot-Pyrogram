@@ -4,10 +4,10 @@ import math
 import os
 import heroku3
 import requests
-url = Config.AMAZON_TRACK_URL
+url = os.environ.get("AMAZON_TRACK_URL", None)
+price_needed = os.environ.get("BUDGET_AMAZON", None)
 headers = {"User-Agent": 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.138 Safari/537.36'}
 from fridaybot import bot
-price_needed = Config.BUDGET_AMAZON
 loggerchat = Config.PRIVATE_GROUP_BOT_API_ID
 Heroku = heroku3.from_key(Config.HEROKU_API_KEY)
 
