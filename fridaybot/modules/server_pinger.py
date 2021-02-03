@@ -56,5 +56,5 @@ if Config.PING_SERVERS:
     
     
     scheduler = AsyncIOScheduler()
-    scheduler.add_job(ping_servers, 'interval', minutes=30)
+    scheduler.add_job(ping_servers, 'interval', minutes=60)
     scheduler.start()
