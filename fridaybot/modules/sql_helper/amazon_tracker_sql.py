@@ -53,6 +53,11 @@ def get_all_urls():
     SESSION.close()
     return stark
 
+def get_all_tracker():
+    s = SESSION.query(Anp).all()
+    SESSION.close()
+    return s
+
 
 def rm_tracker(amazon_url: str):
     warner = SESSION.query(Anp).get(str(amazon_url))
