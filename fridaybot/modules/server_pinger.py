@@ -43,7 +43,7 @@ if Config.PING_SERVERS:
         hmm_p = 0
         url_s = warnerstark.get_all_url()
         header_s = {"User-Agent": 'Server Pinged By @FridayOT'}
-    i   f len(url_s) == 0:
+        if len(url_s) == 0:
             return
         for i in url_s:
             try:
