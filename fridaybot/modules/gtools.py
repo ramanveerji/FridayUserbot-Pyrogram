@@ -12,7 +12,7 @@
 #    along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 import asyncio
-
+import time
 from telethon.events import ChatAction
 from telethon.tl.functions.contacts import BlockRequest, UnblockRequest
 from telethon.tl.types import MessageEntityMentionName
@@ -51,6 +51,7 @@ async def gbun(event):
     if event.fwd_from:
         return
     o = await all_pro_s(Config, client2, client3, client4)
+    stime = time.time()
     await event.edit("**GBanning This User !**")
     sucess = 0
     bad = 0
@@ -81,7 +82,8 @@ async def gbun(event):
           sucess += 1
         except:
           bad += 0
-    await event.edit(f"**GBanned Successfully !**[{user.first_name}](tg://user?id={user.id}) **in {sucess} Chats!**")
+    etime = time.time()
+    await event.edit(f"**GBanned Successfully !**[{user.first_name}](tg://user?id={user.id}) **in {sucess} Chats! in** `{stime-etime}s`")
     
           	
 @friday.on(friday_on_cmd(pattern='ungban(?: |$)(.*)'))
@@ -92,6 +94,7 @@ async def ungbun(event):
     sucess = 0
     bad = 0
     o = await all_pro_s(Config, client2, client3, client4)
+    stime = time.time()
     user, reason = await get_user_from_event(event)
     if not user.id:
         await event.edit("`Mention A User To Un-Gban`")
@@ -115,7 +118,8 @@ async def ungbun(event):
           sucess += 1
         except:
           bad += 0
-    await event.edit(f"**Un-GBanned !**[{user.first_name}](tg://user?id={user.id}) **in {sucess} Chats!**")
+    etime = time.time()
+    await event.edit(f"**Un-GBanned !**[{user.first_name}](tg://user?id={user.id}) **in {sucess} Chats! in** `{stime-etime}s`")
 
 @friday.on(ChatAction)
 async def starky(event):
