@@ -1411,19 +1411,6 @@ async def hi(event):
     )
 
 
-@friday.on(friday_on_cmd(pattern=r"gdn$"))
-async def hi(event):
-    if event.fwd_from:
-        return
-    await event.edit("""
-        ｡♥️｡･ﾟ♡ﾟ･｡♥️｡･｡･｡･｡♥️｡･
-    ╱╱╱╱╱╱╱╭╮╱╱╱╭╮╱╭╮╭╮
-    ╭━┳━┳━┳╯┃╭━┳╋╋━┫╰┫╰╮
-    ┃╋┃╋┃╋┃╋┃┃┃┃┃┃╋┃┃┃╭┫
-    ┣╮┣━┻━┻━╯╰┻━┻╋╮┣┻┻━╯
-    ╰━╯╱╱╱╱╱╱╱╱╱╱╰━╯
-        ｡♥️｡･ﾟ♡ﾟ･｡♥️° ♥️｡･ﾟ♡ﾟ
-        """)
 
 
 @friday.on(friday_on_cmd(pattern=r"happybirthday$"))
