@@ -161,7 +161,7 @@ async def get_user_from_event(event):
         if user.isnumeric():
             user = int(user)
         if not user:
-            await edit_delete(event, "`Pass the user's username, id or reply!`", 5)
+            await event.edit("`Pass the user's username, id or reply!`")
             return None, None
         if event.message.entities:
             probable_user_mention_entity = event.message.entities[0]
