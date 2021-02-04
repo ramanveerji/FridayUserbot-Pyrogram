@@ -20,6 +20,7 @@ import asyncio
 import os
 from pathlib import Path
 import wget
+from fridaybot import bot as borg
 import lottie
 from fridaybot.utils import load_module
 from telethon.tl.types import DocumentAttributeAudio
