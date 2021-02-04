@@ -55,7 +55,6 @@ if Config.PING_SERVERS:
               hmm_p += 1
         success_l = len(url_s) - hmm_p
         logger.info(f"Sucessfully Pinged {success_l} Urls Out Of {len(url_s)}")
-        return
     
     
     scheduler = AsyncIOScheduler(
@@ -63,5 +62,5 @@ if Config.PING_SERVERS:
     'default': AsyncIOExecutor(),
         }
     )
-    scheduler.add_job(ping_servers, 'interval', minutes=30, executor='threadpool')
+    scheduler.add_job(ping_servers, 'interval', minutes=30)
     scheduler.start()
