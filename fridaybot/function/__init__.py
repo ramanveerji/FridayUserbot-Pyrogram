@@ -658,10 +658,13 @@ async def get_all_admin_chats(event):
 
                   
 async def is_admin(event, user):
-    sed = await event.client.get_permissions(event.chat_id, user)
-    if sed.is_admin:
-        is_mod = True
-    else:
+    try:
+        sed = await event.client.get_permissions(event.chat_id, user)
+        if sed.is_admin:
+            is_mod = True
+        else:
+            is_mod = False
+    except:
         is_mod = False
     return is_mod
     
