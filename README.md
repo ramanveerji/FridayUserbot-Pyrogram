@@ -31,7 +31,7 @@
 
 * Multiple Client Support.
 * AssistantBot Support.
-* Channel Sticker / Post Appender Support.
+* Channel Sticker / Post Appender / Night Mode / Amazon Price Tracker / Server Pinger Support.
 * Yet Fast - Powered By FastTelethon.
 * Smart & Powerful Tools.
 * Customizable.
@@ -47,19 +47,21 @@
 
 
 
-# Developers // Maintainers 
+# Developers // Maintainers // Credits
 ## This is Team Project And We All Maintained This Together :)
 
 * [@Chsaiujwal](https://telegram.dog/Chsaiujwal)
 * [@Meisnub](https://telegram.dog/MeisNub)
 * [@Midhun_xD](https://telegram.dog/Midhun_xD)
-
+* [@SpecHide](https://telegram.dog/SpecHide)
+* [@S_n_a_p_s](https://telegram.dog/s_n_a_p_s)
+* [@RaphielScape](https://github.com/raphielscape)
+* [@Nitin1818](https://github.com/Nitin1818)
 
 
 # String Session
 ## Repl
 [![Run on Repl.it](https://repl.it/badge/github/STARKGANG/friday)](https://friday.midhunkm1294.repl.run)
-
 
 
 
