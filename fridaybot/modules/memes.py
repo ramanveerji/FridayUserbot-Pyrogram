@@ -1411,6 +1411,21 @@ async def hi(event):
     )
 
 
+@friday.on(friday_on_cmd(pattern=r"gdn$"))
+async def hi(event):
+    if event.fwd_from:
+        return
+    await event.edit("""
+        ｡♥️｡･ﾟ♡ﾟ･｡♥️｡･｡･｡･｡♥️｡･
+    ╱╱╱╱╱╱╱╭╮╱╱╱╭╮╱╭╮╭╮
+    ╭━┳━┳━┳╯┃╭━┳╋╋━┫╰┫╰╮
+    ┃╋┃╋┃╋┃╋┃┃┃┃┃┃╋┃┃┃╭┫
+    ┣╮┣━┻━┻━╯╰┻━┻╋╮┣┻┻━╯
+    ╰━╯╱╱╱╱╱╱╱╱╱╱╰━╯
+        ｡♥️｡･ﾟ♡ﾟ･｡♥️° ♥️｡･ﾟ♡ﾟ
+        """)
+
+
 @friday.on(friday_on_cmd(pattern=r"happybirthday$"))
 async def hi(event):
     if event.fwd_from:
@@ -1488,6 +1503,8 @@ CMD_HELP.update(
 \nUsage: Like `-_-` but crying.\
 \n\n.cp\
 \nUsage: Copypasta the famous meme\
+\n\n.gdn\
+\nUsage: Good Night ASCII message.\
 \n\n.vapor\
 \nUsage: Vaporize everything!\
 \n\n.str\
