@@ -693,7 +693,7 @@ async def fetch_audio(event, ws):
     if warner_stark.video:
         await event.edit("`Video Detected, Converting To Audio !`")
         wst = open("friday.mp4", "wb")
-        warner_bros = await download_file(client=borg, location=warner_stark, out=wst, progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
+        warner_bros = await download_file(client=borg, location=warner_stark.media.document, out=wst, progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
                     progress(d, t, event, c_time, "Downloading This Media...")
                 ),
         )
@@ -702,7 +702,7 @@ async def fetch_audio(event, ws):
         final_warner = "friday.mp3"
     elif warner_stark.audio:
         wst = open("friday.mp3", "wb")
-        final_warner = await download_file(client=borg, location=warner_stark, out=wst, progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
+        final_warner = await download_file(client=borg, location=warner_stark.media.document, out=wst, progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
                     progress(d, t, event, c_time, "Downloading This Media...")
                 ),
         )
