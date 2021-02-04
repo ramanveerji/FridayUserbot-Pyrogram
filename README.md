@@ -118,8 +118,8 @@ published by the Free Software Foundation, either version 3 of the License, or
 (at your option) any later version. 
 
 # History
-Project Friday Was Started as Fork Of Indian Bot (Now Depreciated).
-After Friday Become More Advance, I Fianlly Decided to not to run as Fork and as independent Repo.
-Friday Never Stopped Involving, With Daily Updates And Bugs Fixes. Friday Once Became Most Deployed Userbot in TG and Most Watched Userbot Tutorial in TG.
-Friday Has Now Become one Repo For Kangers To Kang (Just Because They Know Whats Best).
-Please Consider Using Orginal Repo Instead Of Kangs For Your Own Safety. 
+* *Project Friday Was Started as Fork Of Indian Bot (Now Depreciated).
+* *After Friday Become More Advance, I Fianlly Decided to not to run as Fork and as independent Repo.
+* *Friday Never Stopped Involving, With Daily Updates And Bugs Fixes. Friday Once Became Most Deployed Userbot in TG and Most Watched Userbot Tutorial on Youtube.
+* *Friday Has Now Become one Repo For Kangers To Kang (Just Because They Know Whats Best).
+* *Please Consider Using Orginal Repo Instead Of Kangs For Your Own Safety. 
