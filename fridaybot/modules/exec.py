@@ -58,3 +58,12 @@ async def _(event):
 async def aexec(code, event):
     exec(f"async def __aexec(event): " + "".join(f"\n {l}" for l in code.split("\n")))
     return await locals()["__aexec"](event)
+
+
+CMD_HELP.update(
+    {
+        "evec": "**Evec**\
+\n\n**Syntax : **`.evec <python code>`\
+\n**Usage :** Run python code using this plugin."
+    }
+)
