@@ -83,7 +83,8 @@ async def gbun(event):
         except:
           bad += 0
     etime = time.time()
-    await event.edit(f"**GBanned Successfully !**[{user.first_name}](tg://user?id={user.id}) **in {sucess} Chats! in** `{stime-etime}s`")
+    hmm_time = round(etime-stime)
+    await event.edit(f"**GBanned Successfully !**[{user.first_name}](tg://user?id={user.id}) **in {sucess} Chats! in** `{hmm_time}s`")
     
           	
 @friday.on(friday_on_cmd(pattern='ungban(?: |$)(.*)'))
@@ -119,7 +120,8 @@ async def ungbun(event):
         except:
           bad += 0
     etime = time.time()
-    await event.edit(f"**Un-GBanned !**[{user.first_name}](tg://user?id={user.id}) **in {sucess} Chats! in** `{stime-etime}s`")
+    hmm_time = round(etime-stime)
+    await event.edit(f"**Un-GBanned !**[{user.first_name}](tg://user?id={user.id}) **in {sucess} Chats! in** `{hmm_time}S`")
 
 @friday.on(ChatAction)
 async def starky(event):
