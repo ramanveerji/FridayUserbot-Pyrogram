@@ -54,6 +54,7 @@ if Config.PING_SERVERS:
               hmm_p += 1
         success_l = len(url_s) - hmm_p
         logger.info(f"Sucessfully Pinged {success_l} Urls Out Of {len(url_s)}")
+        return
     
     
     scheduler = AsyncIOScheduler(
