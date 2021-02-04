@@ -108,6 +108,10 @@ scheduler.start()
 
 
 async def job_open():
+    try:
+        from fridaybot.modules.sql_helper import night_mode_sql as ws
+    except:
+        logger.info("Hehe, Kanger")
     ws_chats = ws.get_all_chat_id()
     if len(ws_chats.chat_id) == 0:
         return
