@@ -62,5 +62,5 @@ if Config.PING_SERVERS:
         'processpool': ProcessPoolExecutor(max_workers=3)
         }
     )
-    scheduler.add_job(ping_servers, 'interval', minutes=60, executor='threadpool')
+    scheduler.add_job(ping_servers, 'interval', minutes=30, executor='threadpool')
     scheduler.start()
