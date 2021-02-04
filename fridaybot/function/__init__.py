@@ -651,9 +651,12 @@ async def get_all_admin_chats(event):
             for d in await event.client.get_dialogs()
             if (d.is_group or d.is_channel)
         ]
-    for i in all_chats:
-        if i.creator or i.admin_rights:
-            lul_stark.append(i.id)
+    try:
+        for i in all_chats:
+            if i.creator or i.admin_rights:
+                lul_stark.append(i.id)
+    except:
+        pass
     return lul_stark
 
                   
