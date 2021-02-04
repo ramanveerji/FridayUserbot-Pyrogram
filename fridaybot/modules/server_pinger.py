@@ -60,7 +60,6 @@ if Config.PING_SERVERS:
     
     scheduler = AsyncIOScheduler(
         executors={
-        {
     'default': AsyncIOExecutor(),
         }
     )
