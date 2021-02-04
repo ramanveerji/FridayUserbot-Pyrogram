@@ -67,7 +67,7 @@ async def gbun(event):
         await event.edit("**I Can't Gban You Master / Sudo Users :(**")
         return
     if gban_sql.is_gbanned(user.id):
-        await event.edit("**This User Is Already Gbanned. No Point In Gbanning Him Again !**")
+        await event.edit("**This User Is Already Gbanned. No Point In Gbanning Him Again ! :/**")
         return
     gban_sql.gban_user(user.id, hmm_r)
     chat_s = await get_all_admin_chats(event)
@@ -161,7 +161,7 @@ async def get_user_from_event(event):
         if user.isnumeric():
             user = int(user)
         if not user:
-            await event.edit("`Pass the user's username, id or reply!`")
+            await event.edit("`Pass the User's Username, ID or Reply!`")
             return None, None
         if event.message.entities:
             probable_user_mention_entity = event.message.entities[0]
