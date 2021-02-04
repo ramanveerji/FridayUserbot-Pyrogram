@@ -12,6 +12,7 @@
 #    along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
+from apscheduler.executors.asyncio import AsyncIOExecutor
 import requests
 from apscheduler.executors.pool import ThreadPoolExecutor, ProcessPoolExecutor
 from fridaybot.modules.sql_helper import server_pinger_sql as warnerstark
@@ -59,8 +60,8 @@ if Config.PING_SERVERS:
     
     scheduler = AsyncIOScheduler(
         executors={
-        'threadpool': ThreadPoolExecutor(max_workers=9),
-        'processpool': ProcessPoolExecutor(max_workers=3)
+        {
+    'default': AsyncIOExecutor(),
         }
     )
     scheduler.add_job(ping_servers, 'interval', minutes=30, executor='threadpool')
