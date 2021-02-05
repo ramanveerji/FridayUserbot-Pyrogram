@@ -38,7 +38,7 @@ async def _(event):
     else:
       No = "14"
     N0= int(No)
-    res = ''.join(random.choices(string.ascii_uppercase +string.digits, k = No)) 
+    res = ''.join(random.choices(string.ascii_uppercase +string.digits, k = N0)) 
     oate = str(res)
     h = {
       "token" : oate
