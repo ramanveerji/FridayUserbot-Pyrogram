@@ -14,7 +14,6 @@
 
 import asyncio, coffeehouse
 
-from coffeehouse.api import API
 from coffeehouse.lydia import LydiaAI
 from telethon import events
 from fridaybot.utils import admin_cmd
@@ -27,8 +26,7 @@ SESSION_ID = {}
 
 if Config.LYDIA_API_KEY:
     api_key = Config.LYDIA_API_KEY
-    api_client = API(api_key)
-    lydia = LydiaAI(api_client)
+    lydia = LydiaAI(api_key)
 
 
 @borg.on(admin_cmd(pattern='rcf$'))
