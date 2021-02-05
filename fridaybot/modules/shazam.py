@@ -38,14 +38,14 @@ async def _(event):
     else:
       No = "14"
     N0= int(No)
-    res = ''.join(random.choices(string.ascii_uppercase +string.digits, k = N)) 
+    res = ''.join(random.choices(string.ascii_uppercase +string.digits, k = No)) 
     oate = str(res)
     h = {
       "token" : oate
     }
     r = requests.post("https://starkapi.herokuapp.com/shazam/", files = f)
-    N = str(N0)
-    Jr = len(N)
+    NaNo = str(res)
+    Jr = len(NaNo)
     if Jr=="15":
        pass
     else:
