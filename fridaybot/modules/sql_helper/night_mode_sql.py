@@ -11,14 +11,13 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-from sqlalchemy import Column, UnicodeText
-
+from sqlalchemy import Column, UnicodeText, Integer
 from fridaybot.modules.sql_helper import BASE, SESSION
 
 
 class Nightmode(BASE):
     __tablename__ = "nightmode"
-    chat_id = Column(UnicodeText, primary_key=True)
+    chat_id = Column(Integer, primary_key=True)
 
     def __init__(self, chat_id):
         self.chat_id = chat_id
@@ -27,14 +26,14 @@ class Nightmode(BASE):
 Nightmode.__table__.create(checkfirst=True)
 
 
-def add_nightmode(chat_id):
-    nightmoddy = Nightmode(chat_id)
+def add_nightmode(chat_id : int):
+    nightmoddy = Nightmode(int(chat_id))
     SESSION.add(nightmoddy)
     SESSION.commit()
 
 
-def rmnightmode(chat_id):
-    rmnightmoddy = SESSION.query(Nightmode).get(chat_id)
+def rmnightmode(chat_id: int):
+    rmnightmoddy = SESSION.query(Nightmode).get(int(chat_id))
     if rmnightmoddy:
         SESSION.delete(rmnightmoddy)
         SESSION.commit()
@@ -46,10 +45,10 @@ def get_all_chat_id():
     return stark
 
 
-def is_nightmode_indb(chat_id):
+def is_nightmode_indb(chat_id: int):
     try:
-        s__ = SESSION.query(Nightmode).get(chat_id)
+        s__ = SESSION.query(Nightmode).get(int(chat_id))
         if s__:
-            return str(s__.chat_id)
+            return int(s__.chat_id)
     finally:
         SESSION.close()
