@@ -8,8 +8,8 @@ import random
 import string
 from pathlib import Path
 
-@friday.on(friday_on_cmd(pattern="shazam"))
-@friday.on(sudo_cmd(pattern="shazam", allow_sudo=True))
+@friday.on(friday_on_cmd(pattern="(shazam|sreverse|identify)"))
+@friday.on(sudo_cmd(pattern="(shazam|sreverse|identify)", allow_sudo=True))
 async def _(event):
     if event.fwd_from:
         return
@@ -19,17 +19,17 @@ async def _(event):
     if Path("friday.mp3").is_file():
       os.remove("friday.mp3")
     credit = "By Friday. Get Your Friday From @FridayOt"
-    ommhg = await edit_or_reply(event, "Downloading The Song. 🙂😄")
+    ommhg = await edit_or_reply(event, "`Downloading To Local Server.`")
     kkk = await fetch_audio(event, borg)
     downloaded_file_name = str("friday.mp3")
     train = credit[3].lower()
     f = {"file": (downloaded_file_name, open(downloaded_file_name, "rb"))}
     Lop = "flutter's formula"
     loP = Lop[1]
-    await ommhg.edit("searching for the song 🔍🧐")
+    await ommhg.edit("**Searching For This Song In Friday's DataBase.**")
     r = requests.post("https://starkapi.herokuapp.com/shazam/", files = f)
     if train == loP:
-       await ommhg.edit("server crashed for unknown reasons")
+       await ommhg.edit("Server Has Been Crashed for Unknown Reasons")
     try:
       xo = r.json()
     except:
@@ -44,7 +44,7 @@ async def _(event):
       image = nt.get("coverarthq")
       by = zzz.get("subtitle")
       title = zzz.get("title")
-      message = f"""<b>Song Identified</b>
+      message = f"""<b>Song Shazamed.</b>
 <b>Song Name : </b>{title}
 <b>Song By : </b>{by}
 
@@ -62,12 +62,12 @@ Get Your Friday From</b></u> @FridayOT.
       os.remove(downloaded_file_name)
       await ommhg.delete()
     except:
-      if xo.get("success") ==False:
-        errer = xo.get("success")
+      if xo.get("success") is False:
+        errer = xo.get("error")
         ommhg = await edit_or_reply(event, errer)
         os.remove(downloaded_file_name)
         return
-      ommhg = await edit_or_reply(event, "Song Not Found. Please Try Again.")
+      ommhg = await edit_or_reply(event, "Song Not Found IN Database. Please Try Again.")
       os.remove(downloaded_file_name)
       return
 
@@ -78,4 +78,3 @@ CMD_HELP.update(
 \n**Usage :** Identifies The Song."
     }
 )
-
