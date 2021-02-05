@@ -98,12 +98,16 @@ async def job_close():
             functions.messages.EditChatDefaultBannedRightsRequest(
                 peer=warner, banned_rights=hehes
             )
+            if Config.CLEAN_GROUPS:
+                async for user in friday.iter_participants(warner):
+                    if user.deleted:
+                        await friday.edit_permissions(warner, user.id, view_messages=False)
         )
         except:
             pass
 
 scheduler = AsyncIOScheduler(timezone="Asia/Kolkata")
-scheduler.add_job(job_close, trigger="cron", hour=23, minute=59)
+scheduler.add_job(job_close, trigger="cron", hour=9, minute=20)
 scheduler.start()
 
 
