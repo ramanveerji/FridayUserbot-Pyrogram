@@ -197,7 +197,7 @@ async def demote(event):
     # If passing, declare that we're going to demote
     await event.edit("`Demoting...`")
     rank = "admeme"  # dummy rank, lol.
-    user = await get_user_from_event(event)
+    user, reason = await get_user_from_event(event)
     user = user[0]
     if user:
         pass
