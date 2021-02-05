@@ -15,6 +15,7 @@
 from apscheduler.schedulers.asyncio import AsyncIOScheduler 
 from telethon import functions
 from fridaybot.function import get_all_admin_chats, is_admin
+from fridaybot.modules.sql_helper import night_mode_sql as ws
 from telethon.tl.types import ChatBannedRights
 
 
@@ -49,10 +50,6 @@ async def close_ws(event):
     if not event.is_group:
         await event.edit("You Can Only Enable Night Mode in Groups.")
         return
-    try:
-        from fridaybot.modules.sql_helper import night_mode_sql as ws
-    except:
-        logger.info("Hehe, Kanger")
     if not await is_admin(event, bot.uid): 
         await event.edit("`You Should Be Admin To Do This!`")
         return
@@ -67,10 +64,6 @@ async def disable_ws(event):
     if not event.is_group:
         await event.edit("You Can Only Disable Night Mode in Groups.")
         return
-    try:
-        from fridaybot.modules.sql_helper import night_mode_sql as ws
-    except:
-        logger.info("Hehe, Kanger")
     if not await is_admin(event, bot.uid): 
         await event.edit("`You Should Be Admin To Do This!`")
         return
@@ -82,10 +75,6 @@ async def disable_ws(event):
 
 
 async def job_close():
-    try:
-        from fridaybot.modules.sql_helper import night_mode_sql as ws
-    except:
-        logger.info("Hehe, Kanger")
     ws_chats = ws.get_all_chat_id()
     if len(ws_chats) == 0:
         return
@@ -104,18 +93,14 @@ async def job_close():
                     if user.deleted:
                         await friday.edit_permissions(warner, user.id, view_messages=False)
         except:
-            pass
+            logger.info(f"Unable To Close  Group {warner} - {e}")
 
 scheduler = AsyncIOScheduler(timezone="Asia/Kolkata")
-scheduler.add_job(job_close, trigger="cron", hour=10, minute=35)
+scheduler.add_job(job_close, trigger="cron", hour=11, minute=25)
 scheduler.start()
 
 
 async def job_open():
-    try:
-        from fridaybot.modules.sql_helper import night_mode_sql as ws
-    except:
-        logger.info("Hehe, Kanger")
     ws_chats = ws.get_all_chat_id()
     if len(ws_chats) == 0:
         return
@@ -129,10 +114,10 @@ async def job_open():
                 peer=warner, banned_rights=openhehe
             )
         )
-        except:
-            pass
+        except Exception as e:
+            logger.info(f"Unable To Open Group {warner} - {e}")
 
 # Run everyday at 06
 scheduler = AsyncIOScheduler(timezone="Asia/Kolkata")
-scheduler.add_job(job_open, trigger="cron", hour=10, minute=40)
+scheduler.add_job(job_open, trigger="cron", hour=11, minute=27)
 scheduler.start()
