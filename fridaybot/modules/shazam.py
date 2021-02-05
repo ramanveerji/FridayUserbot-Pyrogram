@@ -51,6 +51,7 @@ async def _(event):
 <u><b>Identified By Friday.
 Get Your Friday From</b></u> @FridayOT.
 """
+      await event.delete()
       await borg.send_message(
         event.chat_id,
         message,
@@ -60,7 +61,6 @@ Get Your Friday From</b></u> @FridayOT.
         silent=True,
       )
       os.remove(downloaded_file_name)
-      await ommhg.delete()
     except:
       if xo.get("success") is False:
         errer = xo.get("error")
