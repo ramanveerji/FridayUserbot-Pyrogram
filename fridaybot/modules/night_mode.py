@@ -15,7 +15,7 @@
 from apscheduler.schedulers.asyncio import AsyncIOScheduler 
 from telethon import functions
 from fridaybot.function import get_all_admin_chats, is_admin
-from fridaybot.modules.sql_helper import night_mode_sql as ws
+from fridaybot.modules.sql_helper.night_mode_sql import add_nightmode, rmnightmode, get_all_chat_id, is_nightmode_indb
 from telethon.tl.types import ChatBannedRights
 
 
@@ -53,10 +53,10 @@ async def close_ws(event):
     if not await is_admin(event, bot.uid): 
         await event.edit("`You Should Be Admin To Do This!`")
         return
-    if ws.is_nightmode_indb(str(event.chat_id)):
+    if is_nightmode_indb(str(event.chat_id)):
         await event.edit("This Chat is Has Already Enabled Night Mode.")
         return
-    ws.add_nightmode(str(event.chat_id))
+    add_nightmode(str(event.chat_id))
     await event.edit(f"**Added Chat {event.chat.title} With Id {event.chat_id} To Database. This Group Will Be Closed On 12Am(IST) And Will Opened On 06Am(IST)**")
 
 @friday.on(friday_on_cmd(pattern="rsgrp$"))
@@ -67,15 +67,15 @@ async def disable_ws(event):
     if not await is_admin(event, bot.uid): 
         await event.edit("`You Should Be Admin To Do This!`")
         return
-    if not ws.is_nightmode_indb(str(event.chat_id)):
+    if not is_nightmode_indb(str(event.chat_id)):
         await event.edit("This Chat is Has Not Enabled Night Mode.")
         return
-    ws.rmnightmode(str(event.chat_id))
+    rmnightmode(str(event.chat_id))
     await event.edit(f"**Removed Chat {event.chat.title} With Id {event.chat_id} From Database. This Group Will Be No Longer Closed On 12Am(IST) And Will Opened On 06Am(IST)**")
 
 
 async def job_close():
-    ws_chats = ws.get_all_chat_id()
+    ws_chats = get_all_chat_id()
     if len(ws_chats) == 0:
         return
     for warner in ws_chats:
@@ -96,12 +96,12 @@ async def job_close():
             logger.info(f"Unable To Open Group {warner} - {e}")
 
 scheduler = AsyncIOScheduler(timezone="Asia/Kolkata")
-scheduler.add_job(job_close, trigger="cron", hour=12, minute=20)
+scheduler.add_job(job_close, trigger="cron", hour=12, minute=45)
 scheduler.start()
 
 
 async def job_open():
-    ws_chats = ws.get_all_chat_id()
+    ws_chats = get_all_chat_id()
     if len(ws_chats) == 0:
         return
     for warner in ws_chats:
@@ -119,5 +119,5 @@ async def job_open():
 
 # Run everyday at 06
 scheduler = AsyncIOScheduler(timezone="Asia/Kolkata")
-scheduler.add_job(job_open, trigger="cron", hour=12, minute=25)
+scheduler.add_job(job_open, trigger="cron", hour=12, minute=50)
 scheduler.start()
