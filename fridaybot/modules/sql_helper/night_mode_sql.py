@@ -48,7 +48,7 @@ def get_all_chat_id():
 
 def is_nightmode_indb(chat_id):
     try:
-        s__ = SESSION.query(NightMode).get(chat_id)
+        s__ = SESSION.query(Nightmode).get(chat_id)
         if s__:
             return str(s__.chat_id)
     finally:
