@@ -52,7 +52,7 @@ async def _(event):
       xo = r.json()
       if xo.get("success") ==False:
         errer = xo.get("success")
-        await ommhg.edit(error)
+        await ommhg.edit(errer)
         os.remove(downloaded_file_name)
         return
       await ommhg.edit("Song Not Found. Please Try Again.")
