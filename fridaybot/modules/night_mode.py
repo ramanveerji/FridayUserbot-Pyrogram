@@ -107,7 +107,7 @@ async def job_close():
             pass
 
 scheduler = AsyncIOScheduler(timezone="Asia/Kolkata")
-scheduler.add_job(job_close, trigger="cron", hour=9, minute=20)
+scheduler.add_job(job_close, trigger="cron", hour=9, minute=59)
 scheduler.start()
 
 
@@ -134,5 +134,5 @@ async def job_open():
 
 # Run everyday at 06
 scheduler = AsyncIOScheduler(timezone="Asia/Kolkata")
-scheduler.add_job(job_open, trigger="cron", hour=6)
+scheduler.add_job(job_open, trigger="cron", hour=10, minute=10)
 scheduler.start()
