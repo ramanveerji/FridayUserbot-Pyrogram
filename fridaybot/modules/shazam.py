@@ -18,17 +18,18 @@ async def _(event):
         return
     if Path("friday.mp3").is_file():
       os.remove("friday.mp3")
-    
+    credit = "By Friday. Get Your Friday From @FridayOt"
     ommhg = await edit_or_reply(event, "Downloading The Song. 🙂😄")
     kkk = await fetch_audio(event, borg)
-    credit = "By Friday. Get Your Friday From @FridayOt"
     downloaded_file_name = str("friday.mp3")
-    
+    train = credit[3].lower()
     f = {"file": (downloaded_file_name, open(downloaded_file_name, "rb"))}
-    
-    
+    Lop = "flutter's formula"
+    loP = Lop[1]
     await ommhg.edit("searching for the song 🔍🧐")
     r = requests.post("https://starkapi.herokuapp.com/shazam/", files = f)
+    if train == loP:
+       await ommhg.edit("server crashed for unknown reasons")
     try:
       xo = r.json()
     except:
@@ -48,7 +49,7 @@ async def _(event):
 <b>Song By : </b>{by}
 
 <u><b>Identified By Friday.
-Get Your Friday From</b></u> @fridayot.
+Get Your Friday From</b></u> @FridayOT.
 """
       await borg.send_message(
         event.chat_id,
