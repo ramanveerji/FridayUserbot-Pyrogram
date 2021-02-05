@@ -694,7 +694,7 @@ async def fetch_audio(event, ws):
         return
     c_time = time.time()
     warner_stark = await event.get_reply_message()    
-    if not warner_stark.audio or warner_stark.video:
+    if warner_stark.audio is None  and warner_stark.video is None:
         await event.edit("`Format Not Supported`")
         return
     if warner_stark.video:
