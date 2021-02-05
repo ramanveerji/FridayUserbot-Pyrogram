@@ -39,7 +39,8 @@ async def _(event):
       zz = xoo[1]
       zzz = zz.get("track")
       Col = zzz.get("sections")[3]
-      image = Col.get("avatar")
+      nt = zzz.get("images")	
+      image = nt.get("coverarthq")
       by = zzz.get("subtitle")
       title = zzz.get("title")
       message = f"""<b>Song Identified</b>
