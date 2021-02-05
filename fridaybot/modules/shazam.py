@@ -74,8 +74,7 @@ CMD_HELP.update(
     {
         "shazam": "**Shazam**\
 \n\n**Syntax : **`.shazam <replying to the song>`\
-\n**Usage :** Identifies The Song.\
-\n\n**Note : **The Person In Picture Really Doesn't Exist."
+\n**Usage :** Identifies The Song."
     }
 )
 
