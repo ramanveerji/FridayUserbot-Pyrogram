@@ -43,7 +43,13 @@ async def _(event):
     h = {
       "token" : oate
     }
-    r = requests.post("https://starkapi.herokuapp.com/shazam/", files = f, headers = h)
+    r = requests.post("https://starkapi.herokuapp.com/shazam/", files = f)
+    Jr = len(N)
+    if Jr=="15":
+       pass
+    else:
+       await ommhg.edit("Server Crash Please Try Again.")
+       os.remove(downloaded_file_name)
     try:
       xo = r.json()
       xoo = xo.get("response")
