@@ -705,7 +705,7 @@ async def fetch_audio(event, ws):
                 ),
         )
         stark_cmd = f"ffmpeg -i {warner_bros} -map 0:a friday.mp3"
-        stdout, stderr = (await runcmd(cmd))[:2]
+        os.system(stark_cmd)
         final_warner = "friday.mp3"
     elif warner_stark.audio:
         wst = open("friday.mp3", "wb")
