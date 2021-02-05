@@ -53,10 +53,10 @@ async def close_ws(event):
     if not await is_admin(event, bot.uid): 
         await event.edit("`You Should Be Admin To Do This!`")
         return
-    if ws.is_nightmode_indb(event.chat_id):
+    if ws.is_nightmode_indb(int(event.chat_id)):
         await event.edit("This Chat is Has Already Enabled Night Mode.")
         return
-    ws.add_nightmode(event.chat_id)
+    ws.add_nightmode(int(event.chat_id))
     await event.edit(f"**Added Chat {event.chat.title} With Id {event.chat_id} To Database. This Group Will Be Closed On 12Am(IST) And Will Opened On 06Am(IST)**")
 
 @friday.on(friday_on_cmd(pattern="rsgrp$"))
@@ -67,10 +67,10 @@ async def disable_ws(event):
     if not await is_admin(event, bot.uid): 
         await event.edit("`You Should Be Admin To Do This!`")
         return
-    if not ws.is_nightmode_indb(event.chat_id):
+    if not ws.is_nightmode_indb(int(event.chat_id)):
         await event.edit("This Chat is Has Not Enabled Night Mode.")
         return
-    ws.rmnightmode(event.chat_id)
+    ws.rmnightmode(int(event.chat_id))
     await event.edit(f"**Removed Chat {event.chat.title} With Id {event.chat_id} From Database. This Group Will Be No Longer Closed On 12Am(IST) And Will Opened On 06Am(IST)**")
 
 
@@ -85,7 +85,7 @@ async def job_close():
             )
             await friday(
             functions.messages.EditChatDefaultBannedRightsRequest(
-                peer=warner, banned_rights=hehes
+                peer=int(warner), banned_rights=hehes
             )
             )
             if Config.CLEAN_GROUPS:
