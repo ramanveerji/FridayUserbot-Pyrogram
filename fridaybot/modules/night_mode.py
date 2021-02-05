@@ -96,7 +96,7 @@ async def job_close():
             logger.info(f"Unable To Open Group {warner} - {e}")
 
 scheduler = AsyncIOScheduler(timezone="Asia/Kolkata")
-scheduler.add_job(job_close, trigger="cron", hour=24, minute=55)
+scheduler.add_job(job_close, trigger="cron", hour=23, minute=55)
 scheduler.start()
 
 
