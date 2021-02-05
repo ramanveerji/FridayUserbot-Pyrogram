@@ -60,8 +60,8 @@ async def _(event):
       return
     try:
       xo = r.json()
-      zz = xo.get("response")
-      #zz = xoo[1]
+      xoo = xo.get("response")
+      zz = xoo[1]
       zzz = zz.get("track")
       nt = zzz.get("images")
       image = nt.get("coverarthq")
