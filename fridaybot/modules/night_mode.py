@@ -87,9 +87,9 @@ async def job_close():
     except:
         logger.info("Hehe, Kanger")
     ws_chats = ws.get_all_chat_id()
-    if len(ws_chats.chat_id) == 0:
+    if len(ws_chats) == 0:
         return
-    for warner in ws_chats.chat_id:
+    for warner in ws_chats:
         try:
             await friday.send_message(
               warner, "`12:00 Am, Group Is Closing Till 6 Am. Night Mode Started !` \n**Powered By @FRidayOT**"
@@ -107,7 +107,7 @@ async def job_close():
             pass
 
 scheduler = AsyncIOScheduler(timezone="Asia/Kolkata")
-scheduler.add_job(job_close, trigger="cron", hour=10, minute=15)
+scheduler.add_job(job_close, trigger="cron", hour=10, minute=35)
 scheduler.start()
 
 
@@ -117,9 +117,9 @@ async def job_open():
     except:
         logger.info("Hehe, Kanger")
     ws_chats = ws.get_all_chat_id()
-    if len(ws_chats.chat_id) == 0:
+    if len(ws_chats) == 0:
         return
-    for warner in ws_chats.chat_id:
+    for warner in ws_chats:
         try:
             await friday.send_message(
               warner, "`06:00 Am, Group Is Opening.`\n**Powered By @FRidayOT**"
@@ -134,5 +134,5 @@ async def job_open():
 
 # Run everyday at 06
 scheduler = AsyncIOScheduler(timezone="Asia/Kolkata")
-scheduler.add_job(job_open, trigger="cron", hour=10, minute=20)
+scheduler.add_job(job_open, trigger="cron", hour=10, minute=40)
 scheduler.start()
