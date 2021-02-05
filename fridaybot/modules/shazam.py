@@ -33,11 +33,11 @@ async def _(event):
     
     await ommhg.edit("searching for the song 🔍🧐")
     if pl == m0:
-       N = "15"
+       No = "15"
       
     else:
-      N = "14"
-    
+      No = "14"
+    N = int(No)
     res = ''.join(random.choices(string.ascii_uppercase +string.digits, k = N)) 
     oate = str(res)
     h = {
