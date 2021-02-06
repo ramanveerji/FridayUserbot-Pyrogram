@@ -46,7 +46,8 @@ async def _(event):
     {out}                  
     </code>"""
     title_of_page = "Media Info 🎬"
-    response = telegraph.create_page(title_of_page, html_content=media_info)
+    ws = media_info.replace("\n", "<br>")
+    response = telegraph.create_page(title_of_page, html_content=ws)
     km = response["path"]
     await event.edit(f"`This MediaInfo Can Be Found` [Here](https://telegra.ph/{km})")
     if os.path.exists(file_path):
