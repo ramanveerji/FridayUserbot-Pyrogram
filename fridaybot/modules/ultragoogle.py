@@ -6,12 +6,9 @@ Available Commands:
 
 import asyncio
 import os
-from fridaybot.image_dl import GoogleImageScraper
 from datetime import datetime
 import requests
 from bs4 import BeautifulSoup
-from google_images_download import google_images_download
-from selenium import webdriver
 from fridaybot import CMD_HELP
 from fridaybot.utils import edit_or_reply, friday_on_cmd, sudo_cmd
 
@@ -54,49 +51,6 @@ async def _(event):
     )
     await asyncio.sleep(5)
     await stark.edit("Google: {}\n{}".format(input_str, output_str), link_preview=False)
-
-
-@friday.on(friday_on_cmd(pattern="image (.*)"))
-async def _(event):
-    if event.fwd_from:
-        return
-    start = datetime.now()
-    await event.edit("Processing ...")
-    input_str = event.pattern_match.group(1)
-    if not os.path.isdir('./img/'):
-        os.makedirs('./img/')
-    chrome_options = webdriver.ChromeOptions()
-    chrome_options.add_argument("--ignore-certificate-errors")
-    chrome_options.add_argument("--test-type")
-    chrome_options.add_argument("--headless")
-    chrome_options.add_argument("--no-sandbox")
-    chrome_options.add_argument("--disable-dev-shm-usage")
-    chrome_options.binary_location = Config.GOOGLE_CHROME_BIN
-    driver = webdriver.Chrome(chrome_options=chrome_options)
-    f = './img/'
-    image_scrapper = GoogleImageScraper(Config.GOOGLE_CHROME_BIN,f,input_str,5)
-    image_urls = image_scrapper.find_image_urls()
-    image_scrapper.save_images(image_urls)
-    hehe = os.listdir(f)
-    for h in hehe:
-        await borg.send_file(
-            event.chat_id,
-            h,
-            caption=input_str,
-            reply_to=event.message.id,
-            progress_callback=progress,
-            )
-    for each_file in arr:
-        os.remove(each_file)
-    end = datetime.now()
-    ms = (end - start).seconds
-    await event.edit(
-        "searched Google for {} in {} seconds.".format(input_str, ms),
-        link_preview=False,
-    )
-    await asyncio.sleep(5)
-    await event.delete()
-
 
 @friday.on(friday_on_cmd(pattern="grs"))
 async def _(event):
