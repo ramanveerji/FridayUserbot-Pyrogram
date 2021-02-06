@@ -19,7 +19,7 @@ user_agent = {
     'Connection': 'keep-alive',
 }
 
-Class ImageDL():
+class ImageDL:
     '''
     A Class For Image Downloader
     '''
