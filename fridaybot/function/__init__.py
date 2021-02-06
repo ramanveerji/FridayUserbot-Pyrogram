@@ -729,12 +729,6 @@ def save_img(inp , img , i, directory):
 
 def find_urls(inp,url,driver, directory):
     driver.get(url)
-    for _ in range(10):
-        driver.execute_script("window.scrollBy(0,20)")
-        try:
-            driver.find_element_by_css_selector('.mye4qd').click()
-        except:
-            continue
     for j, imgurl in enumerate(driver.find_elements_by_xpath('//img[contains(@class,"rg_i Q4LuWd")]')):
         try:
             imgurl.click()
