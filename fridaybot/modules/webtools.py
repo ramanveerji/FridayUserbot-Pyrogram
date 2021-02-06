@@ -200,6 +200,9 @@ async def _m(event):
     if stark['success'] is False:
         await event.edit("Search Failed.")
         return
+    if stark['result'] is None:
+        await event.edit("Search Failed. Please Try Again.")
+        return
     for i in stark['result']:
         sel += f"👉 [{i['title']}]({i['link']}) \n**Price :** `{i['price']}` \n\n"
     sel += "\n\n**Powered By @FridayOT**"
