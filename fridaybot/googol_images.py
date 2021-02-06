@@ -6,7 +6,7 @@
 
 # Import Libraries
 import sys
-
+import logging
 version = (3, 0)
 cur_version = sys.version_info
 if cur_version >= version:  # If the Current Version of Python is 3.0 or above
@@ -36,7 +36,7 @@ import json
 import re
 import codecs
 import socket
-
+stark = logging.getLogger("IMAGE_DL")
 args_list = ["keywords", "keywords_from_file", "prefix_keywords", "suffix_keywords",
              "limit", "format", "color", "color_type", "usage_rights", "size",
              "exact_size", "aspect_ratio", "type", "time", "time_range", "delay", "url", "single_image",
@@ -213,7 +213,7 @@ class googleimagesdownload:
                 resp = urllib.request.urlopen(req)
                 respData = str(resp.read())
             except:
-                print("Could not open URL. Please check your internet connection and/or ssl settings \n"
+                stark.info("Could not open URL. Please check your internet connection and/or ssl settings \n"
                       "If you are using proxy, make sure your proxy settings is configured correctly")
                 sys.exit()
         else:  # If the Current Version of Python is 2.x
@@ -226,7 +226,7 @@ class googleimagesdownload:
                     response = urlopen(req, context=context)
                 respData = response.read()
             except:
-                print("Could not open URL. Please check your internet connection and/or ssl settings \n"
+                stark.info("Could not open URL. Please check your internet connection and/or ssl settings \n"
                       "If you are using proxy, make sure your proxy settings is configured correctly")
                 sys.exit()
                 return "Page Not found"
@@ -251,7 +251,7 @@ class googleimagesdownload:
         try:
             browser = webdriver.Chrome(chromedriver, chrome_options=options)
         except Exception as e:
-            print("Looks like we cannot locate the path the 'chromedriver' (use the '--chromedriver' "
+            stark.info("Looks like we cannot locate the path the 'chromedriver' (use the '--chromedriver' "
                   "argument to specify the path to the executable.) or google chrome browser is not "
                   "installed on your machine (exception: %s)" % e)
             sys.exit()
@@ -288,7 +288,7 @@ class googleimagesdownload:
         """)
 
         time.sleep(1)
-        print("Getting you a lot of images. This may take a few moments...")
+        stark.info("Getting you a lot of images. This may take a few moments...")
 
         element = browser.find_element_by_tag_name("body")
         # Scroll down
@@ -306,7 +306,7 @@ class googleimagesdownload:
                 element.send_keys(Keys.PAGE_DOWN)
                 time.sleep(0.3)  # bot id protection
 
-        print("Reached end of Page.")
+        stark.info("Reached end of Page.")
         time.sleep(0.5)
 
         source = browser.page_source  # page source
@@ -432,7 +432,7 @@ class googleimagesdownload:
             raise e
         except OSError as e:
             raise e
-        print("completed ====> " + image_name.encode('raw_unicode_escape').decode('utf-8'))
+        stark.info("completed ====> " + image_name.encode('raw_unicode_escape').decode('utf-8'))
         return
 
     def similar_images(self, similar_images):
@@ -612,7 +612,7 @@ class googleimagesdownload:
                     else:
                         search_keyword.append(line.replace('\n', '').replace('\r', ''))
             else:
-                print("Invalid file type: Valid file types are either .txt or .csv \n"
+                stark.info("Invalid file type: Valid file types are either .txt or .csv \n"
                       "exiting...")
                 sys.exit()
         return search_keyword
@@ -652,7 +652,7 @@ class googleimagesdownload:
     def download_image_thumbnail(self, image_url, main_directory, dir_name, return_image_name, print_urls,
                                  socket_timeout, print_size, no_download, save_source, img_src, ignore_urls):
         if print_urls or no_download:
-            print("Image URL: " + image_url)
+            stark.info("Image URL: " + image_url)
         if no_download:
             return "success", "Printed url without downloading"
         try:
@@ -692,7 +692,7 @@ class googleimagesdownload:
 
                 # image size parameter
                 if print_size:
-                    print("Image Size: " + str(self.file_size(path)))
+                    stark.info("Image Size: " + str(self.file_size(path)))
 
             except UnicodeEncodeError as e:
                 download_status = 'fail'
@@ -721,7 +721,7 @@ class googleimagesdownload:
                        format, ignore_urls):
         if not silent_mode:
             if print_urls or no_download:
-                print("Image URL: " + image_url)
+                stark.info("Image URL: " + image_url)
         if ignore_urls:
             if any(url in image_url for url in ignore_urls.split(',')):
                 return "fail", "Image ignored due to 'ignore url' parameter", None, image_url
@@ -814,7 +814,7 @@ class googleimagesdownload:
                 # image size parameter
                 if not silent_mode:
                     if print_size:
-                        print("Image Size: " + str(self.file_size(path)))
+                        stark.info("Image Size: " + str(self.file_size(path)))
 
             except UnicodeEncodeError as e:
                 download_status = 'fail'
@@ -874,14 +874,14 @@ class googleimagesdownload:
         count = 1
         while count < limit + 1 and i < len(image_objects):
             if len(image_objects) == 0:
-                print("no_links")
+                stark.info("no_links")
                 break
             else:
                 # format the item for readability
                 object = self.format_object(image_objects[i])
                 if arguments['metadata']:
                     if not arguments["silent_mode"]:
-                        print("\nImage Metadata: " + str(object))
+                        stark.info("\nImage Metadata: " + str(object))
 
                 # download the images
                 download_status, download_message, return_image_name, absolute_path = self.download_image(
@@ -916,7 +916,7 @@ class googleimagesdownload:
                     time.sleep(int(arguments['delay']))
             i += 1
         if count < limit:
-            print("\n\nUnfortunately all " + str(
+            stark.info("\n\nUnfortunately all " + str(
                 limit) + " could not be downloaded because some images were not downloadable. " + str(
                 count - 1) + " is all we got for this search filter!")
         return items, errorCount, abs_path
@@ -1050,9 +1050,9 @@ class googleimagesdownload:
                     search_keyword[i]) + (sky)
                     if not arguments["silent_mode"]:
                         print(iteration.encode('raw_unicode_escape').decode('utf-8'))
-                        print("Evaluating...")
+                        stark.info("Evaluating...")
                     else:
-                        print("Downloading images for: " + (pky) + (search_keyword[i]) + (sky) + " ...")
+                        stark.info("Downloading images for: " + (pky) + (search_keyword[i]) + (sky) + " ...")
                     search_term = pky + search_keyword[i] + sky
 
                     if arguments['image_directory']:
@@ -1080,9 +1080,9 @@ class googleimagesdownload:
 
                     if not arguments["silent_mode"]:
                         if arguments['no_download']:
-                            print("Getting URLs without downloading images...")
+                            stark.info("Getting URLs without downloading images...")
                         else:
-                            print("Starting Download...")
+                            stark.info("Starting Download...")
                     items, errorCount, abs_path = self._get_all_items(images, main_directory, dir_name, limit,
                                                                       arguments)  # get all image items and download images
                     paths[pky + search_keyword[i] + sky] = abs_path
@@ -1100,10 +1100,10 @@ class googleimagesdownload:
 
                     # Related images
                     if arguments['related_images']:
-                        print("\nGetting list of related keywords...this may take a few moments")
+                        stark.info("\nGetting list of related keywords...this may take a few moments")
                         for key, value in tabs.items():
                             final_search_term = (search_term + " - " + key)
-                            print("\nNow Downloading - " + final_search_term)
+                            stark.info("\nNow Downloading - " + final_search_term)
                             if limit < 101:
                                 images, _ = self.download_page(value)  # download page
                             else:
@@ -1115,7 +1115,7 @@ class googleimagesdownload:
                     i += 1
                     total_errors = total_errors + errorCount
                     if not arguments["silent_mode"]:
-                        print("\nErrors: " + str(errorCount) + "\n")
+                        stark.info("\nErrors: " + str(errorCount) + "\n")
         return paths, total_errors
 
 
@@ -1137,9 +1137,9 @@ def main():
         t1 = time.time()  # stop the timer
         total_time = t1 - t0  # Calculating the total time required to crawl, find and download all the links of 60,000 images
         if not arguments["silent_mode"]:
-            print("\nEverything downloaded!")
-            print("Total errors: " + str(total_errors))
-            print("Total time taken: " + str(total_time) + " Seconds")
+            stark.info("\nEverything downloaded!")
+            stark.info("Total errors: " + str(total_errors))
+            stark.info("Total time taken: " + str(total_time) + " Seconds")
 
 
 if __name__ == "__main__":
