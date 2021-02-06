@@ -6,7 +6,7 @@ Available Commands:
 
 import asyncio
 import os
-from fridaybot.image_dl import ImageDL
+from fridaybot.image_dl import GoogleImageScraper
 from datetime import datetime
 import requests
 from bs4 import BeautifulSoup
@@ -74,9 +74,10 @@ async def _(event):
     chrome_options.binary_location = Config.GOOGLE_CHROME_BIN
     driver = webdriver.Chrome(chrome_options=chrome_options)
     f = './img/'
-    starkm = ImageDL(driver)
-    arr = starkm.GoogleImageDL(input_str, 5, f)
-    hehe = os.listdir(arr)
+    image_scrapper = GoogleImageScraper(Config.GOOGLE_CHROME_BIN,f,input_str,5)
+    image_urls = image_scrapper.find_image_urls()
+    image_scrapper.save_images(image_urls)
+    hehe = os.listdir(f)
     for h in hehe:
         await borg.send_file(
             event.chat_id,
