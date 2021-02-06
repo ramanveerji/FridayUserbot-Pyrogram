@@ -62,5 +62,5 @@ if Config.PING_SERVERS:
     'default': AsyncIOExecutor(),
         }
     )
-    scheduler.add_job(ping_servers, 'interval', minutes=30)
+    scheduler.add_job(ping_servers, 'interval', minutes=Config.PING_SERVER_EVERY_MINUTE_VALUE)
     scheduler.start()
