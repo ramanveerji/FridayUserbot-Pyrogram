@@ -8,7 +8,7 @@ import shutil
 from re import findall
 
 from fridaybot import CMD_HELP
-from google_images_download import google_images_download
+from fridaybot.googol_images import googleimagesdownload
 from fridaybot.utils import edit_or_reply, friday_on_cmd, sudo_cmd
 
 
@@ -35,12 +35,12 @@ async def img_sampler(event):
         query = query.replace("lim=" + lim[0], "")
     except IndexError:
         lim = 5
-    response = google_images_download.googleimagesdownload()
+    response = googleimagesdownload()
     # creating list of arguments
     arguments = {
         "keywords": query,
         "limit": lim,
-        "format": "jpg",
+        "format": "png",
         "no_directory": "no_directory",
     }
     # passing the arguments to the function
