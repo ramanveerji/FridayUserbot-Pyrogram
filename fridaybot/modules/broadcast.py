@@ -83,7 +83,7 @@ async def _(event):
             rm_channel(channelz.chat_id)
         await event.edit("Fine. Cleared All Channel Database")
         return
-    if input_chnnl is "":
+    if input_chnnl == "":
         if event.is_channel and event.is_group:
             input_chnnl = event.chat_id
         else:
