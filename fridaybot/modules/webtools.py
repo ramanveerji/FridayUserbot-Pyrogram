@@ -189,7 +189,7 @@ async def _(event):
     pathz, name = await apk_dl(akkad, Config.TMP_DOWNLOAD_DIRECTORY, event)
     await borg.send_file(event.chat_id, pathz, caption='Uploaded By @FRidayOT')
     
-@friday.on(friday_on_cmd(pattern="amazonsearch ?(.*)"))
+@friday.on(friday_on_cmd(pattern="amazon ?(.*)"))
 async def _m(event):
     if event.fwd_from:
         return
@@ -204,7 +204,7 @@ async def _m(event):
         await event.edit("Search Failed. Please Try Again.")
         return
     for i in stark['result']:
-        sel += f"👉 {i['title']} \n**Url :** {i['link']} \n**Price :** `{i['price']}` \n\n"
+        sel += f"👉 [{i['title']}]({i['link']}) - `{i['price']}` \n"
     sel += "\n\n**Powered By @FridayOT**"
     await event.edit(sel)
     
