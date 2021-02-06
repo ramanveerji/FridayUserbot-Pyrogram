@@ -63,8 +63,8 @@ async def _(event):
     start = datetime.now()
     await event.edit("Processing ...")
     input_str = event.pattern_match.group(1)
-    if not os.path.isdir('./img'):
-        os.makedirs('./img')
+    if not os.path.isdir('./img/'):
+        os.makedirs('./img/')
     chrome_options = webdriver.ChromeOptions()
     chrome_options.add_argument("--ignore-certificate-errors")
     chrome_options.add_argument("--test-type")
@@ -74,8 +74,8 @@ async def _(event):
     chrome_options.binary_location = Config.GOOGLE_CHROME_BIN
     driver = webdriver.Chrome(chrome_options=chrome_options)
     url = 'https://www.google.com/search?q='+str(input_str)+'&source=lnms&tbm=isch&sa=X&ved=2ahUKEwie44_AnqLpAhUhBWMBHUFGD90Q_AUoAXoECBUQAw&biw=1920&bih=947'
-    find_urls(input_str ,url,driver, './img')
-    arr = os.listdir('./img')
+    find_urls(input_str ,url,driver, './img/')
+    arr = os.listdir('./img/')
     for h in arr:
         await borg.send_file(
             event.chat_id,
@@ -84,8 +84,7 @@ async def _(event):
             reply_to=event.message.id,
             progress_callback=progress,
             )
-    logger.info(lst)
-    for each_file in lst:
+    for each_file in arr:
         os.remove(each_file)
     end = datetime.now()
     ms = (end - start).seconds
