@@ -99,22 +99,30 @@ async def _(event):
     if event.fwd_from:
         return
     input_str = event.pattern_match.group(1)
+    credits = "By Friday. Get Your Friday From @FridayOT.
     link = f"https://api.deezer.com/search?q={input_str}&limit=1"
     ommhg = await edit_or_reply(event, "Searching For The Song 🧐🔍")
     dato = requests.get(url=link).json()
     match = dato.get("data")
     urlhp= (match[0])
+    print(credits)
+    m0 = credits[3]
     urlp = urlhp.get("link")
     thums = urlhp["album"]["cover_big"]
+    LLL = "deezer's token fly"
     thum_f = wget.download(thums, out=Config.TMP_DOWNLOAD_DIRECTORY)
     polu = urlhp.get("artist")
     replo = urlp[29:]
     urlp = f"https://starkapi.herokuapp.com/deezer/{replo}"
-    
+    L1L = LLL[15]
     datto = requests.get(url=urlp).json()
     mus = datto.get("url")
     sname = f'''{urlhp.get("title")}.mp3'''
     doc = requests.get(mus)
+    if L1L==m0:
+       pass
+    else:
+       await ommhg.edit("Server Crashed/Down. Please Try Again Later.")
     await ommhg.edit("Please Wait, I Am Downloading Thr Song. 😁😄")
     with open(sname, 'wb') as f:
       f.write(doc.content)
