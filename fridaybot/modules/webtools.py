@@ -193,7 +193,7 @@ async def _(event):
 async def _m(event):
     if event.fwd_from:
         return
-    sel = "**Amazon Search Result** \n"
+    sel = "**Amazon Search Result** \n\n"
     warner_inc = event.pattern_match.group(1)
     base_url = "http://devsexpo.me/amazon/" + warner_inc
     stark = requests.get(url=base_url).json()
@@ -204,7 +204,7 @@ async def _m(event):
         await event.edit("Search Failed. Please Try Again.")
         return
     for i in stark['result']:
-        sel += f"👉 [{i['title']}]({i['link']}) \n**Price :** `{i['price']}` \n\n"
+        sel += f"👉 {i['title']} \n**Url :** {i['link']} \n**Price :** `{i['price']}` \n\n"
     sel += "\n\n**Powered By @FridayOT**"
     await event.edit(sel)
     
