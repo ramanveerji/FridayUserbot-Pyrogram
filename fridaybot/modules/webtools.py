@@ -180,15 +180,31 @@ async def _(event):
     except:
         await event.edit("Some Thing Went Wrong.")
         
-@friday.on(friday_on_cmd(pattern="akd ?(.*)"))
-@friday.on(sudo_cmd(pattern="akd ?(.*)", allow_sudo=True))
+@friday.on(friday_on_cmd(pattern="apk ?(.*)"))
+@friday.on(sudo_cmd(pattern="apk ?(.*)", allow_sudo=True))
 async def _(event):
     akkad = event.pattern_match.group(1)
     if event.fwd_from:
         return
     pathz, name = await apk_dl(akkad, Config.TMP_DOWNLOAD_DIRECTORY, event)
     await borg.send_file(event.chat_id, pathz, caption='Uploaded By @FRidayOT')
-
+    
+@friday.on(friday_on_cmd(pattern="amazonsearch ?(.*)"))
+async def _m(event):
+    if event.fwd_from:
+        return
+    sel = "**Amazon Search Result** \n"
+    warner_inc = event.pattern_match.group(1)
+    base_url = "http://devsexpo.me/amazon/" + warner_inc
+    stark = requests.get(url=base_url).json()
+    if stark['success'] is False:
+        await event.edit("Search Failed.")
+        return
+    for i in stark['result']:
+        sel += f"👉 [{i['title']}]({i['link']}) \n**Price :** `{i['price']}` \n\n"
+    sel += "\n\n**Powered By @FridayOT**"
+    await event.edit(sel)
+    
 CMD_HELP.update(
     {
         "webtools": "**Web Tools**\
