@@ -81,17 +81,17 @@ async def job_close():
     for warner in ws_chats:
         try:
             await friday.send_message(
-              warner.chat_id, "`12:00 Am, Group Is Closing Till 6 Am. Night Mode Started !` \n**Powered By @FRidayOT**"
+              int(warner.chat_id), "`12:00 Am, Group Is Closing Till 6 Am. Night Mode Started !` \n**Powered By @FRidayOT**"
             )
             await friday(
             functions.messages.EditChatDefaultBannedRightsRequest(
-                peer=warner.chat_id, banned_rights=hehes
+                peer=int(warner.chat_id), banned_rights=hehes
             )
             )
             if Config.CLEAN_GROUPS:
-                async for user in friday.iter_participants(warner.chat_id):
+                async for user in friday.iter_participants(int(warner.chat_id)):
                     if user.deleted:
-                        await friday.edit_permissions(warner.chat_id, user.id, view_messages=False)
+                        await friday.edit_permissions(int(warner.chat_id), user.id, view_messages=False)
         except Exception as e:
             logger.info(f"Unable To Open Group {warner} - {e}")
 
@@ -107,11 +107,11 @@ async def job_open():
     for warner in ws_chats:
         try:
             await friday.send_message(
-              warner.chat_id, "`06:00 Am, Group Is Opening.`\n**Powered By @FRidayOT**"
+              int(warner.chat_id), "`06:00 Am, Group Is Opening.`\n**Powered By @FRidayOT**"
             )
             await friday(
             functions.messages.EditChatDefaultBannedRightsRequest(
-                peer=warner.chat_id, banned_rights=openhehe
+                peer=int(warner.chat_id), banned_rights=openhehe
             )
         )
         except Exception as e:
