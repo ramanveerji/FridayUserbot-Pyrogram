@@ -12,8 +12,8 @@ from fridaybot.googol_images import googleimagesdownload
 from fridaybot.utils import edit_or_reply, friday_on_cmd, sudo_cmd
 
 
-@friday.on(friday_on_cmd(pattern="img ?(.*)"))
-@friday.on(sudo_cmd(pattern="img ?(.*)", allow_sudo=True))
+@friday.on(friday_on_cmd(pattern="(img|image|googleimage|gi) ?(.*)"))
+@friday.on(sudo_cmd(pattern="(img|image|googleimage|gi) ?(.*)", allow_sudo=True))
 async def img_sampler(event):
     await edit_or_reply(event, "`Processing...`")
     reply = await event.get_reply_message()
@@ -40,7 +40,7 @@ async def img_sampler(event):
     arguments = {
         "keywords": query,
         "limit": lim,
-        "format": "png",
+        "format": "jpg",
         "no_directory": "no_directory",
     }
     # passing the arguments to the function
