@@ -26,15 +26,6 @@ async def giblog(event):
     )
 
 
-@friday.on(friday_on_cmd(pattern="(rerun|restarts)"))
-@friday.on(sudo_cmd(pattern="(restart|restarts)", allow_sudo=True))
-async def restart_me(event):
-    if event.fwd_from:
-        return
-    herokuHelper = HerokuHelper(Config.HEROKU_APP_NAME, Config.HEROKU_API_KEY)
-    await event.edit("`App is Restarting. This is May Take Upto 10Min.`")
-    herokuHelper.restart()
-
 
 @friday.on(friday_on_cmd(pattern="usage$"))
 @friday.on(sudo_cmd(pattern="usage$", allow_sudo=True))
