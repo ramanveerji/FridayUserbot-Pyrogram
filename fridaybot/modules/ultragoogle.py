@@ -7,11 +7,10 @@ Available Commands:
 import asyncio
 import os
 from datetime import datetime
-
 import requests
 from bs4 import BeautifulSoup
 from google_images_download import google_images_download
-
+from selenium import webdriver
 from fridaybot import CMD_HELP
 from fridaybot.utils import edit_or_reply, friday_on_cmd, sudo_cmd
 
@@ -63,30 +62,27 @@ async def _(event):
     start = datetime.now()
     await event.edit("Processing ...")
     input_str = event.pattern_match.group(1)
-    response = google_images_download.googleimagesdownload()
-    if not os.path.isdir(Config.TMP_DOWNLOAD_DIRECTORY):
-        os.makedirs(Config.TMP_DOWNLOAD_DIRECTORY)
-    arguments = {
-        "keywords": input_str,
-        "limit": Config.TG_GLOBAL_ALBUM_LIMIT,
-        "format": "jpg",
-        "delay": 1,
-        "safe_search": True,
-        "output_directory": Config.TMP_DOWNLOAD_DIRECTORY,
-    }
-    paths = response.download(arguments)
-    logger.info(paths)
-    lst = paths[0].get(input_str)
-    if len(lst) == 0:
-        await event.delete()
-        return
-    await borg.send_file(
-        event.chat_id,
-        lst,
-        caption=input_str,
-        reply_to=event.message.id,
-        progress_callback=progress,
-    )
+    if not os.path.isdir('./img'):
+        os.makedirs('./img')
+    chrome_options = webdriver.ChromeOptions()
+    chrome_options.add_argument("--ignore-certificate-errors")
+    chrome_options.add_argument("--test-type")
+    chrome_options.add_argument("--headless")
+    chrome_options.add_argument("--no-sandbox")
+    chrome_options.add_argument("--disable-dev-shm-usage")
+    chrome_options.binary_location = Config.GOOGLE_CHROME_BIN
+    driver = webdriver.Chrome(chrome_options=chrome_options)
+    url = 'https://www.google.com/search?q='+str(input_str)+'&source=lnms&tbm=isch&sa=X&ved=2ahUKEwie44_AnqLpAhUhBWMBHUFGD90Q_AUoAXoECBUQAw&biw=1920&bih=947'
+    find_urls(input_str ,url,driver, './img')
+    arr = os.listdir('./img')
+    for h in arr:
+        await borg.send_file(
+            event.chat_id,
+            h,
+            caption=input_str,
+            reply_to=event.message.id,
+            progress_callback=progress,
+            )
     logger.info(lst)
     for each_file in lst:
         os.remove(each_file)
