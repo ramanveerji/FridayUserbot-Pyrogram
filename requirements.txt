@@ -54,7 +54,6 @@ geopy
 gitpython
 google-api-python-client==1.8.0
 google-auth-oauthlib
-pip install git+https://github.com/Joeclinton1/google-images-download.git
 gsearch
 hachoir
 heroku3
