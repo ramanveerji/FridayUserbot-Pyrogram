@@ -6,7 +6,7 @@ Available Commands:
 
 import asyncio
 import os
-from fridaybot.function import find_urls, save_img 
+from fridaybot.image_dl import ImageDL
 from datetime import datetime
 import requests
 from bs4 import BeautifulSoup
@@ -73,10 +73,11 @@ async def _(event):
     chrome_options.add_argument("--disable-dev-shm-usage")
     chrome_options.binary_location = Config.GOOGLE_CHROME_BIN
     driver = webdriver.Chrome(chrome_options=chrome_options)
-    url = 'https://www.google.com/search?q='+str(input_str)+'&source=lnms&tbm=isch&sa=X&ved=2ahUKEwie44_AnqLpAhUhBWMBHUFGD90Q_AUoAXoECBUQAw&biw=1920&bih=947'
-    find_urls(input_str ,url,driver, './img/')
-    arr = os.listdir('./img/')
-    for h in arr:
+    f = './img/'
+    starkm = ImageDL(driver)
+    arr = starkm.GoogleImageDL(input_str, 5, f)
+    hehe = os.listdir(arr)
+    for h in hehe:
         await borg.send_file(
             event.chat_id,
             h,
