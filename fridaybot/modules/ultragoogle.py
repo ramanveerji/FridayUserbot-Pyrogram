@@ -6,6 +6,7 @@ Available Commands:
 
 import asyncio
 import os
+from fridaybot.function import find_urls, save_img 
 from datetime import datetime
 import requests
 from bs4 import BeautifulSoup
