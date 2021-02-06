@@ -17,8 +17,8 @@ from fridaybot.utils import edit_or_reply, friday_on_cmd, sudo_cmd
 async def img_sampler(event):
     await edit_or_reply(event, "`Processing...`")
     reply = await event.get_reply_message()
-    if event.pattern_match.group(1):
-        query = event.pattern_match.group(1)
+    if event.pattern_match.group(2):
+        query = event.pattern_match.group(2)
     elif reply:
         query = reply.message
     else:
