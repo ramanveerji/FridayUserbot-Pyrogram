@@ -7,8 +7,8 @@ from fridaybot.googol_images import googleimagesdownload
 from fridaybot.utils import edit_or_reply, friday_on_cmd, sudo_cmd
 
 
-@friday.on(friday_on_cmd(pattern="wpaper ?(.*)"))
-@friday.on(sudo_cmd(pattern="wpaper ?(.*)", allow_sudo=True))
+@friday.on(friday_on_cmd(pattern="(wpaper|wallpaper|wp) ?(.*)"))
+@friday.on(sudo_cmd(pattern="(wpaper|wallpaper|wp) ?(.*)", allow_sudo=True))
 async def img_sampler(event):
     if event.fwd_from:
         return
