@@ -322,6 +322,6 @@ CMD_HELP.update(
 \n\n**Syntax : **`.yta <song link> OR .ytv <video link>`\
 \n**Usage :** download songs or videos from YouTube just with a link\
 \n\n**Syntax : **`.hyta <song link>`\
-\n**Usage :** download songs in m4a format(higher quality)."
+\n**Usage :** download songs in m4a format-higher quality."
     }
 )
