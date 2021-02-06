@@ -204,7 +204,7 @@ async def _m(event):
         await event.edit("Search Failed. Please Try Again.")
         return
     for i in stark['result']:
-        sel += f"👉 [{i['title']}]({i['link']}) - `{i['price']}` \n"
+        sel += f"👉 [{}]({}) \n`{}` \n".format(i['title'], i['link'], i['price'])
     sel += "\n\n**Powered By @FridayOT**"
     await event.edit(sel)
     
