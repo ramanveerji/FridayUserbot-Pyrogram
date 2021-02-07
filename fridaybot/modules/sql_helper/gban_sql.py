@@ -30,7 +30,7 @@ Gban.__table__.create(checkfirst=True)
 
 
 def gban_user(user_id: int, reason):
-    gbanner = Gban(str(user_id), reason)
+    gbanner = Gban(str(user_id), str(reason))
     SESSION.add(gbanner)
     SESSION.commit()
 
@@ -38,7 +38,7 @@ def gban_user(user_id: int, reason):
 def gban_data(user_id: int):
     try:
         s__ = SESSION.query(Gban).get(str(user_id))
-        return int(s__.user_id), s__.reason
+        return int(s__.user_id), str(s__.reason)
     finally:
         SESSION.close()
         
@@ -46,7 +46,7 @@ def is_gbanned(user_id: int):
     try:
         s__ = SESSION.query(Gban).get(str(user_id))
         if s__:
-            return s__.reason
+            return str(s__.reason)
     finally:
         SESSION.close()
 
