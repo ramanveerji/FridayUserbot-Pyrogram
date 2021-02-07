@@ -94,6 +94,9 @@ async def _(event):
         await event.edit("`No Fed IN DB, Add One To Do So. Please Do .fadd all to Add All Feds IN Database`")
         return
     await event.edit(f"`FBanning in {len_feds} Feds.`")
+    if not chnnl_grp:
+        await event.edit("Bruh, Atleast Set Fban Group Var, Do `.set var FBAN_GROUP <yourgroupidhere>`")
+        return
     try:
         await borg.send_message(chnnl_grp, "/start")
     except Exception as e:
