@@ -152,16 +152,12 @@ if failed2 is None:
 if failed3 is None:
     total_clients += 1
 
-fridaydevs.info(f"""
-Friday-Userbot Based On Telethon V{tv}
+fridaydevs.info(f"""Friday-Userbot Based On Telethon V{tv}
 Python Version : {platform.python_version()}
 Friday-Userbot Version : V{friday_version}
 Support Chat : @FridayChat
 Updates Channel : @FridaySupportOfficial
-Total Clients : {total_clients} 
-Total Modules Loaded : {len(files) - failed_warner}
-(C) @DevsExpo
-    """)
+Total Clients : {total_clients}""")
         
 bot.tgbot.loop.run_until_complete(check_inline_on_warner(bot.tgbot))
 
