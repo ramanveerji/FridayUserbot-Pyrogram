@@ -142,9 +142,9 @@ if Config.ENABLE_ASSISTANTBOT == "ENABLE":
             path1 = Path(f.name)
             shortname = path1.stem
             start_assistant(shortname.replace(".py", ""))
-    fridaydevs.info("Friday And Assistant Bot Have Been Installed Successfully !")
+    wsta = "Friday And Assistant Bot Have Been Installed Successfully !"
 else:
-    fridaydevs.info("Friday Has Been Installed Sucessfully")
+    wsta = "Friday Has Been Installed Sucessfully"
 
 total_clients = 1
 if failed2 is None:
@@ -152,12 +152,15 @@ if failed2 is None:
 if failed3 is None:
     total_clients += 1
 
-fridaydevs.info(f"""Friday-Userbot Based On Telethon V{tv}
+fridaydevs.info(f"""{wsta}
+-------------------------------------------
+Friday-Userbot Based On Telethon V{tv}
 Python Version : {platform.python_version()}
 Friday-Userbot Version : V{friday_version}
 Support Chat : @FridayChat
 Updates Channel : @FridaySupportOfficial
-Total Clients : {total_clients}""")
+Total Clients : {total_clients}
+-------------------------------------------""")
         
 bot.tgbot.loop.run_until_complete(check_inline_on_warner(bot.tgbot))
 
