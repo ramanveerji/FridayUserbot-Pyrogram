@@ -21,15 +21,15 @@ import random
 import string
 from pathlib import Path
 
-@friday.on(friday_on_cmd(pattern="(shazam|sreverse|identify)"))
-@friday.on(sudo_cmd(pattern="(shazam|sreverse|identify)", allow_sudo=True))
+@friday.on(friday_on_cmd(pattern="(shazam|sreverse|identify)$"))
+@friday.on(sudo_cmd(pattern="(shazam|sreverse|identify)$", allow_sudo=True))
 async def _(event):
     if event.fwd_from:
         return
     if not event.reply_to_msg_id:
         ommhg = await edit_or_reply(event, "Reply To The Audio.")
         return
-    if Path("friday.mp3").is_file():
+    if os.path.exists("friday.mp3"):
       os.remove("friday.mp3")
     credit = "By Friday. Get Your Friday From @FridayOt"
     ommhg = await edit_or_reply(event, "`Downloading To Local Server.`")
