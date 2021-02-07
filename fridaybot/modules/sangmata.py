@@ -37,7 +37,7 @@ async def _(event):
             await event.edit(
                 "```can you kindly disable your forward privacy settings for good?```"
             )
-            await borg.send_message(str(chat), "/search_id " + kk)
+            await borg.send_message("@SangMataInfo_bot", "/search_id " + str(kk))
             response1 = await response
             response2 = await response
             if response2.text.startswith("No records"):
