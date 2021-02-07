@@ -6,7 +6,7 @@ import sys
 import platform
 from git import Repo
 from uniborg.util import friday_on_cmd, sudo_cmd
-from fridaybot import ALIVE_NAME, CMD_HELP, Lastupdate
+from fridaybot import ALIVE_NAME, CMD_HELP, Lastupdate, friday_version
 from fridaybot.Configs import Config
 from fridaybot.modules import currentversion
 
@@ -60,7 +60,7 @@ async def friday(alive):
                   f"➥ **Uptime** : `{uptime}` \n"
                   "➥ **Database Status:**  `Functional`\n"
                   f"➥ **Current Branch** : `{branch_name}`\n"
-                  f"➥ **Version** : `6.5`\n"
+                  f"➥ **Version** : `{friday_version}`\n"
                   f"➥ **My Boss** : {DEFAULTUSER} \n"
                   "➥ **Heroku Database** : `AWS - Working Properly`\n\n"
                   "➥ **License** : [GNU General Public License v3.0](github.com/StarkGang/FridayUserbot/blob/master/LICENSE)\n"
