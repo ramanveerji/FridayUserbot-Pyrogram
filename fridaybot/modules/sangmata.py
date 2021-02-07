@@ -13,11 +13,12 @@ async def _(event):
         await event.edit("```Reply to any user message.```")
         return
     reply_message = await event.get_reply_message()
+    holy = "Name History [@SangMataInfo_bot] \n"
     if not reply_message.text:
         await event.edit("```reply to text message```")
         return
     chat = "@SangMataInfo_bot"
-    reply_message.sender
+    kk = reply_message.sender
     if reply_message.sender.bot:
         await event.edit("```Reply to actual users message.```")
         return
@@ -36,6 +37,15 @@ async def _(event):
             await event.edit(
                 "```can you kindly disable your forward privacy settings for good?```"
             )
+            await borg.send_message(chat, "/search_id " + kk)
+            response1 = await response
+            response2 = await response
+            if response2.text.startswith("No records"):
+                await event.edit("Yes, You Heard Right, No Records Found.")
+                return
+            response3 = await response
+            holy += "Name History \n" + response2 + "\nUsername History \n" + response3
+            await event.edit(holy)
         else:
             await event.edit(f"{response.message.message}")
 
