@@ -84,11 +84,11 @@ async def gbun(event):
           bad += 0
     etime = time.time()
     hmm_time = round(etime-stime)
-    await event.edit(f"**GBanned Successfully !**"
-                     f"**User :** [{user.first_name}](tg://user?id={user.id})"
-                     f"**Affected Chats :** `{sucess}`"
-                     f"**Time Taken :** `{hmm_time}`"
-                     f"**Reason :** `{reason}`"
+    await event.edit(f"**GBanned Successfully !** \n\n"
+                     f"**User :** [{user.first_name}](tg://user?id={user.id}) \n"
+                     f"**Affected Chats :** `{sucess}` \n"
+                     f"**Time Taken :** `{hmm_time}` \n"
+                     f"**Reason :** `{reason}` \n"
                      f"This User Will Be Banned Incase Of Joining Any Groups Where You Are Admin in Future.")
           	
 @friday.on(friday_on_cmd(pattern='ungban(?: |$)(.*)'))
@@ -125,9 +125,9 @@ async def ungbun(event):
           bad += 0
     etime = time.time()
     hmm_time = round(etime-stime)
-    await event.edit(f"**Un-GBanned Successfully !**"
-                     f"**User :** [{user.first_name}](tg://user?id={user.id})"
-                     f"**Affected Chats :** `{sucess}`"
+    await event.edit(f"**Un-GBanned Successfully !** \n\n"
+                     f"**User :** [{user.first_name}](tg://user?id={user.id}) \n"
+                     f"**Affected Chats :** `{sucess}` \n"
                      f"**Time Taken :** `{hmm_time}`")
 @friday.on(ChatAction)
 async def starky(event):
