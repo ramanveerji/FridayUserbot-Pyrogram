@@ -127,6 +127,9 @@ async def _(event):
     errors = 0
     len_feds = len(all_fed)
     await event.edit(f"`UnFBanning in {len_feds} Feds.`")
+    if not chnnl_grp:
+        await event.edit("Bruh, Atleast Set Fban Group Var, Do `.set var FBAN_GROUP <yourgroupidhere>`")
+        return
     try:
         await borg.send_message(chnnl_grp, "/start")
     except Exception as e:
