@@ -18,6 +18,7 @@ async def _(event):
         await event.edit("```reply to text message```")
         return
     chat = "@SangMataInfo_bot"
+    sw = reply_message.sender_id
     kk = reply_message.sender
     if reply_message.sender.bot:
         await event.edit("```Reply to actual users message.```")
@@ -37,7 +38,10 @@ async def _(event):
             await event.edit(
                 "```can you kindly disable your forward privacy settings for good?```"
             )
-            await borg.send_message("@SangMataInfo_bot", "/search_id " + str(kk))
+            response = conv.wait_event(
+                events.NewMessage(incoming=True, from_users=461843263)
+            )
+            await borg.send_message("@SangMataInfo_bot", "/search_id " + str(sw))
             response1 = await response
             response2 = await response
             if response2.text.startswith("No records"):
