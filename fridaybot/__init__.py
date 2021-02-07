@@ -221,3 +221,5 @@ try:
         os.makedirs(TMP_DOWNLOAD_DIRECTORY)
 except:
     pass
+
+friday_version = "7.0"
