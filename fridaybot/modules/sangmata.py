@@ -44,7 +44,7 @@ async def _(event):
                 await event.edit("Yes, You Heard Right, No Records Found.")
                 return
             response3 = await response
-            holy += "Name History \n" + response2 + "\nUsername History \n" + response3
+            holy += "Name History \n" + str(response2.text) + "\nUsername History \n" + str(response3.text)
             await event.edit(holy)
         else:
             await event.edit(f"{response.message.message}")
