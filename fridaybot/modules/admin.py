@@ -201,7 +201,6 @@ async def demote(event):
     poppo = await edit_or_reply(event, "`Demoting...`")
     rank = "admeme"  # dummy rank, lol.
     user, reason = await get_user_from_event(event)
-    user = user[0]
     if user:
         pass
     else:
