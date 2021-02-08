@@ -42,3 +42,21 @@ async def _(event):
       await kok.edit("Replied Image is nsfw.")
     elif r.get("is_nsfw") is False:
       await kok.edit("Replied Image is Not nsfw.")
+    else:
+      Repled = r.get("error")
+      await kok.edit(Repled)
+
+
+CMD_HELP.update(
+    {
+        "nsfw_detector": "**Nsfw Detector**\
+\n\n**Syntax : **`.nsfw <replying to the image>`\
+\n**Usage :** Identifies If The Given Image Is Nsfw Or Not.\
+    }
+)
+
+
+
+
+
+
