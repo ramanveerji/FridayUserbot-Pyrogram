@@ -719,8 +719,7 @@ async def is_nsfw(event):
             or lmao.sticker
             or lmao.media
     ):
-        await event.edit("`Format Not Supported`")
-        return
+        return False
     if lmao.video or lmao.video_note or lmao.sticker or lmao.gif:
         try:
             stark = await event.client.download_media(lmao.media, thumb=-1)
