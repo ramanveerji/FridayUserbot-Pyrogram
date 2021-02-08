@@ -228,25 +228,26 @@ if PM_ON_OFF != "DISABLE":
             await do_pm_permit_action(chat_ids, event)
                                        
     async def do_pm_permit_action(chat_ids, event):
-        hehe = await is_nsfw(event)
-        if hehe is True:
-            await event.client.send_message(chat_ids, "`How Dare You Send Nsfw In My Masters Pm, You Have Been Blocked By FridayUserBot !`")
-            await event.client(functions.contacts.BlockRequest(chat_ids))
-            _message = ""
-            _message += "#BLOCKED_PM_NSFW\n\n"
-            _message += f"[User](tg://user?id={chat_ids}): {chat_ids}\n"
-            _message += f"Message Counts: {PM_WARNS[chat_ids]}\n"
-            _message += f"**This Asshole Sent Nsfw Contect in Your Pm**"
-            try:
-                await event.client.send_message(
-                    entity=Config.PRIVATE_GROUP_ID,
-                    message=_message,
-                    link_preview=False,
-                    silent=True,
-                )
-                return
-            except BaseException:
-                pass
+        if event.media:
+            hehe = await is_nsfw(event)
+            if hehe is True:
+                await event.client.send_message(chat_ids, "`How Dare You Send Nsfw In My Masters Pm, You Have Been Blocked By FridayUserBot !`")
+                await event.client(functions.contacts.BlockRequest(chat_ids))
+                _message = ""
+                _message += "#BLOCKED_PM_NSFW\n\n"
+                _message += f"[User](tg://user?id={chat_ids}): {chat_ids}\n"
+                _message += f"Message Counts: {PM_WARNS[chat_ids]}\n"
+                _message += f"**This Asshole Sent Nsfw Contect in Your Pm**"
+                try:
+                    await event.client.send_message(
+                        entity=Config.PRIVATE_GROUP_ID,
+                        message=_message,
+                        link_preview=False,
+                        silent=True,
+                    )   
+                    return
+                except BaseException:
+                    pass
         if chat_ids not in PM_WARNS:
             PM_WARNS.update({chat_ids: 0})
         if PM_WARNS[chat_ids] == 3:
