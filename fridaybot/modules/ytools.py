@@ -85,7 +85,7 @@ async def _(event):
         }
     try:
         with YoutubeDL(opts) as ytdl:
-            ytdl_data = ytdl.download(url)
+            ytdl_data = ytdl.download(mo)
     except Exception as e:
         await event.edit(f"**Failed To Download** \n**Error :** `{str(e)}`")
         return
