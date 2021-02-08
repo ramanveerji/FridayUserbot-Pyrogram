@@ -692,7 +692,6 @@ async def fetch_audio(event, ws):
     if not event.reply_to_msg_id:
         await event.edit("`Reply To A Video / Audio.`")
         return
-    c_time = time.time()
     warner_stark = await event.get_reply_message()    
     if warner_stark.audio is None  and warner_stark.video is None:
         await event.edit("`Format Not Supported`")
@@ -704,6 +703,7 @@ async def fetch_audio(event, ws):
         stdout, stderr = (await runcmd(stark_cmd))[:2]
         final_warner = "friday.mp3"
     elif warner_stark.audio:
+        await event.edit("`Download Started !`")
         final_warner = await event.client.download_media(warner_stark.media)
     await event.edit("`Almost Done!`")    
     return final_warner
