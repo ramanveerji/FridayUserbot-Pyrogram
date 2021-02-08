@@ -69,7 +69,7 @@ async def _(event):
         return
     if not already_added(input_chnnl):
         add_chnnl_in_db(input_chnnl)
-        await edit_or_reply(event, (f"Fine. I have Added {input_chnnl} To DataBase.")
+        await edit_or_reply(event, f"Fine. I have Added {input_chnnl} To DataBase.")
         await borg.send_message(loggy_grp, f"Added {input_chnnl} To DB")
 
 
@@ -89,11 +89,11 @@ async def _(event):
         if event.is_channel and event.is_group:
             input_chnnl = event.chat_id
         else:
-            await edit_or_reply(event, ("Please Give Group / Channel ID")
+            await edit_or_reply(event, "Please Give Group / Channel ID")
             return
     if already_added(input_chnnl):
         rm_channel(input_chnnl)
-        await edit_or_reply(event, (f"Fine. I have Removed {input_chnnl} From DataBase.")
+        await edit_or_reply(event, f"Fine. I have Removed {input_chnnl} From DataBase.")
         await borg.send_message(loggy_grp, f"Removed {input_chnnl} From DB")
     elif not already_added(input_chnnl):
         await edit_or_reply(event, 
