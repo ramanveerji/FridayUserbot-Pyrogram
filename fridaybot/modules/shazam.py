@@ -34,7 +34,7 @@ async def _(event):
     credit = "By Friday. Get Your Friday From @FridayOt"
     ommhg = await edit_or_reply(event, "`Downloading To Local Server.`")
     kkk = await fetch_audio(event, borg)
-    downloaded_file_name = str("friday.mp3")
+    downloaded_file_name = kkk
     train = credit[3].lower()
     f = {"file": (downloaded_file_name, open(downloaded_file_name, "rb"))}
     Lop = "flutter's formula"
