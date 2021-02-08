@@ -92,7 +92,8 @@ async def thumbnailer(event):
     except:
         await event.edit("`Well, My Eyes Couldn't Find Any Thumb. :/`")
         return
-    await event.reply(file=thumbstark) 
+    await event.delete()
+    await event.client.send_file(event.chat_id, thumbstark, reply_to=is_reply)
 
 # Firstly Released By @DELETEDUSER420
 @friday.on(friday_on_cmd(pattern=r"nst"))
