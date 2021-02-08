@@ -230,8 +230,6 @@ if PM_ON_OFF != "DISABLE":
     async def do_pm_permit_action(chat_ids, event):
         if Config.NSFW_FILTER_PM:
             if event.media:
-                if chat_ids in PREV_REPLY_MESSAGE:
-                    pass
                 hehe = await is_nsfw(event)
                 if hehe is True:
                     await event.client.send_message(chat_ids, "`How Dare You Send Nsfw In My Masters Pm, You Have Been Blocked By FridayUserBot !`")
