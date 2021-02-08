@@ -22,8 +22,8 @@ from uniborg.util import friday_on_cmd
 
 
 
-@friday.on(friday_on_cmd(pattern=r"nsfw"))
-@friday.on(sudo_cmd(pattern=r"nsfw", allow_sudo=True))
+@friday.on(friday_on_cmd(pattern=r"oldnsfw"))
+@friday.on(sudo_cmd(pattern=r"oldnsfw", allow_sudo=True))
 async def nsfw(event):
     if event.fwd_from:
         return
