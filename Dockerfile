@@ -65,6 +65,5 @@ RUN git clone https://github.com/DevsExpo/FridayUserbot /root/fridaybot
 RUN mkdir /root/fridaybot/bin/
 WORKDIR /root/fridaybot/
 RUN chmod +x /usr/local/bin/*
-RUN pip3 install tensorflow==1.15
 RUN pip3 install -r requirements.txt
 CMD ["bash","start.sh"]
