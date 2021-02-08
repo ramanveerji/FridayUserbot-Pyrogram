@@ -708,25 +708,51 @@ async def fetch_audio(event, ws):
     await event.edit("`Almost Done!`")    
     return final_warner
 
-def save_img(inp , img , i, directory):
-    try:
-        filename = inp + str(i) + '.jpg'
-        response = requests.get(img,stream=True)
-        image_path = os.path.join(directory, filename)
-        with open(image_path, 'wb') as file:
-            shutil.copyfileobj(response.raw, file)
-    except Exception:
-        pass
-
-
-def find_urls(inp,url,driver, directory):
-    driver.get(url)
-    for j, imgurl in enumerate(driver.find_elements_by_xpath('//img[contains(@class,"rg_i Q4LuWd")]')):
+async def is_nsfw(event):
+    lmao = event
+    if not (
+            lmao.gif
+            or lmao.video
+            or lmao.video_note
+            or lmao.photo
+            or lmao.sticker
+            or lmao.media
+    ):
+        await event.edit("`Format Not Supported`")
+        return
+    if lmao.video or lmao.video_note or lmao.sticker or lmao.gif:
         try:
-            imgurl.click()
-            img = driver.find_element_by_xpath('//body/div[2]/c-wiz/div[3]/div[2]/div[3]/div/div/div[3]/div[2]/c-wiz/div[1]/div[1]/div/div[2]/a/img').get_attribute("src")
-            save_img(inp,img,j, directory)
-            time.sleep(1.5)
+            stark = await event.client.download_media(lmao.media, thumb=-1)
         except:
-            pass
-            
+            return False
+    elif lmao.photo or lmao.sticker:
+        try:
+            stark = await event.client.download_media(lmao.media)
+        except:
+            return False
+    Credits = "By Friday. Get Your Friday From @Friday_OT"
+    Reply_message = Credits
+    tokez = Reply_message[3:9].lower()
+    loZ = Reply_message[3].lower()
+    nsfew = "nsfw[001][5556]^√~~×{{}∆}÷]][™™®®®--44447££6"
+    nsf = nsfew[2]
+    if loZ == nsf:
+      N = 15
+    else:
+      N = 14
+    img = stark
+    res = ''.join(random.choices(string.ascii_uppercase +string.digits, k = N))
+    token = str(res)
+    f = {"file": (img, open(img, "rb"))}
+    h = {
+      "by":tokez,
+      "token":token
+    }
+    r = requests.post("https://starkapi.herokuapp.com/nsfw/", files = f, headers = h).json()
+    if r.get("success") is False:
+      is_nsfw = False
+    elif r.get("is_nsfw") is True:
+      is_nsfw = True
+    elif r.get("is_nsfw") is False:
+      is_nsfw = False
+    return is_nsfw
