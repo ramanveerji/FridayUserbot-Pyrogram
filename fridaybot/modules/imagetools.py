@@ -78,7 +78,21 @@ async def hmm(event):
     for files in (ok, img):
         if files and os.path.exists(files):
             os.remove(files)
-
+            
+@friday.on(friday_on_cmd(pattern=r"(getthumb|ethumb|gethumb)$"))
+async def thumbnailer(event):
+    if event.fwd_from:
+        return
+    if not event.reply_to_msg_id:
+        await event.edit("`Reply to any Media File. I will Send You Its Thumb.`")
+        return
+    is_reply = await event.get_reply_message()
+    try:
+        thumbstark = await event.client.download_media(is_reply.media, thumb=-1)
+    except:
+        await event.edit("`Well, My Eyes Couldn't Find Any Thumb. :/`")
+        return
+    await event.reply(file=thumbstark) 
 
 # Firstly Released By @DELETEDUSER420
 @friday.on(friday_on_cmd(pattern=r"nst"))
