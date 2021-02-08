@@ -561,7 +561,7 @@ async def kick(event):
         poppo = await edit_or_reply(event, "`Couldn't fetch user.`")
         return
 
-    poppo = await edit_or_reply(event, `Kicking...`")
+    poppo = await edit_or_reply(event, "`Kicking...`")
 
     try:
         await event.client.kick_participant(event.chat_id, user.id)
