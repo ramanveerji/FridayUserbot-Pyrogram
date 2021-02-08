@@ -38,13 +38,13 @@ async def _(event):
       "token":token
     }
     r = requests.post("https://starkapi.herokuapp.com/nsfw/", files = f, headers = h).json()
-    if r.get("is_nsfw") is True:
+    if r.get("success") is False:
+      await kok.edit(r.get("error"))
+      return
+    elif r.get("is_nsfw") is True:
       await kok.edit("Replied Image is nsfw.")
     elif r.get("is_nsfw") is False:
       await kok.edit("Replied Image is Not nsfw.")
-    else:
-      Repled = r.get("error")
-      await kok.edit(Repled)
 
 
 CMD_HELP.update(
