@@ -6,7 +6,7 @@ import string
 import random 
 
 
-@friday.on(friday_on_cmd(pattern="nsfw$"))
+@friday.on(friday_on_cmd(pattern="(nsfw|checknsfw|nsfwdetect)$"))
 @friday.on(sudo_cmd(pattern="nsfw$", allow_sudo=True))
 async def _(event):
     if event.fwd_from:
@@ -14,6 +14,7 @@ async def _(event):
     if not event.reply_to_msg_id:
         await edit_or_reply(event, "Reply To Any Image Idiot.")
         return
+    await event.edit("Proces
     reply_message = await event.get_reply_message()
     Credits = "By Friday. Get Your Friday From @Friday_OT"
     Reply_message = Credits
@@ -51,7 +52,7 @@ CMD_HELP.update(
     {
         "nsfw_detector": "**Nsfw Detector**\
 \n\n**Syntax : **`.nsfw <replying to the image>`\
-\n**Usage :** Identifies If The Given Image Is Nsfw Or Not.\
+\n**Usage :** Identifies If The Given Image Is Nsfw Or Not."
     }
 )
 
