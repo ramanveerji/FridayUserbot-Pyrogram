@@ -97,7 +97,7 @@ async def set_not_afk(event):
                 reply_to=event.message.id,
                 silent=True,
             )
-        await asyncio.sleep(5)
+        await asyncio.sleep(10)
         await shite.delete()
         USER_AFK = {}  # pylint:disable=E0602
         afk_time = None  # pylint:disable=E0602
