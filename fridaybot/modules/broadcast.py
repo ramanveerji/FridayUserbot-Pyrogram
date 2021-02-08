@@ -73,7 +73,7 @@ async def _(event):
         await borg.send_message(loggy_grp, Ml)
 
 
-@friday.on(friday_on_cmd(pattern="brm ?(.*)")
+@friday.on(friday_on_cmd(pattern="brm ?(.*)"))
 @friday.on(sudo_cmd(pattern="brm ?(.*)", allow_sudo=True))
 async def _(event):
     if event.fwd_from:
