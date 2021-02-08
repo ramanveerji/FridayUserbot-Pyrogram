@@ -83,7 +83,7 @@ async def _(event):
     if input_chnnl == "all":
         for channelz in all_chnnl:
             rm_channel(channelz.chat_id)
-        await edit_or_reply(event, Fine. Cleared All Channel Database")
+        await edit_or_reply(event, "Fine. Cleared All Channel Database")
         return
     if input_chnnl == "":
         if event.is_channel and event.is_group:
