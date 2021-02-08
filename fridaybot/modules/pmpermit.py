@@ -90,7 +90,7 @@ if PM_ON_OFF != "DISABLE":
                 await asyncio.sleep(3)
                 await rko.delete()           
 
-    @borg.on(friday_on_cmd(pattern="(a|approve)$"))
+    @borg.on(friday_on_cmd(pattern="(a|approve|allow)$"))
     async def approve(event):
         if event.fwd_from:
             return
@@ -131,7 +131,7 @@ if PM_ON_OFF != "DISABLE":
                 await event.edit('`User Already Approved !`')
                 await event.delete()
 
-    @borg.on(friday_on_cmd(pattern="(da|disapprove)$"))
+    @borg.on(friday_on_cmd(pattern="(da|disapprove|disallow)$"))
     async def dapprove(event):
         if event.fwd_from:
             return
