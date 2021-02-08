@@ -14,7 +14,6 @@ async def _(event):
     if not event.reply_to_msg_id:
         await edit_or_reply(event, "Reply To Any Image Idiot.")
         return
-    await event.edit("Proces
     reply_message = await event.get_reply_message()
     Credits = "By Friday. Get Your Friday From @Friday_OT"
     Reply_message = Credits
