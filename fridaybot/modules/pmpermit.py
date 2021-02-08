@@ -237,7 +237,6 @@ if PM_ON_OFF != "DISABLE":
                     _message = ""
                     _message += "#BLOCKED_PM_NSFW\n\n"
                     _message += f"[User](tg://user?id={chat_ids}): {chat_ids}\n"
-                    _message += f"Message Counts: {PM_WARNS[chat_ids]}\n"
                     _message += f"**This Asshole Sent Nsfw Contect in Your Pm**"
                     try:
                         await event.client.send_message(
