@@ -80,6 +80,51 @@ UNMUTE_RIGHTS = ChatBannedRights(until_date=None, send_messages=False)
 # ================================================
 
 
+
+# ------------------------------------------------------------------------------------
+async def get_user_from_event(event):
+    args = event.pattern_match.group(1).split(" ", 1)
+    extra = None
+    if event.reply_to_msg_id:
+        previous_message = await event.get_reply_message()
+        user_obj = await event.client.get_entity(previous_message.sender_id)
+        extra = event.pattern_match.group(1)
+    elif args:
+        user = args[0]
+        if len(args) == 2:
+            extra = args[1]
+        if user.isnumeric():
+            user = int(user)
+        if not user:
+            await event.edit("`Pass the User's Username, ID or Reply!`")
+            return None, None
+        if event.message.entities:
+            probable_user_mention_entity = event.message.entities[0]
+            if isinstance(probable_user_mention_entity, MessageEntityMentionName):
+                user_id = probable_user_mention_entity.user_id
+                user_obj = await event.client.get_entity(user_id)
+                return user_obj, extra
+        try:
+            user_obj = await event.client.get_entity(user)
+        except (TypeError, ValueError):
+            return None, None
+    return user_obj, extra
+
+
+async def get_user_sender_id(user, event):
+    if isinstance(user, str):
+        user = int(user)
+
+    try:
+        user_obj = await event.client.get_entity(user)
+    except (TypeError, ValueError) as err:
+        await event.edit(str(err))
+        return None
+
+    return user_obj
+# --------------------------------------------------------------------------------------------
+
+
 # @register(outgoing=True, pattern="^.setevent$")
 @friday.on(friday_on_cmd(pattern="setgpic$"))
 @friday.on(sudo_cmd(pattern="setgpic$", allow_sudo=True))
@@ -693,46 +738,6 @@ async def rm_deletedacc(event):
     await poppo.delete()
 
 
-async def get_user_from_event(event):
-    args = event.pattern_match.group(1).split(" ", 1)
-    extra = None
-    if event.reply_to_msg_id:
-        previous_message = await event.get_reply_message()
-        user_obj = await event.client.get_entity(previous_message.sender_id)
-        extra = event.pattern_match.group(1)
-    elif args:
-        user = args[0]
-        if len(args) == 2:
-            extra = args[1]
-        if user.isnumeric():
-            user = int(user)
-        if not user:
-            await event.edit("`Pass the User's Username, ID or Reply!`")
-            return None, None
-        if event.message.entities:
-            probable_user_mention_entity = event.message.entities[0]
-            if isinstance(probable_user_mention_entity, MessageEntityMentionName):
-                user_id = probable_user_mention_entity.user_id
-                user_obj = await event.client.get_entity(user_id)
-                return user_obj, extra
-        try:
-            user_obj = await event.client.get_entity(user)
-        except (TypeError, ValueError):
-            return None, None
-    return user_obj, extra
-
-
-async def get_user_sender_id(user, event):
-    if isinstance(user, str):
-        user = int(user)
-
-    try:
-        user_obj = await event.client.get_entity(user)
-    except (TypeError, ValueError) as err:
-        await event.edit(str(err))
-        return None
-
-    return user_obj
 
 
 CMD_HELP.update(
