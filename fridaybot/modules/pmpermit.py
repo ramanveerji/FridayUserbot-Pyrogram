@@ -8,6 +8,7 @@ from telethon.tl.functions.users import GetFullUserRequest
 import fridaybot.modules.sql_helper.pmpermit_sql as pmpermit_sql
 from fridaybot import ALIVE_NAME, CUSTOM_PMPERMIT
 from fridaybot.Configs import Config
+from fridaybot.function import is_nsfw
 from fridaybot.utils import friday_on_cmd
 
 PMPERMIT_PIC = os.environ.get("PMPERMIT_PIC", None)
@@ -217,8 +218,6 @@ if PM_ON_OFF != "DISABLE":
             return
         if sender.bot:
             return
-        if event.sender_id in devs_id:
-            return
         if sender.verified:
             return
         if PM_ON_OFF == "DISABLE":
@@ -229,6 +228,25 @@ if PM_ON_OFF != "DISABLE":
             await do_pm_permit_action(chat_ids, event)
                                        
     async def do_pm_permit_action(chat_ids, event):
+        hehe = await is_nsfw(event)
+        if hehe is True:
+            await event.client.send_message(chat_ids, "`How Dare You Send Nsfw In My Masters Pm, You Have Been Blocked By FridayUserBot !`")
+            await event.client(functions.contacts.BlockRequest(chat_ids))
+            _message = ""
+            _message += "#BLOCKED_PM_NSFW\n\n"
+            _message += f"[User](tg://user?id={chat_ids}): {chat_ids}\n"
+            _message += f"Message Counts: {PM_WARNS[chat_ids]}\n"
+            _message += f"**This Asshole Sent Nsfw Contect in Your Pm**"
+            try:
+                await event.client.send_message(
+                    entity=Config.PRIVATE_GROUP_ID,
+                    message=_message,
+                    link_preview=False,
+                    silent=True,
+                )
+                return
+            except BaseException:
+                pass
         if chat_ids not in PM_WARNS:
             PM_WARNS.update({chat_ids: 0})
         if PM_WARNS[chat_ids] == 3:
@@ -251,7 +269,7 @@ if PM_ON_OFF != "DISABLE":
                 )
                 return
             except BaseException:
-                return
+                pass
         trap_m = await tgbot.get_me()
         botusername = trap_m.username
         tap = await bot.inline_query(botusername, USER_BOT_NO_WARN)
