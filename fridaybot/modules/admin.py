@@ -451,8 +451,8 @@ async def spider(event):
 
 
 # @register(outgoing=True, pattern="^.unmute(?: |$)(.*)")
-@friday.on(friday_on_cmd(pattern="unmute(?: |$)(.*"))
-@friday.on(sudo_cmd(pattern="unmute(?: |$)(.*", allow_sudo=True))
+@friday.on(friday_on_cmd(pattern="unmute(?: |$)(.*)"))
+@friday.on(sudo_cmd(pattern="unmute(?: |$)(.*)", allow_sudo=True))
 async def unmoot(event):
     if event.fwd_from:
         return
@@ -507,8 +507,8 @@ async def unmoot(event):
 
 
 # @register(outgoing=True, pattern="^.adminlist$")
-@friday.on(friday_on_cmd(pattern="adminlist"))
-@friday.on(sudo_cmd(pattern="adminlist", allow_sudo=True))
+@friday.on(friday_on_cmd(pattern="adminlist$"))
+@friday.on(sudo_cmd(pattern="adminlist$", allow_sudo=True))
 async def get_admin(event):
     if event.fwd_from:
         return
