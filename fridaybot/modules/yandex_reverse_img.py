@@ -31,8 +31,6 @@ async def hmm(event):
         await event.reply("Reply to any Image.")
         return
     hmmu = await event.reply("hmm... Reverse Searching The Image On Yandex...🚶")
-    await event.get_reply_message()
-    img = await convert_to_image(event, borg)
     sed = await event.get_reply_message()
     img = await convert_to_image(event, borg)
     filePath = img
