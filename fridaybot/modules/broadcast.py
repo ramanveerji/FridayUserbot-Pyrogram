@@ -102,14 +102,15 @@ async def _(event):
 
 
 @friday.on(friday_on_cmd(pattern="broadcast"))
+@friday.on(sudo_cmd(pattern="broadcast", allow_sudo=True))
 async def _(event):
     if event.fwd_from:
         return
-    await event.edit("**Fine. Broadcasting in Progress. Kindly Wait !**")
+    poppo = await edit_or_reply(event, "**Fine. Broadcasting in Progress. Kindly Wait !**")
     sedpath = Config.TMP_DOWNLOAD_DIRECTORY
     all_chnnl = get_all_chnnl()
     if len(all_chnnl) == 0:
-        await event.edit("No Channel Or Group Found On Database. Please Check Again")
+        await poppo.edit("No Channel Or Group Found On Database. Please Check Again")
         return
     total_errors = 0
     total_count = 0
@@ -118,7 +119,7 @@ async def _(event):
     if event.reply_to_msg_id:
         hmm = await event.get_reply_message()
     else:
-        event.edit("Reply To Some Message.")
+        await poppo.edit("Reply To Some Message.")
         return
     if hmm and hmm.media:
         ok = await borg.download_media(hmm.media, sedpath)
@@ -143,9 +144,9 @@ async def _(event):
             except Exception as e:
                 total_errors += 1
     elif hmm.message.poll:
-        await event.edit("Bruh, This Can't Be Broadcasted.")
+        await poppo.edit("Bruh, This Can't Be Broadcasted.")
         return
-    await event.edit(
+    await poppo.edit(
         f"BroadCast Success In : {total_count} \nFailed In : {total_errors} \nTotal Channel In DB : {total_chnnl}"
     )
     await borg.send_message(
@@ -155,12 +156,13 @@ async def _(event):
 
 
 @friday.on(friday_on_cmd(pattern="bforward"))
+@friday.on(sudo_cmd(pattern="bforward", allow_sudo=True))
 async def _(event):
     if event.fwd_from:
         return
     all_chnnl = get_all_chnnl()
     if len(all_chnnl) == 0:
-        await event.edit("No Channel Or Group Found On Database. Please Check Again")
+        await edit_or_reply(event, "No Channel Or Group Found On Database. Please Check Again")
         return
     total_errors = 0
     total_count = 0
@@ -169,7 +171,7 @@ async def _(event):
     if event.reply_to_msg_id:
         hmm = await event.get_reply_message()
     else:
-        event.edit("Reply To Some Message.")
+        await edit_or_reply(event, "Reply To Some Message.")
         return
     try:
         for forbard in all_chnnl:
@@ -182,7 +184,7 @@ async def _(event):
         loggy_grp,
         f"Failed in {forbard.chat_id} Because Of Error : `{errorno}` \n\n",
     )
-    await event.edit(
+    poppo = await edit_or_reply(event, 
         f"Forward Success in {total_count} And Failed In {total_errors} And Total Channel In Db is {total_chnnl}"
     )
     await borg.send_message(
@@ -192,6 +194,7 @@ async def _(event):
 
 
 @friday.on(friday_on_cmd(pattern="bstat"))
+@friday.on(sudo_cmd(pattern="bstat", allow_sudo=True))
 async def _(event):
     if event.fwd_from:
         return
