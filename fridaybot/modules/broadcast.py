@@ -54,9 +54,7 @@ async def _(event):
                             sed += 1
             except BaseException:
                 pass
-        await poppo.edit(
-            f"Process Completed. Added {sed} Channel To List. Failed {oks} Due to already Added !"
-        )
+        await poppo.edit(f"Process Completed. Added {sed} Channel To List. Failed {oks} Due to already Added !")
         return
     elif input_chnnl == "":
         if event.is_channel and event.is_group:
@@ -69,8 +67,10 @@ async def _(event):
         return
     if not already_added(input_chnnl):
         add_chnnl_in_db(input_chnnl)
-        await edit_or_reply(event, f"Fine. I have Added {input_chnnl} To DataBase.")
-        await borg.send_message(loggy_grp, f"Added {input_chnnl} To DB")
+        M = f"Fine. I have Added {input_chnnl} To DataBase."
+        Ml = f"Added {input_chnnl} To DB"
+        await edit_or_reply(event, M)
+        await borg.send_message(loggy_grp, Ml)
 
 
 @friday.on(friday_on_cmd(pattern="brm ?(.*)")
