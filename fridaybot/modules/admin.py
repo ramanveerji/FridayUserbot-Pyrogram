@@ -543,7 +543,7 @@ async def kick(event):
     if event.fwd_from:
         return
     if not event.is_group:
-        poppo = await edit_or_reply(event, `I don't think this is a group.`")
+        poppo = await edit_or_reply(event, "`I don't think this is a group.`")
         return
     """ For .kick command, kicks the replied/tagged person from the group. """
     # Admin or creator check
