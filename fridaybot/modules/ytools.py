@@ -54,6 +54,7 @@ async def _(event):
     mi = search.result()
     mio = mi["search_result"]
     mo = mio[0]["link"]
+    dur = mio[0]["duration"]
     thum = mio[0]["title"]
     fridayz = mio[0]["id"]
     thums = mio[0]["channel"]
@@ -91,7 +92,7 @@ async def _(event):
         return
     await asyncio.sleep(20)
     c_time = time.time()
-    file_stark = f"{ytdl_data['title']}.mp3"
+    file_stark = f"{thum}.mp3"
     lol_m = await upload_file(
             file_name=file_stark,
             client=borg,
@@ -113,9 +114,9 @@ async def _(event):
         thumb=sedlyf,
         attributes=[
                 DocumentAttributeAudio(
-                    duration=int(ytdl_data["duration"]),
-                    title=str(ytdl_data["title"]),
-                    performer=str(ytdl_data["uploader"]),
+                    duration=int(dur),
+                    title=str(thum),
+                    performer=str(thums),
                 )
             ],
         supports_streaming=True,
