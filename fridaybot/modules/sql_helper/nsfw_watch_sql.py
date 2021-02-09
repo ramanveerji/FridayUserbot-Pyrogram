@@ -28,7 +28,7 @@ Nsfwatch.__table__.create(checkfirst=True)
 
 def add_nsfwatch(chat_id: str):
     nsfws = Nsfwatch(str(chat_id))
-    SESSION.add(nsfwatch)
+    SESSION.add(nsfws)
     SESSION.commit()
 
 
