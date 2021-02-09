@@ -55,8 +55,8 @@ async def disable_nsfw(event):
     rmnsfwatch(str(event.chat_id))
     await event.edit(f"**Removed Chat {event.chat.title} With Id {event.chat_id} From Nsfw Watch**")
     
- @bot.on(events.NewMessage())        
- async def ws(event):
+@bot.on(events.NewMessage())        
+async def ws(event):
     warner_starkz = get_all_nsfw_enabled_chat()
     if len(warner_starkz) != 0:
         return
