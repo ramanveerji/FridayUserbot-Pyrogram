@@ -25,7 +25,7 @@ from telethon.tl.types import (
     MessageMediaPhoto,
 )
 
-MUTE_RIGHTS = ChatBannedRights(until_date=None, send_messages=True)
+MUTE_RIGHTS = ChatBannedRights(until_date=None, send_messages=False)
 
 @friday.on(friday_on_cmd(pattern="anw$"))
 async def nsfw_watch(event):
