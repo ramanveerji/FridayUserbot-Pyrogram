@@ -13,7 +13,7 @@
 
 import asyncio
 import os
-
+import glob
 import wget
 from youtubesearchpython import SearchVideos
 import asyncio
@@ -94,8 +94,10 @@ async def _(event):
     await asyncio.sleep(20)
     c_time = time.time()
     file_stark = f"./music/*.mp3"
+    Kk0 = glob.glob(file_stark)
+    file_to_uold = Kk0[0]
     lol_m = await upload_file(
-            file_name=file_stark,
+            file_name=file_to_uold,
             client=borg,
             file=open(file_stark, 'rb'),
             progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
