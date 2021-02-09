@@ -43,7 +43,7 @@ async def starkmeme(event):
         top_text = first_txt
         bottom_text = second_txt
         generate_meme(seds, top_text=top_text, bottom_text=bottom_text)
-        imgpath = sedpath + "/" + "memeimg.png"
+        imgpath = sedpath + "/" + "memeimg.webp"
         await borg.send_file(event.chat_id, imgpath)
         if os.path.exists(imgpath):
             os.remove(imgpath)
@@ -52,7 +52,7 @@ async def starkmeme(event):
         top_text = hmm
         bottom_text = ""
         generate_meme(seds, top_text=top_text, bottom_text=bottom_text)
-        imgpath = sedpath + "/" + "memeimg.png"
+        imgpath = sedpath + "/" + "memeimg.webp"
         await borg.send_file(event.chat_id, imgpath)
         if os.path.exists(imgpath):
             os.remove(imgpath)
@@ -93,6 +93,6 @@ def generate_meme(
         draw.text((x - 2, y + 2), line, font=font, fill="black")
         draw.text((x, y), line, fill="white", font=font)
         y += line_height
-    file_name = "memeimg.png"
+    file_name = "memeimg.webp"
     ok = sedpath + "/" + file_name
-    im.save(ok, "PNG")
+    im.save(ok, "WebP")
