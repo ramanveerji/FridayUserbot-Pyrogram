@@ -30,7 +30,7 @@ async def nsfw_watch(event):
         await event.edit("`This Chat is Has Already Nsfw Watch.`")
         return
     add_nsfwatch(str(event.chat_id))
-    await event.edit(f"**Added Chat {event.chat.title} With Id {event.chat_id} To Database. This Groups Nsfw Contents Will Be Deleted And Will Will Be Logged in Logger Group**")
+    await event.edit(f"**Added Chat {event.chat.title} With Id {event.chat_id} To Database. This Groups Nsfw Contents Will Be Deleted And Will Be Logged in Logger Group**")
 
 @friday.on(friday_on_cmd(pattern="rmnw$"))
 async def disable_nsfw(event):
