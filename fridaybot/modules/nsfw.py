@@ -95,7 +95,7 @@ Video link:- https://www.pornhub.com/view_video.php?viewkey={vid.video_id}
 CMD_HELP.update(
     {
         "nsfw": "**NSFW**\
-\n\n**Syntax : **`.nsfw <reply to image>`\
+\n\n**Syntax : **`.oldnsfw <reply to image>`\
 \n**Usage :** Checks if the replyed image is nsfw or not.\
 \n\n**Syntax : **`.phs <query>`\
 \n**Usage :** Searches PornHub Website With Given Query."
