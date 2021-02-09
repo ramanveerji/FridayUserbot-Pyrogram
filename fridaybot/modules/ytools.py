@@ -47,6 +47,7 @@ async def _(event):
     if event.fwd_from:
         return
     urlissed = event.pattern_match.group(1)
+    print(urlissed)
     myself_stark = await edit_or_reply(
         event, f"`Getting {urlissed} From Youtube Servers. Please Wait.`"
     )
@@ -96,10 +97,11 @@ async def _(event):
     file_stark = f"./music/*.mp3"
     Kk0 = glob.glob(file_stark)
     file_to_uold = Kk0[0]
+    file_HH = f"{ytdl_data['title']}.mp4"
     lol_m = await upload_file(
-            file_name=file_to_uold,
+            file_name=file_HH,
             client=borg,
-            file=open(file_stark, 'rb'),
+            file=open(file_to_uold, 'rb'),
             progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
                 progress(
                     d, t, event, c_time, "Uploading Your Song!", file_stark
