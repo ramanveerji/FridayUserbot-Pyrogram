@@ -25,7 +25,7 @@ from telegraph import upload_file
 from fridaybot import CMD_HELP
 from fridaybot.function import convert_to_image, crop_vid, runcmd, tgs_to_gif, progress, humanbytes, time_formatter
 import time
-from fridaybot.function.FastTelethon import upload_file
+from fridaybot.function.FastTelethon import upload_file as uf
 from fridaybot.utils import friday_on_cmd, sudo_cmd, edit_or_reply
 import html
 from telethon.tl.functions.photos import GetUserPhotosRequest
@@ -671,7 +671,7 @@ async def _(event):
     endard = r.text.replace('"', "")
     await ommhg.edit(endard)
     
-@friday.on(friday_on_cmd(pattern="speedup ?(.*)"))
+@friday.on(friday_on_cmd(pattern="speedup$"))
 async def fasty(event):
     if event.fwd_from:
         return
@@ -684,19 +684,19 @@ async def fasty(event):
         return
     hmm = await event.client.download_media(kk.media)
     c_time = time.time()
-    cmd = f'ffmpeg -i {hmm} -vf  "setpts=0.25*PTS" SlowMotionBy@FridayOT.mp4'
+    cmd = f'ffmpeg -i {hmm} -vf  "setpts=0.25*PTS" FastMotionBy@FridayOT.mp4'
     await runcmd(cmd)
-    filem = "SlowMotionBy@FridayOT.mp4"
+    filem = "FastMotionBy@FridayOT.mp4"
     if not os.path.exists(filem):
         await event.edit("**Process, Failed !**")
         return
-    final_file = await upload_file(
+    final_file = await uf(
         	file_name=filem,
             client=bot,
             file=open(filem, 'rb'),
             progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
                 progress(
-                    d, t, event, c_time, "Uploading..", filem
+                    d, t, event, c_time, "Uploading Fast Motion Image..", filem
                 )
             ),
         )
@@ -704,6 +704,47 @@ async def fasty(event):
         event.chat_id,
         final_file,
         caption="Powered By @FridayOT")
+    for files in (filem, hmm):
+        if files and os.path.exists(files):
+            os.remove(files)
+            
+@friday.on(friday_on_cmd(pattern="slowdown$"))
+async def fasty(event):
+    if event.fwd_from:
+        return
+    if not event.reply_to_msg_id:
+        await event.edit("Reply To Any Video.")
+        return
+    kk = await event.get_reply_message()
+    if not kk.video or kk.video_note:
+        await event.edit("`Oho, Reply To Video Only`")
+        return
+    hmm = await event.client.download_media(kk.media)
+    c_time = time.time()
+    cmd = f'ffmpeg -i {hmm} -vf  "setpts=4*PTS" SlowMotionBy@FridayOT.mp4'
+    await runcmd(cmd)
+    filem = "SlowMotionBy@FridayOT.mp4"
+    if not os.path.exists(filem):
+        await event.edit("**Process, Failed !**")
+        return
+    final_file = await uf(
+        	file_name=filem,
+            client=bot,
+            file=open(filem, 'rb'),
+            progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
+                progress(
+                    d, t, event, c_time, "Uploading Slow Motion Video..", filem
+                )
+            ),
+        )
+    await borg.send_file(
+        event.chat_id,
+        final_file,
+        caption="Powered By @FridayOT")
+    for files in (filem, hmm):
+        if files and os.path.exists(files):
+            os.remove(files)
+    
     
 CMD_HELP.update(
     {
