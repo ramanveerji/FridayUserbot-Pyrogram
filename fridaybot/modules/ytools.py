@@ -96,7 +96,7 @@ async def _(event):
     c_time = time.time()
     file_stark = f"{ytdl_data['id']}.mp3"
     lol_m = await upload_file(
-            file_name=f"{ytdl_data["title"]}.mp3",
+            file_name=f"{ytdl_data['title']}.mp3",
             client=borg,
             file=open(file_stark, 'rb'),
             progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
