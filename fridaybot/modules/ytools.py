@@ -104,7 +104,7 @@ async def _(event):
             file=open(file_to_uold, 'rb'),
             progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
                 progress(
-                    d, t, event, c_time, "Uploading Your Song!", file_stark
+                    d, t, event, c_time, "Uploading Your Song!", file_HH
                 )
             ),
         )
