@@ -700,6 +700,7 @@ async def fasty(event):
                 )
             ),
         )
+    await event.delete()
     await borg.send_file(
         event.chat_id,
         final_file,
@@ -741,6 +742,7 @@ async def fasty(event):
         event.chat_id,
         final_file,
         caption="Powered By @FridayOT")
+    await event.delete()
     for files in (filem, hmm):
         if files and os.path.exists(files):
             os.remove(files)
