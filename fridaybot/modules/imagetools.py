@@ -1,4 +1,4 @@
-#    Copyright (C) Midhun KM 2020-2021
+#    Copyright (C) DevsExpo 2020-2021
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as published by
 #    the Free Software Foundation, either version 3 of the License, or
@@ -642,6 +642,36 @@ async def warnerstarkgangz(event):
     lol_m = await kk.edit("`Converting This Tgs To Gif Now !`")
     await lol_m.delete()
     await borg.send_file(event.chat_id, file=ok_stark, caption=so)
+    
+@friday.on(friday_on_cmd(pattern="cimage ?(.*)"))
+@friday.on(sudo_cmd(pattern="cimage ?(.*)", allow_sudo=True))
+async def _(event):
+    if event.fwd_from:
+        return
+    if not event.reply_to_msg_id:
+        ommhg = await edit_or_reply(event, "Reply To Any Image.")
+        return
+    reply_message = await event.get_reply_message()
+    ommhg = await edit_or_reply(event, "Processing. please wait.")
+    img = await convert_to_image(event, borg)
+    f = {"image": (img, open(img, "rb"))}
+    r = requests.post("https://api.imgur.com/3/upload", files = f)
+    jo = r.json()
+    j = jo.get("data")
+    link = j.get("link")
+    if not link:
+        await event.edit("`SomeThing is Wrong !`")
+        return
+    c = {
+      "Type":"CaptionRequest",
+      "Content":link
+    }
+    h = {
+      "Content-Type":"application/json"
+    }
+    r = requests.post("https://captionbot.azurewebsites.net/api/messages", headers = h, json = c)
+    endard = r.text.replace('"', "")
+    await ommhg.edit(endard)
         
 CMD_HELP.update(
     {
