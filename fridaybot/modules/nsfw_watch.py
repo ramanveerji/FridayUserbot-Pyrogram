@@ -68,7 +68,7 @@ async def ws(event):
         return
     if not event.media:
         return
-    if not is_admin(event, bot.uid):
+    if not await is_admin(event, bot.uid):
         return
     hmmstark = await is_nsfw(event)
     his_id = event.sender_id
