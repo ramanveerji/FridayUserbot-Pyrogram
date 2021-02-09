@@ -22,7 +22,7 @@ from telethon.tl.types import DocumentAttributeAudio
 from fridaybot.function import progress, humanbytes, time_formatter, convert_to_image
 from fridaybot.function.FastTelethon import upload_file
 
-@friday.on(friday_on_cmd(pattern="animereverse$"))
+@friday.on(friday_on_cmd(pattern="anp$"))
 async def anime_name(event):
     tracemoe = tracemoepy.tracemoe.TraceMoe()
     file_s = await convert_to_image(event, friday)
@@ -36,6 +36,15 @@ async def anime_name(event):
     video = tracemoe.natural_preview(ws)
     with open('preview@FridayOT.mp4', 'wb') as f:
       f.write(video)
+    # Hmm Stolen From Userge
+    # Anime Reverse Search Powered by tracemoepy.
+    # TraceMoePy (GitHub: https://github.com/DragSama/tracemoepy)
+    # (C) Author: Phyco-Ninja (https://github.com/Phyco-Ninja) (@PhycoNinja13b)
+    caption = (f"**Title**: **{ws['title_english']}**\n"
+                   f"   🇯🇵 (`{ws['title_romaji']} - {ws['title_native']}`)\n"
+                   f"\n**Anilist ID:** `{ws['anilist_id']}`"
+                   f"\n**Similarity**: `{ws['similarity']*100}`"
+                   f"\n**Episode**: `{ws['episode']}")
     starkfile = 'preview@FridayOT.mp4'
     warner = await upload_file(
             file_name=f"{ws.docs[0].title}.mp4",
@@ -50,5 +59,5 @@ async def anime_name(event):
     await event.delete()
     await friday.send_file(event.chat_id,
       warner,
-      caption=str(ws.docs[0].title)
+      caption=caption
       )
