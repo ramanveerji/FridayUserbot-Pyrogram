@@ -11,7 +11,7 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-from telethon import functions
+rom telethon import Button, custom, events, functions
 from fridaybot.function import get_all_admin_chats, is_admin, is_nsfw
 import requests
 import string 
