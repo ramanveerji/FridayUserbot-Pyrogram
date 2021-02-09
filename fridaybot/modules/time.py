@@ -6,12 +6,13 @@ import os
 from datetime import datetime
 
 from PIL import Image, ImageDraw, ImageFont
-
+import pytz 
 from fridaybot import CMD_HELP
 from fridaybot.utils import friday_on_cmd
 
 FONT_FILE_TO_USE = "Fonts/digital.ttf"
 
+IST = pytz.timezone(Config.TZ) 
 
 @friday.on(friday_on_cmd("time ?(.*)"))  # pylint:disable=E0602
 async def _(event):
@@ -60,7 +61,15 @@ async def _(event):
         return
     input_str = event.pattern_match.group(1)
     logger.info(input_str)  # pylint:disable=E0602
-
+    
+@friday.on(friday_on_cmd("ctime (.*)"))  # pylint:disable=E0602
+async def _(event):
+    if event.fwd_from:
+        return
+    TZ = pytz.timezone(Config.TZ)
+    datetime_tz = datetime.now(TZ)
+    oof = datetime_tz.strftime(f"**Date :** `%Y/%m/%d` \n**Time :** `%H:%M:%S` \n**Time Zone :** `{Config.TZ}`")
+    await event.edit(oof)
 
 CMD_HELP.update(
     {
