@@ -544,7 +544,7 @@ async def _ytdl(url, is_it, event, tgbot):
                     "preferredquality": "480",
                 }
             ],
-            "outtmpl": "%(title)s.mp3",
+            "outtmpl": "%(id)s.mp3",
             "quiet": True,
             "logtostderr": False,
         }
@@ -561,7 +561,7 @@ async def _ytdl(url, is_it, event, tgbot):
             "postprocessors": [
                 {"key": "FFmpegVideoConvertor", "preferedformat": "mp4"}
             ],
-            "outtmpl": "%(title)s.mp4",
+            "outtmpl": "%(id)s.mp4",
             "logtostderr": False,
             "quiet": True,
         }
@@ -575,9 +575,9 @@ async def _ytdl(url, is_it, event, tgbot):
         return
     c_time = time.time()
     if song:
-        file_stark = f"{ytdl_data['title']}.mp3"
+        file_stark = f"{ytdl_data['id']}.mp3"
         lol_m = await upload_file(
-            file_name=file_stark,
+            file_name=f"{ytdl_data['title']}.mp3",
             client=tgbot,
             file=open(file_stark, 'rb'),
             progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
@@ -592,9 +592,9 @@ async def _ytdl(url, is_it, event, tgbot):
         )
         os.remove(file_stark)
     elif video:
-        file_stark = f"{ytdl_data['title']}.mp4"
+        file_stark = f"{ytdl_data['id']}.mp4"
         lol_m = await upload_file(
-            file_name=file_stark,
+            file_name=f"{ytdl_data['title']}.mp4",
             client=tgbot,
             file=open(file_stark, 'rb'),
             progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
