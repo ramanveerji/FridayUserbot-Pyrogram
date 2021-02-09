@@ -93,7 +93,7 @@ async def okgoogle(img):
             "no_directory": "no_directory",
         }
         paths = response.download(arguments)
-        lst = paths[0][query]
+        lst = paths[0][guess]
         await event.edit(f"[{guess}]({fetchUrl})\n\n[Visually similar images]({imgspage})")
         await event.client.send_file(
             await event.client.get_input_entity(event.chat_id), lst
