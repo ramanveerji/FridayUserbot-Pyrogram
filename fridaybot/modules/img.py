@@ -41,6 +41,7 @@ async def img_sampler(event):
         "keywords": query,
         "limit": lim,
         "format": "jpg",
+        "silent_mode": True,
         "no_directory": "no_directory",
     }
     # passing the arguments to the function
