@@ -23,7 +23,7 @@ import requests
 from PIL import Image, ImageDraw, ImageFont
 from telegraph import upload_file
 from fridaybot import CMD_HELP
-from fridaybot.function import convert_to_image, crop_vid, runcmd, tgs_to_gif, 
+from fridaybot.function import convert_to_image, crop_vid, runcmd, tgs_to_gif, progress, humanbytes, time_formatter
 import time
 from fridaybot.function.FastTelethon import upload_file
 from fridaybot.utils import friday_on_cmd, sudo_cmd, edit_or_reply
