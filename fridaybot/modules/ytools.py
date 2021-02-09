@@ -77,7 +77,7 @@ async def _(event):
                 {
                     "key": "FFmpegExtractAudio",
                     "preferredcodec": "mp3",
-                    "preferredquality": "480",
+                    "preferredquality": "720",
                 }
             ],
             "outtmpl": "%(id)s.mp3",
