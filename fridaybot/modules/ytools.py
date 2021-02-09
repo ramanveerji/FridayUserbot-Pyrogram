@@ -67,6 +67,7 @@ async def _(event):
     sedlyf = wget.download(kekme, out=path)
     opts = {
             "format": "bestaudio",
+            "download": True,
             "addmetadata": True,
             "key": "FFmpegMetadata",
             "writethumbnail": True,
@@ -80,19 +81,19 @@ async def _(event):
                     "preferredquality": "480",
                 }
             ],
-            "outtmpl": "%(title)s.mp3",
+            "outtmpl": "./music/%(title)s.mp3",
             "quiet": True,
             "logtostderr": False,
         }
     try:
         with YoutubeDL(opts) as ytdl:
-            ytdl_data = ytdl.download([mo])
+            ytdl_data = ytdl.extract_info(mo)
     except Exception as e:
         await event.edit(f"**Failed To Download** \n**Error :** `{str(e)}`")
         return
     await asyncio.sleep(20)
     c_time = time.time()
-    file_stark = f"{thum}.mp3"
+    file_stark = f"./music/*.mp3"
     lol_m = await upload_file(
             file_name=file_stark,
             client=borg,
@@ -114,16 +115,15 @@ async def _(event):
         thumb=sedlyf,
         attributes=[
                 DocumentAttributeAudio(
-                    duration=int(dur),
-                    title=str(thum),
-                    performer=str(thums),
+                    duration=int(ytdl_data["duration"]),
+                    title=str(ytdl_data["title"]),
+                    performer=str(ytdl_data["uploader"]),
                 )
             ],
         supports_streaming=True,
     )
-    for files in (sedlyf, file_stark):
-        if files and os.path.exists(files):
-            os.remove(files)
+    shutil.rmtree("./music/")
+    os.remove(sedlyf)
             
 @friday.on(friday_on_cmd(pattern="utubevid ?(.*)"))
 @friday.on(sudo_cmd(pattern="utubevid ?(.*)", allow_sudo=True))
