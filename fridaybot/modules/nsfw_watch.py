@@ -24,7 +24,11 @@ from telethon.tl.types import (
     MessageEntityMentionName,
     MessageMediaPhoto,
 )
-
+from telethon.tl.functions.channels import (
+    EditAdminRequest,
+    EditBannedRequest,
+    EditPhotoRequest,
+)
 MUTE_RIGHTS = ChatBannedRights(until_date=None, send_messages=False)
 
 @friday.on(friday_on_cmd(pattern="anw$"))
