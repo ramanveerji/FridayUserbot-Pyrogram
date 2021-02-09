@@ -76,11 +76,13 @@ async def okgoogle(img):
         else:
             await img.edit("`Can't find this piece of shit.`")
             return
-
-        if img.pattern_match.group(1):
-            lim = img.pattern_match.group(1)
-        else:
-            lim = 3
+        lim = findall(r"lim=\d+", guess)
+        try:
+            lim = lim[0]
+            lim = lim.replace("lim=", "")
+            guess = guess.replace("lim=" + lim[0], "")
+        except IndexError:
+            lim = 5
         response = googleimagesdownload()
         logger.info(guess)
         arguments = {
