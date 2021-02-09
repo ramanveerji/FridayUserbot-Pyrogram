@@ -15,8 +15,8 @@
 from apscheduler.schedulers.asyncio import AsyncIOScheduler 
 from telethon import functions
 from fridaybot.function import get_all_admin_chats, is_admin
-from fridaybot.modules.sql_helper.night_mode_sql import add_nsfwatch, rmnsfwatch, get_all_nsfw_enabled_chat, is_nsfwatch_indb
-
+from fridaybot.modules.sql_helper.night_mode_sql import add_nightmode, rmnightmode, get_all_chat_id, is_nightmode_indb
+from telethon.tl.types import ChatBannedRights
 
 hehes = ChatBannedRights(
     until_date=None,
