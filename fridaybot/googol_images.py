@@ -1049,10 +1049,10 @@ class googleimagesdownload:
                     iteration = "\n" + "Item no.: " + str(i + 1) + " -->" + " Item name = " + (pky) + (
                     search_keyword[i]) + (sky)
                     if not arguments["silent_mode"]:
-                        #print(iteration.encode('raw_unicode_escape').decode('utf-8'))
-                        #stark.info("Evaluating...")
+                        print(iteration.encode('raw_unicode_escape').decode('utf-8'))
+                        stark.info("Evaluating...")
                     else:
-                        #stark.info("Downloading images for: " + (pky) + (search_keyword[i]) + (sky) + " ...")
+                        stark.info("Downloading images for: " + (pky) + (search_keyword[i]) + (sky) + " ...")
                     search_term = pky + search_keyword[i] + sky
 
                     if arguments['image_directory']:
