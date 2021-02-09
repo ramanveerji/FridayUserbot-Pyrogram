@@ -684,7 +684,7 @@ async def fasty(event):
         return
     hmm = await event.client.download_media(kk.media)
     c_time = time.time()
-    cmd = f"ffmpeg -i {hmm} -vf  "setpts=0.25*PTS" SlowMotionBy@FridayOT.mp4"
+    cmd = f'ffmpeg -i {hmm} -vf  "setpts=0.25*PTS" SlowMotionBy@FridayOT.mp4'
     await runcmd(cmd)
     filem = "SlowMotionBy@FridayOT.mp4"
     if not os.path.exists(filem):
