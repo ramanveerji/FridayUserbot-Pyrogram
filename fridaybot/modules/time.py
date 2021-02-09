@@ -24,12 +24,11 @@ async def _(event):
     )
     start = datetime.now()
     reply_msg_id = event.message.id
-    elif event.reply_to_msg_id:
+    if event.reply_to_msg_id:
         previous_message = await event.get_reply_message()
         reply_msg_id = previous_message.id
-    if not os.path.isdir(Config.TMP_DOWNLOAD_DIRECTORY):  # pylint:disable=E0602
-        os.makedirs(Config.TMP_DOWNLOAD_DIRECTORY)  # pylint:disable=E0602
-    # pylint:disable=E0602
+    if not os.path.isdir(Config.TMP_DOWNLOAD_DIRECTORY):  
+        os.makedirs(Config.TMP_DOWNLOAD_DIRECTORY)
     required_file_name = (
         Config.TMP_DOWNLOAD_DIRECTORY + " " + str(datetime.now()) + ".webp"
     )
@@ -38,11 +37,9 @@ async def _(event):
     drawn_text = ImageDraw.Draw(img)
     drawn_text.text((10, 10), current_time, font=fnt, fill=(255, 255, 255))
     img.save(required_file_name)
-    await borg.send_file(  # pylint:disable=E0602
+    await borg.send_file(  
         event.chat_id,
         required_file_name,
-        caption="Time",
-        # Courtesy: @ManueI15
         reply_to=reply_msg_id,
     )
     os.remove(required_file_name)
