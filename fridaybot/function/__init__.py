@@ -755,4 +755,6 @@ async def is_nsfw(event):
       is_nsfw = True
     elif r.get("is_nsfw") is False:
       is_nsfw = False
+    if os.path.exists(img):
+      os.remove(img)
     return is_nsfw
