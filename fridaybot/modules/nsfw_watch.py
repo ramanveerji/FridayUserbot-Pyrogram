@@ -77,7 +77,8 @@ async def disable_nsfw(event):
                 ujwal = wstark.id
             try:
                 await borg.send_message(Config.PRIVATE_GROUP_ID, f"**#NSFW_WATCH** \n**Chat :** `{hehe}` \n**Nsfw Sender - User / Bot :** `{ujwal}` \n**Chat Title:** `{ctitle}`")       
+                return
             except:
-                pass
+                return
         else:
             return
