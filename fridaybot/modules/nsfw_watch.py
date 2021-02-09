@@ -30,7 +30,7 @@ async def nsfw_watch(event):
         await event.edit("`This Chat is Has Already Nsfw Watch.`")
         return
     add_nsfwatch(str(event.chat_id))
-    await event.edit(f"**Added Chat {event.chat.title} With Id {event.chat_id} To Database. This Groups Nsfw Contents Will Be Deleted And Will Will Be Logged in Logger Groupp**")
+    await event.edit(f"**Added Chat {event.chat.title} With Id {event.chat_id} To Database. This Groups Nsfw Contents Will Be Deleted And Will Will Be Logged in Logger Group**")
 
 @friday.on(friday_on_cmd(pattern="rmnw$"))
 async def disable_nsfw(event):
@@ -46,11 +46,11 @@ async def disable_nsfw(event):
     rmnsfwatch(str(event.chat_id))
     await event.edit(f"**Removed Chat {event.chat.title} With Id {event.chat_id} From Nsfw Watch**")
     
-warner_starkz = get_all_nsfw_enabled_chat()
-
-if len(warner_starkz) != 0:
     @bot.on(events.NewMessage())        
     async def ws(event):
+        warner_starkz = get_all_nsfw_enabled_chat()
+        if len(warner_starkz) != 0:
+            return
         if not is_nsfwatch_indb(str(event.chat_id)):
             return
         if not event.media:
@@ -76,7 +76,7 @@ if len(warner_starkz) != 0:
             else:
                 ujwal = wstark.id
             try:
-                await borg.send_message(Config.PRIVATE_GROUP_ID, f"**#NSFW_WATCH** \n**Chat :** `{hehe}` \n**User / Bot :** `{ujwal}` \n**Chat Title:** `{ctitle}`")       
+                await borg.send_message(Config.PRIVATE_GROUP_ID, f"**#NSFW_WATCH** \n**Chat :** `{hehe}` \n**Nsfw Sender - User / Bot :** `{ujwal}` \n**Chat Title:** `{ctitle}`")       
             except:
                 pass
         else:
