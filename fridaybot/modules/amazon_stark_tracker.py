@@ -67,20 +67,19 @@ async def track_amazon():
     if len(ws) == 0:
         return
     kk = get_all_tracker()
-    for url in kk.amazon_url:
-        for pm in kk.budget:
-            page = requests.get(url, headers = headers)
-            soup = BeautifulSoup(page.content, 'html.parser')
-            title = soup.find(id = "productTitle").get_text()
-            price = soup.find(id = "priceblock_ourprice").get_text()
-            title = title.strip()
-            price = price[2:].split(',')
-            price = round(float("".join(price)))
-            if (price <= pm):
-                await borg.send_message(Config.PRIVATE_GROUP_ID, f"#Tracker - Price Reduced \nProduct Name : {title} \nCurrent price : {price}")
-                rm_tracker(str(url))
-            else:
-                pass
+    for ujwal in kk:
+        page = requests.get(ujwal.amazon_url, headers = headers)
+        soup = BeautifulSoup(page.content, 'html.parser')
+        title = soup.find(id = "productTitle").get_text()
+        price = soup.find(id = "priceblock_ourprice").get_text()
+        title = title.strip()
+        price = price[2:].split(',')
+        price = round(float("".join(price)))
+        if (price <= ujwal.budget):
+            await borg.send_message(Config.PRIVATE_GROUP_ID, f"#Tracker - Price Reduced \nProduct Name : {title} \nCurrent price : {price}")
+            rm_tracker(str(ujwal.amazon_url))
+        else:
+            pass
 
 scheduler = AsyncIOScheduler(timezone="Asia/Kolkata")
 scheduler.add_job(track_amazon, trigger="cron", hour=9)
