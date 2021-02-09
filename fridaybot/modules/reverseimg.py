@@ -87,6 +87,7 @@ async def okgoogle(img):
         logger.info(guess)
         arguments = {
             "keywords": guess,
+            "silent_mode": True,
             "limit": lim,
             "format": "jpg",
             "no_directory": "no_directory",
