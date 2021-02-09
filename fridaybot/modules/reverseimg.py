@@ -11,7 +11,8 @@ import io
 import os
 import re
 import urllib
-
+import shutil
+from re import findall
 import requests
 from bs4 import BeautifulSoup
 from PIL import Image
