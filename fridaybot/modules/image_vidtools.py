@@ -691,7 +691,7 @@ async def fasty(event):
         await event.edit("**Process, Failed !**")
         return
     final_file = await uf(
-        	file_name=filem,
+            file_name=filem,
             client=bot,
             file=open(filem, 'rb'),
             progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
@@ -704,7 +704,7 @@ async def fasty(event):
     await borg.send_file(
         event.chat_id,
         final_file,
-        caption="Powered By @FridayOT")
+        caption="**Fast Motion** - Powered By @FridayOT")
     for files in (filem, hmm):
         if files and os.path.exists(files):
             os.remove(files)
@@ -729,7 +729,7 @@ async def fasty(event):
         await event.edit("**Process, Failed !**")
         return
     final_file = await uf(
-        	file_name=filem,
+            file_name=filem,
             client=bot,
             file=open(filem, 'rb'),
             progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
@@ -741,7 +741,7 @@ async def fasty(event):
     await borg.send_file(
         event.chat_id,
         final_file,
-        caption="Powered By @FridayOT")
+        caption="**Slow Motion** - Powered By @FridayOT")
     await event.delete()
     for files in (filem, hmm):
         if files and os.path.exists(files):
