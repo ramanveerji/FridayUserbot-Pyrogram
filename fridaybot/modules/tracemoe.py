@@ -29,17 +29,18 @@ async def anime_name(event):
     c_time = time.time()
     await event.edit("`Searching For This Anime. Bruh.`")
     try:
-      ws = tracemoe.search(file_s, encode=True)
+      st = tracemoe.search(file_s, encode=True)
     except:
       await event.edit("`SomeThing is Sad, Failed.`")
       return
-    video = tracemoe.natural_preview(ws)
+    video = tracemoe.natural_preview(st)
     with open('preview@FridayOT.mp4', 'wb') as f:
       f.write(video)
     # Hmm Stolen From Userge
     # Anime Reverse Search Powered by tracemoepy.
     # TraceMoePy (GitHub: https://github.com/DragSama/tracemoepy)
     # (C) Author: Phyco-Ninja (https://github.com/Phyco-Ninja) (@PhycoNinja13b)
+    ws = st['docs'][0]
     caption = (f"**Title**: **{ws['title_english']}**\n"
                    f"   🇯🇵 (`{ws['title_romaji']} - {ws['title_native']}`)\n"
                    f"\n**Anilist ID:** `{ws['anilist_id']}`"
@@ -47,7 +48,7 @@ async def anime_name(event):
                    f"\n**Episode**: `{ws['episode']}")
     starkfile = 'preview@FridayOT.mp4'
     warner = await upload_file(
-            file_name=f"{ws.docs[0].title}.mp4",
+            file_name=f"{st.docs[0].title}.mp4",
             client=borg,
             file=open(starkfile, 'rb'),
             progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
