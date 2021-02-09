@@ -41,6 +41,9 @@ async def _(event):
     await event.edit("`Processing...`")
     file_path = await borg.download_media(reply_message, Config.TMP_DOWNLOAD_DIRECTORY)
     out, err, ret, pid = await runcmd(f"mediainfo '{file_path}'")
+    if not out:
+        await event.edit("`Wtf, I Can't Determine This File Info`")
+        return
     media_info = f"""
     <code>           
     {out}                  
