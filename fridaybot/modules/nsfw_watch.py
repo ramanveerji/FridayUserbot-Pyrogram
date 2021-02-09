@@ -12,7 +12,10 @@
 #    along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 from telethon import functions
-from fridaybot.function import get_all_admin_chats, is_admin
+from fridaybot.function import get_all_admin_chats, is_admin, is_nsfw
+import requests
+import string 
+import random 
 from fridaybot.modules.sql_helper.nsfw_watch_sql import add_nsfwatch, rmnsfwatch, get_all_nsfw_enabled_chat, is_nsfwatch_indb
 
 @friday.on(friday_on_cmd(pattern="anw$"))
