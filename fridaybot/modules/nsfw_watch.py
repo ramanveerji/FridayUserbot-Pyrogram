@@ -27,7 +27,7 @@ async def nsfw_watch(event):
         await event.edit("`You Should Be Admin To Do This!`")
         return
     if is_nsfwatch_indb(str(event.chat_id)):
-        await event.edit("`This Chat is Has Already Nsfw Watch.`")
+        await event.edit("`This Chat Has Already Enabled Nsfw Watch.`")
         return
     add_nsfwatch(str(event.chat_id))
     await event.edit(f"**Added Chat {event.chat.title} With Id {event.chat_id} To Database. This Groups Nsfw Contents Will Be Deleted And Logged in Logging Group**")
@@ -41,7 +41,7 @@ async def disable_nsfw(event):
         await event.edit("`You Should Be Admin To Do This!`")
         return
     if not is_nsfwatch_indb(str(event.chat_id)):
-        await event.edit("This Chat is Has Not Enabled Nsfw Watch.")
+        await event.edit("This Chat Has Not Enabled Nsfw Watch.")
         return
     rmnsfwatch(str(event.chat_id))
     await event.edit(f"**Removed Chat {event.chat.title} With Id {event.chat_id} From Nsfw Watch**")
