@@ -654,14 +654,8 @@ async def _(event):
     reply_message = await event.get_reply_message()
     ommhg = await edit_or_reply(event, "Processing. please wait.")
     img = await convert_to_image(event, borg)
-    f = {"image": (img, open(img, "rb"))}
-    r = requests.post("https://api.imgur.com/3/upload", files = f)
-    jo = r.json()
-    j = jo.get("data")
-    link = j.get("link")
-    if not link:
-        await event.edit("`SomeThing is Wrong !`")
-        return
+    url_s = upload_file(img)
+    link = f"https://telegra.ph{url_s[0]}"
     c = {
       "Type":"CaptionRequest",
       "Content":link
