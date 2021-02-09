@@ -10,22 +10,20 @@ import pytz
 from fridaybot import CMD_HELP
 from fridaybot.utils import friday_on_cmd
 
-FONT_FILE_TO_USE = "Fonts/digital.ttf"
+FONT_FILE_TO_USE = "Fonts/DroidSansMono.ttf"
 
 IST = pytz.timezone(Config.TZ) 
 
-@friday.on(friday_on_cmd("time ?(.*)"))  # pylint:disable=E0602
+@friday.on(friday_on_cmd("time$"))  # pylint:disable=E0602
 async def _(event):
     if event.fwd_from:
         return
-    current_time = datetime.now().strftime(
-        "FRIDAY TIMEZONE \nLOCATION: India \nTime: %H:%M:%S \nDate: %d.%m.%y"
+    TZ = pytz.timezone(Config.TZ)
+    current_time = datetime.now(TZ).strftime(
+        f"Time Zone : {Config.TZ} \n\nDate : %Y/%m/%d \nTime : %H:%M:%S"
     )
     start = datetime.now()
-    input_str = event.pattern_match.group(1)
     reply_msg_id = event.message.id
-    if input_str:
-        current_time = input_str
     elif event.reply_to_msg_id:
         previous_message = await event.get_reply_message()
         reply_msg_id = previous_message.id
@@ -54,21 +52,14 @@ async def _(event):
     await asyncio.sleep(5)
     await event.delete()
 
-
-@friday.on(friday_on_cmd("gtime (.*)"))  # pylint:disable=E0602
-async def _(event):
-    if event.fwd_from:
-        return
-    input_str = event.pattern_match.group(1)
-    logger.info(input_str)  # pylint:disable=E0602
     
-@friday.on(friday_on_cmd("ctime (.*)"))  # pylint:disable=E0602
+@friday.on(friday_on_cmd("(ctime|timenow)$"))  # pylint:disable=E0602
 async def _(event):
     if event.fwd_from:
         return
     TZ = pytz.timezone(Config.TZ)
     datetime_tz = datetime.now(TZ)
-    oof = datetime_tz.strftime(f"**Date :** `%Y/%m/%d` \n**Time :** `%H:%M:%S` \n**Time Zone :** `{Config.TZ}`")
+    oof = datetime_tz.strftime(f"**Time Zone :** `{Config.TZ}` \n\n**Date :** `%Y/%m/%d` \n**Time :** `%H:%M:%S`")
     await event.edit(oof)
 
 CMD_HELP.update(
