@@ -101,8 +101,8 @@ async def _(event):
         )
 
 
-@friday.on(friday_on_cmd(pattern="broadcast"))
-@friday.on(sudo_cmd(pattern="broadcast", allow_sudo=True))
+@friday.on(friday_on_cmd(pattern="broadcast$"))
+@friday.on(sudo_cmd(pattern="broadcast$", allow_sudo=True))
 async def _(event):
     if event.fwd_from:
         return
@@ -129,11 +129,6 @@ async def _(event):
                 total_count += 1
             except Exception as e:
                 total_errors += 1
-                errorno += f"{e} \n"
-        await borg.send_message(
-            loggy_grp,
-            f"Error : {total_errors}\nError : {errorno} \n\n",
-        )
         if os.path.exists(ok):
             os.remove(ok)
     elif hmm and hmm.text:
@@ -149,14 +144,16 @@ async def _(event):
     await poppo.edit(
         f"BroadCast Success In : {total_count} \nFailed In : {total_errors} \nTotal Channel In DB : {total_chnnl}"
     )
-    await borg.send_message(
-        loggy_grp,
-        f"BroadCast Success In : {total_count} \nFailed In : {total_errors} \nTotal Channel In DB : {total_chnnl}",
-    )
+    try:
+        await borg.send_message(
+            loggy_grp,
+            f"BroadCast Success In : {total_count} \nFailed In : {total_errors} \nTotal Channel In DB : {total_chnnl}",
+        )
+    except:
+        pass
 
-
-@friday.on(friday_on_cmd(pattern="bforward"))
-@friday.on(sudo_cmd(pattern="bforward", allow_sudo=True))
+@friday.on(friday_on_cmd(pattern="bforward$"))
+@friday.on(sudo_cmd(pattern="bforward$", allow_sudo=True))
 async def _(event):
     if event.fwd_from:
         return
@@ -175,23 +172,20 @@ async def _(event):
         return
     try:
         for forbard in all_chnnl:
-            await hmm.forward_to(forbard.chat_id)
+            await borg.forward_messages(forbard.chat_id, hmm)
             total_count += 1
     except Exception as e:
         total_errors += 1
-        errorno += f"{e} \n"
-    await borg.send_message(
-        loggy_grp,
-        f"Failed in {forbard.chat_id} Because Of Error : `{errorno}` \n\n",
-    )
     poppo = await edit_or_reply(event, 
         f"Forward Success in {total_count} And Failed In {total_errors} And Total Channel In Db is {total_chnnl}"
     )
-    await borg.send_message(
-        loggy_grp,
-        f"Forward Success in {total_count} And Failed In {total_errors} And Total Channel In Db is {total_chnnl}",
-    )
-
+    try:
+        await borg.send_message(
+            loggy_grp,
+            f"Forward Success in {total_count} And Failed In {total_errors} And Total Channel In Db is {total_chnnl}",
+        )
+    except:
+        pass
 
 @friday.on(friday_on_cmd(pattern="bstat"))
 @friday.on(sudo_cmd(pattern="bstat", allow_sudo=True))
