@@ -16,7 +16,7 @@ async def _(event):
         return
     reply_message = await event.get_reply_message()
     kok = await edit_or_reply(event, "`Processing...`")
-    IdkWtf = is_nsfw(reply_message)
+    IdkWtf = await is_nsfw(reply_message)
     if IdkWtf is False:
       await kok.edit("Replied Image Is Not Nsfw.")
       return
