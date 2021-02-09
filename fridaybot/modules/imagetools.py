@@ -579,31 +579,31 @@ async def warnerstark_s(event):
     await event.edit("`Processing..`")
     if ws == "flip":
         flipped = cv2.flip(image, 0)
-        file_name = "Flipped.png"
+        file_name = "Flipped.webp"
         ok = sedpath + "/" + file_name
         cv2.imwrite(ok, flipped)
         warnerstark = "Hehe, Flipped"
     elif ws == "blur":
         blurred = cv2.blur(image, (8,8))
-        file_name = "Blurred.png"
+        file_name = "Blurred.webp"
         ok = sedpath + "/" + file_name
         cv2.imwrite(ok, blurred)
         warnerstark = "Hehe, Blurred"
     elif ws == "tresh":
         treshold, fridaydevs = cv2.threshold(image, 150, 225, cv2.THRESH_BINARY)
-        file_name = "Tresh.png"
+        file_name = "Tresh.webp"
         ok = sedpath + "/" + file_name
         cv2.imwrite(ok, fridaydevs)
         warnerstark = "Hehe, TreshHolded."
     elif ws == "hsv":
         hsv = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
-        file_name = "Hsv.png"
+        file_name = "Hsv.webp"
         ok = sedpath + "/" + file_name
         cv2.imwrite(ok, hsv)
         warnerstark = "Hehe, Hsv"
     elif ws == "lab":
         lab = cv2.cvtColor(image, cv2.COLOR_BGR2LAB)
-        file_name = "Lab.png"
+        file_name = "Lab.webp"
         ok = sedpath + "/" + file_name
         cv2.imwrite(ok, lab)
         warnerstark = "Hehe, Lab"
