@@ -654,7 +654,8 @@ async def _(event):
     reply_message = await event.get_reply_message()
     ommhg = await edit_or_reply(event, "Processing. please wait.")
     img = await convert_to_image(event, borg)
-    url_s = upload_file(img)
+    image = open(img, 'rb')
+    url_s = upload_file(image)
     link = f"https://telegra.ph{url_s[0]}"
     c = {
       "Type":"CaptionRequest",
