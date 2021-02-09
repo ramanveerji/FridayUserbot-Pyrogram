@@ -58,7 +58,7 @@ async def disable_nsfw(event):
 @bot.on(events.NewMessage())        
 async def ws(event):
     warner_starkz = get_all_nsfw_enabled_chat()
-    if len(warner_starkz) != 0:
+    if len(warner_starkz) == 0:
         return
     if not is_nsfwatch_indb(str(event.chat_id)):
         return
