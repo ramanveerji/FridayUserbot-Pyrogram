@@ -15,14 +15,22 @@ import os
 
 from glitch_this import ImageGlitcher
 from telethon.tl.types import MessageMediaPhoto
-
+from pygifsicle import optimize
 from fridaybot import CMD_HELP
+import asyncio
+import math
+import os
+import time
+from fridaybot.function import progress, humanbytes, time_formatter
+from fridaybot.function.FastTelethon import upload_file
 from fridaybot.utils import friday_on_cmd, sudo_cmd
+from fridaybot.function import convert_to_image
 
 glitcher = ImageGlitcher()
 DURATION = 200  # Set this to however many centiseconds each frame should be visible for
 LOOP = 0  # Set this to how many times the gif should loop
 # LOOP = 0 means infinite loop
+
 sedpath = "./starkgangz/"
 if not os.path.isdir(sedpath):
     os.makedirs(sedpath)
@@ -35,15 +43,8 @@ async def glitch(event):
         return
     sed = await event.get_reply_message()
     okbruh = await event.edit("`Gli, Glitchiiingggg.....`")
-    if isinstance(sed.media, MessageMediaPhoto):
-        photolove = await borg.download_media(sed.media, sedpath)
-    elif "image" in sed.media.document.mime_type.split("/"):
-        photolove = await borg.download_media(sed.media, sedpath)
-    else:
-        await event.edit("`Reply To Image`")
-        return
-    fmt = "gif"
-    pathsn = f"./starkgangz/@fridayot.{fmt}"
+    photolove = await convert_to_image(event, friday)
+    pathsn = f"./starkgangz/@fridayot.gif"
     glitch_imgs = glitcher.glitch_image(photolove, 2, gif=True, color_offset=True)
     glitch_imgs[0].save(
         pathsn,
@@ -53,7 +54,21 @@ async def glitch(event):
         duration=DURATION,
         loop=LOOP,
     )
-    await borg.send_file(event.chat_id, pathsn)
+    c_time = time.time()
+    optimize(pathsn)
+    stark_m = await upload_file(
+        	file_name="Glitched@FridayOt.gif",
+            client=borg,
+            file=open(pathsn, 'rb'),
+            progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
+                progress(
+                    d, t, event, c_time, "Uploading..", pathsn
+                )
+            ),
+        )
+    await borg.send_file(event.chat_id,
+                         stark_m,
+                         caption="Powered By @FridayOT")
     await okbruh.delete()
     for starky in (pathsn, photolove):
         if starky and os.path.exists(starky):
