@@ -82,7 +82,7 @@ async def _(event):
                     "preferredquality": "480",
                 }
             ],
-            "outtmpl": "./music/%(title)s.mp3",
+            "outtmpl": "%(id)s.mp3",
             "quiet": True,
             "logtostderr": False,
         }
@@ -94,17 +94,14 @@ async def _(event):
         return
     await asyncio.sleep(20)
     c_time = time.time()
-    file_stark = f"./music/*.mp3"
-    Kk0 = glob.glob(file_stark)
-    file_to_uold = Kk0[0]
-    file_HH = f"{ytdl_data['title']}.mp4"
+    file_stark = f"{ytdl_data['id']}.mp3"
     lol_m = await upload_file(
-            file_name=file_HH,
+            file_name=f"{ytdl_data["title"]}.mp3",
             client=borg,
-            file=open(file_to_uold, 'rb'),
+            file=open(file_stark, 'rb'),
             progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
                 progress(
-                    d, t, event, c_time, "Uploading Your Song!", file_HH
+                    d, t, event, c_time, "Uploading Your Song!", str(ytdl_data["title"])
                 )
             ),
         )
@@ -126,7 +123,6 @@ async def _(event):
             ],
         supports_streaming=True,
     )
-    shutil.rmtree("./music/")
     os.remove(sedlyf)
             
 @friday.on(friday_on_cmd(pattern="utubevid ?(.*)"))
