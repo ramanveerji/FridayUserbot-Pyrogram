@@ -82,6 +82,7 @@ async def okgoogle(img):
         else:
             lim = 3
         response = googleimagesdownload()
+        logger.info(guess)
         arguments = {
             "keywords": guess,
             "limit": lim,
