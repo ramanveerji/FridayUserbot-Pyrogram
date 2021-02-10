@@ -223,3 +223,4 @@ except:
     pass
 
 friday_version = "7.0"
+friday_name = "FridayUserBot V7.0"
