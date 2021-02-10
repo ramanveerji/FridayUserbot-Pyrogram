@@ -25,9 +25,9 @@ from fridaybot.Configs import Config
 from telethon.tl.types import InputMessagesFilterDocument
 from fridaybot.utils import load_module, start_assistant, load_module_dclient
 from fridaybot.Configs import Config
-credits = "Get Your FridayUserBot From @FridayOT"
+
 fridaydevs = logging.getLogger("Friday")
-B= credits[9].lower()
+
 async def add_bot(bot_token):
     await bot.start(bot_token)
     bot.me = await bot.get_me()
@@ -89,11 +89,7 @@ async def get_other_plugins(Config, client_s, fridaydevs):
         else:
             await client_s.download_media(meisnub.media, "fridaybot/modules/")
     fridaydevs.info("Extra Plugins Downloaded.")
-if B != Lol[0]:
-   print("bug detected")
-   exit()
-else:
-   pass
+
 if len(argv) not in (1, 3, 4):
     bot.disconnect()
 else:
