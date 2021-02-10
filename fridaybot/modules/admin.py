@@ -566,7 +566,7 @@ async def pin(event):
     except BadRequestError:
         poppo = await edit_or_reply(event, NO_PERM)
         return
-    h = str(event.chat_id.text.replace("-100", ""))
+    h = str(event.chat_id).replace("-100", "")
     poppo = await edit_or_reply(event, f"I Have Pinned This [Message](http://t.me/c/{h}/{to_pin})")
     user = await get_user_sender_id(event.sender_id, event)
 
