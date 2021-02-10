@@ -802,7 +802,7 @@ async def flip(event):
         return
     hmm = await event.client.download_media(kk.media)
     c_time = time.time()
-    cmd = f'ffmpeg -i {hmm} -vf "drawtext=text={watermark}:x=(1100-text_w):y=(600-text_h):fontsize=32:fontcolor=black:box=1:boxcolor=white@0.5: boxborderw=5" -c:a copy watermarked@FridayOT.mp4'
+    cmd = f'ffmpeg -i {hmm} -vf drawtext="fontfile=Fonts/impact.ttf: text={watermark}: fontcolor=white: fontsize=24: box=1: boxcolor=black@0.5: boxborderw=5: x=(w-text_w)/2:y=(h-text_h)/2" -codec:a copy watermarked@FridayOT.mp4'
     await runcmd(cmd)
     filem = "watermarked@FridayOT.mp4"
     if not os.path.exists(filem):
