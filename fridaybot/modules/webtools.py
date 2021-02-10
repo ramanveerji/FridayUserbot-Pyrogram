@@ -188,12 +188,12 @@ async def _(event):
     pathz, name = await apk_dl(akkad, Config.TMP_DOWNLOAD_DIRECTORY, event)
     await borg.send_file(event.chat_id, pathz, caption='Uploaded By @FRidayOT')
     
-@friday.on(friday_on_cmd(pattern="phoneinfo ?(.*)"))
+@friday.on(friday_on_cmd(pattern="(numberlookup|nl|pi) ?(.*)"))
 async def _(event):
     if event.fwd_from:
         return
     hmm = "<b>Phone Info Powered By @FridayOT</b> \n\n"
-    phonenumber = event.pattern_match.group(1)
+    phonenumber = event.pattern_match.group(2)
     try:
         warner = Track_Mobile_Number(phonenumber).track
     except:
