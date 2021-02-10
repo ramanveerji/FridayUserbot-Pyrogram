@@ -516,6 +516,7 @@ async def get_admin(event):
         poppo = await edit_or_reply(event, "`I don't think this is a group.`")
         return
     """ For .admins command, list all of the admins of the chat. """
+    poppo = await edit_or_reply(event, "processing...")
     info = await event.client.get_entity(event.chat_id)
     title = info.title if info.title else "this chat"
     mentions = f"<b>Admins in {title}:</b> \n"
@@ -531,7 +532,7 @@ async def get_admin(event):
                 mentions += f"\nDeleted Account <code>{user.id}</code>"
     except ChatAdminRequiredError as err:
         mentions += " " + str(err) + "\n"
-    poppo = await edit_or_reply(event, mentions, parse_mode="html")
+    await poppo.edit(mentions, parse_mode="html")
 
 
 # @register(outgoing=True, pattern="^.pin(?: |$)(.*)")
