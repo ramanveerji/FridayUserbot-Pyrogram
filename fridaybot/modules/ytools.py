@@ -287,6 +287,8 @@ CMD_HELP.update(
         "ytmusic": "**Ytmusic**\
 \n\n**Syntax : **`.ytmusic <song name>`\
 \n**Usage :** Downloads songs from ytmusic\
+\n\n**Syntax : **`.utubevid <video name>`\
+\n**Usage :** Downloads video from ytmusic\
 \n\n**Syntax : **`.ytm4a <song name>`\
 \n**Usage :** Downloads songs from ytmusic with best quality"
     }
