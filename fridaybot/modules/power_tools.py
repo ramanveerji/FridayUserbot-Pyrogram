@@ -14,20 +14,20 @@ import heroku3
 import requests
 Heroku = heroku3.from_key(Config.HEROKU_API_KEY)
 
-@friday.on(friday_on_cmd("restart"))
+@friday.on(friday_on_cmd("restart$"))
 async def _(event):
     if event.fwd_from:
         return
     await event.edit("**Restarted ! If You Want To Check If I am Alive, Do** `.ping` !")
-    if Config.HEROKU_API_KEY:
+    try:
         herokuHelper = HerokuHelper(Config.HEROKU_APP_NAME, Config.HEROKU_API_KEY)
         herokuHelper.restart()
-    else:
+    except:
         await borg.disconnect()
         os.execl(sys.executable, sys.executable, *sys.argv)
 
 
-@friday.on(friday_on_cmd("shutdown"))
+@friday.on(friday_on_cmd("shutdown$"))
 async def _(event):
     if event.fwd_from:
         return
