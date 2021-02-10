@@ -32,7 +32,7 @@
     },
     "NOSPAMPLUS_TOKEN": {
       "description": "Your Token From @NospamPlusBot",
-      "value": ""
+      "value": "",
       "required": false
     },
     "SUDO_USERS": {
