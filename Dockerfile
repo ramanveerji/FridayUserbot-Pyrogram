@@ -8,6 +8,7 @@ RUN apt-get install -y\
     gifsicle \
     apt-utils \
     bash \
+    ImageMagick \
     bzip2 \
     build-essential \
     cmake \
