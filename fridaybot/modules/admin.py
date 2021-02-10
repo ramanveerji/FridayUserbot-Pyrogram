@@ -759,8 +759,8 @@ CMD_HELP.update(
 \n**Usage:** Mutes the person in all groups you have in common with them.\
 \n\n.ungmute <username/reply>\
 \n**Usage:** Reply someone's message with .ungmute to remove them from the gmuted list.\
-\n\n.delusers\
-\n**Usage:** Searches for deleted accounts in a group. Use .delusers clean to remove deleted accounts from the group.\
+\n\n.zombies\
+\n**Usage:** Searches for deleted accounts in a group. Use .zombies clean to remove deleted accounts from the group.\
 \n\n.adminlist\
 \n**Usage:** Retrieves a list of admins in the chat.\
 \n\n.users or .users <name of member>\
