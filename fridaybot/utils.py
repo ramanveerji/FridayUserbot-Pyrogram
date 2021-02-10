@@ -533,7 +533,7 @@ def sudo_cmd(pattern=None, **args):
     return events.NewMessage(**args)
 
 
-async def edit_or_reply(event, text parse_mode=None):
+async def edit_or_reply(event, text, parse_mode=None):
     parse_mode_z = parse_mode if parse_mode else "md"
     if event.sender_id in Config.SUDO_USERS:
         reply_to = await event.get_reply_message()
