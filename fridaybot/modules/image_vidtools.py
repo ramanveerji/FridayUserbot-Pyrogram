@@ -785,6 +785,45 @@ async def flip(event):
         if files and os.path.exists(files):
             os.remove(files)
             
+@friday.on(friday_on_cmd(pattern="extractaudio$"))
+async def audio_extract(event):
+    if event.fwd_from:
+        return
+    if not event.reply_to_msg_id:
+        await event.edit("Reply To Any Video.")
+        return
+    kk = await event.get_reply_message()
+    if not kk.video or kk.video_note:
+        await event.edit("`Oho, Reply To Video Only`")
+        return
+    hmm = await event.client.download_media(kk.media)
+    name_out = str(kk.media.document.attributes[1].file_name.split(".")[0]) + str(".mp3")
+    c_time = time.time()
+    cmd = f"ffmpeg -i {hmm} -map 0:a {name_out}"
+    await runcmd(cmd)
+    filem = name_out
+    if not os.path.exists(filem):
+        await event.edit("**Process, Failed !**")
+        return
+    final_file = await uf(
+            file_name=filem,
+            client=bot,
+            file=open(filem, 'rb'),
+            progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
+                progress(
+                    d, t, event, c_time, "Uploading Audio From The video..", filem
+                )
+            ),
+        )
+    await event.delete()
+    await borg.send_file(
+        event.chat_id,
+        final_file,
+        caption="**Audio Extarcted** - Powered By @FridayOT")
+    for files in (filem, hmm):
+        if files and os.path.exists(files):
+            os.remove(files)
+                 
 CMD_HELP.update(
     {
         "imagetools": "**imagetools**\
