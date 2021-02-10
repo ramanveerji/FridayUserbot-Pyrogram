@@ -805,13 +805,7 @@ async def flip(event):
     cap = cv2.VideoCapture(hmm)
     ret, frame = cap.read() 
     font = cv2.FONT_HERSHEY_SIMPLEX 
-    cv2.putText(frame,  
-                watermark,  
-                (50, 50),  
-                font, 1,  
-                (0, 255, 255),  
-                2,  
-                cv2.LINE_4)
+    cv2.putText(frame, watermark, (50, 50), font, 2, (0, 0, 0), 2, cv2.LINE_AA)
     filem = "watermarked@FridayOT.mp4"
     hehe = cv2.VideoWriter(filem, -1, 20.0, (640,480))
     hehe.write(frame) 
