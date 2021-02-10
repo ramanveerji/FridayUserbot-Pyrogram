@@ -68,6 +68,8 @@ async def ws(event):
         return
     if not event.media:
         return
+    if not (event.gif or event.video or event.video_note or event.photo or event.sticker):
+        return
     if not await is_admin(event, bot.uid):
         return
     hmmstark = await is_nsfw(event)
