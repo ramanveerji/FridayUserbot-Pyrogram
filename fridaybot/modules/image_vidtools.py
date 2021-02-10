@@ -797,6 +797,10 @@ async def audio_extract(event):
         await event.edit("`Oho, Reply To Video Only`")
         return
     hmm = await event.client.download_media(kk.media)
+    try:
+        thumb = await event.client.download_media(kk.media, thumb=-1)
+    except:
+        thumb = "./resources/IMG_20200929_103719_628.jpg"
     name_out = str(kk.media.document.attributes[1].file_name.split(".")[0]) + str(".mp3")
     c_time = time.time()
     cmd = f"ffmpeg -i {hmm} -map 0:a {name_out}"
@@ -819,6 +823,7 @@ async def audio_extract(event):
     await borg.send_file(
         event.chat_id,
         final_file,
+        thumb=thumb,
         caption="**Audio Extarcted** - Powered By @FridayOT")
     for files in (filem, hmm):
         if files and os.path.exists(files):
