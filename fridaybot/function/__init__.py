@@ -722,12 +722,12 @@ async def is_nsfw(event):
         return False
     if lmao.video or lmao.video_note or lmao.sticker or lmao.gif:
         try:
-            stark = await event.client.download_media(lmao.media, thumb=-1)
+            starkstark = await event.client.download_media(lmao.media, thumb=-1)
         except:
             return False
     elif lmao.photo or lmao.sticker:
         try:
-            stark = await event.client.download_media(lmao.media)
+            starkstark = await event.client.download_media(lmao.media)
         except:
             return False
     Credits = "By Friday. Get Your Friday From @Friday_OT"
@@ -740,7 +740,7 @@ async def is_nsfw(event):
       N = 15
     else:
       N = 14
-    img = stark
+    img = starkstark
     res = ''.join(random.choices(string.ascii_uppercase +string.digits, k = N))
     token = str(res)
     f = {"file": (img, open(img, "rb"))}
