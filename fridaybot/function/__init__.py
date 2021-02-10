@@ -730,25 +730,10 @@ async def is_nsfw(event):
             starkstark = await event.client.download_media(lmao.media)
         except:
             return False
-    Credits = "By Friday. Get Your Friday From @Friday_OT"
-    Reply_message = Credits
-    tokez = Reply_message[3:9].lower()
-    loZ = Reply_message[3].lower()
-    nsfew = "nsfw[001][5556]^√~~×{{}∆}÷]][™™®®®--44447££6"
-    nsf = nsfew[2]
-    if loZ == nsf:
-      N = 15
-    else:
-      N = 14
     img = starkstark
-    res = ''.join(random.choices(string.ascii_uppercase +string.digits, k = N))
-    token = str(res)
     f = {"file": (img, open(img, "rb"))}
-    h = {
-      "by":tokez,
-      "token":token
-    }
-    r = requests.post("https://starkapi.herokuapp.com/nsfw/", files = f, headers = h).json()
+    
+    r = requests.post("https://starkapi.herokuapp.com/nsfw/", files = f).json()
     if r.get("success") is False:
       is_nsfw = False
     elif r.get("is_nsfw") is True:
