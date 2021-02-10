@@ -802,9 +802,19 @@ async def flip(event):
         return
     hmm = await event.client.download_media(kk.media)
     c_time = time.time()
-    cmd = f'ffmpeg -i {hmm} -vf drawtext="fontfile=Fonts/impact.ttf: text={watermark}: fontcolor=white: fontsize=20: box=1: boxcolor=black@0.5: boxborderw=5: x=(w-text_w)/2:y=(h-text_h)/2" -codec:a copy watermarked@FridayOT.mp4'
-    await runcmd(cmd)
+    cap = cv2.VideoCapture(hmm)
+    ret, frame = cap.read() 
+    font = cv2.FONT_HERSHEY_SIMPLEX 
+    cv2.putText(frame,  
+                watermark,  
+                (50, 50),  
+                font, 1,  
+                (0, 255, 255),  
+                2,  
+                cv2.LINE_4)
     filem = "watermarked@FridayOT.mp4"
+    hehe = cv2.VideoWriter(filem, -1, 20.0, (640,480))
+    hehe.write(frame) 
     if not os.path.exists(filem):
         await event.edit("**Process, Failed !**")
         return
