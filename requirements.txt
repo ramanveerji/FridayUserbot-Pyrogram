@@ -8,6 +8,7 @@ pymediainfo
 apscheduler
 git+https://github.com/gleitz/howdoi
 pyseoanalyzer
+fake_useragent
 pygifsicle
 pokedex.py
 faker
