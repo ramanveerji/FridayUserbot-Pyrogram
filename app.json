@@ -30,9 +30,10 @@
       "description": "Get this value from my.telegram.org! Please do not steal",
       "value": ""
     },
-    "PLUGIN_CHANNEL": {
-      "description": "Channel Where You Save Your Plugins.",
+    "NOSPAMPLUS_TOKEN": {
+      "description": "Your Token From @NospamPlusBot",
       "value": ""
+      "required": false
     },
     "SUDO_USERS": {
       "description": "Enter A User Id Which You Would Like to Use To Control Sudo. Don't Give Your Own ID Or ID Of Users You Don't Trust.",
