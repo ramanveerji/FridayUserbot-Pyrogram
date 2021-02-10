@@ -15,7 +15,7 @@ import requests
 from iplookup import iplookup
 from selenium import webdriver
 from youtube_search import YoutubeSearch
-from fridaybot.function import apk_dl
+from fridaybot.function import apk_dl, Track_Mobile_Number
 from fridaybot import CMD_HELP
 from fridaybot.utils import edit_or_reply, friday_on_cmd, sudo_cmd
 
@@ -181,13 +181,27 @@ async def _(event):
         await event.edit("Some Thing Went Wrong.")
         
 @friday.on(friday_on_cmd(pattern="apk ?(.*)"))
-@friday.on(sudo_cmd(pattern="apk ?(.*)", allow_sudo=True))
 async def _(event):
     akkad = event.pattern_match.group(1)
     if event.fwd_from:
         return
     pathz, name = await apk_dl(akkad, Config.TMP_DOWNLOAD_DIRECTORY, event)
     await borg.send_file(event.chat_id, pathz, caption='Uploaded By @FRidayOT')
+    
+@friday.on(friday_on_cmd(pattern="phoneinfo ?(.*)"))
+async def _(event):
+    if event.fwd_from:
+        return
+    hmm = "<b>Phone Info Powered By @FridayOT</b> \n\n"
+    phonenumber = event.pattern_match.group(1)
+    try:
+        warner = Track_Mobile_Number(phonenumber).track
+    except:
+        await event.edit("Failed, Please Check Phone Number")
+        return
+    for i in warner:
+        hmm += f"<u><b>➠ {i}</u></b> --> <code>{warner[i]}</code> \n"
+    await event.edit(hmm, parse_mode="HTML")
     
 @friday.on(friday_on_cmd(pattern="amazon ?(.*)"))
 async def _m(event):
