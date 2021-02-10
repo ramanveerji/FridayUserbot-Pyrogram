@@ -102,7 +102,7 @@ async def _(event):
                 )
             ),
         )
-    capy = f"**Song Name ➠** `{thum}` \n**Requested For ➠** `{urlissed}` \n**Channel ➠** `{thums}` \n**Link ➠** `{mo}` \n**Direct Link ➠** `{ytdl_data['url']}`"
+    capy = f"**Song Name ➠** `{thum}` \n**Requested For ➠** `{urlissed}` \n**Channel ➠** `{thums}` \n**Link ➠** `{mo}`"
     await event.delete()
     await borg.send_file(
         event.chat_id,
@@ -177,7 +177,7 @@ async def _(event):
                 )
             ),
         )
-    capy = f"**Video Name ➠** `{thum}` \n**Requested For ➠** `{urlissed}` \n**Channel ➠** `{thums}` \n**Link ➠** `{mo}` \n**Direct Link ➠** `{ytdl_data['url']}`"
+    capy = f"**Video Name ➠** `{thum}` \n**Requested For ➠** `{urlissed}` \n**Channel ➠** `{thums}` \n**Link ➠** `{mo}`"
     await event.delete()
     await borg.send_file(
         event.chat_id,
@@ -259,7 +259,7 @@ async def _(event):
                 )
             ),
         )
-    capy = f"**Song Name ➠** `{thum}` \n**Requested For ➠** `{urlissed}` \n**Channel ➠** `{thums}` \n**Link ➠** `{mo}` \n**Direct Link ➠** `{ytdl_data['url']}`"
+    capy = f"**Song Name ➠** `{thum}` \n**Requested For ➠** `{urlissed}` \n**Channel ➠** `{thums}` \n**Link ➠** `{mo}`"
     await event.delete()
     await borg.send_file(
         event.chat_id,
