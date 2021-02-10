@@ -66,7 +66,6 @@ async def _(event):
     sedlyf = wget.download(kekme, out=path)
     opts = {
             "format": "bestaudio",
-            "download": True,
             "addmetadata": True,
             "key": "FFmpegMetadata",
             "writethumbnail": True,
@@ -86,7 +85,7 @@ async def _(event):
         }
     try:
         with YoutubeDL(opts) as ytdl:
-            ytdl_data = ytdl.extract_info(mo)
+            ytdl_data = ytdl.extract_info(mo, download=True)
     except Exception as e:
         await event.edit(f"**Failed To Download** \n**Error :** `{str(e)}`")
         return
@@ -103,7 +102,7 @@ async def _(event):
                 )
             ),
         )
-    capy = f"**Song Name ➠** `{thum}` \n**Requested For ➠** `{urlissed}` \n**Channel ➠** `{thums}` \n**Link ➠** `{mo}`"
+    capy = f"**Song Name ➠** `{thum}` \n**Requested For ➠** `{urlissed}` \n**Channel ➠** `{thums}` \n**Link ➠** `{mo}` \n**Direct Link ➠** `{ytdl_data['url']}`"
     await event.delete()
     await borg.send_file(
         event.chat_id,
@@ -162,7 +161,7 @@ async def _(event):
         }
     try:
         with YoutubeDL(opts) as ytdl:
-            ytdl_data = ytdl.extract_info(url)
+            ytdl_data = ytdl.extract_info(url, download=True)
     except Exception as e:
         await event.edit(f"**Failed To Download** \n**Error :** `{str(e)}`")
         return
@@ -178,7 +177,7 @@ async def _(event):
                 )
             ),
         )
-    capy = f"**Video Name ➠** `{thum}` \n**Requested For ➠** `{urlissed}` \n**Channel ➠** `{thums}` \n**Link ➠** `{mo}`"
+    capy = f"**Video Name ➠** `{thum}` \n**Requested For ➠** `{urlissed}` \n**Channel ➠** `{thums}` \n**Link ➠** `{mo}` \n**Direct Link ➠** `{ytdl_data['url']}`"
     await event.delete()
     await borg.send_file(
         event.chat_id,
@@ -260,7 +259,7 @@ async def _(event):
                 )
             ),
         )
-    capy = f"**Song Name ➠** `{thum}` \n**Requested For ➠** `{urlissed}` \n**Channel ➠** `{thums}` \n**Link ➠** `{mo}`"
+    capy = f"**Song Name ➠** `{thum}` \n**Requested For ➠** `{urlissed}` \n**Channel ➠** `{thums}` \n**Link ➠** `{mo}` \n**Direct Link ➠** `{ytdl_data['url']}`"
     await event.delete()
     await borg.send_file(
         event.chat_id,
