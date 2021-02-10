@@ -696,7 +696,7 @@ async def fasty(event):
             file=open(filem, 'rb'),
             progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
                 progress(
-                    d, t, event, c_time, "Uploading Fast Motion Image..", filem
+                    d, t, event, c_time, "Uploading Fast Motion video..", filem
                 )
             ),
         )
@@ -747,7 +747,44 @@ async def fasty(event):
         if files and os.path.exists(files):
             os.remove(files)
     
-    
+@friday.on(friday_on_cmd(pattern="vidflip$"))
+async def flip(event):
+    if event.fwd_from:
+        return
+    if not event.reply_to_msg_id:
+        await event.edit("Reply To Any Video.")
+        return
+    kk = await event.get_reply_message()
+    if not kk.video or kk.video_note:
+        await event.edit("`Oho, Reply To Video Only`")
+        return
+    hmm = await event.client.download_media(kk.media)
+    c_time = time.time()
+    cmd = f'ffmpeg -i {hmm} -vf "transpose=2,transpose=2" FlipedBy@FridayOT.mp4'
+    await runcmd(cmd)
+    filem = "FlipedBy@FridayOT.mp4"
+    if not os.path.exists(filem):
+        await event.edit("**Process, Failed !**")
+        return
+    final_file = await uf(
+            file_name=filem,
+            client=bot,
+            file=open(filem, 'rb'),
+            progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
+                progress(
+                    d, t, event, c_time, "Uploading Flipped video..", filem
+                )
+            ),
+        )
+    await event.delete()
+    await borg.send_file(
+        event.chat_id,
+        final_file,
+        caption="**Video Flipped** - Powered By @FridayOT")
+    for files in (filem, hmm):
+        if files and os.path.exists(files):
+            os.remove(files)
+            
 CMD_HELP.update(
     {
         "imagetools": "**imagetools**\
