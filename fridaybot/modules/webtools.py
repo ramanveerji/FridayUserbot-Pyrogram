@@ -197,10 +197,10 @@ async def _(event):
     try:
         warner = Track_Mobile_Number(phonenumber).track
     except:
-        await event.edit("Failed, Please Check Phone Number")
+        await event.edit("`Failed, Please Check Phone Number.`")
         return
     for i in warner:
-        hmm += f"<u><b>➠ {i}</u></b> --> <code>{warner[i]}</code> \n"
+        hmm += f"<u><b>{i}</u></b> ➠ <code>{warner[i]}</code> \n"
     await event.edit(hmm, parse_mode="HTML")
     
 @friday.on(friday_on_cmd(pattern="amazon ?(.*)"))
