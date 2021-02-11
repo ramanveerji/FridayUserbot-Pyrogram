@@ -151,11 +151,11 @@ if failed2 is None:
     total_clients += 1
 if failed3 is None:
     total_clients += 1
-if wsta[0].lower() ==Lol[0]:
-   pass
-else:
-   print("bug detected")
-   exit()
+    
+if wsta[0].lower() != Lol[0]:
+   logger.info("Bug Detected ! // UserBot is Exiting.")
+   sys.exit()
+    
 fridaydevs.info(f"""{wsta}
 -------------------------------------------
 Friday-Userbot Based On Telethon V{tv}
