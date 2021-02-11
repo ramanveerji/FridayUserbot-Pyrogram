@@ -219,7 +219,7 @@ async def gif_world(event):
     hu = event.pattern_match.group(2).replace(' ', '+')
     url = f"https://api.tenor.com/v1/random?q={hu}&contentfilter=medium"
     r = requests.get(url=url).json()
-    giff = r["results"][random.randint(0, len(response["results"]) - 1)]["media"][0]["gif"]["url"]
+    giff = r["results"][random.randint(0, len(r["results"]) - 1)]["media"][0]["gif"]["url"]
     await borg.send_file(event.chat_id, giff, caption="Powered By @FridayOT")
     
 @friday.on(friday_on_cmd(pattern="(randomeme|memegen)$"))
