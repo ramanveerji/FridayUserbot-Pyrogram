@@ -608,7 +608,7 @@ async def holastark(event):
         os.remove(ok)
     
     
-@friday.on(friday_on_cmd(pattern="(flip|blur|tresh|hsv|lab)"))
+@friday.on(friday_on_cmd(pattern="(flip|blur|tresh|hsv|lab|sketch)"))
 async def warnerstark_s(event):
     if event.fwd_from:
         return
@@ -646,6 +646,24 @@ async def warnerstark_s(event):
         ok = sedpath + "/" + file_name
         cv2.imwrite(ok, lab)
         warnerstark = "Hehe, Lab"
+    elif ws == "sketch":
+        scale_percent = 0.60
+        width = int(img.shape[1] * scale_percent)
+        height = int(img.shape[0] * scale_percent)
+        dim = (width, height)
+        resized = cv2.resize(img, dim, interpolation=cv2.INTER_AREA)
+        kernel_sharpening = np.array([[-1, -1, -1],
+                              [-1, 9, -1],
+                              [-1, -1, -1]])
+        sharpened = cv2.filter2D(resized, -1, kernel_sharpening)
+        gray = cv2.cvtColor(sharpened, cv2.COLOR_BGR2GRAY)
+        inv = 255 - gray
+        gauss = cv2.GaussianBlur(inv, ksize=(15, 15), sigmaX=0, sigmaY=0)
+        pencil_img = dodgeV2(gray, gauss)
+        file_name = "Drawn.webp"
+        ok = sedpath + "/" + file_name
+        cv2.imwrite(ok, lab)
+        warnerstark = "Hehe, Drawn By @FridayOT"
     await event.delete()
     await borg.send_file(event.chat_id, file=ok, caption=warnerstark)
     for files in (ok, img):
@@ -913,7 +931,9 @@ async def convert_to_note(event):
         if files and os.path.exists(files):
             os.remove(files)
         
-        
+def dodgeV2(image, mask):
+    return cv2.divide(image, 255 - mask, scale=256)
+
 CMD_HELP.update(
     {
         "imagetools": "**imagetools**\
