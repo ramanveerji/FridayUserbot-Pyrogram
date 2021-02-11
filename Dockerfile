@@ -20,6 +20,7 @@ RUN apt-get install -y\
     gcc \
     g++ \
     git \
+    espeak \
     libevent-dev \
     libjpeg-dev \
     libffi-dev \
