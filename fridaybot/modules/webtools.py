@@ -11,6 +11,7 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+import random
 import requests
 from iplookup import iplookup
 from selenium import webdriver
@@ -210,6 +211,24 @@ async def hehe(event):
     r = requests.get("https://icanhazdadjoke.com/", headers={"Accept": "application/json"}).json()
     await event.edit(r['joke'])
     
+@friday.on(friday_on_cmd(pattern="(tenor|giphy) ?(.*)"))
+async def gif_world(event):
+    if event.fwd_from:
+        return
+    hu = event.pattern_match.group(2).replace(' ', '+')
+    url = f"https://api.tenor.com/v1/random?q={hu}&contentfilter=medium"
+    r = requests.get(url=url).json()
+    giff = r["results"][random.randint(0, len(response["results"]) - 1)]["media"][0]["gif"]["url"]
+    await borg.send_file(event.chat_id, giff, caption="Powered By @FridayOT")
+    
+@friday.on(friday_on_cmd(pattern="(randomeme|memegen)$"))
+async def meme_world(event):
+    if event.fwd_from:
+        return
+    url = f"https://some-random-api.ml/meme"
+    r = requests.get(url=url).json()
+    await borg.send_file(event.chat_id, r['image'], caption="**Meme Gen** - Powered By @FridayOT")
+     
     
 CMD_HELP.update(
     {
