@@ -570,7 +570,30 @@ async def hmm(event):
     for files in (ok, img):
         if files and os.path.exists(files):
             os.remove(files)
-
+            
+@friday.on(friday_on_cmd(pattern="(genca|gencertificate) ?(.*)"))
+async def holastark2(event):
+    if event.fwd_from:
+        return
+    await event.edit("`Processing..`")
+    text = event.pattern_match.group(2)
+    img = Image.open('./resources/CERTIFICATE_TEMPLATE_IMAGE.png')
+    d1 = ImageDraw.Draw(img)
+    myFont = ImageFont.truetype('Fonts/impact.ttf', 20)
+    d1.text((1769, 1441), text, font=myFont, fill=(51, 51, 51))
+    TZ = pytz.timezone(Config.TZ)
+    datetime_tz = datetime.now(TZ)
+    oof = datetime_tz.strftime(f"%Y/%m/%d")
+    d1.text((1769, 1441), oof, font=myFont, fill=(51, 51, 51))
+    file_name = "certificate.png"
+    ok = sedpath + "/" + file_name
+    im.save(ok, "PNG")
+    await borg.send_file(event.chat_id, ok)
+    if os.path.exists(ok):
+        os.remove(ok)
+    
+    
+    
 @friday.on(friday_on_cmd(pattern="(certificategen|cg) ?(.*)"))
 async def holastark(event):
     if event.fwd_from:
