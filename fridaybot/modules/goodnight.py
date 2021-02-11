@@ -25,7 +25,7 @@ async def hi(event):
 
 CMD_HELP.update(
     {
-        "Good Night": ".gdn \
+        "good_Night": ".gdn \
 \nUsage: Say Good Night"
     }
 )
