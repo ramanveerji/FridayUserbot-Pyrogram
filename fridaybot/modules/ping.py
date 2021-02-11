@@ -57,7 +57,7 @@ async def _(event):
 CMD_HELP.update(
     {
         "ping": "**Ping**\
-\n\n**Syntax : **`.pin`\
+\n\n**Syntax : **`.ping`\
 \n**Usage :** Get uptime and speed of your bot."
     }
 )
