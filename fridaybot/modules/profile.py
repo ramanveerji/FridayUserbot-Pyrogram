@@ -22,6 +22,9 @@ async def _(event):
         id_s = event.pattern_match.group(1)
     elif event.is_private:
         id_s = await event.get_input_chat()
+    if not id_s:
+        await event.edit("`Reply To User To Add Him In Contact.`")
+        return
     user_s = await event.client.get_entity(id_s)
     if user_s.last_name is None:
         sed_m = " "
