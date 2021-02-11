@@ -229,6 +229,20 @@ async def meme_world(event):
     url = f"https://some-random-api.ml/meme"
     r = requests.get(url=url).json()
     await borg.send_file(event.chat_id, r['image'], caption="**Meme Gen** - Powered By @FridayOT")
+    
+@friday.on(friday_on_cmd(pattern="genderguess (.*)"))
+async def what(event):
+    if event.fwd_from:
+        return
+    starky = event.pattern_match.group(1)
+    url = f"https://api.diversitydata.io/?fullname={starky}"
+    r = requests.get(url=url).json()
+    hmm = (f"**Name :** `{r['fullname']}` \n"
+           f"**Gender :** `{r['gender']}` \n"
+           f"**Ethnicity :** `{r['ethnicity']}` \n"
+           f"**Probability :** `{r['gender probability']}`")
+    await event.edit(hmm)
+     
      
 @friday.on(friday_on_cmd(pattern="hostlookup (.*)"))
 async def hecks(event):
