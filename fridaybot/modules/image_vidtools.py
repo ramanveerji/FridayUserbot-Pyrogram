@@ -648,10 +648,10 @@ async def warnerstark_s(event):
         warnerstark = "Hehe, Lab"
     elif ws == "sketch":
         scale_percent = 0.60
-        width = int(img.shape[1] * scale_percent)
-        height = int(img.shape[0] * scale_percent)
+        width = int(image.shape[1] * scale_percent)
+        height = int(image.shape[0] * scale_percent)
         dim = (width, height)
-        resized = cv2.resize(img, dim, interpolation=cv2.INTER_AREA)
+        resized = cv2.resize(image, dim, interpolation=cv2.INTER_AREA)
         kernel_sharpening = np.array([[-1, -1, -1],
                               [-1, 9, -1],
                               [-1, -1, -1]])
@@ -659,7 +659,7 @@ async def warnerstark_s(event):
         gray = cv2.cvtColor(sharpened, cv2.COLOR_BGR2GRAY)
         inv = 255 - gray
         gauss = cv2.GaussianBlur(inv, ksize=(15, 15), sigmaX=0, sigmaY=0)
-        pencil_img = dodgeV2(gray, gauss)
+        pencil_image = dodgeV2(gray, gauss)
         file_name = "Drawn.webp"
         ok = sedpath + "/" + file_name
         cv2.imwrite(ok, lab)
