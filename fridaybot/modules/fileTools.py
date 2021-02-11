@@ -30,7 +30,7 @@ from telethon.tl.types import InputMessagesFilterPhotos
 if not os.path.isdir(Config.TMP_DOWNLOAD_DIRECTORY):
   os.makedirs(Config.TMP_DOWNLOAD_DIRECTORY)
   
-@friday.on(friday_on_cmd(pattern=r"chnnlimgzip"))
+@friday.on(friday_on_cmd(pattern=r"chnnlimgzip(?: |$)(.*)"))
 async def heck(event):
     if event.fwd_from:
         return  
