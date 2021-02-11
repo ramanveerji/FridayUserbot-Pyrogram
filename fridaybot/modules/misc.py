@@ -14,7 +14,7 @@ from fridaybot import CMD_HELP
 from fridaybot.events import register
 
 
-@friday.on(friday_on_cmd(pattern="random"))
+@friday.on(friday_on_cmd(pattern="rndm"))
 async def randomise(items):
     if items.fwd_from:
         return
