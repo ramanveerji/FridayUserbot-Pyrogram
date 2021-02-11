@@ -25,7 +25,6 @@ async def _(event):
     if event.fwd_from:
         return
     input_st = event.pattern_match.group(2)
-    await event.edit("`Processing...`")
     Credits = "By FridayBot. Get Your FridayBot From @FridayOT."
     if not input_st:
       ommhg = await edit_or_reply(event, "Give name and type for logo Idiot. like `.logogen messi:football`")
