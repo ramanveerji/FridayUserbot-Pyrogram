@@ -590,7 +590,7 @@ async def holastark2(event):
     d1.text((1769, 1441), oof, font=myFont, fill=(51, 51, 51))
     file_name = "certificate.png"
     ok = sedpath + "/" + file_name
-    im.save(ok, "PNG")
+    img.save(ok, "PNG")
     await borg.send_file(event.chat_id, ok)
     if os.path.exists(ok):
         os.remove(ok)
