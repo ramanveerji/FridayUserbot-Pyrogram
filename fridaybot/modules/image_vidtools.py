@@ -597,7 +597,7 @@ async def holastark(event):
             font_color,
             10,
         )
-    file_name = "CertificateGenBy@FridayOt.png'
+    file_name = "CertificateGenBy@FridayOt.png"
     ok = sedpath + "/" + file_name
     cv2.imwrite(ok, img)
     await event.delete()
