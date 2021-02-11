@@ -12,7 +12,7 @@ Heroku = heroku3.from_key(Config.HEROKU_API_KEY)
 heroku_api = "https://api.heroku.com"
 
 
-@friday.on(friday_on_cmd(pattern="(logs|log)"))
+@friday.on(friday_on_cmd(pattern="(logs$|log$)"))
 @friday.on(sudo_cmd(pattern="(logs|log)", allow_sudo=True))
 async def giblog(event):
     if event.fwd_from:
