@@ -39,7 +39,7 @@ async def u2pdf(event):
     file_name = "Web2Pdf@FridayOT.pdf"
     try:
       pyppdf.save_pdf(file_name, url)
-    except:
+    except Exception as e:
       await event.edit("Task Failed. is url Valid?")
       return
     await borg.send_file(event.chat_id, file_name, caption="Powered By @FridayOT")
