@@ -12,7 +12,6 @@
 #    along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 import asyncio
-import os
 import time
 import time as t
 import zipfile
@@ -21,29 +20,49 @@ import shutil
 from fridaybot import CMD_HELP
 from fridaybot.function import convert_to_image, crop_vid, runcmd
 from fridaybot.utils import friday_on_cmd, sudo_cmd
-from pdf2docx import parse
-import glob
-import string 
-import pyppdf
-import random 
+import shutil
+import os
 import uuid
+import img2pdf
+from fridaybot.utils import friday_on_cmd
+from telethon.tl.types import InputMessagesFilterPhotos
 
 if not os.path.isdir(Config.TMP_DOWNLOAD_DIRECTORY):
   os.makedirs(Config.TMP_DOWNLOAD_DIRECTORY)
   
-@friday.on(friday_on_cmd(pattern=r"url2pdf"))
-async def u2pdf(event):
+@friday.on(friday_on_cmd(pattern=r"chnnlimgzip"))
+async def heck(event):
     if event.fwd_from:
         return  
-    url = event.text.split(" ", maxsplit=1)[1]  
-    file_name = "Web2Pdf@FridayOT.pdf"
+    un = event.pattern_match.group(1)
+    rndm = uuid.uuid4().hex
+    dir = f"./{rndm}/"
+    media_count = 0
+    text_count = 0
+    os.makedirs(dir)
+    if un:
+        chnnl = un
+    else:
+        chnnl = event.chat_id
+    await event.edit(f"**Fetching All Images From This Channel**")
     try:
-      pyppdf.save_pdf(file_name, url)
-    except Exception as e:
-      await event.edit("Task Failed. is url Valid?")
-      return
-    await borg.send_file(event.chat_id, file_name, caption="Powered By @FridayOT")
-    os.remove(file_name)
+        chnnl_msgs = await borg.get_messages(chnnl, limit=3000, filter=InputMessagesFilterPhotos)
+    except:
+        await event.edit("**Unable To fetch Messages !** \n`Please, Check Channel Details And IF There Are Any Images :/`")
+        return
+    total = int(chnnl_msgs.total)
+    await event.edit(f"**Downloading {total} Images**")
+    for d in chnnl_msgs:
+        media_count += 1
+        await borg.download_media(d.media, dir)
+    images_path = []
+    images_names = os.listdir(dir)
+    for i in images_names:
+        path = os.path.join(dir, i)
+        images_path.append(path)
+    with open('imagetopdf@fridayot.pdf', "wb") as f:
+        f.write(img2pdf.convert(images_path))    
+    await borg.send_file(event.chat_id, "imagetopdf@fridayot.pdf", caption="Powered By @FridayOT")    
     
 @friday.on(friday_on_cmd(pattern=r"pdf2docx"))
 async def hmm(event):
