@@ -3,9 +3,8 @@ deezer-python
 moviepy
 google-trans-new
 nospamplus
-pyppdf
-pyppeteer
 eyed3
+img2pdf
 pymediainfo
 apscheduler
 git+https://github.com/gleitz/howdoi
