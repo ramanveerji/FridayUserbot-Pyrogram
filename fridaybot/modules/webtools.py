@@ -12,6 +12,7 @@
 #    along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 import random
+import socket
 import requests
 from iplookup import iplookup
 from selenium import webdriver
@@ -229,6 +230,17 @@ async def meme_world(event):
     r = requests.get(url=url).json()
     await borg.send_file(event.chat_id, r['image'], caption="**Meme Gen** - Powered By @FridayOT")
      
+@friday.on(friday_on_cmd(pattern="hostlookup (.*)"))
+async def hecks(event):
+    if event.fwd_from:
+        return
+    starky = event.pattern_match.group(1)
+    try:
+        kk = socket.gethostbyaddr(starky)[0]
+    except:
+        await event.edit("Check Your Fking IP")
+        return
+    await event.edit(f"**Host Name :** `{kk}`")
     
 CMD_HELP.update(
     {
