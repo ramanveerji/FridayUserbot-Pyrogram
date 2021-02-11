@@ -153,8 +153,7 @@ if failed3 is None:
     total_clients += 1
     
 if wsta[0].lower() != Lol[0]:
-   logger.info("Bug Detected ! // UserBot is Exiting.")
-   sys.exit()
+   sys.exit("Bug Detected ! // UserBot is Exiting.")
     
 fridaydevs.info(f"""{wsta}
 -------------------------------------------
