@@ -1439,6 +1439,31 @@ async def hi(event):
         "┏┓┈╭━━╮╭━━╮╭━━╮\n┃┃┈┃┃┃┃┃╭╮┃┃╭╮┃\n┃┗┓┃┃┃┃┃┏┓┃┃╰╯┃\n┗━┛┗┻┻┛┗┛┗┛╰━━╯"
     )
 
+@friday.on(friday_on_cmd(pattern=r"gm$"))
+async def hi(event):
+    if event.fwd_from:
+        return
+    X = """
+
+ ┏━━━┓╋╋╋╋╋╋╋┏┓
+ ┃┏━┓┃╋╋╋╋╋╋╋┃┃
+ ┃┃╋┗╋━━┳━━┳━┛┃
+ ┃┃┏━┫┏┓┃┏┓┃┏┓┃
+ ┃┗┻━┃┗┛┃┗┛┃┗┛┃
+ ┗━━━┻━━┻━━┻━━┛
+ 
+ 
+ ╭━╮╭━╮
+ ┃┃╰╯┃┃
+ ┃╭╮╭╮┣━━┳━┳━╮╭┳━╮╭━━╮
+ ┃┃┃┃┃┃╭╮┃╭┫╭╮╋┫╭╮┫╭╮┃
+ ┃┃┃┃┃┃╰╯┃┃┃┃┃┃┃┃┃┃╰╯┃
+ ╰╯╰╯╰┻━━┻╯╰╯╰┻┻╯╰┻━╮┃
+ ╱╱╱╱╱╱╱╱╱╱╱╱╱╱╱╱╱╭━╯┃
+ ╱╱╱╱╱╱╱╱╱╱╱╱╱╱╱╱╱╰━━╯"""
+    await event.edit(X)
+
+
 
 @friday.on(friday_on_cmd(pattern=r"no$"))
 async def hi(event):
@@ -1550,6 +1575,10 @@ CMD_HELP.update(
 \nUsage: The onlu word that can be used fucking everywhere.\
 \n\n.thanos\
 \nUsage: Try and then Snap.\
+\n\n.gm\
+\nUsage: Good Morning ASCII.\
+\n\n.lmao\
+\nUsage: Lmao ASCII.\
 \n\n.noob\
 \nUsage: Whadya want to know? Are you a NOOB?\
 \n\n.pro\
