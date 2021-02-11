@@ -75,7 +75,7 @@ async def disable_ws(event):
 
 async def job_close():
     ws_chats = get_all_chat_id()
-    if len(ws_chats.chat_id) == 0:
+    if len(ws_chats) == 0:
         return
     for warner in ws_chats:
         try:
@@ -92,7 +92,7 @@ async def job_close():
                     if user.deleted:
                         await friday.edit_permissions(int(warner.chat_id), user.id, view_messages=False)
         except Exception as e:
-            logger.info(f"Unable To Open Group {warner} - {e}")
+            logger.info(f"Unable To Close Group {warner} - {e}")
 
 scheduler = AsyncIOScheduler(timezone="Asia/Kolkata")
 scheduler.add_job(job_close, trigger="cron", hour=23, minute=55)
