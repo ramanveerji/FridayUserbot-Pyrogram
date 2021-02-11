@@ -203,24 +203,13 @@ async def _(event):
         hmm += f"<u><b>{i}</u></b> ➠ <code>{warner[i]}</code> \n"
     await event.edit(hmm, parse_mode="HTML")
     
-@friday.on(friday_on_cmd(pattern="amazon ?(.*)"))
-async def _m(event):
+@friday.on(friday_on_cmd(pattern="(comedyme|jokes)$"))
+async def hehe(event):
     if event.fwd_from:
         return
-    sel = "**Amazon Search Result** \n\n"
-    warner_inc = event.pattern_match.group(1)
-    base_url = "http://devsexpo.me/amazon/" + warner_inc
-    stark = requests.get(url=base_url).json()
-    if stark['success'] is False:
-        await event.edit("Search Failed.")
-        return
-    if stark['result'] is None:
-        await event.edit("Search Failed. Please Try Again.")
-        return
-    for i in stark['result']:
-        sel += "👉 [{}]({}) \n`{}` \n".format(i['title'], i['link'], i['price'])
-    sel += "\n\n**Powered By @FridayOT**"
-    await event.edit(sel)
+    r = requests.get("https://icanhazdadjoke.com/", headers={"Accept": "application/json"}).json()
+    await event.edit(r['joke'])
+    
     
 CMD_HELP.update(
     {
