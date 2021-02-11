@@ -575,10 +575,12 @@ async def hmm(event):
 async def holastark(event):
     if event.fwd_from:
         return
+    await event.edit("`Processing..`")
     text = event.pattern_match.group(2)
     font_size = 3.6
     font_color = (51, 51, 51)
     coordinate_y_adjustment = -120
+    coordinate_x_adjustment = 7
     img = cv2.imread('./resources/CERTIFICATE_TEMPLATE_IMAGE.png')
     font = cv2.FONT_HERSHEY_SIMPLEX
     textsize = cv2.getTextSize(text, font, font_size, 10)[0]
