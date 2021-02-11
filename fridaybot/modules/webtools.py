@@ -190,7 +190,7 @@ async def _(event):
     pathz, name = await apk_dl(akkad, Config.TMP_DOWNLOAD_DIRECTORY, event)
     await borg.send_file(event.chat_id, pathz, caption='Uploaded By @FRidayOT')
     
-@friday.on(friday_on_cmd(pattern="(numberlookup|nl|pi) ?(.*)"))
+@friday.on(friday_on_cmd(pattern="(numberlookup|nl) ?(.*)"))
 async def _(event):
     if event.fwd_from:
         return
