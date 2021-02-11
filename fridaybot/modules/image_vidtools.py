@@ -586,13 +586,13 @@ async def holastark2(event):
     d1 = ImageDraw.Draw(img)
     myFont = ImageFont.truetype('Fonts/impact.ttf', 200)
     myFont2 = ImageFont.truetype('Fonts/impact.ttf', 70)
-    myFont3 = ImageFont.truetype('Fonts/sign.otf', 200)
-    d1.text((1609, 1481), text, font=myFont, fill=(51, 51, 51))
+    myFont3 = ImageFont.truetype('Fonts/sign.otf', 195)
+    d1.text((1433, 1345), text, font=myFont, fill=(51, 51, 51))
     TZ = pytz.timezone(Config.TZ)
     datetime_tz = datetime.now(TZ)
     oof = datetime_tz.strftime(f"%Y/%m/%d")
     d1.text((961, 2185), oof, font=myFont2, fill=(51, 51, 51))
-    d1.text((2417, 2009), random.choice(famous_people), font=myFont3, fill=(51, 51, 51))
+    d1.text((2441, 2113), random.choice(famous_people), font=myFont3, fill=(51, 51, 51))
     file_name = "certificate.png"
     ok = sedpath + "/" + file_name
     img.save(ok, "PNG")
