@@ -571,7 +571,41 @@ async def hmm(event):
         if files and os.path.exists(files):
             os.remove(files)
 
-
+@friday.on(friday_on_cmd(pattern="(certificategen|cg) ?(.*)"))
+async def holastark(event):
+    if event.fwd_from:
+        return
+    text = event.pattern_match.group(2)
+    font_size = 3.6
+    font_color = (51, 51, 51)
+    coordinate_y_adjustment = -120
+    img = cv2.imread('./resources/CERTIFICATE_TEMPLATE_IMAGE.png')
+    font = cv2.FONT_HERSHEY_SIMPLEX
+    textsize = cv2.getTextSize(text, font, font_size, 10)[0]
+    text_x = (img.shape[1] - textsize[0]) / 2 \
+            + coordinate_x_adjustment
+    text_y = (img.shape[0] + textsize[1]) / 2 \
+            - coordinate_y_adjustment
+    text_x = int(text_x)
+    text_y = int(text_y)
+    cv2.putText(
+            img,
+            text,
+            (text_x, text_y),
+            font,
+            font_size,
+            font_color,
+            10,
+        )
+    file_name = "CertificateGenBy@FridayOt.png'
+    ok = sedpath + "/" + file_name
+    cv2.imwrite(ok, img)
+    await event.delete()
+    await borg.send_file(event.chat_id, file=ok, caption="Powered By @FridayOT")
+    if os.path.exists(ok):
+        os.remove(ok)
+    
+    
 @friday.on(friday_on_cmd(pattern="(flip|blur|tresh|hsv|lab)"))
 async def warnerstark_s(event):
     if event.fwd_from:
