@@ -24,7 +24,7 @@ import sys
 async def _(event):
     if event.fwd_from:
         return
-    input_st = event.pattern_match.group(1)
+    input_st = event.pattern_match.group(2)
     await event.edit("`Processing...`")
     Credits = "By FridayBot. Get Your FridayBot From @FridayOT."
     if not input_st:
