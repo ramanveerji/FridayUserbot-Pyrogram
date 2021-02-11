@@ -662,7 +662,7 @@ async def warnerstark_s(event):
         pencil_image = dodgeV2(gray, gauss)
         file_name = "Drawn.webp"
         ok = sedpath + "/" + file_name
-        cv2.imwrite(ok, lab)
+        cv2.imwrite(ok, pencil_image)
         warnerstark = "Hehe, Drawn By @FridayOT"
     await event.delete()
     await borg.send_file(event.chat_id, file=ok, caption=warnerstark)
