@@ -24,14 +24,27 @@ from fridaybot.utils import friday_on_cmd, sudo_cmd
 from pdf2docx import parse
 import glob
 import string 
+import pyppdf
 import random 
 import uuid
-
-
 
 if not os.path.isdir(Config.TMP_DOWNLOAD_DIRECTORY):
   os.makedirs(Config.TMP_DOWNLOAD_DIRECTORY)
   
+@friday.on(friday_on_cmd(pattern=r"url2pdf"))
+async def u2pdf(event):
+    if event.fwd_from:
+        return  
+    url = event.text.split(" ", maxsplit=1)[1]  
+    file_name = "Web2Pdf@FridayOT.pdf"
+    try:
+      pyppdf.save_pdf(file_name, url)
+    except:
+      await event.edit("Task Failed. is url Valid?")
+      return
+    await borg.send_file(event.chat_id, file_name, caption="Powered By @FridayOT")
+    os.remove(file_name)
+    
 @friday.on(friday_on_cmd(pattern=r"pdf2docx"))
 async def hmm(event):
     if event.fwd_from:
