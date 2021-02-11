@@ -3,6 +3,8 @@ deezer-python
 moviepy
 google-trans-new
 nospamplus
+pyppdf
+pyppeteer
 eyed3
 pymediainfo
 apscheduler
