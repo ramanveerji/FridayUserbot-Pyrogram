@@ -17,6 +17,7 @@ import wget
 from shutil import rmtree
 import cv2
 import cv2 as cv
+import random
 import numpy as np
 from datetime import datetime
 from PIL import Image, ImageDraw, ImageFont
@@ -578,16 +579,20 @@ async def hmm(event):
 async def holastark2(event):
     if event.fwd_from:
         return
+    famous_people = ['modi', 'trump', 'albert', 'tony stark']
     await event.edit("`Processing..`")
     text = event.pattern_match.group(2)
     img = Image.open('./resources/CERTIFICATE_TEMPLATE_IMAGE.png')
     d1 = ImageDraw.Draw(img)
-    myFont = ImageFont.truetype('Fonts/impact.ttf', 70)
+    myFont = ImageFont.truetype('Fonts/impact.ttf', 115)
+    myFont2 = ImageFont.truetype('Fonts/impact.ttf', 70)
+    myFont3 = ImageFont.truetype('Fonts/sign.otf', 85)
     d1.text((1769, 1441), text, font=myFont, fill=(51, 51, 51))
     TZ = pytz.timezone(Config.TZ)
     datetime_tz = datetime.now(TZ)
     oof = datetime_tz.strftime(f"%Y/%m/%d")
-    d1.text((961, 2185), oof, font=myFont, fill=(51, 51, 51))
+    d1.text((961, 2185), oof, font=myFont2, fill=(51, 51, 51))
+    d1.text((2425, 2169), random.choice(famous_people), font=myFont3, fill=(51, 51, 51))
     file_name = "certificate.png"
     ok = sedpath + "/" + file_name
     img.save(ok, "PNG")
