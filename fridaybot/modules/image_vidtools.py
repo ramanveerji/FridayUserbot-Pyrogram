@@ -834,7 +834,7 @@ async def audio_extract(event):
         if files and os.path.exists(files):
             os.remove(files)
             
-@friday.on(friday_on_cmd(pattern="(audionote|convertaudionote)$"))
+@friday.on(friday_on_cmd(pattern="(videonote|convertvideonote)$"))
 async def convert_to_note(event):
     if event.fwd_from:
         return
@@ -843,8 +843,8 @@ async def convert_to_note(event):
         return
     await event.edit("Ah, Shit. Here it Starts.")
     kk = await event.get_reply_message()
-    if not kk.video or kk.video_note or kk.gif:
-        await event.edit("`Oho, Reply To Video Only`")
+    if not (kk.video or kk.video_note or kk.gif or kk.video_note):
+        await event.edit("`Oho, Reply To Video Only.`")
         return
     hmm = await event.client.download_media(kk.media)
     try:
