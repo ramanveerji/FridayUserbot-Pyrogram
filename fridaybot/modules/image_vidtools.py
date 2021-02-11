@@ -651,6 +651,7 @@ async def warnerstarkgangz(event):
 async def _(event):
     if event.fwd_from:
         return
+    await event.edit("Oh Wait Let Me Get Wear Glasses")
     if not event.reply_to_msg_id:
         ommhg = await edit_or_reply(event, "Reply To Any Image.")
         return
@@ -678,6 +679,7 @@ async def fasty(event):
     if not event.reply_to_msg_id:
         await event.edit("Reply To Any Video.")
         return
+    await event.edit("Ah, Shit. Here it Starts.")
     kk = await event.get_reply_message()
     if not kk.video or kk.video_note:
         await event.edit("`Oho, Reply To Video Only`")
@@ -713,6 +715,7 @@ async def fasty(event):
 async def fasty(event):
     if event.fwd_from:
         return
+    await event.edit("Ah, Shit. Here it Starts.")
     if not event.reply_to_msg_id:
         await event.edit("Reply To Any Video.")
         return
@@ -754,6 +757,7 @@ async def flip(event):
     if not event.reply_to_msg_id:
         await event.edit("Reply To Any Video.")
         return
+    await event.edit("Ah, Shit. Here it Starts.")
     kk = await event.get_reply_message()
     if not kk.video or kk.video_note:
         await event.edit("`Oho, Reply To Video Only`")
@@ -792,6 +796,7 @@ async def audio_extract(event):
     if not event.reply_to_msg_id:
         await event.edit("Reply To Any Video.")
         return
+    await event.edit("Ah, Shit. Here it Starts.")
     kk = await event.get_reply_message()
     if not kk.video or kk.video_note:
         await event.edit("`Oho, Reply To Video Only`")
@@ -828,7 +833,51 @@ async def audio_extract(event):
     for files in (filem, hmm):
         if files and os.path.exists(files):
             os.remove(files)
-                 
+            
+@friday.on(friday_on_cmd(pattern="(audionote|convertaudionote)$"))
+async def convert_to_note(event):
+    if event.fwd_from:
+        return
+    if not event.reply_to_msg_id:
+        await event.edit("Reply To Any Video.")
+        return
+    await event.edit("Ah, Shit. Here it Starts.")
+    kk = await event.get_reply_message()
+    if not kk.video or kk.video_note or kk.gif:
+        await event.edit("`Oho, Reply To Video Only`")
+        return
+    hmm = await event.client.download_media(kk.media)
+    try:
+        thumb = await event.client.download_media(kk.media, thumb=-1)
+    except:
+        thumb = "./resources/IMG_20200929_103719_628.jpg"
+    c_time = time.time()
+    filem = "ConvertedBy@FridayOT.mp4"
+    await crop_vid(hmm, filem)
+    if not os.path.exists(filem):
+        await event.edit("**Process, Failed !**")
+        return
+    final_file = await uf(
+            file_name=filem,
+            client=bot,
+            file=open(filem, 'rb'),
+            progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
+                progress(
+                    d, t, event, c_time, "Uploading Round / Video Note.", filem
+                )
+            ),
+        )
+    await event.delete()
+    await borg.send_file(
+        event.chat_id,
+        final_file,
+        thumb=thumb, 
+        video_note=True)
+    for files in (filem, hmm):
+        if files and os.path.exists(files):
+            os.remove(files)
+        
+        
 CMD_HELP.update(
     {
         "imagetools": "**imagetools**\
