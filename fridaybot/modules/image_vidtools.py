@@ -1077,7 +1077,7 @@ async def glitch(event):
     )
     c_time = time.time()
     optimize(pathsn)
-    stark_m = await upload_file(
+    stark_m = await uf(
         	file_name="Glitched@FridayOt.gif",
             client=borg,
             file=open(pathsn, 'rb'),
