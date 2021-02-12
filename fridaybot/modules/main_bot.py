@@ -76,7 +76,7 @@ PM_IMG = Config.ALIVE_IMAGE
 
 @friday.on(friday_on_cmd(pattern=r"alive"))
 @friday.on(sudo_cmd(pattern=r"alive", allow_sudo=True))
-async def friday(alive):
+async def fridayalive(alive):
     if alive.fwd_from:
         return
     await alive.get_chat()
