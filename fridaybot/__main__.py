@@ -19,7 +19,6 @@ import telethon.utils
 from telethon import TelegramClient
 from telethon import __version__ as tv
 import sys
-from fridaybot.function.FastTelethon import upload_file
 import platform
 from fridaybot import bot, client2, client3, friday_version
 from fridaybot.Configs import Config
@@ -32,7 +31,6 @@ fridaydevs = logging.getLogger("Friday")
 async def add_bot(bot_token):
     await bot.start(bot_token)
     bot.me = await bot.get_me()
-    bot.upload_to_server = await upload_file
     bot.uid = telethon.utils.get_peer_id(bot.me)
    
         
