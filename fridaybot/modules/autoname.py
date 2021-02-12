@@ -1,4 +1,4 @@
-﻿"""Auto Profile Updation Commands
+"""Auto Profile Updation Commands
 .autoname"""
 import asyncio
 import time
@@ -7,6 +7,7 @@ from telethon.errors import FloodWaitError
 from telethon.tl import functions
 from uniborg.util import edit_or_reply, friday_on_cmd, sudo_cmd
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
+from apscheduler.executors.asyncio import AsyncIOExecutor
 from fridaybot.function.auto_tools import auto_name
 from fridaybot import ALIVE_NAME, CMD_HELP
 
