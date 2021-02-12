@@ -4,7 +4,10 @@ import random
 from telethon.tl import functions
 from fridaybot.Configs import Config
 from fridaybot import bot
-
+import pytz
+import asyncio
+import os
+from datetime import datetime
 m = logging.getLogger("AUTOTOOLS")
 
 bio_temp = ["Making History.", "I'm on energy-saving mode.", "Success is in my blood.", "Life F$@ks me, now it's my turn.", "Error 400: Bio unavailable."]
