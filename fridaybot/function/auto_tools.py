@@ -31,7 +31,7 @@ async def auto_name(name=None):
 async def auto_bio(bio=None):
     TZ = pytz.timezone(Config.TZ)
     datetime_tz = datetime.now(TZ)
-    bioof = name if name else random.choice(bio_temp)
+    bioof = bio if bio else random.choice(bio_temp)
     oof = datetime_tz.strftime(f'🕒%d/%m/%Y "{bioof}" 📅%H:%M')
     try:
         await bot(
