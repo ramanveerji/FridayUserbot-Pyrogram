@@ -626,8 +626,9 @@ async def holastark2(event):
     text = event.pattern_match.group(2)
     img = Image.open('./resources/Blankmeisnub.jpg')
     d1 = ImageDraw.Draw(img)
-    myFont = ImageFont.truetype('Fonts/Streamster.ttf', 300)
-    d1.text((601, 601), text, font=myFont, fill=(255, 255, 0))
+    image_width, image_height = im.size
+    myFont = ImageFont.truetype('Fonts/Streamster.ttf', size=int(image_height * font_size) // 300)
+    d1.text((621, 597), text, font=myFont, fill=(255, 255, 0))
     file_name = "LogoBy@MeisNub.png"
     await event.delete()
     ok = sedpath + "/" + file_name
