@@ -28,6 +28,15 @@ from PIL import Image, ImageDraw, ImageFont
 from telegraph import upload_file
 from fridaybot import CMD_HELP
 from fridaybot.function import convert_to_image, crop_vid, runcmd, tgs_to_gif, progress, humanbytes, time_formatter
+import os
+from glitch_this import ImageGlitcher
+from telethon.tl.types import MessageMediaPhoto
+from pygifsicle import optimize
+from fridaybot import CMD_HELP
+import asyncio
+import math
+import os
+import time
 import time
 from fridaybot.function.FastTelethon import upload_file as uf
 from fridaybot.utils import friday_on_cmd, sudo_cmd, edit_or_reply
@@ -36,9 +45,17 @@ from telethon.tl.functions.photos import GetUserPhotosRequest
 from telethon.tl.functions.users import GetFullUserRequest
 from telethon.tl.types import MessageEntityMentionName
 from telethon.utils import get_input_location
+import os
+import textwrap
+from PIL import Image, ImageDraw, ImageFont
+
 sedpath = "./starkgangz/"
 if not os.path.isdir(sedpath):
     os.makedirs(sedpath)
+    
+glitcher = ImageGlitcher()
+DURATION = 200
+LOOP = 0
 
 
 @friday.on(friday_on_cmd(pattern=r"cit"))
@@ -965,6 +982,119 @@ async def convert_to_note(event):
 def dodgeV2(image, mask):
     return cv2.divide(image, 255 - mask, scale=256)
 
+@friday.on(friday_on_cmd(pattern="memify (.*)"))
+async def starkmeme(event):
+    if event.fwd_from:
+        return
+    hmm = event.pattern_match.group(1)
+    if hmm == None:
+        await event.edit("Give Some Text")
+        return
+    if not event.reply_to_msg_id:
+        await event.edit("`PLease, Reply To A MsG`")
+        return
+    mryeast = await event.edit("Making Memes Until Praise MrBeast.")
+    await event.get_reply_message()
+    seds = await convert_to_image(event, borg)
+    if ";" in hmm:
+        stark = hmm.split(";", 1)
+        first_txt = stark[0]
+        second_txt = stark[1]
+        top_text = first_txt
+        bottom_text = second_txt
+        generate_meme(seds, top_text=top_text, bottom_text=bottom_text)
+        imgpath = sedpath + "/" + "memeimg.webp"
+        await borg.send_file(event.chat_id, imgpath)
+        if os.path.exists(imgpath):
+            os.remove(imgpath)
+        await mryeast.delete()
+    else:
+        top_text = hmm
+        bottom_text = ""
+        generate_meme(seds, top_text=top_text, bottom_text=bottom_text)
+        imgpath = sedpath + "/" + "memeimg.webp"
+        await borg.send_file(event.chat_id, imgpath)
+        if os.path.exists(imgpath):
+            os.remove(imgpath)
+        await mryeast.delete()
+
+
+def generate_meme(
+    image_path, top_text, bottom_text="", font_path="Fonts/impact.ttf", font_size=11
+):
+    im = Image.open(image_path)
+    draw = ImageDraw.Draw(im)
+    image_width, image_height = im.size
+    font = ImageFont.truetype(font=font_path, size=int(image_height * font_size) // 100)
+    top_text = top_text.upper()
+    bottom_text = bottom_text.upper()
+    char_width, char_height = font.getsize("A")
+    chars_per_line = image_width // char_width
+    top_lines = textwrap.wrap(top_text, width=chars_per_line)
+    bottom_lines = textwrap.wrap(bottom_text, width=chars_per_line)
+    y = 9
+    for line in top_lines:
+        line_width, line_height = font.getsize(line)
+        x = (image_width - line_width) / 2
+        draw.text((x - 2, y - 2), line, font=font, fill="black")
+        draw.text((x + 2, y - 2), line, font=font, fill="black")
+        draw.text((x + 2, y + 2), line, font=font, fill="black")
+        draw.text((x - 2, y + 2), line, font=font, fill="black")
+        draw.text((x, y), line, fill="white", font=font)
+        y += line_height
+
+    y = image_height - char_height * len(bottom_lines) - 14
+    for line in bottom_lines:
+        line_width, line_height = font.getsize(line)
+        x = (image_width - line_width) / 2
+        draw.text((x - 2, y - 2), line, font=font, fill="black")
+        draw.text((x + 2, y - 2), line, font=font, fill="black")
+        draw.text((x + 2, y + 2), line, font=font, fill="black")
+        draw.text((x - 2, y + 2), line, font=font, fill="black")
+        draw.text((x, y), line, fill="white", font=font)
+        y += line_height
+    file_name = "memeimg.webp"
+    ok = sedpath + "/" + file_name
+    im.save(ok, "WebP")
+    
+@friday.on(friday_on_cmd(pattern=r"glitch"))
+@friday.on(sudo_cmd(pattern=r"glitch", allow_sudo=True))
+async def glitch(event):
+    if event.fwd_from:
+        return
+    sed = await event.get_reply_message()
+    okbruh = await event.edit("`Gli, Glitchiiingggg.....`")
+    photolove = await convert_to_image(event, friday)
+    pathsn = f"./starkgangz/@fridayot.gif"
+    glitch_imgs = glitcher.glitch_image(photolove, 2, gif=True, color_offset=True)
+    glitch_imgs[0].save(
+        pathsn,
+        format="GIF",
+        append_images=glitch_imgs[1:],
+        save_all=True,
+        duration=DURATION,
+        loop=LOOP,
+    )
+    c_time = time.time()
+    optimize(pathsn)
+    stark_m = await upload_file(
+        	file_name="Glitched@FridayOt.gif",
+            client=borg,
+            file=open(pathsn, 'rb'),
+            progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
+                progress(
+                    d, t, event, c_time, "Uploading..", pathsn
+                )
+            ),
+        )
+    await borg.send_file(event.chat_id,
+                         stark_m,
+                         caption="Powered By @FridayOT")
+    await okbruh.delete()
+    for starky in (pathsn, photolove):
+        if starky and os.path.exists(starky):
+            os.remove(starky)
+    
 CMD_HELP.update(
     {
         "imagetools": "**imagetools**\
