@@ -7,6 +7,7 @@ eyed3
 img2pdf
 pymediainfo
 apscheduler
+git+https://github.com/chsaiujwal/maigret
 git+https://github.com/gleitz/howdoi
 pyseoanalyzer
 fake_useragent
