@@ -17,7 +17,7 @@ async def auto_name(name=None):
     TZ = pytz.timezone(Config.TZ)
     datetime_tz = datetime.now(TZ)
     nameof = name if name else Config.ALIVE_NAME
-    oof = datetime_tz.strftime(f"🕒 %Y/%m/%d ⚡{nameof}⚡ 📅%H:%M:%S")
+    oof = datetime_tz.strftime(f"🕒 %d/%m/%Y ⚡{nameof}⚡ 📅 %H:%M")
     try:
         await bot(
                 functions.account.UpdateProfileRequest(
@@ -32,7 +32,7 @@ async def auto_bio(bio=None):
     TZ = pytz.timezone(Config.TZ)
     datetime_tz = datetime.now(TZ)
     bioof = name if name else random.choice(bio_temp)
-    oof = datetime_tz.strftime(f"🕒 %Y/%m/%d {bioof} 📅%H:%M:%S")
+    oof = datetime_tz.strftime(f'🕒%d/%m/%Y "{bioof}" 📅%H:%M')
     try:
         await bot(
                 functions.account.UpdateProfileRequest(
