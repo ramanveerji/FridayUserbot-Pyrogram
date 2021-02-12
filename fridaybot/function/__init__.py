@@ -313,7 +313,8 @@ async def convert_to_image(event, borg):
     elif lmao.sticker and lmao.sticker.mime_type == "image/webp":
         pathofsticker2 = downloaded_file_name
         image_new_path = sedpath + "image.png"
-        os.rename(pathofsticker2, image_new_path)
+        im = Image.open(pathofsticker2)
+        im.save(image_new_path, "PNG")
         if not os.path.exists(image_new_path):
             await event.edit("`Wasn't Able To Fetch Shot.`")
             return
@@ -338,7 +339,6 @@ async def convert_to_image(event, borg):
             await event.edit("`Couldn't Fetch. SS`")
             return
         lmao_final = jpg_file
-    await event.edit("`Almost Completed.`")
     return lmao_final
 
 
