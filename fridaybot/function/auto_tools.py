@@ -7,6 +7,7 @@ from fridaybot import bot
 import pytz
 import asyncio
 import os
+import logging
 from datetime import datetime
 m = logging.getLogger("AUTOTOOLS")
 
