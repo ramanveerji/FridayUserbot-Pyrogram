@@ -31,6 +31,7 @@ from fridaybot import bot as borg
 import lottie
 from fridaybot.utils import load_module
 from telethon.tl.types import DocumentAttributeAudio
+from PIL import Image
 from youtube_dl import YoutubeDL
 from youtube_dl.utils import (
     ContentTooShortError,
