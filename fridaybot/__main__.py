@@ -116,7 +116,13 @@ for name in files:
     with open(name) as f:
         path1 = Path(f.name)
         shortname = path1.stem
-        load_module(shortname.replace(".py", ""))    
+        try:
+            load_module(shortname.replace(".py", ""))    
+        except Exception as e:
+            failed_warner += 1
+            fridaydevs.info("------------------------")
+            fridaydevs.info("Failed To Load : " + str(shortname.replace(".py", "")) + f" Error : {str(e)}")
+            fridaydevs.info("------------------------")   
         if failed2 is None:
             try:
                 load_module_dclient(shortname.replace(".py", ""), client2)
