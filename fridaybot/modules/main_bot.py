@@ -1,4 +1,4 @@
-from fridaybot import CMD_HELP
+from fridaybot import CMD_HELP, CMD_LIST
 from fridaybot.utils import friday_on_cmd, sudo_cmd
 import time
 from telethon import __version__ as tv
