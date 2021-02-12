@@ -624,11 +624,9 @@ async def yufytf(event):
         return
     await event.edit("`Processing..`")
     text = event.pattern_match.group(2)
-    if '|' in text:
-        text = text.split("|" "\n")
     img = Image.open('./resources/Blankmeisnub.jpg')
     draw = ImageDraw.Draw(img)
-    font = ImageFont.truetype('Fonts/Streamster.ttf', 210)
+    font = ImageFont.truetype('Fonts/Streamster.ttf', 220)
     image_widthz, image_heightz = img.size
     w,h = draw.textsize(text, font=font)
     h += int(h*0.21)
@@ -637,7 +635,7 @@ async def yufytf(event):
     await event.delete()
     ok = sedpath + "/" + file_name
     img.save(ok, "PNG")
-    await borg.send_file(event.chat_id, ok)
+    await borg.send_file(event.chat_id, ok, caption="Made By @FridayOT")
     if os.path.exists(ok):
         os.remove(ok)
     
