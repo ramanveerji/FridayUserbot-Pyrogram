@@ -618,7 +618,7 @@ async def holastark2(event):
     if os.path.exists(ok):
         os.remove(ok)
         
-@friday.on(friday_on_cmd(pattern="(adityalogo|al) ?(.*)"))
+@friday.on(friday_on_cmd(pattern="(adityalogo|al|blacklogo|bl) ?(.*)"))
 async def yufytf(event):
     if event.fwd_from:
         return
@@ -626,11 +626,11 @@ async def yufytf(event):
     text = event.pattern_match.group(2)
     img = Image.open('./resources/Blankmeisnub.jpg')
     draw = ImageDraw.Draw(img)
-    font = ImageFont.truetype('Fonts/Streamster.ttf', 250)
+    font = ImageFont.truetype('Fonts/Streamster.ttf', 230)
     image_widthz, image_heightz = img.size
-    w,h = draw.getsize(text, font=font)
+    w,h = draw.textsize(text, font=font)
     h += int(h*0.21)
-    draw.text((image_widthz-w)/2, (image_heightz-h)/2, text, font=font, fill=(255, 255, 0))
+    draw.text(((image_widthz-w)/2, (image_heightz-h)/2), text, font=font, fill=(255, 255, 0))
     file_name = "LogoBy@MeisNub.png"
     await event.delete()
     ok = sedpath + "/" + file_name
