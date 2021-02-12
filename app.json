@@ -35,6 +35,10 @@
       "value": "",
       "required": false
     },
+    "LOAD_OTHER_PLUGINS": {
+      "description": "Do You Wish To Load Spammy / Official Plugins?",
+      "value": "False",
+    },
     "SUDO_USERS": {
       "description": "Enter A User Id Which You Would Like to Use To Control Sudo. Don't Give Your Own ID Or ID Of Users You Don't Trust.",
       "value": "",
