@@ -628,7 +628,7 @@ async def yufytf(event):
     draw = ImageDraw.Draw(img)
     font = ImageFont.truetype('Fonts/Streamster.ttf', 250)
     image_widthz, image_heightz = img.size
-    w,h = img.getsize(text, font=font)
+    w,h = draw.getsize(text, font=font)
     h += int(h*0.21)
     draw.text((image_widthz-w)/2, (image_heightz-h)/2, text, font=font, fill=(255, 255, 0))
     file_name = "LogoBy@MeisNub.png"
