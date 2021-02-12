@@ -21,7 +21,7 @@ async def _(event):
     'default': AsyncIOExecutor(),
         }
     )
-    scheduler.add_job(auto_name, 'interval', args=[event.pattern_match.group(1)], minutes=1)
+    scheduler.add_job(auto_name, 'interval', args=[event.pattern_match.group(1)], minutes=1, id='autoname')
     scheduler.start()
 
 @friday.on(friday_on_cmd(pattern="autobio(?: |$)(.*)"))
@@ -35,7 +35,7 @@ async def _(event):
     'default': AsyncIOExecutor(),
         }
     )
-    scheduler.add_job(auto_bio, 'interval', args=[event.pattern_match.group(1)], minutes=1)
+    scheduler.add_job(auto_bio, 'interval', args=[event.pattern_match.group(1)], minutes=1, id='autobio')
     scheduler.start()
 
 
