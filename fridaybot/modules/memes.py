@@ -6,7 +6,8 @@
 #
 
 """ Userbot module for having some fun with people. """
-
+from fridaybot.utils import friday_on_cmd
+from fridaybot.utils import edit_or_reply, friday_on_cmd, sudo_cmd
 import asyncio
 import random
 import re
@@ -678,6 +679,26 @@ async def kek(keks):
         for i in range(1, 15):
             time.sleep(0.3)
             await keks.edit(":" + uio[i % 2])
+
+
+@friday.on(friday_on_cmd(pattern="ehi ?(.*)"))
+@friday.on(sudo_cmd(pattern="ehi ?(.*)", allow_sudo=True))
+async def _(event):
+    if event.fwd_from:
+        return
+    hitleR = event.pattern_match.group(1)
+    X = """
+🌺✨✨🌺✨🌺🌺🌺
+🌺✨✨🌺✨✨🌺✨
+🌺🌺🌺🌺✨✨🌺✨
+🌺✨✨🌺✨✨🌺✨
+🌺✨✨🌺✨🌺🌺🌺
+☁☁☁☁☁☁☁☁
+"""
+
+    Y = X.replace("🌺",hitleR)
+    await event.edit(Y)
+
 
 
 @register(outgoing=True, pattern=r"^.coinflip (.*)")
