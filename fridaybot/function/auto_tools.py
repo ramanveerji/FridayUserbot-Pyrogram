@@ -10,7 +10,7 @@ import os
 from datetime import datetime
 m = logging.getLogger("AUTOTOOLS")
 
-bio_temp = ["Making History.", "I'm on energy-saving mode.", "Success is in my blood.", "Life F$@ks me, now it's my turn.", "Error 400: Bio unavailable."]
+bio_temp = ["Making History.", "I'm on energy-saving mode.", "Success is in my blood.", "Life F$@ks me, now it's my turn.", "Error 404: Bio unavailable."]
 
 async def auto_name(name=None):
     TZ = pytz.timezone(Config.TZ)
