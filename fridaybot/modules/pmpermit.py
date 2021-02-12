@@ -86,8 +86,6 @@ if PM_ON_OFF != "DISABLE":
         if not pmpermit_sql.is_approved(event.chat_id):
             if not event.chat_id in PM_WARNS:
                 pmpermit_sql.approve(event.chat_id, "outgoing")
-                await asyncio.sleep(3)
-                await rko.delete() 
                 
     @borg.on(friday_on_cmd(pattern="(a|approve|allow)$"))
     async def approve(event):
