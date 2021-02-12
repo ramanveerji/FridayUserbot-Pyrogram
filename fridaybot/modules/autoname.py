@@ -12,8 +12,8 @@ from fridaybot.function.auto_tools import auto_name
 from fridaybot import ALIVE_NAME, CMD_HELP
 
 
-@friday.on(friday_on_cmd(pattern="autoname"))  # pylint:disable=E0602
-@friday.on(sudo_cmd(pattern="autoname", allow_sudo=True))
+@friday.on(friday_on_cmd(pattern="autoname(?: |$)(.*)"))  # pylint:disable=E0602
+@friday.on(sudo_cmd(pattern="autoname(?: |$)(.*)", allow_sudo=True))
 async def _(event):
     if event.fwd_from:
         return
