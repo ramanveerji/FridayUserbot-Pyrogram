@@ -13,6 +13,7 @@ RUN apt-get install -y\
     build-essential \
     cmake \
     curl \
+    libmagic-dev \
     tesseract-ocr \
     tesseract-ocr-eng \
     imagemagick \
