@@ -79,7 +79,7 @@ async def auto_pic():
     h += int(h*0.21)
     draw.text(((image_widthz-w)/2, (image_heightz-h)/2), text, font=font, fill=(255, 255, 255))
     file_name = "autopic_friday.png"
-    img.save(filename, "PNG")
+    img.save(file_name, "PNG")
     file = await bot.upload_file(file_name)
     try:
             await bot(
