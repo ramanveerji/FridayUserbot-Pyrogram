@@ -18,6 +18,11 @@ from shutil import rmtree
 import cv2
 import cv2 as cv
 import random
+from skimage.filters import threshold_local
+import numpy as np
+import argparse
+import cv2
+import imutils
 import numpy as np
 from datetime import datetime
 from PIL import Image, ImageDraw, ImageFont
@@ -27,7 +32,7 @@ import requests
 from PIL import Image, ImageDraw, ImageFont
 from telegraph import upload_file
 from fridaybot import CMD_HELP
-from fridaybot.function import convert_to_image, crop_vid, runcmd, tgs_to_gif, progress, humanbytes, time_formatter, mapp
+from fridaybot.function import convert_to_image, crop_vid, runcmd, tgs_to_gif, progress, humanbytes, time_formatter, four_point_transform
 import os
 from glitch_this import ImageGlitcher
 from telethon.tl.types import MessageMediaPhoto
@@ -1150,24 +1155,27 @@ async def dscanner(event):
     if event.fwd_from:
         return
     downloaded_img = await convert_to_image(event, friday)
-    image=cv2.imread(downloaded_img)
-    image=cv2.resize(image,(1300,800))
-    orig=image.copy()
-    gray=cv2.cvtColor(image,cv2.COLOR_BGR2GRAY)
-    blurred=cv2.GaussianBlur(gray,(5,5),0) 
-    edged=cv2.Canny(blurred,30,50)
-    contours,hierarchy=cv2.findContours(edged,cv2.RETR_LIST,cv2.CHAIN_APPROX_SIMPLE)  #retrieve the contours as a list, with simple apprximation model
-    contours=sorted(contours,key=cv2.contourArea,reverse=True)
-    for c in contours:
-        p=cv2.arcLength(c,True)
-        approx=cv2.approxPolyDP(c,0.02*p,True)
-        if len(approx)==4:
-            target=approx
-            break
-    approx=mapp(target)
-    pts=np.float32([[0,0],[800,0],[800,800],[0,800]])
-    op=cv2.getPerspectiveTransform(approx,pts)
-    dst=cv2.warpPerspective(orig,op,(800,800))
+    image = cv2.imread(downloaded_img)
+    ratio = image.shape[0] / 500.0
+    image = imutils.resize(image, height = 500)
+    gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+    gray = cv2.GaussianBlur(gray, (5, 5), 0)
+    edged = cv2.Canny(gray, 75, 200)
+    cnts = cv2.findContours(edged.copy(), cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE)
+    cnts = imutils.grab_contours(cnts)
+    cnts = sorted(cnts, key = cv2.contourArea, reverse = True)[:5]
+    for c in cnts:
+	    peri = cv2.arcLength(c, True)
+	    approx = cv2.approxPolyDP(c, 0.02 * peri, True)
+	    if len(approx) == 4:
+		    screenCnt = approx
+		    break
+    cv2.drawContours(image, [screenCnt], -1, (0, 255, 0), 2)
+    warped = four_point_transform(orig, screenCnt.reshape(4, 2) * ratio)
+    warped = cv2.cvtColor(warped, cv2.COLOR_BGR2GRAY)
+    T = threshold_local(warped, 11, offset = 10, method = "gaussian")
+    warped = (warped > T).astype("uint8") * 255
+    dst = imutils.resize(warped, height = 650)
     file_name = "Scanned.png"
     ok = sedpath + "/" + file_name
     cv2.imwrite(ok, dst)
@@ -1186,10 +1194,6 @@ CMD_HELP.update(
         \n**Usage :** removes colours from image.\
         \n\n**Syntax : **`.tni`\
         \n**Usage :** Toonify the image.\
-        \n\n**Syntax : ** `.slogo <text>`\
-        \n**Usage :** Creates a Logo With The Text.\
-        \n\n**Syntax : ** `.alogo <text>`\
-        \n**Usage :** Creates a Logo With The Text.\
         \n\n**Syntax : ** `.thug`\
         \n**Usage :** makes a thug life meme image.\
         \n\n**Syntax : ** `.tig`\
