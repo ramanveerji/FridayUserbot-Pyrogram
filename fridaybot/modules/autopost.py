@@ -1,3 +1,16 @@
+#    Copyright (C) @DevsExpo 2020-2021
+#    This program is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU Affero General Public License as published by
+#    the Free Software Foundation, either version 3 of the License, or
+#
+#    This program is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU Affero General Public License for more details.
+#
+#    You should have received a copy of the GNU Affero General Public License
+#    along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
 from fridaybot.modules.sql_helper.auto_post_sql import add_new_post_data_in_db, get_all_post_data, is_post_data_in_db, remove_post_data
 from telethon import events
 from telethon.utils import pack_bot_file_id
@@ -36,5 +49,5 @@ async def what(event):
     for chat in channels_set:
         if event.media:
             await event.client.send_file(int(chat), event.media, caption=event.text)
-        elif event.message:
+        elif not event.media and event.text:
             await event.client.send_message(int(chat), event.message)
