@@ -17,8 +17,8 @@ from fridaybot.modules.sql_helper import BASE, SESSION
 
 class Post(BASE):
     __tablename__ = "post"
+    to_post_chat_id = Column(String(14), primary_key=True)
     target_chat_id = Column(String(14), primary_key=True)
-    to_post_chat_id = Column(String(14))
 
     def __init__(self, target_chat_id, to_post_chat_id):
         self.target_chat_id = target_chat_id
