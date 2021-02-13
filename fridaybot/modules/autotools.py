@@ -58,6 +58,7 @@ async def _(event):
     except:
         await event.edit("`Are You Fking Insane?`")
         return
+    logger.info("Auto Tools Has Been Terminated")
     await sed.edit("`All Auto Tools Has Been Terminated`")
     
 scheduler.start()
