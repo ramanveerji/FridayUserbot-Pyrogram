@@ -1186,6 +1186,10 @@ CMD_HELP.update(
         \n**Usage :** removes colours from image.\
         \n\n**Syntax : **`.tni`\
         \n**Usage :** Toonify the image.\
+        \n\n**Syntax : ** `.slogo <text>`\
+        \n**Usage :** Creates a Logo With The Text.\
+        \n\n**Syntax : ** `.alogo <text>`\
+        \n**Usage :** Creates a Logo With The Text.\
         \n\n**Syntax : ** `.thug`\
         \n**Usage :** makes a thug life meme image.\
         \n\n**Syntax : ** `.tig`\
