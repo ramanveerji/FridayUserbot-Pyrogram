@@ -776,7 +776,7 @@ async def yufytf(event):
     if event.fwd_from:
         return
     await event.edit("`Processing..`")
-    text = event.pattern_match.group(2)
+    text = event.pattern_match.group(1)
     img = Image.open('./resources/Blankmeisnub.jpg')
     draw = ImageDraw.Draw(img)
     font = ImageFont.truetype('Fonts/Streamster.ttf', 220)
