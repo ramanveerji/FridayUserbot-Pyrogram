@@ -103,10 +103,11 @@ async def hmm(event):
         return
     starky = await borg.download_media(lol.media)
     hmmu = await event.edit("hmm... Please Wait..")
-    pdf = Code2pdf(starky, "Code2Pdf@FridayOt.pdf", "Ä4")
+    pdf = Code2pdf(starky, "test.pdf", "Ä4")
+    pdf.init_print()
     await event.delete()
     await borg.send_file(
-        event.chat_id, "Code2Pdf@FridayOt.pdf", caption=f"**Code2Pdf - ** @FridayOt"
+        event.chat_id, "test.pdf", caption=f"**Code2Pdf - ** @FridayOt"
     )
     os.remove("Code2Pdf@FridayOt.pdf")
     os.remove(starky)
