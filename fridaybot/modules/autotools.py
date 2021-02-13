@@ -54,7 +54,7 @@ async def _(event):
         return
     sed = await edit_or_reply(event, "`Checking Recived Input :/`")
     try:
-        scheduler.shutdown()
+        scheduler.remove_all_jobs()
     except:
         await event.edit("`Are You Fking Insane?`")
         return
