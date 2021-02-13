@@ -3,6 +3,7 @@ deezer-python
 moviepy
 google-trans-new
 nospamplus
+Code2pdf
 eyed3
 img2pdf
 pymediainfo
