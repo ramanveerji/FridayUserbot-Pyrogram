@@ -641,8 +641,8 @@ async def slogo(event):
     draw.text((x, y), text, font=font, fill="white", stroke_width=30, stroke_fill="black")
     fname2 = "LogoBy@FRIDAYBOT.png"
     img.save(fname2, "png")
+    await event.delete()
     await borg.send_file(event.chat_id, fname2, caption="Made By @FridayOT")
-
 
 
 @friday.on(friday_on_cmd(pattern="(adityalogo|al|blacklogo|bl) ?(.*)"))
