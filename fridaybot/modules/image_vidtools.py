@@ -27,7 +27,7 @@ import requests
 from PIL import Image, ImageDraw, ImageFont
 from telegraph import upload_file
 from fridaybot import CMD_HELP
-from fridaybot.function import convert_to_image, crop_vid, runcmd, tgs_to_gif, progress, humanbytes, time_formatter
+from fridaybot.function import convert_to_image, crop_vid, runcmd, tgs_to_gif, progress, humanbytes, time_formatter, mapp
 import os
 from glitch_this import ImageGlitcher
 from telethon.tl.types import MessageMediaPhoto
@@ -639,13 +639,13 @@ async def slogo(event):
     x = (image_widthz-w)/2
     y= (image_heightz-h)/2
     draw.text((x, y), text, font=font, fill="white", stroke_width=30, stroke_fill="black")
-    fname2 = "LogoBy@FRIDAYBOT.png"
+    fname2 = "LogoBy@FRIDAYBOT"
     img.save(fname2, "png")
-    await event.delete()
     await borg.send_file(event.chat_id, fname2, caption="Made By @FridayOT")
 
 
-@friday.on(friday_on_cmd(pattern="(adityalogo|al|blacklogo|bl) ?(.*)"))
+
+@friday.on(friday_on_cmd(pattern="(adityalogo|al|blacklogo|bl)
 async def yufytf(event):
     if event.fwd_from:
         return
@@ -1143,7 +1143,40 @@ async def glitch(event):
     for starky in (pathsn, photolove):
         if starky and os.path.exists(starky):
             os.remove(starky)
+
+                         
+@friday.on(friday_on_cmd(pattern="(documentscan|ds) ?(.*)"))
+async def dscanner(event):
+    if event.fwd_from:
+        return
+    downloaded_img = await convert_to_image(event, friday)
+    image=cv2.imread(downloaded_img)
+    image=cv2.resize(image,(1300,800))
+    orig=image.copy()
+    gray=cv2.cvtColor(image,cv2.COLOR_BGR2GRAY)
+    blurred=cv2.GaussianBlur(gray,(5,5),0) 
+    edged=cv2.Canny(blurred,30,50)
+    contours,hierarchy=cv2.findContours(edged,cv2.RETR_LIST,cv2.CHAIN_APPROX_SIMPLE)  #retrieve the contours as a list, with simple apprximation model
+    contours=sorted(contours,key=cv2.contourArea,reverse=True)
+    for c in contours:
+        p=cv2.arcLength(c,True)
+        approx=cv2.approxPolyDP(c,0.02*p,True)
+        if len(approx)==4:
+            target=approx
+            break
+    approx=mapp(target)
+    pts=np.float32([[0,0],[800,0],[800,800],[0,800]])
+    op=cv2.getPerspectiveTransform(approx,pts)
+    dst=cv2.warpPerspective(orig,op,(800,800))
+    file_name = "Scanned.png"
+    ok = sedpath + "/" + file_name
+    cv2.imwrite(ok, dst)
+    await borg.send_file(event.chat_id, ok, caption="Powered By @FridayOT")
+    for starky in (ok, downloaded_img):
+        if starky and os.path.exists(starky):
+            os.remove(starky)
     
+
 CMD_HELP.update(
     {
         "imagetools": "**imagetools**\
