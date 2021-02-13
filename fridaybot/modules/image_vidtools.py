@@ -906,7 +906,7 @@ async def warnerstarkgang(event):
     await borg.send_file(event.chat_id, file=img, caption=so)
     os.remove(img)
     
-@friday.on(friday_on_cmd(pattern="aic$"))
+@friday.on(friday_on_cmd(pattern="compressimage$"))
 async def warnerstarkgang(event):
     if event.fwd_from:
         return
