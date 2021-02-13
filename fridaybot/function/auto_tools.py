@@ -20,6 +20,7 @@ from datetime import datetime
 m = logging.getLogger("AUTOTOOLS")
 
 bio_temp = ["Making History.", "I'm on energy-saving mode.", "Success is in my blood.", "Life F$@ks me, now it's my turn.", "Error 404: Bio unavailable."]
+rgb_temp = [(255, 255, 255), (0, 0, 0), (0, 0, 255), (255, 191, 0), (255, 127, 80), (0, 255, 255), (128, 0, 128), (255, 0, 0)]
 
 async def auto_name(name=None):
     TZ = pytz.timezone(Config.TZ)
@@ -78,7 +79,7 @@ async def auto_pic():
     text = datetime_tz.strftime('%H:%M')
     w,h = draw.textsize(text, font=font)
     h += int(h*0.21)
-    draw.text(((image_widthz-w)/2, (image_heightz-h)/2), text, font=font, fill=(255, 255, 255))
+    draw.text(((image_widthz-w)/2, (image_heightz-h)/2), text, font=font, fill=random.choice(rgb_temp))
     file_name = "autopic_friday.png"
     img.save(file_name, "PNG")
     file = await bot.upload_file(file_name)
