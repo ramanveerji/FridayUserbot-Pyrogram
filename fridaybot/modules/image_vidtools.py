@@ -27,7 +27,7 @@ import requests
 from PIL import Image, ImageDraw, ImageFont
 from telegraph import upload_file
 from fridaybot import CMD_HELP
-from fridaybot.function import convert_to_image, crop_vid, runcmd, tgs_to_gif, progress, humanbytes, time_formatter, is_nsfw
+from fridaybot.function import convert_to_image, crop_vid, runcmd, tgs_to_gif, progress, humanbytes, time_formatter, is_nsfw, load_image, initialize_K_centroids, find_closest_centroids, compute_means, find_k_means
 import os
 from glitch_this import ImageGlitcher
 from telethon.tl.types import MessageMediaPhoto
@@ -765,9 +765,11 @@ async def slogo(event):
     x = (image_widthz-w)/2
     y= (image_heightz-h)/2
     draw.text((x, y), text, font=font, fill="white", stroke_width=30, stroke_fill="black")
-    fname2 = "LogoBy@FRIDAYBOT.png"
+    fname2 = "LogoBy@FRIDAYOT.png"
     img.save(fname2, "png")
     await borg.send_file(event.chat_id, fname2, caption="Made By @FridayOT")
+    if os.path.exists(fname2):
+            os.remove(fname2)
 
 
 
@@ -902,26 +904,41 @@ async def warnerstarkgang(event):
     so = "**Powered By @FridayOT**"
     await event.delete()
     await borg.send_file(event.chat_id, file=img, caption=so)
+    os.remove(img)
     
-@friday.on(friday_on_cmd(pattern="tgstogif(?: |$)(.*)"))
-async def warnerstarkgangz(event):
+@friday.on(friday_on_cmd(pattern="aic$"))
+async def warnerstarkgang(event):
     if event.fwd_from:
         return
     if not event.reply_to_msg_id:
-        await event.edit("`Please Reply To Tgs To Convert To Gif.`")
+        await event.edit("Reply To Image To Compress It")
         return
-    if event.pattern_match.group(1):
-        quality = event.pattern_match.group(1)
-    else:
-        quality = 512
-    kk = await event.edit("`Processing..`")
-    hmm_ws = await event.get_reply_message()
-    warner_s = await friday.download_media(hmm_ws.media)
-    ok_stark = tgs_to_gif(warner_s, quality)
+    sed = await event.get_reply_message()
+    if not sed.photo:
+        await event.edit("This Only Works On Images")
+        return
+    image_path = await friday.download_media(sed.media)
+    image = load_image(image_path)
+    w, h, d = image.shape
+    X = image.reshape((w * h, d))
+    K = 40
+    colors, _ = find_k_means(X, K, max_iters=20)
+    idx = find_closest_centroids(X, colors)
+    idx = np.array(idx, dtype=np.uint8)
+    X_reconstructed = np.array(colors[idx, :] * 255, dtype=np.uint8).reshape((w, h, d))
+    compressed_image = Image.fromarray(X_reconstructed)
+    file_name = "CompressedUsing@FridayOT.png"
+    await event.delete()
+    ok = sedpath + "/" + file_name
+    compressed_image.save(ok, "PNG")
+    await event.edit("`Compressing This Image.`")
     so = "**Powered By @FridayOT**"
-    lol_m = await kk.edit("`Converting This Tgs To Gif Now !`")
-    await lol_m.delete()
-    await borg.send_file(event.chat_id, file=ok_stark, caption=so)
+    await event.delete()
+    await borg.send_file(event.chat_id, file=ok, caption=so)
+    for files in (ok, image_path):
+        if files and os.path.exists(files):
+            os.remove(files)
+    
     
 @friday.on(friday_on_cmd(pattern="cimage ?(.*)"))
 @friday.on(sudo_cmd(pattern="cimage ?(.*)", allow_sudo=True))
@@ -948,6 +965,8 @@ async def _(event):
     r = requests.post("https://captionbot.azurewebsites.net/api/messages", headers = h, json = c)
     endard = r.text.replace('"', "")
     await ommhg.edit(endard)
+    if os.path.exists(img):
+        os.remove(img)
     
 @friday.on(friday_on_cmd(pattern="speedup$"))
 async def fasty(event):
