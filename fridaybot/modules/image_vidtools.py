@@ -197,6 +197,25 @@ async def _(event):
             await event.delete()
     else:
         await event.edit("Syntax: `.color <color_code>`")
+        
+@friday.on(friday_on_cmd(pattern="picgen"))
+@friday.on(sudo_cmd(pattern="picgen", allow_sudo=True))
+async def _(event):
+    if event.fwd_from:
+        return
+    
+    url = "https://thispersondoesnotexist.com/image"
+    response = requests.get(url)
+    poppy = await edit_or_reply(event, "Creating a fake face for you... 🌚")
+    if response.status_code == 200:
+      with open("FRIDAYOT.jpg", 'wb') as f:
+        f.write(response.content)
+    
+    captin = f"Fake Image By Friday.\nGet Your Own Friday From @FRIDAYCHAT."
+    fole = "FRIDAYOT.jpg"
+    await borg.send_file(event.chat_id, fole, caption=captin)
+    await poppy.delete()
+    os.system("rm /root/fridaybot/FRIDAYOT.jpg ")
     
 @friday.on(friday_on_cmd(pattern=r"thug"))
 @friday.on(sudo_cmd(pattern=r"thug", allow_sudo=True))
@@ -1217,6 +1236,9 @@ CMD_HELP.update(
         \n**Usage :** Makes a black and white image of the replied image.\
         \n\n**Syntax : **`.nsfw <replying to the image>`\
         \n**Usage :** Identifies If The Given Image Is Nsfw Or Not.\
+        \n\n**Syntax : **`.picgen`\
+        \n**Usage :** Genetates Fake Image.\
+        \n\n**Note : **The Person In Picture Really Doesn't Exist.\
         \n\n**Syntax : ** `.lnews <text>`\
         \n**Usage :** Makes a Fake News Streaming With Replyed Image And Text."
     }
