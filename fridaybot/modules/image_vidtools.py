@@ -907,8 +907,8 @@ async def warnerstarkgang(event):
     await borg.send_file(event.chat_id, file=img, caption=so)
     os.remove(img)
     
-@friday.on(friday_on_cmd(pattern="compressimage$"))
-async def warnerstarkgang(event):
+@friday.on(friday_on_cmd(pattern="compressimage(?: |$)(.*)"))
+async def asscompress(event):
     if event.fwd_from:
         return
     if not event.reply_to_msg_id:
@@ -918,19 +918,11 @@ async def warnerstarkgang(event):
     if not sed.photo:
         await event.edit("This Only Works On Images")
         return
+    sedq = int(event.pattern_match.group(1)) if event.pattern_match.group(1) else 75
     image_path = await friday.download_media(sed.media)
-    image = load_image(image_path)
-    w, h, d = image.shape
-    X = image.reshape((w * h, d))
-    K = 40
-    colors, _ = find_k_means(X, K, max_iters=20)
-    idx = find_closest_centroids(X, colors)
-    idx = np.array(idx, dtype=np.uint8)
-    X_reconstructed = np.array(colors[idx, :] * 255, dtype=np.uint8).reshape((w, h, d))
-    compressed_image = Image.fromarray(X_reconstructed)
-    file_name = "CompressedUsing@FridayOT.png"
-    ok = sedpath + "/" + file_name
-    compressed_image.save(ok, "PNG")
+    im = Image.open(image_path)
+    ok = "CompressedBy@FridayOt.png"
+    im.save(ok, optimize=True, quality=sedq)
     await event.edit("`Compressing This Image.`")
     so = "**Powered By @FridayOT**"
     await event.delete()
