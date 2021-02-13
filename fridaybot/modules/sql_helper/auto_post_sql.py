@@ -46,7 +46,7 @@ def is_post_data_in_db(target_chat_id: str):
     try:
         s__ = SESSION.query(Post).get(str(target_chat_id))
         if s__:
-            return str(s__.target_chat_id)
+            return str(s__.to_post_chat_id)
     finally:
         SESSION.close()
 
