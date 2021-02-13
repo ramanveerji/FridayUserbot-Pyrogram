@@ -21,7 +21,7 @@ async def lol(event):
         await event.edit("`Only Channels Can Use THis Feature.`")
         return
     sed = event.pattern_match.group(1)
-    if is_post_data_in_db(event.chat_id):
+    if get_all_post_data(event.chat_id):
         await event.edit("Ah, This Channel Is Already DB")
         return
     add_new_post_data_in_db(event.chat_id, sed)
@@ -33,7 +33,7 @@ async def lol(event):
         await event.edit("`Only Channels Can Use THis Feature.`")
         return
     sed = event.pattern_match.group(1)
-    if not is_post_data_in_db(event.chat_id):
+    if not get_all_post_data(event.chat_id):
         await event.edit("Ah, This Channel Is Not In DB")
         return
     remove_post_data(event.chat_id)
@@ -48,12 +48,12 @@ async def what(event):
     if event.media:
         bot_api_file_id = pack_bot_file_id(event.media)
         await bot.send_file(
-                is_post_data_in_db(event.chat_id),
+                int(is_post_data_in_db(event.chat_id)),
                 file=bot_api_file_id,
                 caption=event.text
             )
     elif event.text:
         await borg.send_message(
-           is_post_data_in_db(event.chat_id),
+           int(is_post_data_in_db(event.chat_id)),
            event.text
            )
