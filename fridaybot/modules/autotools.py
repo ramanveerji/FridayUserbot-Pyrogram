@@ -18,7 +18,7 @@ from telethon.tl import functions
 from uniborg.util import edit_or_reply, friday_on_cmd, sudo_cmd
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from apscheduler.executors.asyncio import AsyncIOExecutor
-from fridaybot.function.auto_tools import auto_name, auto_bio
+from fridaybot.function.auto_tools import auto_name, auto_bio, auto_pic
 from fridaybot import ALIVE_NAME, CMD_HELP
 
 scheduler = AsyncIOScheduler(executors={'default': AsyncIOExecutor()})
@@ -30,6 +30,14 @@ async def _(event):
         return
     sed = await edit_or_reply(event, "`Started AutoName Your Name Will Be Changed Every 1 Min, According To TimeZone Given. To Terminate This Process Use .stop Cmd`")
     scheduler.add_job(auto_name, 'interval', args=[event.pattern_match.group(1)], minutes=1, id='autoname')
+    
+@friday.on(friday_on_cmd(pattern="autopic(?: |$)(.*)"))
+@friday.on(sudo_cmd(pattern="autopic(?: |$)(.*)", allow_sudo=True))
+async def _(event):
+    if event.fwd_from:
+        return
+    sed = await edit_or_reply(event, "`Started AutoPic Your Name Will Be Changed Every 1 Min, According To TimeZone Given. To Terminate This Process Use .stop Cmd`")
+    scheduler.add_job(auto_pic, 'interval', minutes=1, id='autopic')
 
 @friday.on(friday_on_cmd(pattern="autobio(?: |$)(.*)"))
 @friday.on(sudo_cmd(pattern="autobio(?: |$)(.*)", allow_sudo=True))
