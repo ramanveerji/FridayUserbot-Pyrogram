@@ -23,6 +23,7 @@ import cv2
 import imutils
 import numpy as np
 from datetime import datetime
+
 from PIL import Image, ImageDraw, ImageFont
 import pytz 
 import asyncio
@@ -30,7 +31,7 @@ import requests
 from PIL import Image, ImageDraw, ImageFont
 from telegraph import upload_file
 from fridaybot import CMD_HELP
-from fridaybot.function import convert_to_image, crop_vid, runcmd, tgs_to_gif, progress, humanbytes, time_formatter, four_point_transform
+from fridaybot.function import convert_to_image, crop_vid, runcmd, tgs_to_gif, progress, humanbytes, time_formatter, is_nsfw
 import os
 from glitch_this import ImageGlitcher
 from telethon.tl.types import MessageMediaPhoto
@@ -153,7 +154,24 @@ async def hmm(event):
     if os.path.exists(img):
         os.remove(img)
 
-
+@friday.on(friday_on_cmd(pattern="(nsfw|checknsfw|nsfwdetect)$"))
+@friday.on(sudo_cmd(pattern="nsfw$", allow_sudo=True))
+async def _(event):
+    if event.fwd_from:
+        return
+    if not event.reply_to_msg_id:
+        await edit_or_reply(event, "Reply To Any Image Idiot.")
+        return
+    reply_message = await event.get_reply_message()
+    kok = await edit_or_reply(event, "`Processing...`")
+    IdkWtf = await is_nsfw(reply_message)
+    if IdkWtf is False:
+      await kok.edit("**IMAGE-RESULT** \n**NSFW :** `False`")
+      return
+    elif IdkWtf is True:
+      await kok.edit("**IMAGE-RESULT** \n**NSFW :** `True`")
+      return 
+    
 @friday.on(friday_on_cmd(pattern=r"thug"))
 @friday.on(sudo_cmd(pattern=r"thug", allow_sudo=True))
 async def iamthug(event):
@@ -1171,6 +1189,8 @@ CMD_HELP.update(
         \n**Usage :** Makes a Fake PornHub comment with given username and text.\
         \n\n**Syntax : ** `.greyscale`\
         \n**Usage :** Makes a black and white image of the replied image.\
+        \n\n**Syntax : **`.nsfw <replying to the image>`\
+        \n**Usage :** Identifies If The Given Image Is Nsfw Or Not.\
         \n\n**Syntax : ** `.lnews <text>`\
         \n**Usage :** Makes a Fake News Streaming With Replyed Image And Text."
     }
