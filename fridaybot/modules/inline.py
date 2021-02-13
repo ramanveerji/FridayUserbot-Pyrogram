@@ -274,6 +274,15 @@ async def rip(event):
         LOG_CHAT,
         message=PM_E)
 
+@tgbot.on(events.callbackquery.CallbackQuery(data=re.compile(b"cleuse")))
+async def rip(event):
+    o = await all_pro_s(Config, client1, client2, client3)
+    if event.query.user_id in o:
+       await event.edit("Help Menu Closed Successfully")
+    if event.query.user_id not in o:
+        sedok = "Who The Fuck Are You? Get Your Own Friday."
+        await event.answer(sedok, cache_time=0, alert=True)
+        return
 
 def paginate_help(page_number, loaded_modules, prefix):
     number_of_rows = 8
@@ -302,6 +311,7 @@ def paginate_help(page_number, loaded_modules, prefix):
                 custom.Button.inline(
                     "Previous", data="{}_prev({})".format(prefix, modulo_page)
                 ),
+                custom.Button.inline("Close", data="cleuse"),
                 custom.Button.inline(
                     "Next", data="{}_next({})".format(prefix, modulo_page)
                 ),
