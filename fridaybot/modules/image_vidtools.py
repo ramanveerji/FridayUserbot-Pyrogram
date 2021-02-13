@@ -1166,17 +1166,18 @@ async def dscanner(event):
 	    peri = cv2.arcLength(c, True)
 	    approx = cv2.approxPolyDP(c, 0.02 * peri, True)
 	    if len(approx) == 4:
-		    screenCnt = approx
-		    break
-    cv2.drawContours(image, [screenCnt], -1, (0, 255, 0), 2)
-    warped = four_point_transform(orig, screenCnt.reshape(4, 2) * ratio)
-    warped = cv2.cvtColor(warped, cv2.COLOR_BGR2GRAY)
-    T = threshold_local(warped, 11, offset = 10, method = "gaussian")
-    warped = (warped > T).astype("uint8") * 255
-    dst = imutils.resize(warped, height = 650)
-    file_name = "Scanned.png"
-    ok = sedpath + "/" + file_name
-    cv2.imwrite(ok, dst)
+		screenCnt = approx
+    		cv2.drawContours(image, [screenCnt], -1, (0, 255, 0), 2)
+                warped = four_point_transform(orig, screenCnt.reshape(4, 2) * ratio)
+    		warped = cv2.cvtColor(warped, cv2.COLOR_BGR2GRAY)
+    		T = threshold_local(warped, 11, offset = 10, method = "gaussian")
+    		warped = (warped > T).astype("uint8") * 255
+    		dst = imutils.resize(warped, height = 650)
+    		file_name = "Scanned.png"
+    		ok = sedpath + "/" + file_name
+    		cv2.imwrite(ok, dst)		
+    if not os.path.exists(sedpath + "/" + "Scanned.png"):	
+    	dst = downloaded_img
     await borg.send_file(event.chat_id, ok, caption="Powered By @FridayOT")
     for starky in (ok, downloaded_img):
         if starky and os.path.exists(starky):
