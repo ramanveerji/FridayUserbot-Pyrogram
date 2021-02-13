@@ -77,7 +77,7 @@ import zipfile
 import os
 import aiohttp
 from fridaybot.function.FastTelethon import upload_file
-
+import numpy as np
 
 sedpath = Config.TMP_DOWNLOAD_DIRECTORY
 from fridaybot import logging
@@ -93,6 +93,20 @@ async def fetch_json(link):
     async with session.get(link) as resp:
         return await resp.json()
     
+# By AdityaPai2398@Github
+def mapp(h):
+    h = h.reshape((4,2))
+    hnew = np.zeros((4,2),dtype = np.float32)
+
+    add = h.sum(1)
+    hnew[0] = h[np.argmin(add)]
+    hnew[2] = h[np.argmax(add)]
+
+    diff = np.diff(h,axis = 1)
+    hnew[1] = h[np.argmin(diff)]
+    hnew[3] = h[np.argmax(diff)]
+
+    return hnew
     
 def get_readable_file_size(size_in_bytes: Union[int, float]) -> str:
     if size_in_bytes is None:
