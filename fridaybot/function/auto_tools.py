@@ -7,6 +7,13 @@ from fridaybot import bot
 import pytz
 import asyncio
 import os
+import shutil
+from datetime import datetime
+from PIL import Image, ImageDraw, ImageFont
+from pySmartDL import SmartDL
+from telethon.tl import functions
+import asyncio
+import os
 import logging
 from datetime import datetime
 m = logging.getLogger("AUTOTOOLS")
@@ -42,3 +49,44 @@ async def auto_bio(bio=None):
     except Exception as e:
         m.warning(f"Failed AutoBio Due To : {e}")
     return    
+
+counter = -30
+
+async def auto_pic():
+    global counter
+    TZ = pytz.timezone(Config.TZ)
+    datetime_tz = datetime.now(TZ)
+    downloaded_file_name = "fridaybot/original_pic.png"
+    if not os.path.exists(downloaded_file_name):
+       downloader = SmartDL(
+        Config.DOWNLOAD_PFP_URL_CLOCK, downloaded_file_name, progress_bar=False
+    )
+        downloader.start(blocking=False)
+        photo = "fridaybot/photo_pfp.png"
+        while not downloader.isFinished():
+            pass
+    else:
+        pass
+    img = Image.open(downloaded_file_name)
+    draw = ImageDraw.Draw(img)
+    font = ImageFont.truetype('Fonts/Streamster.ttf', 220)
+    file_test = img.rotate(counter, expand=False)
+    image_widthz, image_heightz = img.size
+    TZ = pytz.timezone(Config.TZ)
+    datetime_tz = datetime.now(TZ)
+    text = datetime_tz.strftime('%H:%M')
+    w,h = draw.textsize(text, font=font)
+    h += int(h*0.21)
+    draw.text(((image_widthz-w)/2, (image_heightz-h)/2), text, font=font, fill=(255, 255, 255))
+    file_name = "autopic_friday.png"
+    img.save(filename, "PNG")
+    file = await bot.upload_file(file_name)
+    try:
+            await bot(
+                functions.photos.UploadProfilePhotoRequest(file)
+            )
+            os.remove(file_name)
+            counter -= 30
+    except:
+            return
+    return
