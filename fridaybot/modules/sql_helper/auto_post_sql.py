@@ -17,7 +17,7 @@ from fridaybot.modules.sql_helper import BASE, SESSION
 
 class Post(BASE):
     __tablename__ = "post"
-    to_post_chat_id = Column(String(14), primary_key=True)
+    to_post_chat_id = Column(String(14))
     target_chat_id = Column(String(14))
 
     def __init__(self, target_chat_id, to_post_chat_id):
@@ -37,7 +37,8 @@ def add_new_post_data_in_db(to_post_chat_id: str, target_chat_id: str):
 def get_all_post_data(to_post_chat_id: str):
     try:
         s__ = SESSION.query(Post).get(str(to_post_chat_id))
-        return str(s__.target_chat_id), str(s__.to_post_chat_id)
+        if s__:
+            return str(s__.target_chat_id), str(s__.to_post_chat_id)
     finally:
         SESSION.close()
 
