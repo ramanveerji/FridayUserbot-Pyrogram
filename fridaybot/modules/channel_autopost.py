@@ -17,7 +17,7 @@ from telethon.utils import pack_bot_file_id
 
 @friday.on(friday_on_cmd(pattern="autopost ?(.*)"))
 async def lol(event):
-    if (event.is_pvt or event.is_group):
+    if (event.is_private or event.is_group):
         await event.edit("`Only Channels Can Use THis Feature.`")
         return
     sed = event.pattern_match.group(1)
@@ -29,7 +29,7 @@ async def lol(event):
     
 @friday.on(friday_on_cmd(pattern="rmautopost$"))
 async def lol(event):
-    if (event.is_pvt or event.is_group):
+    if (event.is_private or event.is_group):
         await event.edit("`Only Channels Can Use THis Feature.`")
         return
     sed = event.pattern_match.group(1)
@@ -41,6 +41,8 @@ async def lol(event):
     
 @bot.on(events.NewMessage())
 async def what(event):
+    if event.is_private:
+        return
     if not is_post_data_in_db(event.chat_id):
         return
     if event.media:
