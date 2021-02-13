@@ -58,9 +58,9 @@ async def auto_pic():
     datetime_tz = datetime.now(TZ)
     downloaded_file_name = "fridaybot/original_pic.png"
     if not os.path.exists(downloaded_file_name):
-       downloader = SmartDL(
+        downloader = SmartDL(
         Config.DOWNLOAD_PFP_URL_CLOCK, downloaded_file_name, progress_bar=False
-    )
+            )
         downloader.start(blocking=False)
         photo = "fridaybot/photo_pfp.png"
         while not downloader.isFinished():
