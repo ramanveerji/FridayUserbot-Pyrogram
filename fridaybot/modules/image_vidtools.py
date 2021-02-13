@@ -928,7 +928,6 @@ async def warnerstarkgang(event):
     X_reconstructed = np.array(colors[idx, :] * 255, dtype=np.uint8).reshape((w, h, d))
     compressed_image = Image.fromarray(X_reconstructed)
     file_name = "CompressedUsing@FridayOT.png"
-    await event.delete()
     ok = sedpath + "/" + file_name
     compressed_image.save(ok, "PNG")
     await event.edit("`Compressing This Image.`")
