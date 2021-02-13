@@ -15,6 +15,7 @@ import asyncio
 import time
 import time as t
 import zipfile
+from Code2pdf.code2pdf import Code2pdf
 from datetime import datetime
 import shutil
 from fridaybot import CMD_HELP
@@ -87,6 +88,28 @@ async def hmm(event):
     os.remove(pdf_file)
     os.remove(docx_file)
     await event.delete()
+    
+@friday.on(friday_on_cmd(pattern=r"code2pdf$"))
+async def hmm(event):
+    if event.fwd_from:
+        return
+    if not event.reply_to_msg_id:
+        await event.edit("Reply to any File.")
+        return
+    hmmu = await event.edit("hmm... Please Wait...🚶")
+    lol = await event.get_reply_message()
+    if not lol.document:
+        await event.edit("Only Documents :/")
+        return
+    starky = await borg.download_media(lol.media)
+    hmmu = await event.edit("hmm... Please Wait..")
+    pdf = Code2pdf(starky, "Code2Pdf@FridayOt.pdf", "Ä4")
+    await event.delete()
+    await borg.send_file(
+        event.chat_id, "Code2Pdf@FridayOt.pdf", caption=f"**Code2Pdf - ** @FridayOt"
+    )
+    os.remove("Code2Pdf@FridayOt.pdf")
+    os.remove(starky)
 
 
 
