@@ -21,8 +21,8 @@ class Post(BASE):
     target_chat_id = Column(String(14))
 
     def __init__(self, target_chat_id, to_post_chat_id):
-        self.target_chat_id = target_chat_id
         self.to_post_chat_id = to_post_chat_id
+        self.target_chat_id = target_chat_id
 
 
 Post.__table__.create(checkfirst=True)
