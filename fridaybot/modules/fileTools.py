@@ -15,7 +15,7 @@ import asyncio
 import time
 import time as t
 import zipfile
-from Code2pdf.code2pdf import Code2pdf
+from Code2pdf import Code2pdf
 from datetime import datetime
 import shutil
 from fridaybot import CMD_HELP
