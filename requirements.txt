@@ -1,6 +1,3 @@
-imutils
-scikit-image
-imutils
 Pillow
 deezer-python
 moviepy
