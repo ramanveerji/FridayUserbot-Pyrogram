@@ -18,6 +18,7 @@ import json
 from math import ceil
 from re import findall
 import requests
+from fridaybot.Configs import Config
 from youtube_search import YoutubeSearch
 from search_engine_parser import GoogleSearch
 from fridaybot.function import _ytdl, fetch_json, _deezer_dl, all_pro_s
@@ -37,6 +38,12 @@ else:
     WARN_PIC = PMPERMIT_PIC
 LOG_CHAT = Config.PRIVATE_GROUP_ID
 DEFAULTUSER = str(ALIVE_NAME) if ALIVE_NAME else "Friday"
+
+HELP_EMOJI = os.environ.get("HELP_EMOJI", None)
+if not HELP_EMOJI:
+    emji = "✘"
+else:
+    emji = HELP_EMOJI
 
 
 @tgbot.on(events.InlineQuery)
@@ -278,7 +285,7 @@ def paginate_help(page_number, loaded_modules, prefix):
     helpable_modules = sorted(helpable_modules)
     modules = [
         custom.Button.inline(
-            "{} {} {}".format("✘", x, "✘"), data="us_plugin_{}|{}".format(x, page_number)
+            "{} {} {}".format(emji, x, emji), data="us_plugin_{}|{}".format(x, page_number)
         )
         for x in helpable_modules
     ]
