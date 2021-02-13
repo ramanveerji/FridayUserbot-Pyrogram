@@ -1,3 +1,4 @@
+# Fully Rewritten By @DevsExpo
 import asyncio
 import time
 import random
