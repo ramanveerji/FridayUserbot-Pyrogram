@@ -1147,42 +1147,7 @@ async def glitch(event):
         if starky and os.path.exists(starky):
             os.remove(starky)
 
-                         
-@friday.on(friday_on_cmd(pattern="(documentscan|ds) ?(.*)"))
-async def dscanner(event):
-    if event.fwd_from:
-        return
-    downloaded_img = await convert_to_image(event, friday)
-    image = cv2.imread(downloaded_img)
-    ratio = image.shape[0] / 500.0
-    image = imutils.resize(image, height = 500)
-    gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-    gray = cv2.GaussianBlur(gray, (5, 5), 0)
-    edged = cv2.Canny(gray, 75, 200)
-    cnts = cv2.findContours(edged.copy(), cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE)
-    cnts = imutils.grab_contours(cnts)
-    cnts = sorted(cnts, key = cv2.contourArea, reverse = True)[:5]
-    for c in cnts:
-	    peri = cv2.arcLength(c, True)
-	    approx = cv2.approxPolyDP(c, 0.02 * peri, True)
-	    if len(approx) == 4:
-                screenCnt = approx
-                warped = four_point_transform(orig, screenCnt.reshape(4, 2) * ratio)
-                warped = cv2.cvtColor(warped, cv2.COLOR_BGR2GRAY)
-                T = threshold_local(warped, 11, offset = 10, method = "gaussian")
-                warped = (warped > T).astype("uint8") * 255
-                dst = imutils.resize(warped, height = 650)
-                file_name = "Scanned.png"
-                ok = sedpath + "/" + file_name
-                cv2.imwrite(ok, dst)		
-    if not os.path.exists(sedpath + "/" + "Scanned.png"):	
-        dst = downloaded_img
-    await borg.send_file(event.chat_id, ok, caption="Powered By @FridayOT")
-    for starky in (ok, downloaded_img):
-        if starky and os.path.exists(starky):
-            os.remove(starky)
     
-
 CMD_HELP.update(
     {
         "imagetools": "**imagetools**\
