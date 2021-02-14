@@ -31,8 +31,8 @@ async def _(event):
     sed = await edit_or_reply(event, "`Started AutoName Your Name Will Be Changed Every 1 Min, According To TimeZone Given. To Terminate This Process Use .stop Cmd`")
     scheduler.add_job(auto_name, 'interval', args=[event.pattern_match.group(1)], minutes=1, id='autoname')
     
-@friday.on(friday_on_cmd(pattern="autopic(?: |$)(.*)"))
-@friday.on(sudo_cmd(pattern="autopic(?: |$)(.*)", allow_sudo=True))
+@friday.on(friday_on_cmd(pattern="autopic$"))
+@friday.on(sudo_cmd(pattern="autopic$", allow_sudo=True))
 async def _(event):
     if event.fwd_from:
         return
