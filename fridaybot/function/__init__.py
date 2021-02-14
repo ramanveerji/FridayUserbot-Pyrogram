@@ -767,7 +767,7 @@ async def fetch_audio(event, ws):
         await event.edit("`Video Detected, Converting To Audio !`")
         warner_bros = await event.client.download_media(warner_stark.media)
 	stark_cmd = f"ffmpeg -i {warner_bros} -map 0:a friday.mp3"
-        stdout, stderr = (await runcmd(stark_cmd))[:2]
+        await runcmd(stark_cmd)
         final_warner = "friday.mp3"
     elif warner_stark.audio:
         await event.edit("`Download Started !`")
