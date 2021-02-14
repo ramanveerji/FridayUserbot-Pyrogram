@@ -13,7 +13,6 @@
 
 from fridaybot.modules.sql_helper.auto_post_sql import add_new_post_data_in_db, get_all_post_data, is_post_data_in_db, remove_post_data
 from telethon import events
-from telethon.utils import pack_bot_file_id
 
 @bot.on(admin_cmd(pattern="autopost ?(.*)"))
 async def lol(event):
@@ -40,11 +39,19 @@ async def lol(event):
         await event.edit("`Only Channels Can Use THis Feature.`")
         return
     sed = event.pattern_match.group(1)
-    if not is_post_data_in_db(sed, event.chat_id):
+     sed = event.pattern_match.group(1)
+    if str(sed).startswith("-100"):
+        kk = str(sed).replace("-100", "")
+    else:
+        kk = sed
+    if not kk.isdigit():
+        await event.edit("`Channel ID Should be Integers`")
+        return
+    if not is_post_data_in_db(kk, event.chat_id):
         await event.edit("Ah, This Channel Is Not In DB")
         return
-    remove_post_data(sed , event.chat_id)
-    await event.edit(f"`Removed AutoPosting From This Channel`")
+    remove_post_data(kk, event.chat_id)
+    await event.edit(f"`Oh, Okay I will Stop Posting From {sed}.`")
 
 @bot.on(events.NewMessage())
 async def what(event):
