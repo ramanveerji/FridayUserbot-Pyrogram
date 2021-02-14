@@ -19,7 +19,7 @@ async def _(event):
     if event.fwd_from:
         return
     d = event.pattern_match.group(1)
-
+    print("dafaq" + str(d))
     c = d.split(" ")  
 
     chat_id = c[1]
