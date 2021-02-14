@@ -45,7 +45,7 @@ def download_images(images):
                 except UnicodeDecodeError:
                     if path.exists("logo@FridayOT.jpg"):
                        return
-                    except:
+                    else:
                        pass
                     with open("logo@FridayOT.jpg", "wb+") as f: 
                         f.write(r)
