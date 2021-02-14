@@ -6,6 +6,7 @@ from telethon import *
 from fridaybot import CMD_HELP
 
 from fridaybot.utils import friday_on_cmd
+from telethon.tl.functions.users import GetFullUserRequest
 
 
 from fridaybot.utils import register
@@ -21,13 +22,13 @@ async def _(event):
 
     c = d.split(" ")  
 
-    chat_id = c[0]
+    chat_id = c[1]
     try:  
         chat_id = int(chat_id)
     
     except BaseException:  
-        pass
-
+        H = await event.client(GetFullUserRequest(chat_id))
+        chat_id = H.user.id
     msg = ""
     masg = await event.get_reply_message() 
     if event.reply_to_msg_id:
