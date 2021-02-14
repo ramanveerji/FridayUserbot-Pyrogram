@@ -248,7 +248,7 @@ async def _(event):
     caption = "<b>Logo Made By FridayUserBot. Get Your FridayUserBot From @FridayOT</b>."
     await borg.send_message(
         event.chat_id,
-        caption,
+        caption=caption,
         parse_mode="HTML",
         file="FridayOT.jpg",
         force_document=False,
