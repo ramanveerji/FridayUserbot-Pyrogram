@@ -21,13 +21,17 @@ async def lol(event):
         await event.edit("`Only Channels Can Use THis Feature.`")
         return
     sed = event.pattern_match.group(1)
-    if not sed.isdigit():
+    if str(sed).startswith("-100"):
+        kk = str(sed).replace("-100", "")
+    else:
+        kk = sed
+    if not int(kk).isdigit():
         await event.edit("`Channel ID Should be Integers`")
         return
-    if is_post_data_in_db(sed , event.chat_id):
+    if is_post_data_in_db(kk , event.chat_id):
         await event.edit("Ah, This Channel Is Already DB")
         return
-    add_new_post_data_in_db(sed, event.chat_id)
+    add_new_post_data_in_db(kk, event.chat_id)
     await event.edit(f"`Added AutoPosting To This Chat From {sed}`")
 
 @bot.on(admin_cmd(pattern="rmautopost ?(.*)"))
@@ -46,7 +50,8 @@ async def lol(event):
 async def what(event):
     if event.is_private:
         return
-    channels_set  = get_all_post_data(event.chat_id)
+    chat_id = str(event.chat_id).replace("-100", "")
+    channels_set  = get_all_post_data(chat_id)
     if channels_set == []:
         return
     for chat in channels_set:
