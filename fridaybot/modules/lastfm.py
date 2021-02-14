@@ -17,6 +17,7 @@ from fridaybot import (
     CMD_HELP,
     DEFAULT_BIO,
     LASTFM_USERNAME,
+    ALIVE_NAME,
     lastfm,
 )
 from fridaybot.events import register
@@ -58,6 +59,8 @@ async def last_fm(lastFM):
         preview = None
         playing = User(LASTFM_USERNAME, lastfm).get_now_playing()
         username = f"https://www.last.fm/user/{LASTFM_USERNAME}"
+        song = playing.get_title()
+        artist = playing.get_artist()
         if playing is not None:
             try:
                 image = (
@@ -71,10 +74,10 @@ async def last_fm(lastFM):
                 "^", "https://www.youtube.com/results?search_query=", rectrack
             )
             if image:
-                output = f"[‎]({image})[{LASTFM_USERNAME}]({username}) __is now listening to:__\n\n• [{playing}]({rectrack})\n`{tags}`"
+                output = f"[‎]({image}){ALIVE_NAME} is now listening to:\n\n 🎧 **{song}**\n 💃 {artist}\n\n`{tags}`"
                 preview = True
             else:
-                output = f"[{LASTFM_USERNAME}]({username}) __is now listening to:__\n\n• [{playing}]({rectrack})\n`{tags}`"
+                output = f"{ALIVE_NAME} is now listening to:\n\n 🎧 **{song}**\n 💃 {artist}\n\n`{tags}`"
         else:
             recent = User(LASTFM_USERNAME, lastfm).get_recent_tracks(limit=3)
             playing = User(LASTFM_USERNAME, lastfm).get_now_playing()
@@ -141,9 +144,9 @@ async def get_curr_track(lfmbio):
                 environ["oldsong"] = str(SONG)
                 environ["oldartist"] = str(ARTIST)
                 if BIOPREFIX:
-                    lfmbio = f"{BIOPREFIX} 🎧: {ARTIST} - {SONG}"
+                    lfmbio = f"{BIOPREFIX} 🎧 {ARTIST} - {SONG}"
                 else:
-                    lfmbio = f"🎧: {ARTIST} - {SONG}"
+                    lfmbio = f"🎧 {ARTIST} - {SONG}"
                 try:
                     if BOTLOG and LastLog:
                         await bot.send_message(
@@ -151,7 +154,7 @@ async def get_curr_track(lfmbio):
                         )
                     await bot(UpdateProfileRequest(about=lfmbio))
                 except AboutTooLongError:
-                    short_bio = f"🎧: {SONG}"
+                    short_bio = f"🎧 {SONG}"
                     await bot(UpdateProfileRequest(about=short_bio))
             else:
                 if playing is None and user_info.about != DEFAULT_BIO:
