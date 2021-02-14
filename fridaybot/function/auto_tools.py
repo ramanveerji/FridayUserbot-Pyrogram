@@ -71,7 +71,7 @@ async def auto_pic():
         pass
     img = Image.open(downloaded_file_name)
     draw = ImageDraw.Draw(img)
-    font = ImageFont.truetype('Fonts/Streamster.ttf', 130)
+    font = ImageFont.truetype('Fonts/Streamster.ttf', 90)
     file_test = img.rotate(counter, expand=False)
     image_widthz, image_heightz = img.size
     TZ = pytz.timezone(Config.TZ)
