@@ -23,10 +23,11 @@ async def _(event):
     c = d.split(" ")  
 
     chat_id = c[1]
+    print(chat_id)
     try:  
         chat_id = int(chat_id)
     
-    except BaseException:  
+    except:  
         H = await event.client(GetFullUserRequest(chat_id))
         chat_id = H.user.id
     msg = ""
