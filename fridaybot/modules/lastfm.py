@@ -59,8 +59,6 @@ async def last_fm(lastFM):
         preview = None
         playing = User(LASTFM_USERNAME, lastfm).get_now_playing()
         username = f"https://www.last.fm/user/{LASTFM_USERNAME}"
-        song = playing.get_title()
-        artist = playing.get_artist()
         if playing is not None:
             try:
                 image = (
@@ -73,6 +71,8 @@ async def last_fm(lastFM):
             rectrack = sub(
                 "^", "https://www.youtube.com/results?search_query=", rectrack
             )
+            song = playing.get_title()
+            artist = playing.get_artist()
             if image:
                 output = f"[‎]({image})**{ALIVE_NAME}** is now listening to:\n\n 🎧 **{song}**\n 💃 {artist}\n\n`{tags}`"
                 preview = True
