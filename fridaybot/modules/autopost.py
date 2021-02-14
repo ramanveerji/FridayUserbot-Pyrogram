@@ -52,5 +52,5 @@ async def what(event):
     for chat in channels_set:
         if event.media:
             await event.client.send_file(int(chat), event.media, caption=event.text)
-        elif not event.media and event.text:
+        elif not event.media:
             await event.client.send_message(int(chat), event.message)
