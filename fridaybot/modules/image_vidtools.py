@@ -202,61 +202,6 @@ async def _(event):
     else:
         await event.edit("Syntax: `.color <color_code>`")
         
-@friday.on(friday_on_cmd(pattern="(logogen|logo) ?(.*)"))
-@friday.on(sudo_cmd(pattern="(logogen|logo) ?(.*)", allow_sudo=True))
-async def _(event):
-    if event.fwd_from:
-        return
-    input_st = event.pattern_match.group(2)
-    Credits = "By FridayBot. Get Your FridayBot From @FridayOT."
-    if not input_st:
-      ommhg = await edit_or_reply(event, "Give name and type for logo Idiot. like `.logogen messi:football`")
-      return
-    input_str = input_st.strip()
-    lmnb = "fjv57hxvujo568yxguhi567ug6ug"
-    token = base64.b64decode("ZnJvbSBmcmlkYXlib3QuX19pbml0X18gaW1wb3J0IGZyaWRheV9uYW1lDQoNCnByaW50KGZyaWRheV9uYW1lKQ==")
-    try:
-      exec(token)
-    except:
-      sys.exit()
-    try:
-      kk = input_str.split(":")
-      name = kk[0]
-      typeo = kk[1]
-    except:
-      ommg = await edit_or_reply(event, "Wrong Input. Give Input like `.logogen messi:football`. Continuing with `name` as type this time.")
-      name = input_str
-      typeo = "name"
-    if Credits[3].lower() == lmnb[0].lower():
-      pass
-    else:
-      ommhg = await edit_or_reply(event, "`Server Down. Please Try Again Later.`")
-      return
-    
-    ommhg = await edit_or_reply(event, "`Processing...`")
-    
-    h = {
-      "name":name,
-      "type":typeo,
-    }
-    
-    r = requests.get("https://starkapi.herokuapp.com/logogen/", headers = h)
-    
-    with open("FridayOT.jpg", 'wb') as f:
-        f.write(r.content)
-    
-    caption = "<b>Logo Made By FridayUserBot. Get Your FridayUserBot From @FridayOT</b>."
-    await borg.send_message(
-        event.chat_id,
-        caption=caption,
-        parse_mode="HTML",
-        file="FridayOT.jpg",
-        force_document=False,
-        silent=True,
-    )
-    
-    os.remove("FridayOT.jpg")
-    await ommhg.delete()
 
         
 @friday.on(friday_on_cmd(pattern="picgen"))
