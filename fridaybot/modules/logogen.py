@@ -3,6 +3,7 @@ from fridaybot.utils import edit_or_reply, friday_on_cmd, sudo_cmd
 from fridaybot.function import convert_to_image
 from bs4 import *
 from fridaybot import CMD_HELP, sclient
+import shutil
 import requests
 import os
 import base64
