@@ -33,6 +33,8 @@ async def _(event):
     msg = ""
     masg = await event.get_reply_message() 
     if event.reply_to_msg_id:
+        masg = (await event.get_reply_message()).sender
+        chat_id = masg.id
         await borg.send_message(chat_id, masg)
         await event.edit("Message Delivered Succesufully ")
     for i in c[1:]:
