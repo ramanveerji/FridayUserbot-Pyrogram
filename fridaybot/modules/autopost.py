@@ -25,7 +25,7 @@ async def lol(event):
         kk = str(sed).replace("-100", "")
     else:
         kk = sed
-    if not int(kk).isdigit():
+    if not kk.isdigit():
         await event.edit("`Channel ID Should be Integers`")
         return
     if is_post_data_in_db(kk , event.chat_id):
