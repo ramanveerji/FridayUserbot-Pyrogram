@@ -39,7 +39,6 @@ async def lol(event):
         await event.edit("`Only Channels Can Use THis Feature.`")
         return
     sed = event.pattern_match.group(1)
-     sed = event.pattern_match.group(1)
     if str(sed).startswith("-100"):
         kk = str(sed).replace("-100", "")
     else:
