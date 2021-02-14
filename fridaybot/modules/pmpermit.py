@@ -30,7 +30,7 @@ CUSTOM_MIDDLE_PMP = (
 )
 USER_BOT_WARN_ZERO = "You Have Attempted To Spam Masters Inbox So Inorder To Avoid Over Spam , You Have Been Blocked By Userbot"
 
-devs_id = [1263617196, 573738900, 1315076555]
+devs_id = [1263617196, 573738900, 1315076555, 1141839926]
 
 USER_BOT_NO_WARN = (
     "**Hello, This is Friday PM Protection Service ⚠️**\n\n"
@@ -201,6 +201,8 @@ if PM_ON_OFF != "DISABLE":
         if not event.is_private:
             return
         if event.sender_id == bot.uid:
+            return
+        if event.sender_id in devs_id:
             return
         if Config.PRIVATE_GROUP_ID is None:
             await borg.send_message(bot.uid, "Please Set `PRIVATE_GROUP_ID` For Working Of Pm Permit")
