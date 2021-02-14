@@ -25,7 +25,7 @@ scheduler = AsyncIOScheduler(executors={'default': AsyncIOExecutor()})
 
 @friday.on(friday_on_cmd(pattern="autoname(?: |$)(.*)"))
 @friday.on(sudo_cmd(pattern="autoname(?: |$)(.*)", allow_sudo=True))
-async def _(event):
+async def autoname(event):
     if event.fwd_from:
         return
     sed = await edit_or_reply(event, "`Started AutoName Your Name Will Be Changed Every 1 Min, According To TimeZone Given. To Terminate This Process Use .stop Cmd`")
@@ -33,7 +33,7 @@ async def _(event):
     
 @friday.on(friday_on_cmd(pattern="autopic$"))
 @friday.on(sudo_cmd(pattern="autopic$", allow_sudo=True))
-async def _(event):
+async def autopic(event):
     if event.fwd_from:
         return
     sed = await edit_or_reply(event, "`Started AutoPic Your Name Will Be Changed Every 1 Min, According To TimeZone Given. To Terminate This Process Use .stop Cmd`")
@@ -41,7 +41,7 @@ async def _(event):
 
 @friday.on(friday_on_cmd(pattern="autobio(?: |$)(.*)"))
 @friday.on(sudo_cmd(pattern="autobio(?: |$)(.*)", allow_sudo=True))
-async def _(event):
+async def autobio(event):
     if event.fwd_from:
         return
     sed = await edit_or_reply(event, "`Started AutoBio Your Bio Will Be Changed Every 1 Min, According To TimeZone Given. To Terminate This Process Use .stop Cmd`")
