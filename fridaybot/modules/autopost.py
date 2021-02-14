@@ -30,7 +30,7 @@ async def lol(event):
     add_new_post_data_in_db(sed, event.chat_id)
     await event.edit(f"`Added AutoPosting To This Chat From {sed}`")
 
-@bot.on(admin_cmd(pattern="rmautopost$"))
+@bot.on(admin_cmd(pattern="rmautopost ?(.*)"))
 async def lol(event):
     if (event.is_private or event.is_group):
         await event.edit("`Only Channels Can Use THis Feature.`")
