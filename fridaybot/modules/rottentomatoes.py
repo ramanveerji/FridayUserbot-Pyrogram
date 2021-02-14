@@ -20,7 +20,7 @@ async def _(event):
     Classe = l.get("meterClass")
     Meter = l.get("meterScore")
     ullu = l.get("url")
-    url = f"http://http://rottentomatoes.com{ullu}"
+    url = f"http://rottentomatoes.com{ullu}"
     Ceset = l.get("castItems")
     cast = ""
     for Hitler in Ceset:
