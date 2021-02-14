@@ -105,7 +105,7 @@ async def _(event):
     if event.fwd_from:
         return
     input_str = event.pattern_match.group(1)
-    LeO = await edit_or_reply("Please Wait....🚶‍♂️🚶‍♂️🚶‍♂️")
+    LeO = await edit_or_reply(event, "Please Wait....🚶‍♂️🚶‍♂️🚶‍♂️")
     search = MangaSearch(input_str)
     ID = search.results[0].mal_id
     manga = Manga(ID)
