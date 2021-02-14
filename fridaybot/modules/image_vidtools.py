@@ -1094,7 +1094,7 @@ async def audio_extract(event):
         thumb = await event.client.download_media(kk.media, thumb=-1)
     except:
         thumb = "./resources/IMG_20200929_103719_628.jpg"
-    name_out = os.path.basename(hmm) + str(".mp3")
+    name_out = str(os.path.basename(hmm)).split(".")[0] + str(".mp3")
     c_time = time.time()
     cmd = f"ffmpeg -i {hmm} -map 0:a {name_out}"
     await runcmd(cmd)
