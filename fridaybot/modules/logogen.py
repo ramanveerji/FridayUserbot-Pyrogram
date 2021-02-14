@@ -68,7 +68,7 @@ def mainne(name, typeo):
 async def _(event):
     if event.fwd_from:
         return
-    input_st = event.pattern_match.group(1)
+    input_st = event.pattern_match.group(2)
     Credits = "By FridayBot. Get Your FridayBot From @FridayOT."
     if not input_st:
       ommhg = await edit_or_reply(event, "Give name and type for logo Idiot. like `.logogen messi:football`")
@@ -108,6 +108,5 @@ async def _(event):
     )
     
     os.remove(pate)
-    shutil.rmtree("/logos/")
     await ommhg.delete()
     
