@@ -1193,6 +1193,9 @@ def generate_meme(
 async def glitch(event):
     if event.fwd_from:
         return
+    if not event.reply_to_msg_id:
+        await event.edit("`Are You on Weed? Please Reply To Image`")
+        return
     sed = await event.get_reply_message()
     okbruh = await event.edit("`Gli, Glitchiiingggg.....`")
     photolove = await convert_to_image(event, friday)
