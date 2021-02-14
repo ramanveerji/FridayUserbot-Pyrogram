@@ -774,7 +774,7 @@ async def slogo(event):
 
 
 
-@friday.on(friday_on_cmd(pattern="(adityalogo|blacklogo|bl) ?(.*)"))
+@friday.on(friday_on_cmd(pattern="(adityalogo|blacklogo) ?(.*)"))
 async def yufytf(event):
     if event.fwd_from:
         return
