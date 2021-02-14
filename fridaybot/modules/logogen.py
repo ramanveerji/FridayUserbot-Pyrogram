@@ -7,6 +7,7 @@ import requests
 import os
 import base64
 import sys
+import random
 import requests
 
 def folder_create(images): 
