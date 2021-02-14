@@ -22,7 +22,7 @@ async def _(event):
     print("dafaq" + str(d))
     c = d.split(" ")  
 
-    chat_id = c[1]
+    chat_id = c[0]
     print(chat_id)
     try:  
         chat_id = int(chat_id)
