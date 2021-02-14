@@ -74,14 +74,14 @@ async def last_fm(lastFM):
                 "^", "https://www.youtube.com/results?search_query=", rectrack
             )
             if image:
-                output = f"[‎]({image}){ALIVE_NAME} is now listening to:\n\n 🎧 **{song}**\n 💃 {artist}\n\n`{tags}`"
+                output = f"[‎]({image})**{ALIVE_NAME}** is now listening to:\n\n 🎧 **{song}**\n 💃 {artist}\n\n`{tags}`"
                 preview = True
             else:
-                output = f"{ALIVE_NAME} is now listening to:\n\n 🎧 **{song}**\n 💃 {artist}\n\n`{tags}`"
+                output = f"**{ALIVE_NAME}** is now listening to:\n\n 🎧 **{song}**\n 💃 {artist}\n\n`{tags}`"
         else:
             recent = User(LASTFM_USERNAME, lastfm).get_recent_tracks(limit=3)
             playing = User(LASTFM_USERNAME, lastfm).get_now_playing()
-            output = f"[{LASTFM_USERNAME}]({username}) __was last listening to:__\n\n"
+            output = f"**{ALIVE_NAME}** was last listening to:\n\n"
             for i, track in enumerate(recent):
                 print(i)  # vscode hates the i being there so lets make it chill
                 printable = artist_and_song(track)
@@ -90,7 +90,7 @@ async def last_fm(lastFM):
                 rectrack = sub(
                     "^", "https://www.youtube.com/results?search_query=", rectrack
                 )
-                output += f"• [{printable}]({rectrack})\n"
+                output += f"[{printable}]({rectrack})\n"
                 if tags:
                     output += f"`{tags}`\n\n"
         if preview is not None:
