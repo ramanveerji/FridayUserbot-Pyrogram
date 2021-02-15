@@ -20,7 +20,7 @@ if not Config.API_HASH:
     quit(1)
     
 if not Config.PRIVATE_GROUP_ID:
-    starky.warning("Please Add Priavte Group ID For Proper Functioning Of UserBot")
+    starky.warning("Please Add Private Group ID For Proper Functioning Of UserBot")
     quit(1)
 
 if Config.STRING_SESSION:
