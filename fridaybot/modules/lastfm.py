@@ -20,7 +20,7 @@ from fridaybot import (
     ALIVE_NAME,
     lastfm,
 )
-from fridaybot.events import register
+from fridaybot.function.events import register
 
 # =================== CONSTANT ===================
 LFM_BIO_ENABLED = "```last.fm current music to bio is now enabled.```"
