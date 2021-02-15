@@ -65,8 +65,14 @@ scheduler.start()
 
 CMD_HELP.update(
     {
-        "autoname": "**Autoname**\
+        "autotools": "**AutoTools**\
 \n\n**Syntax : **`.autoname`\
-\n**Usage :** Change your Name With Time"
+\n**Usage :** Change your Name With Time.\
+\n\n**Syntax : **`.autopic`\
+\n**Usage :** Change your Picture With Time.\
+\n\n**Syntax : **`.autobio <text>`\
+\n**Usage :** Change your Bio With Time.\
+\n\n**Syntax : **`.stop`\
+\n**Usage :** Stops All The Auto Processes"
     }
 )
