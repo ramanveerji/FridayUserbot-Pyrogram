@@ -28,7 +28,6 @@ from PIL import Image, ImageDraw, ImageFont
 from telegraph import upload_file
 from fridaybot import CMD_HELP
 from fridaybot.function import convert_to_image, crop_vid, runcmd, tgs_to_gif, progress, humanbytes, time_formatter, is_nsfw
-from fridaybot.function.image_compression import load_image, initialize_K_centroids, find_closest_centroids, compute_means, find_k_means
 import os
 from glitch_this import ImageGlitcher
 from telethon.tl.types import MessageMediaPhoto
