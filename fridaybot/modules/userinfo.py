@@ -23,7 +23,7 @@ from telethon.tl.types import (
 )
 
 from fridaybot import CMD_HELP
-from fridaybot.events import register
+from fridaybot.function.events import register
 from fridaybot.utils import friday_on_cmd
 
 def parse_arguments(message: str, valid: List[str]) -> (dict, str):
