@@ -1200,6 +1200,7 @@ async def glitch(event):
     okbruh = await event.edit("`Gli, Glitchiiingggg.....`")
     photolove = await convert_to_image(event, friday)
     pathsn = f"./starkgangz/@fridayot.gif"
+    await event.edit("Glitching Image :/")
     glitch_imgs = glitcher.glitch_image(photolove, 2, gif=True, color_offset=True)
     glitch_imgs[0].save(
         pathsn,
@@ -1210,7 +1211,9 @@ async def glitch(event):
         loop=LOOP,
     )
     c_time = time.time()
+    await event.edit("Optimizing Now")
     optimize(pathsn)
+    await event.edit("Starting Upload")
     stark_m = await uf(
         	file_name="Glitched@FridayOt.gif",
             client=borg,
