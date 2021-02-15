@@ -11,7 +11,7 @@ from subprocess import run as runapp
 import pybase64
 from fridaybot.utils import friday_on_cmd
 from fridaybot import CMD_HELP
-from fridaybot.events import errors_handler, register
+from fridaybot.function.events import errors_handler, register
 
 
 @friday.on(friday_on_cmd(pattern="hash (.*)"))
