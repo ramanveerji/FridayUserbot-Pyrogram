@@ -8,6 +8,7 @@ Userbot module to help you manage a group
 
 from asyncio import sleep
 from os import remove
+from telethon.tl import functions
 from fridaybot.function import is_admin
 from telethon.errors import (
     BadRequestError,
@@ -16,6 +17,14 @@ from telethon.errors import (
     PhotoCropSizeSmallError,
     UserAdminInvalidError,
 )
+from telethon.tl.types import (
+    ChannelParticipantAdmin,
+    ChannelParticipantCreator,
+    ChannelParticipantsAdmins,
+)
+from telethon.tl.types import ChannelParticipantAdmin, ChannelParticipantsBots
+from telethon.tl.types import ChannelParticipantsAdmins
+from fridaybot.modules.sql_helper import warns_sql as sql
 from telethon.errors.rpcerrorlist import MessageTooLongError, UserIdInvalidError
 from telethon.tl.functions.channels import (
     EditAdminRequest,
@@ -32,7 +41,32 @@ from telethon.tl.types import (
 )
 
 from fridaybot import BOTLOG, BOTLOG_CHATID, CMD_HELP
-from fridaybot.utils import edit_or_reply, friday_on_cmd, sudo_cmd
+import asyncio
+import re
+from fridaybot import CMD_HELP
+from fridaybot.modules.sql_helper.filter_sql import (
+    add_filter,
+    get_all_filters,
+    remove_all_filters,
+    remove_filter,
+)
+from telethon import events, utils
+from telethon.tl import types
+from fridaybot.modules.sql_helper.snips_sql import (
+    add_snip,
+    get_all_snips,
+    get_snips,
+    remove_snip,
+)
+
+DELETE_TIMEOUT = 0
+TYPE_TEXT = 0
+TYPE_PHOTO = 1
+TYPE_DOCUMENT = 2
+
+
+global last_triggered_filters
+last_triggered_filters = {}
 
 # =================== CONSTANT ===================
 PP_TOO_SMOL = "`The image is too small`"
@@ -739,7 +773,564 @@ async def rm_deletedacc(event):
     await poppo.delete()
 
 
+@command(incoming=True)
+async def on_snip(event):
+    global last_triggered_filters
+    name = event.raw_text
+    if event.chat_id in last_triggered_filters:
+        if name in last_triggered_filters[event.chat_id]:
+            return False
+        
+    snips = get_all_filters(event.chat_id)
+    if snips:
+        for snip in snips:
+            pattern = r"( |^|[^\w])" + re.escape(snip.keyword) + r"( |$|[^\w])"
+            if re.search(pattern, name, flags=re.IGNORECASE):
+                if snip.snip_type == TYPE_PHOTO:
+                    media = types.InputPhoto(
+                        int(snip.media_id),
+                        int(snip.media_access_hash),
+                        snip.media_file_reference,
+                    )
+                elif snip.snip_type == TYPE_DOCUMENT:
+                    media = types.InputDocument(
+                        int(snip.media_id),
+                        int(snip.media_access_hash),
+                        snip.media_file_reference,
+                    )
+                else:
+                    media = None
+                event.message.id
+                if event.reply_to_msg_id:
+                    event.reply_to_msg_id
+                await event.reply(snip.reply, file=media)
+                if event.chat_id not in last_triggered_filters:
+                    last_triggered_filters[event.chat_id] = []
+                last_triggered_filters[event.chat_id].append(name)
+                await asyncio.sleep(DELETE_TIMEOUT)
+                last_triggered_filters[event.chat_id].remove(name)
 
+
+@friday.on(friday_on_cmd(pattern="filter (.*)"))
+@friday.on(sudo_cmd(pattern="filter (.*)", allow_sudo=True))
+async def on_snip_save(event):
+    if event.fwd_from:
+        return
+    hitler = await edit_or_reply(event, "Processing....")
+    name = event.pattern_match.group(1)
+    msg = await event.get_reply_message()
+    if msg:
+        snip = {"type": TYPE_TEXT, "text": msg.message or ""}
+        if msg.media:
+            media = None
+            if isinstance(msg.media, types.MessageMediaPhoto):
+                media = utils.get_input_photo(msg.media.photo)
+                snip["type"] = TYPE_PHOTO
+            elif isinstance(msg.media, types.MessageMediaDocument):
+                media = utils.get_input_document(msg.media.document)
+                snip["type"] = TYPE_DOCUMENT
+            if media:
+                snip["id"] = media.id
+                snip["hash"] = media.access_hash
+                snip["fr"] = media.file_reference
+        add_filter(
+            event.chat_id,
+            name,
+            snip["text"],
+            snip["type"],
+            snip.get("id"),
+            snip.get("hash"),
+            snip.get("fr"),
+        )
+        await hitler.edit(f"filter {name} saved successfully. Get it with {name}")
+    else:
+        await hitler.edit(
+            "Reply to a message with `savefilter keyword` to save the filter"
+        )
+
+
+@friday.on(friday_on_cmd(pattern="filters$"))
+@friday.on(sudo_cmd(pattern="filters$", allow_sudo=True))
+async def on_snip_list(event):
+    if event.fwd_from:
+        return
+    indiaislove = await edit_or_reply(event, "Processing....")
+    all_snips = get_all_filters(event.chat_id)
+    OUT_STR = "Available Filters in the Current Chat:\n"
+    if len(all_snips) > 0:
+        for a_snip in all_snips:
+            OUT_STR += f"👉 {a_snip.keyword} \n"
+    else:
+        OUT_STR = "No Filters. Start Saving using `.filter`"
+    if len(OUT_STR) > 4096:
+        with io.BytesIO(str.encode(OUT_STR)) as out_file:
+            out_file.name = "filters.text"
+            await bot.send_file(
+                event.chat_id,
+                out_file,
+                force_document=True,
+                allow_cache=False,
+                caption="Available Filters in the Current Chat",
+                reply_to=event,
+            )
+            await event.delete()
+    else:
+        await indiaislove.edit(OUT_STR)
+
+
+@friday.on(friday_on_cmd(pattern="stop (.*)"))
+@friday.on(sudo_cmd(pattern="stop (.*)", allow_sudo=True))
+async def on_snip_delete(event):
+    if event.fwd_from:
+        return
+    iloveindia = await edit_or_reply(event, "Processing...")
+    name = event.pattern_match.group(1)
+    remove_filter(event.chat_id, name)
+    await iloveindia.edit(f"filter {name} deleted successfully")
+
+
+@friday.on(friday_on_cmd(pattern="rmfilters$"))
+@friday.on(sudo_cmd(pattern="rmfilters$", allow_sudo=True))
+async def on_all_snip_delete(event):
+    if event.fwd_from:
+        return
+    edit_or_reply(event, "Processing....")
+    remove_all_filters(event.chat_id)
+    await event.edit(f"filters **in current chat** deleted successfully")
+    
+@friday.on(events.NewMessage(pattern=r"\#(\S+)", outgoing=True))
+async def on_snip(event):
+    name = event.pattern_match.group(1)
+    snip = get_snips(name)
+    if snip:
+        if snip.snip_type == TYPE_PHOTO:
+            media = types.InputPhoto(
+                int(snip.media_id),
+                int(snip.media_access_hash),
+                snip.media_file_reference,
+            )
+        elif snip.snip_type == TYPE_DOCUMENT:
+            media = types.InputDocument(
+                int(snip.media_id),
+                int(snip.media_access_hash),
+                snip.media_file_reference,
+            )
+        else:
+            media = None
+        message_id = event.message.id
+        if event.reply_to_msg_id:
+            message_id = event.reply_to_msg_id
+        await borg.send_message(
+            event.chat_id, snip.reply, reply_to=message_id, file=media
+        )
+        await event.delete()
+
+
+@friday.on(friday_on_cmd("snips (.*)"))
+async def on_snip_save(event):
+    if event.fwd_from:
+        return
+    name = event.pattern_match.group(1)
+    msg = await event.get_reply_message()
+    if msg:
+        snip = {"type": TYPE_TEXT, "text": msg.message or ""}
+        if msg.media:
+            media = None
+            if isinstance(msg.media, types.MessageMediaPhoto):
+                media = utils.get_input_photo(msg.media.photo)
+                snip["type"] = TYPE_PHOTO
+            elif isinstance(msg.media, types.MessageMediaDocument):
+                media = utils.get_input_document(msg.media.document)
+                snip["type"] = TYPE_DOCUMENT
+            if media:
+                snip["id"] = media.id
+                snip["hash"] = media.access_hash
+                snip["fr"] = media.file_reference
+        add_snip(
+            name,
+            snip["text"],
+            snip["type"],
+            snip.get("id"),
+            snip.get("hash"),
+            snip.get("fr"),
+        )
+        await event.edit(
+            "snip {name} saved successfully. Get it with #{name}".format(name=name)
+        )
+    else:
+        await event.edit("Reply to a message with `snips keyword` to save the snip")
+
+
+@friday.on(friday_on_cmd("snipl"))
+async def on_snip_list(event):
+    if event.fwd_from:
+        return
+    all_snips = get_all_snips()
+    OUT_STR = "Available Snips:\n"
+    if len(all_snips) > 0:
+        for a_snip in all_snips:
+            OUT_STR += f"👉 #{a_snip.snip} \n"
+    else:
+        OUT_STR = "No Snips. Start Saving using `.snips`"
+    if len(OUT_STR) > Config.MAX_MESSAGE_SIZE_LIMIT:
+        with io.BytesIO(str.encode(OUT_STR)) as out_file:
+            out_file.name = "snips.text"
+            await borg.send_file(
+                event.chat_id,
+                out_file,
+                force_document=True,
+                allow_cache=False,
+                caption="Available Snips",
+                reply_to=event,
+            )
+            await event.delete()
+    else:
+        await event.edit(OUT_STR)
+
+
+@friday.on(friday_on_cmd("snipd (\S+)"))
+async def on_snip_delete(event):
+    if event.fwd_from:
+        return
+    name = event.pattern_match.group(1)
+    remove_snip(name)
+    await event.edit("snip #{} deleted successfully".format(name))
+
+@friday.on(friday_on_cmd(pattern="create (b|g|c)(?: |$)(.*)"))
+async def telegraphs(grop):
+    if grop.fwd_from:
+        return
+    """ For .create command, Creating New Group & Channel """
+    if not grop.text[0].isalpha() and grop.text[0] not in ("/", "#", "@", "!"):
+
+        if grop.fwd_from:
+
+            return
+
+        type_of_group = grop.pattern_match.group(1)
+
+        group_name = grop.pattern_match.group(2)
+
+        if type_of_group == "b":
+
+            try:
+
+                result = await grop.client(
+                    functions.messages.CreateChatRequest(  # pylint:disable=E0602
+                        users=["@meikobot"],
+                        # Not enough users (to create a chat, for example)
+                        # Telegram, no longer allows creating a chat with ourselves
+                        title=group_name,
+                    )
+                )
+
+                created_chat_id = result.chats[0].id
+
+                await grop.client(
+                    functions.messages.DeleteChatUserRequest(
+                        chat_id=created_chat_id, user_id="@Serena_Robot"
+                    )
+                )
+
+                result = await grop.client(
+                    functions.messages.ExportChatInviteRequest(
+                        peer=created_chat_id,
+                    )
+                )
+
+                await grop.edit(
+                    "Your `{}` Group Made Boss!. Join [{}]({})".format(
+                        group_name, group_name, result.link
+                    )
+                )
+
+            except Exception as e:  # pylint:disable=C0103,W0703
+
+                await grop.edit(str(e))
+
+        elif type_of_group == "g" or type_of_group == "c":
+
+            try:
+
+                r = await grop.client(
+                    functions.channels.CreateChannelRequest(  # pylint:disable=E0602
+                        title=group_name,
+                        about="Welcome to this Channel boss",
+                        megagroup=False if type_of_group == "c" else True,
+                    )
+                )
+
+                created_chat_id = r.chats[0].id
+
+                result = await grop.client(
+                    functions.messages.ExportChatInviteRequest(
+                        peer=created_chat_id,
+                    )
+                )
+
+                await grop.edit(
+                    "Your `{}` Group/Channel Has been made Boss!. Join [{}]({})".format(
+                        group_name, group_name, result.link
+                    )
+                )
+
+            except Exception as e:  # pylint:disable=C0103,W0703
+
+                await grop.edit(str(e))
+@friday.on(friday_on_cmd(pattern="warn(?: |$)(.*)"))
+async def _s(event):
+    if event.fwd_from:
+        return
+    if not event.is_group:
+        await event.edit("This Command is Meant To Be Used in Chats/Groups")
+        return
+    user, reason = await get_user_from_event(event)
+    sed = await friday.get_permissions(event.chat_id, user.id)
+    if sed.is_admin:
+        await event.edit("`Demn, Admins Can't Be Warned`")
+        return
+    dragon = await friday.get_permissions(event.chat_id, bot.uid)
+    if not dragon.is_admin:
+        await event.edit("`Demn, Me nOT Admin`")
+        return
+    limit, soft_warn = sql.get_warn_setting(event.chat_id)
+    num_warns, reasons = sql.warn_user(user.id, event.chat_id, reason)
+    if num_warns >= limit:
+        sql.reset_warns(user.id, event.chat_id)
+        if soft_warn:
+            await friday.kick_participant(event.chat_id, user.id)
+            reply = "{} warnings, {} has been kicked!".format(limit, user.id)
+            await event.edit(reply)
+        else:
+            await friday.edit_permissions(event.chat_id, user.id, view_messages=False)
+            reply = "{} warnings, {} has been banned!".format(
+                limit, user.id, user.first_name
+            )
+            await event.edit(reply)
+        for warn_reason in reasons:
+            reply += "\n - {}".format(warn_reason)
+    else:
+        reply = "{} has {}/{} warnings... watch out!".format(user.id, num_warns, limit)
+        if reason:
+            reply += "\nReason for last warn:\n{}".format(reason)
+        await event.edit(reply)
+
+
+@friday.on(friday_on_cmd(pattern="rwarn(?: |$)(.*)"))
+async def _(event):
+    if event.fwd_from:
+        return
+    if not event.is_group:
+        await event.edit("This Command is Meant To Be Used in Chats/Groups")
+        return
+    user, reason = await get_user_from_event(event)
+    sed = await friday.get_permissions(event.chat_id, user.id)
+    if sed.is_admin:
+        await event.edit("Demn, Admins Can't Be Warned")
+        return
+    dragon = await friday.get_permissions(event.chat_id, bot.uid)
+    if not dragon.is_admin:
+        await event.edit("Demn, Me nOT Admin")
+        return
+    sql.reset_warns(user.id, event.chat_id)
+    await event.edit("Warnings have been reset!")
+
+
+@friday.on(friday_on_cmd(pattern="allwarns(?: |$)(.*)"))
+async def __(event):
+    if event.fwd_from:
+        return
+    if not event.is_group:
+        await event.edit("This Command is Meant To Be Used in Chats/Groups")
+        return
+    user, reason = await get_user_from_event(event)
+    result = sql.get_warns(user.id, event.chat_id)
+    if result and result[0] != 0:
+        num_warns, reasons = result
+        limit, soft_warn = sql.get_warn_setting(event.chat_id)
+        if reasons:
+            text = (
+                "This user has {}/{} warnings, for the following reasons: \n\n".format(
+                    num_warns, limit
+                )
+            )
+            for reason in reasons:
+                text += "- {} \n".format(reason)
+            await event.edit(text)
+        else:
+            await event.edit(
+                "User has {}/{} warnings, but no reasons for any of them.".format(
+                    num_warns, limit
+                )
+            )
+    else:
+        await event.edit("This user hasn't got any warnings!")
+
+
+@friday.on(friday_on_cmd(pattern="slimit ?(.*)"))
+async def m_(event):
+    if event.fwd_from:
+        return
+    if not event.is_group:
+        await event.edit("This Command is Meant To Be Used in Chats/Groups")
+        return
+    args = event.pattern_match.group(1)
+    if args:
+        if args.isdigit():
+            if int(args) < 3:
+                await event.edit("The minimum warn limit is 3!")
+            else:
+                sql.set_warn_limit(event.chat_id, int(args))
+                await event.edit("Updated the warn limit to {}".format(args))
+        else:
+            await event.edit("Give me a number as an arg!")
+    else:
+        limit, soft_warn = sql.get_warn_setting(event.chat_id)
+        await event.edit("The current warn limit is {}".format(limit))
+
+
+@friday.on(friday_on_cmd(pattern="wap ?(.*)"))
+async def m_(event):
+    if event.fwd_from:
+        return
+    if not event.is_group:
+        await event.edit("This Command is Meant To Be Used in Chats/groups")
+        return
+    args = event.pattern_match.group(1)
+    if args:
+        if args.lower() in ("on", "yes"):
+            sql.set_warn_strength(event.chat_id, False)
+            await event.edit("Too many warns will now result in a ban!")
+        elif args.lower() in ("off", "no"):
+            sql.set_warn_strength(event.chat_id, True)
+            await event.edit(
+                "Too many warns will now result in a kick! Users will be able to join again after."
+            )
+        else:
+            await event.edit("I only understand on/yes/no/off!")
+    else:
+        limit, soft_warn = sql.get_warn_setting(chat.id)
+        if soft_warn:
+            await event.edit(
+                "Warns are currently set to **kick** users when they exceed the limits."
+            )
+        else:
+            await event.edit(
+                "Warns are currently set to **ban** users when they exceed the limits."
+            )
+
+
+async def get_user_from_event(event):
+    """ Get the user from argument or replied message. """
+    args = event.pattern_match.group(1).split(" ", 1)
+    extra = None
+    if event.reply_to_msg_id:
+        previous_message = await event.get_reply_message()
+        user_obj = await event.client.get_entity(previous_message.sender_id)
+        extra = event.pattern_match.group(1)
+    elif args:
+        user = args[0]
+        if len(args) == 2:
+            extra = args[1]
+
+        if user.isnumeric():
+            user = int(user)
+
+        if not user:
+            await event.edit("`Pass the user's username, id or reply!`")
+            return
+
+        if event.message.entities is not None:
+            probable_user_mention_entity = event.message.entities[0]
+
+            if isinstance(probable_user_mention_entity, MessageEntityMentionName):
+                user_id = probable_user_mention_entity.user_id
+                user_obj = await event.client.get_entity(user_id)
+                return user_obj
+        try:
+            user_obj = await event.client.get_entity(user)
+        except (TypeError, ValueError) as err:
+            await event.edit(str(err))
+            return None
+
+    return user_obj, extra
+
+
+async def get_user_sender_id(user, event):
+    if isinstance(user, str):
+        user = int(user)
+
+    try:
+        user_obj = await event.client.get_entity(user)
+    except (TypeError, ValueError) as err:
+        await event.edit(str(err))
+        return None
+
+    return user_obj
+
+@friday.on(friday_on_cmd(pattern="admins"))
+async def _(event):
+    if event.fwd_from:
+        return
+    mentions = "@admin: **Spam Spotted**"
+    chat = await event.get_input_chat()
+    async for x in borg.iter_participants(chat, filter=ChannelParticipantsAdmins):
+        mentions += f"[\u2063](tg://user?id={x.id})"
+    reply_message = None
+    if event.reply_to_msg_id:
+        reply_message = await event.get_reply_message()
+        await reply_message.reply(mentions)
+    else:
+        await event.reply(mentions)
+    await event.delete()
+    
+@friday.on(friday_on_cmd("mention (.*)"))
+async def _(event):
+    if event.fwd_from:
+        return
+    input_str = event.pattern_match.group(1)
+    if event.reply_to_msg_id:
+        previous_message = await event.get_reply_message()
+        if previous_message.forward:
+            replied_user = previous_message.forward.sender_id
+        else:
+            replied_user = previous_message.sender_id
+    else:
+        await event.edit("reply To Message")
+    user_id = replied_user
+    caption = """<a href='tg://user?id={}'>{}</a>""".format(user_id, input_str)
+    await event.edit(caption, parse_mode="HTML")
+    
+@friday.on(friday_on_cmd("get_bot ?(.*)"))
+async def _(event):
+    if event.fwd_from:
+        return
+    mentions = "**Bots in this Channel**: \n"
+    input_str = event.pattern_match.group(1)
+    to_write_chat = await event.get_input_chat()
+    chat = None
+    if not input_str:
+        chat = to_write_chat
+    else:
+        mentions = "Bots in {} channel: \n".format(input_str)
+        try:
+            chat = await borg.get_entity(input_str)
+        except Exception as e:
+            await event.edit(str(e))
+            return None
+    try:
+        async for x in borg.iter_participants(chat, filter=ChannelParticipantsBots):
+            if isinstance(x.participant, ChannelParticipantAdmin):
+                mentions += "\n ⚜️ [{}](tg://user?id={}) `{}`".format(
+                    x.first_name, x.id, x.id
+                )
+            else:
+                mentions += "\n [{}](tg://user?id={}) `{}`".format(
+                    x.first_name, x.id, x.id
+                )
+    except Exception as e:
+        mentions += " " + str(e) + "\n"
+    await event.edit(mentions)
 
 CMD_HELP.update(
     {
@@ -767,5 +1358,44 @@ CMD_HELP.update(
 \n**Usage:** Retrieves all (or queried) users in the chat.\
 \n\n.setgppic <reply to image>\
 \n**Usage:** Changes the group's display picture."
+    }
+)
+CMD_HELP.update(
+    {
+        "warns": "**Warns**\
+\n\n**Syntax : **`.warn <reason> <reply or mention the user>`\
+\n**Usage :** Warns The Given User.\
+\n\n**Syntax : **`.rwarn <reply or mention the user>`\
+\n**Usage :** Removes Warn Of The User.\
+\n\n**Syntax : **`.allwarns <reply or mention the user>`\
+\n**Usage :** Shows All The Warns Of The Given User.\
+\n\n**Syntax : **`.slimit <no of max warns>`\
+\n**Usage :** Sets Maximum Warn Limit.\
+\n\n**Syntax : **`.wap <on or off>`\
+\n**Usage :** If this is turned on, user gets banned after reaching maximum warns. If it's off, user is kicked."
+    }
+)
+CMD_HELP.update(
+    {
+        "filters": "**Filters**\
+\n\n**Syntax : **`.filter <word to trigger> <reply to triggered message>`\
+\n**Usage :** save filters using this plugin.\
+\n\n**Syntax : **`.filters`\
+\n**Usage :** All the filters of current chat are listed.\
+\n\n**Syntax : **`.stop <filter word to stop>`\
+\n**Usage :** Deletes given trigger word.\
+\n\n**Syntax : **`.rmfilters`\
+\n**Usage :** All the filters in a chat are deleted."
+    }
+)
+CMD_HELP.update(
+    {
+        "snip": "**Snip**\
+\n\n**Syntax : **`.snips <name of snip> <reply to a message>`\
+\n**Usage :** saves the message with given text.\
+\n\n**Syntax : **`.snipl`\
+\n**Usage :** lists all the snips.\
+\n\n**Syntax : **`.snipd <name of snip>`\
+\n**Usage :** Deletes the snip."
     }
 )
