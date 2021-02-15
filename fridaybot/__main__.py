@@ -29,9 +29,12 @@ from fridaybot.Configs import Config
 fridaydevs = logging.getLogger("Friday")
 
 async def add_bot(bot_token):
-    await bot.start(bot_token)
-    bot.me = await bot.get_me()
-    bot.uid = telethon.utils.get_peer_id(bot.me)
+    try:
+        await bot.start(bot_token)
+        bot.me = await bot.get_me()
+        bot.uid = telethon.utils.get_peer_id(bot.me)
+    except:
+        fridaydevs.info("Failed To Run Main Client. Is Your String Correct?")
    
         
 # Bleck Megic         
@@ -40,7 +43,9 @@ async def check_inline_on_warner(ws):
     if not w_s.bot_inline_placeholder:
         fridaydevs.info("Warning : We Have Detected That You Have Not Turned On Inline Mode For Your Assistant Bot, Please Go To @BotFather And Enable This.")
     return
+
 Lol = "folyl's Token"
+
 async def lol_s(client):
     client.me = await client.get_me()
     client.uid = telethon.utils.get_peer_id(client.me)
