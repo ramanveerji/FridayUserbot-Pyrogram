@@ -1,8 +1,27 @@
 # All 3 Clients
-
+import logging
 from telethon import TelegramClient
 from telethon.sessions import StringSession
 from fridaybot.Configs import Config
+
+starky = logging.getLogger("ALERT")
+
+
+if not Config.STRING_SESSION:
+    starky.warning("String Session is Missing, UserBot is Quiting. Please Check ReadMe")
+    quit(1)
+    
+if not Config.APP_ID:
+    starky.warning("Api ID is Missing, UserBot is Quiting. Please Check ReadMe")
+    quit(1)
+    
+if not Config.API_HASH:
+    starky.warning("Api Hash is Missing, UserBot is Quiting. Please Check ReadMe")
+    quit(1)
+    
+if not Config.PRIVATE_GROUP_ID:
+    starky.warning("Please Add Priavte Group ID For Proper Functioning Of UserBot")
+    quit(1)
 
 if Config.STRING_SESSION:
     session_name = str(Config.STRING_SESSION)
