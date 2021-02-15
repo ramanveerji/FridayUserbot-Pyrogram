@@ -74,14 +74,14 @@ async def last_fm(lastFM):
             song = playing.get_title()
             artist = playing.get_artist()
             if image:
-                output = f"[‎]({image})**{ALIVE_NAME}** is now listening to:\n\n 🎧 **{song}**\n 💃 {artist}\n\n`{tags}`"
+                output = f"[‎]({image})**{borg.me.first_name}** is now listening to:\n\n 🎧 **{song}**\n 💃 {artist}\n\n`{tags}`"
                 preview = True
             else:
-                output = f"**{ALIVE_NAME}** is now listening to:\n\n 🎧 **{song}**\n 💃 {artist}\n\n`{tags}`"
+                output = f"**{borg.me.first_name}** is now listening to:\n\n 🎧 **{song}**\n 💃 {artist}\n\n`{tags}`"
         else:
             recent = User(LASTFM_USERNAME, lastfm).get_recent_tracks(limit=3)
             playing = User(LASTFM_USERNAME, lastfm).get_now_playing()
-            output = f"**{ALIVE_NAME}** was last listening to:\n\n"
+            output = f"**{borg.me.first_name}** was last listening to:\n\n"
             for i, track in enumerate(recent):
                 print(i)  # vscode hates the i being there so lets make it chill
                 printable = artist_and_song(track)
