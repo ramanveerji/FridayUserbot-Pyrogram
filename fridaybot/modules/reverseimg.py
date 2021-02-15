@@ -16,7 +16,7 @@ from re import findall
 import requests
 from bs4 import BeautifulSoup
 from PIL import Image
-from fridaybot.googol_images import googleimagesdownload
+from fridaybot.function.gmdl import googleimagesdownload
 from fridaybot import CMD_HELP
 from fridaybot.utils import errors_handler, register, friday_on_cmd
 
