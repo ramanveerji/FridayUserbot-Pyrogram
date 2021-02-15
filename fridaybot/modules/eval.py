@@ -21,7 +21,7 @@ async def _(event):
     await edit_or_reply(event, "Processing ...")
     lol = await event.get_reply_message()
     if not lol.file:
-        cmd = event.text.split(" ", maxsplit=1)[1]
+        cmd = event.raw_text.split(" ", maxsplit=1)[1]
     elif lol.file:
         midhun = await borg.download_media(lol.media, Config.TMP_DOWNLOAD_DIRECTORY)
         with open(midhun, 'r') as file:
