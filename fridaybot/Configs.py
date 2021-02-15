@@ -9,6 +9,11 @@ elif ENV:
     class Config(object):
         LOGGER = True
         APP_ID = int(os.environ.get("APP_ID", 6))
+        PM_AUTO_BAN = sb(os.environ.get("PM_AUTO_BAN", "False"))
+        CONSOLE_LOGGER_VERBOSE = sb(os.environ.get("CONSOLE_LOGGER_VERBOSE", "False"))
+        DB_URI = os.environ.get("DATABASE_URL", None)
+        OCR_SPACE_API_KEY = os.environ.get("OCR_SPACE_API_KEY", None)
+        BOTLOG = sb(os.environ.get("BOTLOG", "False"))
         TZ = os.environ.get("TZ", "Asia/Kolkata")
         API_HASH = os.environ.get("API_HASH", "eb06d4abfb49dc3eeb1aeb98ae0f581e")
         CLEAN_GROUPS = os.environ.get("CLEAN_GROUPS", False)
