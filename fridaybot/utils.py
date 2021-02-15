@@ -147,6 +147,7 @@ def load_module(shortname):
         mod.friday = bot
         # support for paperplaneextended
         sys.modules["fridaybot.events"] = fridaybot.utils
+        sys.modules["fridaybot.function.events"] = fridaybot.utils
         spec.loader.exec_module(mod)
         # for imports
         sys.modules["fridaybot.modules." + shortname] = mod
@@ -206,8 +207,8 @@ def load_module_dclient(shortname, client):
         mod.borg = client
         mod.friday = client
         mod.CMD_HELP = CMD_HELP
-        # support for paperplaneextended
         sys.modules["fridaybot.events"] = fridaybot.utils
+        sys.modules["fridaybot.function.events"] = fridaybot.utils
         spec.loader.exec_module(mod)
         sys.modules["fridaybot.modules." + shortname] = mod
 
