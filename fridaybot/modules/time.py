@@ -46,7 +46,7 @@ def get_readable_time(seconds: int) -> str:
 async def _(event):
     if event.fwd_from:
         return
-    uptime = get_readable_time((time.time() - ))
+    uptime = get_readable_time((time.time() - Lastupdate))
     TZ = pytz.timezone(Config.TZ)
     current_time = datetime.now(TZ).strftime(
         f"Time Zone : {Config.TZ} \n\nDate : %Y/%m/%d \nTime : %H:%M:%S \nUptime : {Lastupdate} \nFriday - Version : {friday_version}"
