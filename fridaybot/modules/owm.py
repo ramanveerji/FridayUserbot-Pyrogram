@@ -15,7 +15,7 @@ from pytz import timezone as tz
 from fridaybot.utils import friday_on_cmd
 from fridaybot import CMD_HELP
 from fridaybot import OPEN_WEATHER_MAP_APPID as OWM_API
-from fridaybot.events import errors_handler, register
+from fridaybot.function.events import errors_handler, register
 
 # ===== CONSTANT =====
 DEFCITY = "Ahmedabad"
