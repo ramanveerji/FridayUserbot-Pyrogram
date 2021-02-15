@@ -32,8 +32,8 @@ async def _(event):
     required_file_name = (
         Config.TMP_DOWNLOAD_DIRECTORY + " " + str(datetime.now()) + ".webp"
     )
-    img = Image.new("RGBA", (600, 600), color=(0, 0, 0, 0.5))
-    fnt = ImageFont.truetype(FONT_FILE_TO_USE, 30)
+    img = Image.new("RGBA", (600, 600), color=(0, 0, 0, 115))
+    fnt = ImageFont.truetype(FONT_FILE_TO_USE, 35)
     drawn_text = ImageDraw.Draw(img)
     drawn_text.text((10, 10), current_time, font=fnt, fill=(255, 255, 255))
     img.save(required_file_name)
@@ -43,10 +43,6 @@ async def _(event):
         reply_to=reply_msg_id,
     )
     os.remove(required_file_name)
-    end = datetime.now()
-    time_taken_ms = (end - start).seconds
-    await event.edit("Created sticker in {} seconds".format(time_taken_ms))
-    await asyncio.sleep(5)
     await event.delete()
 
     
