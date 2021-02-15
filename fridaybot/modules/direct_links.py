@@ -17,7 +17,7 @@ from humanize import naturalsize
 
 from fridaybot import CMD_HELP
 from fridaybot.utils import friday_on_cmd
-from fridaybot.events import register
+from fridaybot.function.events import register
 
 
 def subprocess_run(cmd):
