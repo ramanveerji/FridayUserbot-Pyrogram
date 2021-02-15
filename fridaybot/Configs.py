@@ -50,7 +50,7 @@ elif ENV:
                username=LASTFM_USERNAME,
                password_hash=LASTFM_PASS,
            )
-       else:
+        else:
            lastfm = None
         G_DRIVE_CLIENT_ID = os.environ.get("G_DRIVE_CLIENT_ID", None)
         G_DRIVE_CLIENT_SECRET = os.environ.get("G_DRIVE_CLIENT_SECRET", None)
