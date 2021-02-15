@@ -15,7 +15,7 @@ from pySmartDL import SmartDL
 from telethon.tl.types import DocumentAttributeVideo
 from fridaybot.function.FastTelethon import upload_file
 from fridaybot import CMD_HELP, LOGS, TEMP_DOWNLOAD_DIRECTORY
-from fridaybot.events import register
+from fridaybot.function.events import register
 from fridaybot.utils import edit_or_reply, friday_on_cmd, sudo_cmd
 
 
