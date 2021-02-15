@@ -20,7 +20,7 @@ async def _(event):
         return
     TZ = pytz.timezone(Config.TZ)
     current_time = datetime.now(TZ).strftime(
-        f"Time Zone : {Config.TZ} \n\nDate : %Y/%m/%d \nTime : %H:%M:%S"
+        f"Time \nTime Zone : {Config.TZ} \n\nDate : %Y/%m/%d \nTime : %H:%M:%S"
     )
     start = datetime.now()
     reply_msg_id = event.message.id
@@ -32,7 +32,7 @@ async def _(event):
     required_file_name = (
         Config.TMP_DOWNLOAD_DIRECTORY + " " + str(datetime.now()) + ".webp"
     )
-    img = Image.new("RGBA", (600, 600), color=(0, 0, 0, 115))
+    img = Image.new("RGBA", (600, 300), color=(0, 0, 0, 115))
     fnt = ImageFont.truetype(FONT_FILE_TO_USE, 35)
     drawn_text = ImageDraw.Draw(img)
     drawn_text.text((10, 10), current_time, font=fnt, fill=(255, 255, 255))
