@@ -5,7 +5,7 @@ import sys
 import time
 from distutils.util import strtobool as sb
 from logging import DEBUG, INFO, basicConfig, getLogger
-
+from fridaybot.clients import bot, client2, client3
 import pylast
 import wget
 from nospamplus.connect import Connect
@@ -25,23 +25,6 @@ Lastupdate = time.time()
 sedprint = logging.getLogger("WARNING")
 from fridaybot.Configs import Config
 
-
-# All Clients - 3
-
-if Config.STRING_SESSION:
-    session_name = str(Config.STRING_SESSION)
-    bot = TelegramClient(StringSession(session_name), Config.APP_ID, Config.API_HASH)
-else:
-    session_name = "startup"
-    bot = TelegramClient(session_name, Config.APP_ID, Config.API_HASH)
-if Config.STRING_SESSION_2:
-    client2 =  TelegramClient(StringSession(Config.STRING_SESSION_2), Config.APP_ID, Config.API_HASH)
-else:
-    client2 = None
-if Config.STRING_SESSION_3:
-    client3 =  TelegramClient(StringSession(Config.STRING_SESSION_3), Config.APP_ID, Config.API_HASH)
-else:
-    client3 = None
 
 CMD_LIST = {}
 CMD_HELP = {}
