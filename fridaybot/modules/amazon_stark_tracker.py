@@ -75,7 +75,7 @@ async def track_amazon():
         title = title.strip()
         price = price[2:].split(',')
         price = round(float("".join(price)))
-        if (price < ujwal.budget):
+        if (int(price) > int(ujwal.budget)):
             await borg.send_message(Config.PRIVATE_GROUP_ID, f"#Tracker - Price Reduced \nProduct Name : {title} \nCurrent price : {price}")
             rm_tracker(str(ujwal.amazon_url))
         else:
