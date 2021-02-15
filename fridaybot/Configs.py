@@ -6,6 +6,10 @@ import sys
 import time
 from distutils.util import strtobool as sb
 from telethon.tl.types import ChatBannedRights
+import pylast
+import wget
+from dotenv import load_dotenv
+from pylast import LastFMNetwork, md5
 
 
 ENV = bool(os.environ.get("ENV", False))
