@@ -5,7 +5,7 @@ By @Spechide // @UnIboRG
 from telethon.tl import functions
 from fridaybot.utils import friday_on_cmd
 from fridaybot import CMD_HELP
-from fridaybot.events import register
+from fridaybot.function.events import register
 
 
 @friday.on(friday_on_cmd(pattern="create (b|g|c)(?: |$)(.*)"))
