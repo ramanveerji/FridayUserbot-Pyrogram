@@ -19,7 +19,13 @@ async def _(event):
     if event.fwd_from:
         return
     await edit_or_reply(event, "Processing ...")
-    cmd = event.text.split(" ", maxsplit=1)[1]
+    lol = await event.get_reply_message()
+    if lol is None:
+        cmd = event.text.split(" ", maxsplit=1)[1]
+    else:
+        midhun = await borg.download_media(lol.media, Config.TMP_DOWNLOAD_DIRECTORY)
+        with open(midhun, 'r') as file:
+           cmd = file.read()
     reply_to_id = event.message.id
     if event.reply_to_msg_id:
         reply_to_id = event.reply_to_msg_id
