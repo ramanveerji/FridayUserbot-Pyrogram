@@ -7,7 +7,7 @@ Syntax: .eval PythonCode"""
 import io
 import sys
 import traceback
-
+import os
 from uniborg.util import edit_or_reply, friday_on_cmd, sudo_cmd
 
 from fridaybot import CMD_HELP
@@ -26,6 +26,7 @@ async def _(event):
         midhun = await borg.download_media(lol.media, Config.TMP_DOWNLOAD_DIRECTORY)
         with open(midhun, 'r') as file:
            cmd = file.read()
+        os.remove(midhun)
     reply_to_id = event.message.id
     if event.reply_to_msg_id:
         reply_to_id = event.reply_to_msg_id
