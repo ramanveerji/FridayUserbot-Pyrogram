@@ -49,7 +49,7 @@ async def _(event):
     uptime = get_readable_time((time.time() - Lastupdate))
     TZ = pytz.timezone(Config.TZ)
     current_time = datetime.now(TZ).strftime(
-        f"Time Zone : {Config.TZ} \n\nDate : %Y/%m/%d \nTime : %H:%M:%S \nUptime : {Lastupdate} \nFriday - Version : {friday_version}"
+        f"Time Zone : {Config.TZ} \n\nDate : %Y/%m/%d \nTime : %H:%M:%S \nUptime : {uptime} \nFriday - Version : {friday_version}"
     )
     start = datetime.now()
     reply_msg_id = event.message.id
