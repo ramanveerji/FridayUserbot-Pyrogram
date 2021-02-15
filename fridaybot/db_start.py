@@ -19,4 +19,5 @@ try:
 except AttributeError as e:
     databased.warning("DB_URI is not configured. Features depending on the database might have issues.")
     databased.warning(str(e))
+    databased.warning("As For Now, UserBot Will Exit. Bye")
     quit(1)
