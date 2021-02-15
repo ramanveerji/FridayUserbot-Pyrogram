@@ -17,7 +17,7 @@ async def _(event):
         mentions += f"[x.first_name](tg://user?id={x.id}) \n"
     await event.delete()
     n = 4096
-    kk = [mention[i:i+n] for i in range(0, len(mention), n)]
+    kk = [mentions[i:i+n] for i in range(0, len(mentions), n)]
     for i in kk:
         j = f"**{sh}** \n{i}"
         await event.client.send_message(event.chat_id, j)
