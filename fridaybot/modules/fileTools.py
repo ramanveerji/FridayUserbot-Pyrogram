@@ -15,7 +15,6 @@ import asyncio
 import time
 import time as t
 import zipfile
-from Code2pdf import Code2pdf
 from datetime import datetime
 import shutil
 from fridaybot import CMD_HELP
@@ -63,6 +62,7 @@ async def heck(event):
         images_path.append(path)
     with open('imagetopdf@fridayot.pdf', "wb") as f:
         f.write(img2pdf.convert(images_path))    
+    await event.delete()    
     await borg.send_file(event.chat_id, "imagetopdf@fridayot.pdf", caption="Powered By @FridayOT")  
     os.remove("imagetopdf@fridayot.pdf")
     shutil.rmtree(dir)
@@ -89,30 +89,6 @@ async def hmm(event):
     os.remove(docx_file)
     await event.delete()
     
-@friday.on(friday_on_cmd(pattern=r"code2pdf$"))
-async def hmm(event):
-    if event.fwd_from:
-        return
-    if not event.reply_to_msg_id:
-        await event.edit("Reply to any File.")
-        return
-    hmmu = await event.edit("hmm... Please Wait...🚶")
-    lol = await event.get_reply_message()
-    if not lol.document:
-        await event.edit("Only Documents :/")
-        return
-    starky = await borg.download_media(lol.media)
-    hmmu = await event.edit("hmm... Please Wait..")
-    pdf = Code2pdf(starky, "test.pdf", "Ä4")
-    pdf.init_print()
-    await event.delete()
-    await borg.send_file(
-        event.chat_id, "test.pdf", caption=f"**Code2Pdf - ** @FridayOt"
-    )
-    os.remove("Code2Pdf@FridayOt.pdf")
-    os.remove(starky)
-
-
 
 
 CMD_HELP.update(
