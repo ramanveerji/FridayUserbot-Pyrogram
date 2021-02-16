@@ -56,7 +56,6 @@ import re
 import shlex
 import subprocess
 import time
-import eyed3
 from os.path import basename
 from typing import List, Optional, Tuple
 import webbrowser
