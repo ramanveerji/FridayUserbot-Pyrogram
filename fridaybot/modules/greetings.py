@@ -28,7 +28,7 @@ GDNOON = (
 
 
 
-@friday.on(friday_on_cmd(pattern=r"gm$"))
+@friday.on(friday_on_cmd(pattern=r"gmt$"))
 async def morning(event):
     if event.fwd_from:
         return    
@@ -120,7 +120,7 @@ CMD_HELP.update(
         "greetings": ".gdn \
 \nUsage: Say Good Night \n\n .gdm \
 \nUsage: Say Good Morning \n\n .gnt \
-\nUsage: A random Good night text \n\n .gm \
+\nUsage: A random Good night text \n\n .gmt \
 \nUsage: A random Good Morning text \n\n .stysafe \
 \nUsage: Say #StaySafe \n\n .gdbye \
 \nUsage: Better way to say Good Bye"
