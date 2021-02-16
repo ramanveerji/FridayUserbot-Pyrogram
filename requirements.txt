@@ -3,8 +3,6 @@ deezer-python
 moviepy
 google-trans-new
 nospamplus
-git+https://github.com/tushar-rishav/code2pdf
-eyed3
 img2pdf
 pymediainfo
 apscheduler
