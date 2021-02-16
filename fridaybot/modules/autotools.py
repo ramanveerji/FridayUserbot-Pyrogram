@@ -29,7 +29,7 @@ async def autoname(event):
     if event.fwd_from:
         return
     sed = await edit_or_reply(event, "`Started AutoName Your Name Will Be Changed Every 1 Min, According To TimeZone Given. To Terminate This Process Use .stop Cmd`")
-    scheduler.add_job(auto_name, 'interval', args=[event.pattern_match.group(1)], minutes=1, id='autoname')
+    scheduler.add_job(auto_name, 'interval', args=[event.pattern_match.group(1)], minutes=5, id='autoname')
     
 @friday.on(friday_on_cmd(pattern="autopic$"))
 @friday.on(sudo_cmd(pattern="autopic$", allow_sudo=True))
@@ -37,7 +37,7 @@ async def autopic(event):
     if event.fwd_from:
         return
     sed = await edit_or_reply(event, "`Started AutoPic Your Name Will Be Changed Every 1 Min, According To TimeZone Given. To Terminate This Process Use .stop Cmd`")
-    scheduler.add_job(auto_pic, 'interval', minutes=1, id='autopic')
+    scheduler.add_job(auto_pic, 'interval', minutes=5, id='autopic')
 
 @friday.on(friday_on_cmd(pattern="autobio(?: |$)(.*)"))
 @friday.on(sudo_cmd(pattern="autobio(?: |$)(.*)", allow_sudo=True))
@@ -45,7 +45,7 @@ async def autobio(event):
     if event.fwd_from:
         return
     sed = await edit_or_reply(event, "`Started AutoBio Your Bio Will Be Changed Every 1 Min, According To TimeZone Given. To Terminate This Process Use .stop Cmd`")
-    scheduler.add_job(auto_bio, 'interval', args=[event.pattern_match.group(1)], minutes=1, id='autobio')
+    scheduler.add_job(auto_bio, 'interval', args=[event.pattern_match.group(1)], minutes=5, id='autobio')
 
 @friday.on(friday_on_cmd(pattern="stop$"))
 @friday.on(sudo_cmd(pattern="stop$", allow_sudo=True))
