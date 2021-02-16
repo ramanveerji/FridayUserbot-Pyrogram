@@ -29,13 +29,9 @@ from fridaybot.Configs import Config
 fridaydevs = logging.getLogger("Friday")
 
 async def add_bot(bot_token):
-    try:
-        await bot.start(bot_token)
-        bot.me = await bot.get_me()
-        bot.uid = telethon.utils.get_peer_id(bot.me)
-    except:
-        fridaydevs.warning("Failed To Run Main Client. Is Your String Correct?")
-        quit(1)
+    await bot.start(bot_token)
+    bot.me = await bot.get_me()
+    bot.uid = telethon.utils.get_peer_id(bot.me)
    
         
 # Bleck Megic         
