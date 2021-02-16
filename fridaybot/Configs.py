@@ -19,6 +19,7 @@ elif ENV:
     class Config(object):
         LOGGER = True
         APP_ID = int(os.environ.get("APP_ID", 6))
+        LANG = os.environ.get("LANG", "en")
         PM_AUTO_BAN = sb(os.environ.get("PM_AUTO_BAN", "False"))
         CONSOLE_LOGGER_VERBOSE = sb(os.environ.get("CONSOLE_LOGGER_VERBOSE", "False"))
         DB_URI = os.environ.get("DATABASE_URL", None)
