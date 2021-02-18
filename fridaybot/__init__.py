@@ -19,8 +19,8 @@ from telethon.sessions import StringSession
 
 from fridaybot.Configs import Config
 
-if os.path.exists('.env'):
-    load_dotenv()
+if os.path.exists('local.env'):
+    load_dotenv('local.env')
 
 Lastupdate = time.time()
 sedprint = logging.getLogger("WARNING")
