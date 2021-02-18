@@ -11,8 +11,8 @@ import wget
 from dotenv import load_dotenv
 from pylast import LastFMNetwork, md5
 
-if os.path.exists('.env'):
-    load_dotenv()
+if os.path.exists('local.env'):
+    load_dotenv('local.env')
     
 class Config(object):
     LOGGER = True
@@ -124,7 +124,6 @@ class Config(object):
         "SCREEN_SHOT_LAYER_ACCESS_KEY", None
     )
     # Send .get_id in any group to fill this value.
-
     # This is required for the modules involving the file system.
     TMP_DOWNLOAD_DIRECTORY = os.environ.get(
         "TMP_DOWNLOAD_DIRECTORY", "./DOWNLOADS/"
