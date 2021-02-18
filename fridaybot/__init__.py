@@ -80,7 +80,6 @@ G_DRIVE_AUTH_TOKEN_DATA = os.environ.get("G_DRIVE_AUTH_TOKEN_DATA", None)
 GDRIVE_FOLDER_ID = os.environ.get("GDRIVE_FOLDER_ID", None)
 TEMP_DOWNLOAD_DIRECTORY = os.environ.get("TEMP_DOWNLOAD_DIRECTORY", "./downloads")
 CMD_LIST = {}
-CMD_HELP = {}
 INT_PLUG = ""
 LOAD_PLUG = {}
 COUNT_MSG = 0
@@ -116,7 +115,7 @@ try:
     if not os.path.isdir(Config.TMP_DOWNLOAD_DIRECTORY):
         os.makedirs(Config.TMP_DOWNLOAD_DIRECTORY)
     if not os.path.isdir(TEMP_DOWNLOAD_DIRECTORY):
-        os.makedirs(TMP_DOWNLOAD_DIRECTORY)
+        os.makedirs(TEMP_DOWNLOAD_DIRECTORY)
 except:
     pass
 friday_version = "7.0"
