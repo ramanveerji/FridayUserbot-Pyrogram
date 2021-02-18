@@ -97,7 +97,7 @@ class Config(object):
     MAX_FLOOD_IN_P_M_s = int(os.environ.get("MAX_FLOOD_IN_P_M_s", 3))
     if AUTH_TOKEN_DATA is not None:
         if not os.path.isdir(TEMP_DOWNLOAD_DIRECTORY):
-        os.makedirs(TEMP_DOWNLOAD_DIRECTORY)
+            os.makedirs(TEMP_DOWNLOAD_DIRECTORY)
         t_file = open(TEMP_DOWNLOAD_DIRECTORY + "auth_token.txt", "w")
         t_file.write(AUTH_TOKEN_DATA)
         t_file.close()
