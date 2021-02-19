@@ -41,7 +41,6 @@ python-magic
 glitch_this
 PyGithub
 pytesseract
-youtube-dl
 opencv-contrib-python
 Telethon==1.19.0
 iplookup
