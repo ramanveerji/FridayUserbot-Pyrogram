@@ -17,7 +17,7 @@ from telethon.tl.types import MessageMediaPhoto
 
 from fridaybot import CMD_HELP
 from fridaybot.utils import friday_on_cmd, sudo_cmd, admin_cmd
-from pornhub_api import PornhubApi
+#from pornhub_api import PornhubApi
 from uniborg.util import friday_on_cmd
 
 
@@ -55,39 +55,34 @@ async def nsfw(event):
                 os.remove(photo)
 
 
-@friday.on(admin_cmd(pattern="phs (.*)"))
-async def _(event):
-    if event.fwd_from:
-        return
-    input_str = event.pattern_match.group(1)
-    api = PornhubApi()
-    data = api.search.search(
-    input_str,
-    ordering="mostviewed"
-    )
-    ok = 1
-    oik = ""
-    for vid in data.videos:
-      if ok<=5:
-        oik +=(f"""
-Video title:- {vid.title}
-Video link:- https://www.pornhub.com/view_video.php?viewkey={vid.video_id}
-
-
-
-        """)
-        ok = ok+1
-      else:
-        pass
-    
-    oiko = "<b>Links Generated Successfully</b>"+"\n"+"Search Query:- "+input_str+"\n"+oik
-    
-    await borg.send_message(
-        event.chat_id,
-        oiko,
-        parse_mode="HTML",
-    )
-    await event.delete()
+#@friday.on(admin_cmd(pattern="phs (.*)"))
+#async def _(event):
+#    if event.fwd_from:
+#        return
+#    input_str = event.pattern_match.group(1)
+#    api = PornhubApi()
+#   data = api.search.search(
+#   input_str,
+#   ordering="mostviewed"
+#   	)
+#    ok = 1
+#    oik = ""
+#    for vid in data.videos:
+#      if ok<=5:
+#        oik +=(f"""
+#Video title:- {vid.title}
+#Video link:- https://www.pornhub.com/view_video.php?viewkey={vid.video_id}
+#        """)
+#        ok = ok+1
+#      else:
+#        pass   
+#    oiko = "<b>Links Generated Successfully</b>"+"\n"+"Search Query:- "+input_str+"\n"+oik
+#    await borg.send_message(
+#        event.chat_id,
+#        oiko,
+#        parse_mode="HTML",
+#    )
+#    await event.delete()
 
 
 
