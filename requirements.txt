@@ -16,7 +16,7 @@ pokedex.py
 faker
 tracemoepy
 deep_translator
-pornhub-api
+git+https://github.com/Derfirm/pornhub-api.git
 countryinfo
 mal-api
 youtube-search-python
