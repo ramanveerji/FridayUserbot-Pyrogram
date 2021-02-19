@@ -28,7 +28,7 @@ from telethon import Button, custom, events, functions
 from youtubesearchpython import VideosSearch
 from fridaybot import ALIVE_NAME, CMD_HELP, CMD_LIST, client2 as client1, client3 as client2, bot as client3
 from fridaybot.modules import inlinestats
-from pornhub_api import PornhubApi
+#from pornhub_api import PornhubApi
 from telethon.tl.types import BotInlineResult, InputBotInlineMessageMediaAuto, DocumentAttributeImageSize, InputWebDocument, InputBotInlineResult
 from telethon.tl.functions.messages import SetInlineBotResultsRequest
 PMPERMIT_PIC = os.environ.get("PMPERMIT_PIC", None)
@@ -468,44 +468,43 @@ async def inline_id_handler(event: events.InlineQuery.Event):
             break
     await event.answer(results)
     
-@tgbot.on(events.InlineQuery(pattern=r"ph (.*)"))
-async def inline_id_handler(event: events.InlineQuery.Event):
-    builder = event.builder
-    o = await all_pro_s(Config, client1, client2, client3)
-    if event.query.user_id not in o:
-        resultm = builder.article(
-            title="- Not Allowded -",
-            text=f"You Can't Use This Bot. \nDeploy Friday To Get Your Own Assistant, Repo Link [Here](https://github.com/StarkGang/FridayUserbot)",
-        )
-        await event.answer([resultm])
-        return
-    results = []
-    input_str = event.pattern_match.group(1)
-    api = PornhubApi()
-    data = api.search.search(
-    input_str,
-    ordering="mostviewed"
-    )
-    ok = 1
-    oik = ""
-    for vid in data.videos:
-      if ok <= 5:
-        lul_m = (f"**PORN-HUB SEARCH** \n**Video title :** `{vid.title}` \n**Video link :** `https://www.pornhub.com/view_video.php?viewkey={vid.video_id}`")
-        results.append(
-                await event.builder.article(
-                    title=vid.title,
-                    text=lul_m,
-                    buttons=[
-                        Button.switch_inline(
-                            "Search Again", query="ph ", same_peer=True
-                        )
-                    ],
-                )
-            )
-      else:
-        pass
-    await event.answer(results)
-    
+#@tgbot.on(events.InlineQuery(pattern=r"ph (.*)"))
+#async def inline_id_handler(event: events.InlineQuery.Event):
+#    builder = event.builder
+#    o = await all_pro_s(Config, client1, client2, client3)
+#    if event.query.user_id not in o:
+#        resultm = builder.article(
+#            title="- Not Allowded -",
+#            text=f"You Can't Use This Bot. \nDeploy Friday To Get Your Own Assistant, Repo Link [Here](https://github.com/StarkGang/FridayUserbot)",
+#        )
+#        await event.answer([resultm])
+#        return
+#    results = []
+#    input_str = event.pattern_match.group(1)
+#    api = PornhubApi()
+#    data = api.search.search(
+#    input_str,
+#    ordering="mostviewed"
+#    )
+#    ok = 1
+#    oik = ""
+#    for vid in data.videos:
+#      if ok <= 5:
+#        lul_m = (f"**PORN-HUB SEARCH** \n**Video title :** `{vid.title}` \n**Video link :** `https://www.pornhub.com/view_video.php?viewkey={vid.video_id}`")
+#        results.append(
+#                await event.builder.article(
+#                    title=vid.title,
+#                    text=lul_m,
+#                    buttons=[
+#                        Button.switch_inline(
+#                            "Search Again", query="ph ", same_peer=True
+#                        )
+#                    ],
+#                )
+#            )
+#      else:
+#        pass
+#    await event.answer(results)    
 @tgbot.on(events.InlineQuery(pattern=r"xkcd (.*)"))
 async def inline_id_handler(event: events.InlineQuery.Event):
     builder = event.builder
