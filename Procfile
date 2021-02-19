@@ -1,1 +1,1 @@
-fridaybot: python3.7 -m fridaybot
+fridaybot: python -m fridaybot
