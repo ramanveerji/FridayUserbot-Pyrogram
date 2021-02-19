@@ -73,7 +73,7 @@ from fridaybot import logging
 
 logger = logging.getLogger("[--WARNING--]")
 if not os.path.isdir(sedpath):
-    os.makedirs(sedpath)l
+    os.makedirs(sedpath)
     
 # Deethon // @aykxt
 session = aiohttp.ClientSession()
