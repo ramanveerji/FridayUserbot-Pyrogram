@@ -38,7 +38,7 @@ RUN apt-get install -y\
     openssl \
     mediainfo \
     wget \
-    python3 \
+    python3.7 \
     python3-dev \
     python3-pip \
     libreadline-dev \
