@@ -32,17 +32,7 @@ import lottie
 from fridaybot.utils import load_module
 from telethon.tl.types import DocumentAttributeAudio
 from PIL import Image
-from youtube_dl import YoutubeDL
-from youtube_dl.utils import (
-    ContentTooShortError,
-    DownloadError,
-    ExtractorError,
-    GeoRestrictedError,
-    MaxDownloadsReached,
-    PostProcessingError,
-    UnavailableVideoError,
-    XAttrMetadataError,
-)
+
 import requests
 from bs4 import BeautifulSoup
 from fake_useragent import UserAgent
@@ -83,7 +73,7 @@ from fridaybot import logging
 
 logger = logging.getLogger("[--WARNING--]")
 if not os.path.isdir(sedpath):
-    os.makedirs(sedpath)
+    os.makedirs(sedpath)l
     
 # Deethon // @aykxt
 session = aiohttp.ClientSession()
@@ -591,88 +581,6 @@ async def check_if_subbed(channel_id, event, bot):
     except telethon.errors.rpcerrorlist.UserNotParticipantError:
         return False
     
-async def _ytdl(url, is_it, event, tgbot):
-    await event.edit("`Ok Downloading This Video / Audio - Please Wait.` \n**Powered By @FridayOT**")
-    if is_it:
-        opts = {
-            "format": "bestaudio",
-            "addmetadata": True,
-            "key": "FFmpegMetadata",
-            "writethumbnail": True,
-            "prefer_ffmpeg": True,
-            "geo_bypass": True,
-            "nocheckcertificate": True,
-            "postprocessors": [
-                {
-                    "key": "FFmpegExtractAudio",
-                    "preferredcodec": "mp3",
-                    "preferredquality": "480",
-                }
-            ],
-            "outtmpl": "%(id)s.mp3",
-            "quiet": True,
-            "logtostderr": False,
-        }
-        video = False
-        song = True
-    else:
-        opts = {
-            "format": "best",
-            "addmetadata": True,
-            "key": "FFmpegMetadata",
-            "prefer_ffmpeg": True,
-            "geo_bypass": True,
-            "nocheckcertificate": True,
-            "postprocessors": [
-                {"key": "FFmpegVideoConvertor", "preferedformat": "mp4"}
-            ],
-            "outtmpl": "%(id)s.mp4",
-            "logtostderr": False,
-            "quiet": True,
-        }
-        song = False
-        video = True
-    try:
-        with YoutubeDL(opts) as ytdl:
-            ytdl_data = ytdl.extract_info(url)
-    except Exception as e:
-        await event.edit(f"**Failed To Download** \n**Error :** `{str(e)}`")
-        return
-    c_time = time.time()
-    if song:
-        file_stark = f"{ytdl_data['id']}.mp3"
-        lol_m = await upload_file(
-            file_name=f"{ytdl_data['title']}.mp3",
-            client=tgbot,
-            file=open(file_stark, 'rb'),
-            progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
-                progress(
-                    d, t, event, c_time, "Uploading Youtube Audio..", file_stark
-                )
-            ),
-        )
-        await event.edit(
-            file=lol_m,
-            text=f"{ytdl_data['title']} \n**Uploaded Using @FRidayOt**"
-        )
-        os.remove(file_stark)
-    elif video:
-        file_stark = f"{ytdl_data['id']}.mp4"
-        lol_m = await upload_file(
-            file_name=f"{ytdl_data['title']}.mp4",
-            client=tgbot,
-            file=open(file_stark, 'rb'),
-            progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
-                progress(
-                    d, t, event, c_time, "Uploading Youtube Video..", file_stark
-                )
-            ),
-        )
-        await event.edit(
-            file=lol_m,
-            text=f"{ytdl_data['title']} \n**Uploaded Using @FRidayOt**"
-        )
-        os.remove(file_stark)
 
 
 async def _deezer_dl(word, event, tgbot):
