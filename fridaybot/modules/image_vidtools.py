@@ -673,14 +673,14 @@ async def hmm(event):
 async def holastark2(event):
     if event.fwd_from:
         return
-    famous_people = ['MODI', 'TRUMP', 'ALBERT', 'TONY STARK', 'STARK GANG', 'FRIDAYUSERBOT']
+    famous_people = ['Modi', 'Trump', 'Albert', 'Tony-stark', 'Stark-Gang', 'Gandhi']
     await event.edit("`Processing..`")
     text = event.pattern_match.group(2)
     img = Image.open('./resources/CERTIFICATE_TEMPLATE_IMAGE.png')
     d1 = ImageDraw.Draw(img)
     myFont = ImageFont.truetype('Fonts/impact.ttf', 200)
     myFont2 = ImageFont.truetype('Fonts/impact.ttf', 70)
-    myFont3 = ImageFont.truetype('Fonts/Streamster.ttf', 100)
+    myFont3 = ImageFont.truetype('Fonts/Streamster.ttf', 50)
     d1.text((1433, 1345), text, font=myFont, fill=(51, 51, 51))
     TZ = pytz.timezone(Config.TZ)
     datetime_tz = datetime.now(TZ)
