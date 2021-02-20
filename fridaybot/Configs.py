@@ -38,6 +38,7 @@ class Config(object):
     ANTI_SPAMBOT_SHOUT = sb(os.environ.get("ANTI_SPAMBOT_SHOUT", "False"))
     YOUTUBE_API_KEY = os.environ.get("YOUTUBE_API_KEY", None)
     ALIVE_NAME = os.environ.get("ALIVE_NAME", None)
+    WOLFRAM_ID = os.environ.get("WOLFRAM_ID", None)
     LESS_SPAMMY = os.environ.get("LESS_SPAMMY", True)
     COUNTRY = str(os.environ.get("COUNTRY", ""))
     TZ_NUMBER = int(os.environ.get("TZ_NUMBER", 1))
