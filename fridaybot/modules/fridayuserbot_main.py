@@ -146,7 +146,7 @@ async def _(event):
     bothmm = await tgbot.get_me()
     uptime = get_readable_time((time.time() - Lastupdate))
     end = datetime.now()
-    ms = (end - start).microseconds / 1000
+    ms = (end - start)
     await starkislub.edit(
         f"**█▀█ █▀█ █▄░█ █▀▀ █ \n█▀▀ █▄█ █░▀█ █▄█ ▄**\n➲ `{round(ms)}` \n➲ `{uptime}` \n➲ {rip} \n➲ @{bothmm.username}"
     )
