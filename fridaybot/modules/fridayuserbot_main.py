@@ -134,6 +134,7 @@ async def _(event):
 @friday.on(friday_on_cmd(pattern="ping$"))
 @friday.on(sudo_cmd(pattern="ping$", allow_sudo=True))
 async def _(event):
+    start = datetime.now()
     starkislub = await edit_or_reply(event, "`Pong !`")
     if event.fwd_from:
         return
@@ -143,12 +144,11 @@ async def _(event):
     else:
         rip = f"@{hmm.username}"
     bothmm = await tgbot.get_me()
-    start = datetime.now()
+    uptime = get_readable_time((time.time() - Lastupdate))
     end = datetime.now()
     ms = (end - start).microseconds / 1000
-    uptime = get_readable_time((time.time() - Lastupdate))
     await starkislub.edit(
-        f"**█▀█ █▀█ █▄░█ █▀▀ █ \n█▀▀ █▄█ █░▀█ █▄█ ▄**\n➲ `{ms}` \n➲ `{uptime}` \n➲ {rip} \n➲ {bothmm.username}"
+        f"**█▀█ █▀█ █▄░█ █▀▀ █ \n█▀▀ █▄█ █░▀█ █▄█ ▄**\n➲ `{round(ms)}` \n➲ `{uptime}` \n➲ {rip} \n➲ @{bothmm.username}"
     )
 
 
