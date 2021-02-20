@@ -18,10 +18,6 @@
       "description": "Setting this to ANYTHING will enable heroku.",
       "value": "ANYTHING"
     },
-    "ALIVE_NAME": {
-      "description": "Enter Username Here ",
-      "value": ""
-    },
     "APP_ID": {
       "description": "Get this value from my.telegram.org! Please do not steal",
       "value": ""
@@ -55,11 +51,6 @@
     "TESSDATA_PREFIX": {
       "description": "Pytesserct Path. Don't Edit Until You Know What Are You Doing. Just leave it As it is.",
       "value": "./.apt/usr/share/tesseract-ocr/4.00/tessdata"
-    },
-    "LYDIA_API_KEY": {
-      "description": "Needed for Lydia AI. Follow https://telegra.ph/Lydia-09-05 to get your API. This is not Mandatory.",
-      "value": "",
-      "required": false
     },
     "HEROKU_API_KEY": {
       "description": "Go to https://dashboard.heroku.com/account, scroll down and press Reveal API.Required for updater to work.",
