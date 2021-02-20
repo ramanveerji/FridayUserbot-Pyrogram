@@ -584,10 +584,10 @@ async def spinshit(message):
     lmaodict = {"1": 1, "2": 3, "3": 6, "4": 12, "5": 24, "6": 60}
     lolshit = message.pattern_match.group(1)
     if not lolshit.isdigit():
-        await event.edit("`Only Speed from 1-6 Is Allowded !`")
+        await message.edit("`Only Speed from 1-6 Is Allowded !`")
         return
     if int(lolshit) > 6:
-        await event.edit("`Only Speed from 1-6 Is Allowded !`")
+        await message.edit("`Only Speed from 1-6 Is Allowded !`")
         return
     keke = str(lolshit)
     if not reply:
@@ -673,7 +673,7 @@ async def hmm(event):
 async def holastark2(event):
     if event.fwd_from:
         return
-    famous_people = ['modi', 'trump', 'albert', 'tony stark']
+    famous_people = ['MODI', 'TRUMP', 'ALBERT', 'TONY STARK', 'STARK GANG', 'FRIDAYUSERBOT']
     await event.edit("`Processing..`")
     text = event.pattern_match.group(2)
     img = Image.open('./resources/CERTIFICATE_TEMPLATE_IMAGE.png')
