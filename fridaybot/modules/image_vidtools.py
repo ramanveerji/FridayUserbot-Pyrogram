@@ -583,13 +583,19 @@ async def spinshit(message):
     reply = await message.get_reply_message()
     lmaodict = {"1": 1, "2": 3, "3": 6, "4": 12, "5": 24, "6": 60}
     lolshit = message.pattern_match.group(1)
-    keke = f"{lolshit}"
+    if not lolshit.isdigit():
+        await event.edit("`Only Speed from 1-6 Is Allowded !`")
+        return
+    if int(lolshit) > 6:
+        await event.edit("`Only Speed from 1-6 Is Allowded !`")
+        return
+    keke = str(lolshit)
     if not reply:
         await message.edit("`Reply To Media First !`")
         return
     else:
         if lolshit:
-            step = lmaodict[keke]
+            step = lmaodict.get(keke)
         else:
             step = 1
     pic_loc = await convert_to_image(message, borg)
