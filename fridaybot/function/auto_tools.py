@@ -25,7 +25,7 @@ rgb_temp = [(255, 255, 255), (0, 0, 0), (0, 0, 255), (255, 191, 0), (255, 127, 8
 async def auto_name(name=None):
     TZ = pytz.timezone(Config.TZ)
     datetime_tz = datetime.now(TZ)
-    nameof = name if name else Config.ALIVE_NAME
+    nameof = name if name else bot.me.first_name
     oof = datetime_tz.strftime(f"🕒 %d/%m/%Y ⚡{nameof}⚡ 📅 %H:%M")
     try:
         await bot(
