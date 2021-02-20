@@ -65,7 +65,7 @@ async def inline_handler(event):
     elif event.query.user_id in o and query == "stats":
         result = builder.article(
             title="Stats",
-            text=f"**Showing Stats For {DEFAULTUSER}'s Friday** \nNote --> Only Owner Can Check This \n(C) @FridayOT",
+            text=f"**Showing Stats For {bot.me.first_name}'s Friday** \nNote --> Only Owner Can Check This \n(C) @FridayOT",
             buttons=[
                 [custom.Button.inline("Show Stats ?", data="terminator")],
                 [Button.url("Repo 🇮🇳", "https://github.com/StarkGang/FridayUserbot")],
