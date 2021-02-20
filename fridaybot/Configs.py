@@ -86,7 +86,6 @@ class Config(object):
     TG_BOT_TOKEN_BF_HER = os.environ.get("TG_BOT_TOKEN_BF_HER", None)
     # Send .get_id in any channel to fill this value.
     PLUGIN_CHANNEL = int(os.environ.get("PLUGIN_CHANNEL", -100))
-    PRIVATE_GROUP_BOT_API_ID = int(os.environ.get("PRIVATE_GROUP_BOT_API_ID", -100))
     NO_SONGS = bool(os.environ.get("NO_SONGS", False))
     PING_SERVERS = bool(os.environ.get("PING_SERVERS", False))
     DOWNLOAD_PFP_URL_CLOCK = os.environ.get("DOWNLOAD_PFP_URL_CLOCK", None)
@@ -101,7 +100,7 @@ class Config(object):
         t_file = open(TEMP_DOWNLOAD_DIRECTORY + "auth_token.txt", "w")
         t_file.write(AUTH_TOKEN_DATA)
         t_file.close()
-    PRIVATE_GROUP_ID = int(os.environ.get("PRIVATE_GROUP_ID", None))
+    PRIVATE_GROUP_ID = int(os.environ.get("PRIVATE_GROUP_ID", False))
     NEWS_CHANNEL_ID = int(os.environ.get("NEWS_CHANNEL_ID", -100))
     SPAMWATCH_API = os.environ.get("SPAMWATCH_API", None)
     ANTISPAM_SYSTEM = os.environ.get("ANTISPAM_SYSTEM", "DISABLE")
