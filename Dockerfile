@@ -50,15 +50,12 @@ RUN apt-get install -y\
     zlib1g-dev \
     recoverjpeg \
     zip \
-    megatools \
     libfreetype6-dev \
     procps \
     policykit-1
 
 
 RUN apt-get autoremove --purge
-RUN pip3 install --upgrade pip setuptools 
-RUN pip3 install --upgrade pip
 RUN if [ ! -e /usr/bin/pip ]; then ln -s pip3 /usr/bin/pip ; fi 
 RUN if [ ! -e /usr/bin/python ]; then ln -sf /usr/bin/python3 /usr/bin/python; fi 
 RUN rm -r /root/.cache
