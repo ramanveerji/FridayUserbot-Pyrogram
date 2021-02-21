@@ -9,26 +9,17 @@
 
 
 # Support
-
 <a href="https://t.me/FridaySupportOfficial"><img src="https://img.shields.io/badge/Join-Telegram%20Channel-red.svg?logo=Telegram"></a>
-
 <a href="https://t.me/fridayOT"><img src="https://img.shields.io/badge/Join-Telegram%20Group-blue.svg?logo=telegram"></a>
 
 
-
-
-
-
 # Method
-
 <a href="https://youtu.be/xfHcm_e92eQ"><img src="https://img.shields.io/badge/How%20To-Deploy-red.svg?logo=Youtube"></a>
-
 <a href="https://app.gitbook.com/@starkgangz/s/fridayuserbot/"><img src="https://img.shields.io/badge/Read%20More-GitBook-red.svg"></a>
 
 
 
 # KeyFeatures
-
 * Multiple Client Support.
 * AssistantBot Support.
 * Channel Sticker / Post Appender / Night Mode / Amazon Price Tracker / Server Pinger Support.
@@ -39,21 +30,25 @@
 * Daily Maintained.
 * NoSpam+ Support.
 
+# String Session - Telethon
+## Repl
+[![Run on Repl.it](https://repl.it/badge/github/STARKGANG/friday)](https://friday.midhunkm1294.repl.run)
 
 # Deploying To Heroku
 
 [![Deploy To Heroku](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/DevsExpo/FridayUserbot)
 
-
-
-
-# String Session
-## Repl
-[![Run on Repl.it](https://repl.it/badge/github/STARKGANG/friday)](https://friday.midhunkm1294.repl.run)
-
-
-
 # Self-hosting (For Devs)
+
+### If You Want Modules Like Image / Vid Tools To Work You Need To Install These:
+```
+$ ffmpeg
+$ Open CV
+$ Chrome Driver
+$ Chrome
+$ gifsicle
+$ mediainfo
+```
 
 ## Simply clone the repository and run the main file:
 ```sh
@@ -79,7 +74,7 @@ $ python(3) -m fridaybot
     [-] STRING_SESSION : Your String Session, You can get this From Repl or BY running StringGen File Locally
     [-] TG_BOT_TOKEN_BF_HER : Your Bot Token Obtained From @BotFather 
     [-] PRIVATE_GROUP_ID : Id of group where you wanna log important logs, Private group is recommended for this
-    [-] DATABASE_URL: Data Base Url, You Can Get this from Elephant Sql, Or You can even make a heroku app to get Free DataBase. 
+    [-] DATABASE_URL: Data Base Url, You Can Make You Own By Following This Tutorial - https://www.digitalocean.com/community/tutorials/how-to-install-and-use-postgresql-on-ubuntu-18-04, Else Get this from Elephant Sql, Or You can even make a heroku app to get Free DataBase.
 [+] The fridayUserbot will not work without setting the mandatory vars.
 ```
 
