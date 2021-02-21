@@ -48,7 +48,7 @@ if Config.ENABLE_HAREM:
                 waifu_moment = await convert_to_image(event, friday)
                 searchUrl = "https://www.google.com/searchbyimage/upload"
                 file_img = {"encoded_image": (waifu_moment, open(waifu_moment, "rb")), "image_content": ""}
-                response = requests.post(searchUrl, files=multipart, allow_redirects=False)
+                response = requests.post(searchUrl, files=file_img, allow_redirects=False)
                 if response != 400:
                     await borg.send_message(Config.PRIVATE_GROUP_ID, "`A Waifu Appeared By Was Unable To Parse Image! Sorry :(`")
                     return
