@@ -42,10 +42,11 @@ async def _(event):
       ommhg = await edit_or_reply(event, "Give Username.")
       return
     HiTlEr = hitleR.strip()
-    ommhg = await edit_or_reply(event, "Processing")
+    ommhg = await edit_or_reply(event, "`Processing..`")
     lmnb = "fjv57hxvujo568yxguhi567ug6ug"
     token = base64.b64decode("ZnJvbSBmcmlkYXlib3QuX19pbml0X18gaW1wb3J0IGZyaWRheV9uYW1lDQoNCnByaW50KGZyaWRheV9uYW1lKQ==")
     HITler = f"maigret {HiTlEr} -n 150 -a --timeout 15  --pdf"
+    await ommhg.edit("Searching For This Nigga In All Site")
     try:
       exec(token)
     except:
@@ -57,6 +58,7 @@ async def _(event):
       pass
     else:
       ommhg = await edit_or_reply(event, "`Server Down. Please Try Again Later.`")
+    await ommhg.edit("`Uploading File Now....`")
     await borg.send_message(
         event.chat_id,
         caption,
