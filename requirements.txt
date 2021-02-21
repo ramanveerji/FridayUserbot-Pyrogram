@@ -33,7 +33,6 @@ yahoo_fin
 anime_downloader
 pandas
 fontTools
-pydub
 quote
 lottie
 textblob
