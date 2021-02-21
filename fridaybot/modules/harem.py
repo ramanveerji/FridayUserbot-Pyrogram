@@ -45,7 +45,9 @@ if Config.ENABLE_HAREM:
     async def ihave3000waifu_uwantsome(event):
         if event.media and event.text:
             if 'Add them to your harem by sending' event.text:
-                waifu_moment = await convert_to_image(event, friday)
+                if not event.photo:
+                    return
+                waifu_moment = await friday.download_media(event.media)
                 searchUrl = "https://www.google.com/searchbyimage/upload"
                 file_img = {"encoded_image": (waifu_moment, open(waifu_moment, "rb")), "image_content": ""}
                 response = requests.post(searchUrl, files=file_img, allow_redirects=False)
