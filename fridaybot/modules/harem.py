@@ -51,7 +51,7 @@ if Config.ENABLE_HAREM:
                 try:
                     image = Image.open(waifu_moment)
                 except OSError:
-                    await borg.send_message(Config.PRIVATE_GROUP_ID, "`A Waifu Appeared By Was Unable To Parse Image! Sorry :(`")
+                    await borg.send_message(Config.PRIVATE_GROUP_ID, "`A Waifu Appeared By Was Unable To Parse Image! Sorry :( \nError : OSError`")
                     return
                 name = "waifu.png"
                 image.save(name, "PNG")
@@ -60,8 +60,8 @@ if Config.ENABLE_HAREM:
                 file_img = {"encoded_image": (name, open(name, "rb")), "image_content": ""}
                 response = requests.post(searchUrl, files=file_img, allow_redirects=False)
                 os.remove(name)
-                if response != 400:
-                    await borg.send_message(Config.PRIVATE_GROUP_ID, "`A Waifu Appeared By Was Unable To Parse Image! Sorry :(`")
+                if response.status_code == 400:
+                    await borg.send_message(Config.PRIVATE_GROUP_ID, "`A Waifu Appeared By Was Unable To Parse Image! Sorry :( \nError : Bad Status Code`")
                     return
                 fetchUrl = response.headers["Location"]
                 match = await ParseSauce(fetchUrl + "&preferences?hl=en&fg=1#languages")
