@@ -47,7 +47,7 @@ if Config.ENABLE_HAREM:
             if 'Add' in event.raw_text:
                 logger.info("OwO")
                 waifu_moment = io.BytesIO()
-                waifu_dl_moment = await friday.download_media(event, waifu_moment)
+                waifu_dl_moment = await friday.download_media(event.media, waifu_moment)
                 try:
                     image = Image.open(waifu_moment)
                 except OSError:
