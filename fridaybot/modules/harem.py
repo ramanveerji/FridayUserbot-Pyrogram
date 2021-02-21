@@ -44,7 +44,7 @@ if Config.ENABLE_HAREM:
     @friday.on(events.NewMessage(func=lambda x: x.sender_id == int(792028928)))
     async def ihave3000waifu_uwantsome(event):
         if event.media and event.text:
-            if 'Add them to your harem by sending' event.text:
+            if 'Add them to your harem by sending' in event.text:
                 if not event.photo:
                     return
                 waifu_moment = await friday.download_media(event.media)
