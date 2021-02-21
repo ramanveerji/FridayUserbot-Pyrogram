@@ -46,7 +46,8 @@ if Config.ENABLE_HAREM:
         if event.media:
             if 'Add' in event.raw_text:
                 logger.info("OwO")
-                waifu_moment = await friday.download_media(event.media)
+                waifu_moment = io.BytesIO()
+                waifu_dl_moment = await friday.download_media(event, waifu_moment)
                 try:
                     image = Image.open(waifu_moment)
                 except OSError:
@@ -59,7 +60,6 @@ if Config.ENABLE_HAREM:
                 file_img = {"encoded_image": (name, open(name, "rb")), "image_content": ""}
                 response = requests.post(searchUrl, files=file_img, allow_redirects=False)
                 os.remove(name)
-                os.remove(image)
                 if response != 400:
                     await borg.send_message(Config.PRIVATE_GROUP_ID, "`A Waifu Appeared By Was Unable To Parse Image! Sorry :(`")
                     return
