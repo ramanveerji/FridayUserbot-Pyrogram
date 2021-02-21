@@ -43,7 +43,6 @@ async def ParseSauce(googleurl):
 if Config.ENABLE_HAREM:
     @friday.on(events.NewMessage(func=lambda x: x.sender_id == int(792028928)))
     async def ihave3000waifu_uwantsome(event):
-        logger.info("Pass")
         if event.media:
             if 'Add them' in event.raw_text:
                 logger.info("OwO")
