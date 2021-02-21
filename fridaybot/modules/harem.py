@@ -65,9 +65,10 @@ if Config.ENABLE_HAREM:
                     return
                 fetchUrl = response.headers["Location"]
                 match = await ParseSauce(fetchUrl + "&preferences?hl=en&fg=1#languages")
-                guess = match["best_guess"]
-                if not guess:
+                guessp = match["best_guess"]
+                if not guessp:
                     await borg.send_message(Config.PRIVATE_GROUP_ID, "`A Waifu Appeared By Was Unable To Reverse Search Image! Sorry :(`")
                     return
+                guess = guessp.replace("Results for ", "")
                 await borg.send_message(event.chat_id, f"/protecc {guess}")
                 await borg.send_message(Config.PRIVATE_GROUP_ID, f"A {guess} Waifu Appeard At {event.chat_id} \n**Catch Success!**")
