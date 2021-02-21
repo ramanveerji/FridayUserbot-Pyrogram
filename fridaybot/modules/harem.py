@@ -44,7 +44,7 @@ if Config.ENABLE_HAREM:
     @friday.on(events.NewMessage(func=lambda x: x.sender_id == int(792028928)))
     async def ihave3000waifu_uwantsome(event):
         if event.media:
-            if 'Add them' in event.raw_text:
+            if 'Add' in event.raw_text:
                 logger.info("OwO")
                 waifu_moment = await friday.download_media(event.media)
                 searchUrl = "https://www.google.com/searchbyimage/upload"
