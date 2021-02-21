@@ -41,7 +41,7 @@ async def ParseSauce(googleurl):
     return results
 
 if Config.ENABLE_HAREM:
-    @friday.on(events.NewMessage(func=lambda x: x.from_id == 792028928))
+    @friday.on(events.NewMessage(func=lambda x: x.sender_id == int(792028928)))
     async def ihave3000waifu_uwantsome(event):
         if event.media and event.text:
             if 'Add them to your harem by sending' event.text:
