@@ -439,6 +439,8 @@ async def get_sticker_emoji(event):
         final_emoji = reply_message.media.document.attributes[1].alt
     except:
         final_emoji = '😎'
+    if not final_emoji:
+        final_emoji = '😎'
     return final_emoji
 
 def zipdir(path, ziph):
