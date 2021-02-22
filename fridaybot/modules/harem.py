@@ -1,3 +1,4 @@
+
 # Made By @Midhun_xD, Base Of Module By @kandnub
 # Copyright (C) 2019 The Raphielscape Company LLC.
 # Thanks to @kandnub, for Base.
@@ -45,9 +46,11 @@ async def ParseSauce(googleurl):
 if ENABLE_HAREM:
     @friday.on(events.NewMessage(func=lambda x: x.sender_id == int(792028928)))
     async def ihave3000waifu_uwantsome(event):
+        if event.is_private:
+            return
         if event.media:
             if 'Add' in event.raw_text:
-                logger.info("OwO")
+                logger.info("OwO! A Waifu.")
                 waifu_moment = io.BytesIO()
                 waifu_dl_moment = await friday.download_media(event.media, waifu_moment)
                 try:
@@ -73,4 +76,4 @@ if ENABLE_HAREM:
                     return
                 guess = guessp.replace("Results for", "").replace(" ", "")
                 await borg.send_message(event.chat_id, f"/protecc {guess}")
-                await borg.send_message(Config.PRIVATE_GROUP_ID, f"A {guess} Waifu Appeard At {event.chat_id} \n**Catch Success!**")
+                await borg.send_message(Config.PRIVATE_GROUP_ID, f"**#Waifu_Moment** \n**Guessed Waifu :** `{guess}` \n**Chat ID :** `{event.chat_id}` \n**Powered By @FridayOT**")
