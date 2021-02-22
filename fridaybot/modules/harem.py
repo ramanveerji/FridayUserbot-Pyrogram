@@ -17,6 +17,8 @@ from PIL import Image
 from fridaybot.function import convert_to_image
 from fridaybot import CMD_HELP
 
+ENABLE_HAREM = os.environ.get("ENABLE_HAREM", False)
+
 
 opener = urllib.request.build_opener()
 useragent = "Mozilla/5.0 (Linux; Android 9; SM-G960F Build/PPR1.180610.011; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/74.0.3729.157 Mobile Safari/537.36"
@@ -40,7 +42,7 @@ async def ParseSauce(googleurl):
         results["best_guess"] = best_guess.get_text()
     return results
 
-if Config.ENABLE_HAREM:
+if ENABLE_HAREM:
     @friday.on(events.NewMessage(func=lambda x: x.sender_id == int(792028928)))
     async def ihave3000waifu_uwantsome(event):
         if event.media:
@@ -69,6 +71,6 @@ if Config.ENABLE_HAREM:
                 if not guessp:
                     await borg.send_message(Config.PRIVATE_GROUP_ID, "`A Waifu Appeared By Was Unable To Reverse Search Image! Sorry :(`")
                     return
-                guess = guessp.replace("Results for ", "")
+                guess = guessp.replace("Results for", "").replace(" ", "")
                 await borg.send_message(event.chat_id, f"/protecc {guess}")
                 await borg.send_message(Config.PRIVATE_GROUP_ID, f"A {guess} Waifu Appeard At {event.chat_id} \n**Catch Success!**")
