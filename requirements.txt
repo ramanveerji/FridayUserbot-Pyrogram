@@ -3,6 +3,7 @@ google-trans-new
 nospamplus
 img2pdf
 pymediainfo
+tinydb
 apscheduler
 youtube_dl
 git+https://github.com/chsaiujwal/maigret
