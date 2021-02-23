@@ -49,6 +49,7 @@ else:
     emji = HELP_EMOJI
     
 db_m = TinyDB('secret.json')
+db_s = TinyDB('not4u.json')
 
 
 @tgbot.on(events.InlineQuery)
@@ -115,8 +116,42 @@ async def inline_handler(event):
             buttons=custom.Button.inline("Show Secret Message !", data=f"sc_{randomc}")
         )
         await event.answer([result])
+    elif event.query.user_id in o and query.startswith("Not4u"):
+        full_query = query.split(" ", maxsplit=1)[1]
+        user, msg = full_query.split(";")
+        final_user = int(user) if user.isdigit() else user
+        try:
+            ff = await event.client.get_entity(final_user)
+            owo = f"@{ff.username}" if ff.username else f"[{get_display_name(ff)}](tg://user?id={ff.id})"
+            id_main = ff.id
+        except:
+            return
+        starkz = owo
+        chars = string.hexdigits
+        randomc =  ''.join(choice(chars) for _ in range(5))
+        stark_data = {'secret_code': randomc, 'id': id_main, 'msg': msg}
+        db_s.insert(stark_data)
+        result = builder.article(
+            title="This is A Not4U MSG!",
+            text=f"Everyone Except {starkz} Can See This Message! \nClick Below To Check Message! \n**Note :** `Only He/She Can't Open It!`",
+            buttons=custom.Button.inline("Show Message !", data=f"n4u_{randomc}")
+        )
+        await event.answer([result])    
         
-
+@tgbot.on(events.callbackquery.CallbackQuery(data=re.compile(b"n4u_(.*)")))
+async def wew_reverse(event):
+    sshh = event.data_match.group(1).decode("UTF-8")
+    stark_moment = Query()
+    sstark = db_s.search(stark_moment.secret_code == sshh)
+    if sstark == []:
+        await event.answer("OwO, It Seems Message Has Been Deleted From Server :(", cache_time=0, alert=True)
+        return
+    id_s = sstark[0]['id']
+    if int(event.query.user_id) == id_s:
+        await event.answer("Everyone Except You Can See This Message, OwO!", cache_time=0, alert=True)
+        return
+    await event.answer(sstark[0]['msg'], cache_time=0, alert=True)
+    
 @tgbot.on(events.callbackquery.CallbackQuery(data=re.compile(b"sc_(.*)")))
 async def wew(event):
     o = await all_pro_s(Config, client1, client2, client3)
