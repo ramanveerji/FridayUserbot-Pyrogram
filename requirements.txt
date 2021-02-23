@@ -4,6 +4,7 @@ nospamplus
 img2pdf
 pymediainfo
 tinydb
+spotdl
 apscheduler
 youtube_dl
 git+https://github.com/chsaiujwal/maigret
