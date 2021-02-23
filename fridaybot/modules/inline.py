@@ -15,6 +15,9 @@ import os
 import re
 import urllib
 import json
+from tinydb import TinyDB, Query
+import string
+from random import choice
 from math import ceil
 from re import findall
 import requests
@@ -27,6 +30,7 @@ import requests
 from telethon import Button, custom, events, functions
 from fridaybot import ALIVE_NAME, CMD_HELP, CMD_LIST, client2 as client1, client3 as client2, bot as client3
 from fridaybot.modules import inlinestats
+from telethon.utils import get_display_name
 #from pornhub_api import PornhubApi
 from telethon.tl.types import BotInlineResult, InputBotInlineMessageMediaAuto, DocumentAttributeImageSize, InputWebDocument, InputBotInlineResult
 from telethon.tl.functions.messages import SetInlineBotResultsRequest
@@ -43,6 +47,8 @@ if not HELP_EMOJI:
     emji = "✘"
 else:
     emji = HELP_EMOJI
+    
+db_m = TinyDB('secret.json')
 
 
 @tgbot.on(events.InlineQuery)
@@ -88,8 +94,43 @@ async def inline_handler(event):
             ],
         )
         await event.answer([result])
+    elif event.query.user_id in o and query.startswith("Secret"):
+        full_query = query.split(" ", maxsplit=1)[1]
+        user, msg = full_query.split(";")
+        try:
+            ff = await borg.get_entity(user)
+            owo = ff.id
+            starkz = f"[{get_display_name(ff)}](tg://user?id={ff.id})"
+        except:
+            owo = user
+            starkz = f"[User](tg://user?id={user})"
+        chars = string.hexdigits
+        randomc =  ''.join(choice(chars) for _ in range(4))
+        stark_data = {'secret_code': randomc, 'id': int(owo), 'msg': msg}
+        db_m.insert(stark_data)
+        result = builder.article(
+            title="Secret MSG!",
+            text=f"A Whisper Has Been Sent For {starkz} . \nClick Below To Check Message! \n**Note :** `Only He/She Can Open It!`",
+            buttons=custom.Button.inline("Show Secret Message !", data=f"sc_{randomc}")
+        )
+        await event.answer([result])
+        
 
-
+@tgbot.on(events.callbackquery.CallbackQuery(data=re.compile(b"sc_(.*)")))
+async def wew(event):
+    o = await all_pro_s(Config, client1, client2, client3)
+    sshh = event.data_match.group(1).decode("UTF-8")
+    stark_moment = Query()
+    sstark = db_m.search(stark_moment.secret_code == sshh)
+    if sstark == []:
+        await event.answer("OwO, It Seems Message Has Been Deleted From Server :(", cache_time=0, alert=True)
+        return
+    id_s = sstark[0]['id']
+    if int(id_s) != int(event.query.user_id) or int(id_s) not in o:
+        await event.answer("This Message Is Not For You, OwO ! Btw, This is A Bomb Making Secret.!", cache_time=0, alert=True)
+        return
+    await event.answer(sstark[0]['msg'], cache_time=0, alert=True)
+    
 @tgbot.on(
     events.callbackquery.CallbackQuery(  # pylint:disable=E0602
         data=re.compile(b"helpme_next\((.+?)\)")
@@ -170,6 +211,7 @@ async def rip(event):
     else:
         txt = "You Can't View My Masters Stats"
         await event.answer(txt, alert=True)
+                
         
 @tgbot.on(events.callbackquery.CallbackQuery(data=re.compile(b"yt_dla_(.*)")))
 async def rip(event):
