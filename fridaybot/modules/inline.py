@@ -126,7 +126,7 @@ async def wew(event):
         await event.answer("OwO, It Seems Message Has Been Deleted From Server :(", cache_time=0, alert=True)
         return
     id_s = sstark[0]['id']
-    if int(id_s) != int(event.query.user_id) or int(id_s) not in o:
+    if (int(id_s) != int(event.query.user_id) or id_s not in o):
         await event.answer("This Message Is Not For You, OwO ! Btw, This is A Bomb Making Secret.!", cache_time=0, alert=True)
         return
     await event.answer(sstark[0]['msg'], cache_time=0, alert=True)
