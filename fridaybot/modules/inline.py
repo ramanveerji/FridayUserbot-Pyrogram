@@ -126,10 +126,8 @@ async def wew(event):
         await event.answer("OwO, It Seems Message Has Been Deleted From Server :(", cache_time=0, alert=True)
         return
     id_s = sstark[0]['id']
-    o.append(id_s)
-    logger.info(o)
-    logger.info(event.query.user_id)
-    if event.query.user_id in o:
+    o.append(int(id_s))
+    if int(event.query.user_id) in o:
         await event.answer("This Message Is Not For You, OwO ! Btw, This is A Bomb Making Secret.!", cache_time=0, alert=True)
         return
     await event.answer(sstark[0]['msg'], cache_time=0, alert=True)
