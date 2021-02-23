@@ -127,6 +127,8 @@ async def wew(event):
         return
     id_s = sstark[0]['id']
     o.append(id_s)
+    logger.info(o)
+    logger.info(event.query.user_id)
     if event.query.user_id in o:
         await event.answer("This Message Is Not For You, OwO ! Btw, This is A Bomb Making Secret.!", cache_time=0, alert=True)
         return
