@@ -1,5 +1,4 @@
 Pillow
-deezer-python
 moviepy
 google-trans-new
 nospamplus
