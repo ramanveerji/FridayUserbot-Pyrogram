@@ -97,19 +97,19 @@ async def inline_handler(event):
     elif event.query.user_id in o and query.startswith("Secret"):
         full_query = query.split(" ", maxsplit=1)[1]
         user, msg = full_query.split(";")
+        final_user = int(user) if user.isdigit() else user
         try:
-            ff = await borg.get_entity(user)
-            owo = ff.id
-            starkz = f"[{get_display_name(ff)}](tg://user?id={ff.id})"
+            ff = await event.client.get_entity(final_user)
+            owo = f"@{ff.username}" if ff.username else f"[{get_display_name(ff)}](tg://user?id={ff.id})"
         except:
-            owo = user
-            starkz = f"[User](tg://user?id={user})"
+            return
+        starkz = owo
         chars = string.hexdigits
         randomc =  ''.join(choice(chars) for _ in range(4))
-        stark_data = {'secret_code': randomc, 'id': int(owo), 'msg': msg}
+        stark_data = {'secret_code': randomc, 'id': owo, 'msg': msg}
         db_m.insert(stark_data)
         result = builder.article(
-            title="Secret MSG!",
+            title="This is A Secret MSG!",
             text=f"A Whisper Has Been Sent For {starkz} . \nClick Below To Check Message! \n**Note :** `Only He/She Can Open It!`",
             buttons=custom.Button.inline("Show Secret Message !", data=f"sc_{randomc}")
         )
@@ -127,10 +127,11 @@ async def wew(event):
         return
     id_s = sstark[0]['id']
     o.append(int(id_s))
-    if int(event.query.user_id) in o:
+    if int(event.query.user_id) not in o:
         await event.answer("This Message Is Not For You, OwO ! Btw, This is A Bomb Making Secret.!", cache_time=0, alert=True)
         return
     await event.answer(sstark[0]['msg'], cache_time=0, alert=True)
+                                                
     
 @tgbot.on(
     events.callbackquery.CallbackQuery(  # pylint:disable=E0602
