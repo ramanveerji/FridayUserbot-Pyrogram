@@ -101,12 +101,13 @@ async def inline_handler(event):
         try:
             ff = await event.client.get_entity(final_user)
             owo = f"@{ff.username}" if ff.username else f"[{get_display_name(ff)}](tg://user?id={ff.id})"
+            id_main = ff.id
         except:
             return
         starkz = owo
         chars = string.hexdigits
         randomc =  ''.join(choice(chars) for _ in range(4))
-        stark_data = {'secret_code': randomc, 'id': owo, 'msg': msg}
+        stark_data = {'secret_code': randomc, 'id': id_main, 'msg': msg}
         db_m.insert(stark_data)
         result = builder.article(
             title="This is A Secret MSG!",
