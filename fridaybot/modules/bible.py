@@ -14,14 +14,14 @@ async def _(event):
         return
     input_str = event.pattern_match.group(1)
     if input_str is None:
-      await edit_or_reply(event, "Input Not Found. 🤦")
+      await friday.edit_or_reply(event, "Input Not Found. 🤦")
     try:
       Hitler = input_str.split(":",2)
       book = (Hitler[0])
       cr = (Hitler[1])
       ve = (Hitler[2])
     except:
-      await edit_or_reply(event, "Input Not Proper. Give Input in the form of `.bible bookName:chapter:verse` ")
+      await friday.edit_or_reply(event, "Input Not Proper. Give Input in the form of `.bible bookName:chapter:verse` ")
     try:
       url = f"https://bible-api.com/{book.strip()}+{cr.strip()}:{ve.strip()}"
     
@@ -61,7 +61,7 @@ Get Your Fridaybot From @FRIDAYOT</u></b>
       )
     
     except:
-      await edit_or_reply(event, "Given Text is Invalid. 🤦")
+      await friday.edit_or_reply(event, "Given Text is Invalid. 🤦")
     
 
 

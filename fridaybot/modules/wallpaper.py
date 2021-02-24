@@ -12,14 +12,14 @@ from fridaybot.utils import edit_or_reply, friday_on_cmd, sudo_cmd
 async def img_sampler(event):
     if event.fwd_from:
         return
-    await edit_or_reply(event, "`Processing...`")
+    await friday.edit_or_reply(event, "`Processing...`")
     reply = await event.get_reply_message()
     if event.pattern_match.group(2):
         queryo = event.pattern_match.group(2)
     elif reply:
         queryo = reply.message
     else:
-        await edit_or_reply(
+        await friday.edit_or_reply(
             event, "`um, mind mentioning what I actually need to search for ;_;`"
         )
         return

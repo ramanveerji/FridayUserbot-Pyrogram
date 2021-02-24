@@ -27,12 +27,12 @@ async def _(event):
     if event.fwd_from:
         return
     if not event.reply_to_msg_id:
-        ommhg = await edit_or_reply(event, "Reply To The Audio.")
+        ommhg = await friday.edit_or_reply(event, "Reply To The Audio.")
         return
     if os.path.exists("friday.mp3"):
       os.remove("friday.mp3")
     credit = "By Friday. Get Your Friday From @FridayOt"
-    ommhg = await edit_or_reply(event, "`Downloading To Local Server.`")
+    ommhg = await friday.edit_or_reply(event, "`Downloading To Local Server.`")
     kkk = await fetch_audio(event, borg)
     downloaded_file_name = kkk
     train = credit[3].lower()
@@ -77,10 +77,10 @@ Get Your Friday From</b></u> @FridayOT.
     except:
       if xo.get("success") is False:
         errer = xo.get("error")
-        ommhg = await edit_or_reply(event, errer)
+        ommhg = await friday.edit_or_reply(event, errer)
         os.remove(downloaded_file_name)
         return
-      ommhg = await edit_or_reply(event, "Song Not Found IN Database. Please Try Again.")
+      ommhg = await friday.edit_or_reply(event, "Song Not Found IN Database. Please Try Again.")
       os.remove(downloaded_file_name)
       return
 

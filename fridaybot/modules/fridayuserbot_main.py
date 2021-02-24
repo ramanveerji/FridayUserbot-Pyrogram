@@ -135,7 +135,7 @@ async def _(event):
 @friday.on(sudo_cmd(pattern="ping$", allow_sudo=True))
 async def _(event):
     start = datetime.now()
-    starkislub = await edit_or_reply(event, "`Pong !`")
+    starkislub = await friday.edit_or_reply(event, "`Pong !`")
     if event.fwd_from:
         return
     hmm = await bot.get_me()

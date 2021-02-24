@@ -25,7 +25,7 @@ from fridaybot.utils import edit_or_reply, friday_on_cmd, sudo_cmd
 async def gps(event):
     if event.fwd_from:
         return
-    starkislub = await edit_or_reply(event, "Processing")
+    starkislub = await friday.edit_or_reply(event, "Processing")
     if event.fwd_from:
         return
     reply_to_id = event.message

@@ -178,7 +178,7 @@ async def set_group_photo(event):
         return
     """ For .setevent command, changes the picture of a group """
     if not event.is_group:
-        poppo = await edit_or_reply(event, "`I don't think this is a group.`")
+        poppo = await friday.edit_or_reply(event, "`I don't think this is a group.`")
         return
     replyevent = await event.get_reply_message()
     chat = await event.get_chat()
@@ -186,7 +186,7 @@ async def set_group_photo(event):
     creator = chat.creator
     photo = None
     if not admin and not creator:
-        poppo = await edit_or_reply(event, NO_ADMIN)
+        poppo = await friday.edit_or_reply(event, NO_ADMIN)
         return
     if replyevent and replyevent.media:
         if isinstance(replyevent.media, MessageMediaPhoto):
@@ -194,19 +194,19 @@ async def set_group_photo(event):
         elif "image" in replyevent.media.document.mime_type.split("/"):
             photo = await event.client.download_file(replyevent.media.document)
         else:
-            poppo = await edit_or_reply(event, INVALID_MEDIA)
+            poppo = await friday.edit_or_reply(event, INVALID_MEDIA)
 
     if photo:
         try:
             await event.client(
                 EditPhotoRequest(event.chat_id, await event.client.upload_file(photo))
             )
-            poppo = await edit_or_reply(event, CHAT_PP_CHANGED)
+            poppo = await friday.edit_or_reply(event, CHAT_PP_CHANGED)
 
         except PhotoCropSizeSmallError:
-            poppo = await edit_or_reply(event, PP_TOO_SMOL)
+            poppo = await friday.edit_or_reply(event, PP_TOO_SMOL)
         except ImageProcessFailedError:
-            poppo = await edit_or_reply(event, PP_ERROR)
+            poppo = await friday.edit_or_reply(event, PP_ERROR)
 
 
 # @register(outgoing=True, pattern="^.promote(?: |$)(.*)")
@@ -216,7 +216,7 @@ async def promote(event):
     if event.fwd_from:
         return
     if not event.is_group:
-        poppo = await edit_or_reply(event, "`I don't think this is a group.`")
+        poppo = await friday.edit_or_reply(event, "`I don't think this is a group.`")
         return
     """ For .promote command, promotes the replied/tagged person """
     # Get targeted chat
@@ -227,7 +227,7 @@ async def promote(event):
 
     # If not admin and not creator, also return
     if not admin and not creator:
-        poppo = await edit_or_reply(event, NO_ADMIN)
+        poppo = await friday.edit_or_reply(event, NO_ADMIN)
         return
 
     new_rights = ChatAdminRights(
@@ -239,7 +239,7 @@ async def promote(event):
         pin_messages=True,
     )
 
-    poppo = await edit_or_reply(event, "`Promoting...`")
+    poppo = await friday.edit_or_reply(event, "`Promoting...`")
     user, rank = await get_user_from_event(event)
     if not rank:
         rank = "admeme"  # Just in case.
@@ -275,7 +275,7 @@ async def demote(event):
     if event.fwd_from:
         return
     if not event.is_group:
-        poppo = await edit_or_reply(event, "`I don't think this is a group.`")
+        poppo = await friday.edit_or_reply(event, "`I don't think this is a group.`")
         return
     """ For .demote command, demotes the replied/tagged person """
     # Admin right check
@@ -284,11 +284,11 @@ async def demote(event):
     creator = chat.creator
 
     if not admin and not creator:
-        poppo = await edit_or_reply(event, NO_ADMIN)
+        poppo = await friday.edit_or_reply(event, NO_ADMIN)
         return
 
     # If passing, declare that we're going to demote
-    poppo = await edit_or_reply(event, "`Demoting...`")
+    poppo = await friday.edit_or_reply(event, "`Demoting...`")
     rank = "admeme"  # dummy rank, lol.
     user, reason = await get_user_from_event(event)
     if user:
@@ -311,7 +311,7 @@ async def demote(event):
     # If we catch BadRequestError from Telethon
     # Assume we don't have permission to demote
     except BadRequestError:
-        popp9 = await edit_or_reply(event, NO_PERM)
+        popp9 = await friday.edit_or_reply(event, NO_PERM)
         return
     await poppo.edit(f"Demoted, [{user.first_name}](tg://user?id={user.id}) in {event.chat.title} Sucessfully!")
 
@@ -332,7 +332,7 @@ async def ban(event):
     if event.fwd_from:
         return
     if not event.is_group:
-        poppo = await edit_or_reply(event, "`I don't think this is a group.`")
+        poppo = await friday.edit_or_reply(event, "`I don't think this is a group.`")
         return
     """ For .ban command, bans the replied/tagged person """
     # Here laying the sanity check
@@ -342,7 +342,7 @@ async def ban(event):
 
     # Well
     if not admin and not creator:
-        poppo = await edit_or_reply(event, NO_ADMIN)
+        poppo = await friday.edit_or_reply(event, NO_ADMIN)
         return
 
     user, reason = await get_user_from_event(event)
@@ -352,7 +352,7 @@ async def ban(event):
         return
 
     # Announce that we're going to whack the pest
-    poppo = await edit_or_reply(event, "`Dusting Dust of ban Hammer`")
+    poppo = await friday.edit_or_reply(event, "`Dusting Dust of ban Hammer`")
 
     try:
         await event.client(EditBannedRequest(event.chat_id, user.id, BANNED_RIGHTS))
@@ -365,7 +365,7 @@ async def ban(event):
         if reply:
             await reply.delete()
     except BadRequestError:
-        poppio = await edit_or_reply(event, "`I dont have message nuking rights! But still he was banned!`")
+        poppio = await friday.edit_or_reply(event, "`I dont have message nuking rights! But still he was banned!`")
         return
     # Delete message and then tell that the command
     # is done gracefully
@@ -392,7 +392,7 @@ async def nothanos(event):
     if event.fwd_from:
         return
     if not event.is_group:
-        poppo = await edit_or_reply(event, "`I don't think this is a group.`")
+        poppo = await friday.edit_or_reply(event, "`I don't think this is a group.`")
         return
     """ For .unban command, unbans the replied/tagged person """
     # Here laying the sanity check
@@ -402,11 +402,11 @@ async def nothanos(event):
 
     # Well
     if not admin and not creator:
-        poppo = await edit_or_reply(event, NO_ADMIN)
+        poppo = await friday.edit_or_reply(event, NO_ADMIN)
         return
 
     # If everything goes well...
-    poppo = await edit_or_reply(event, "`Unbanning...`")
+    poppo = await friday.edit_or_reply(event, "`Unbanning...`")
 
     user = await get_user_from_event(event)
     user = user[0]
@@ -435,7 +435,7 @@ async def spider(event):
     if event.fwd_from:
         return
     if not event.is_group:
-        poppo = await edit_or_reply(event, "`I don't think this is a group.`")
+        poppo = await friday.edit_or_reply(event, "`I don't think this is a group.`")
         return
     """
     This function is basically muting peeps
@@ -444,7 +444,7 @@ async def spider(event):
     try:
         from userbot.modules.sql_helper.spam_mute_sql import mute
     except AttributeError:
-        poppo = await edit_or_reply(event, NO_SQL)
+        poppo = await friday.edit_or_reply(event, NO_SQL)
         return
 
     # Admin or creator check
@@ -454,7 +454,7 @@ async def spider(event):
 
     # If not admin and not creator, return
     if not admin and not creator:
-        poppo = await edit_or_reply(event, NO_ADMIN)
+        poppo = await friday.edit_or_reply(event, NO_ADMIN)
         return
 
     user, reason = await get_user_from_event(event)
@@ -466,11 +466,11 @@ async def spider(event):
     self_user = await event.client.get_me()
 
     if user.id == self_user.id:
-        poppo = await edit_or_reply(event, "`Hands too short, can't duct tape myself...\n(ヘ･_･)ヘ┳━┳`")
+        poppo = await friday.edit_or_reply(event, "`Hands too short, can't duct tape myself...\n(ヘ･_･)ヘ┳━┳`")
         return
 
     # If everything goes well, do announcing and mute
-    poppo = await edit_or_reply(event, "`Gets a tape!`")
+    poppo = await friday.edit_or_reply(event, "`Gets a tape!`")
     if mute(event.chat_id, user.id) is False:
         return await poppo.edit("`Error! User probably already muted.`")
     else:
@@ -502,7 +502,7 @@ async def unmoot(event):
     if event.fwd_from:
         return
     if not event.is_group:
-        poppo = await edit_or_reply(event, "`I don't think this is a group.`")
+        poppo = await friday.edit_or_reply(event, "`I don't think this is a group.`")
         return
     """ For .unmute command, unmute the replied/tagged person """
     # Admin or creator check
@@ -512,18 +512,18 @@ async def unmoot(event):
 
     # If not admin and not creator, return
     if not admin and not creator:
-        poppo = await edit_or_reply(event, NO_ADMIN)
+        poppo = await friday.edit_or_reply(event, NO_ADMIN)
         return
 
     # Check if the function running under SQL mode
     try:
         from userbot.modules.sql_helper.spam_mute_sql import unmute
     except AttributeError:
-        poppo = await edit_or_reply(event, NO_SQL)
+        poppo = await friday.edit_or_reply(event, NO_SQL)
         return
 
     # If admin or creator, inform the user and start unmuting
-    poppo = await edit_or_reply(event, "```Unmuting...```")
+    poppo = await friday.edit_or_reply(event, "```Unmuting...```")
     user = await get_user_from_event(event)
     user = user[0]
     if user:
@@ -558,10 +558,10 @@ async def get_admin(event):
     if event.fwd_from:
         return
     if not event.is_group:
-        poppo = await edit_or_reply(event, "`I don't think this is a group.`")
+        poppo = await friday.edit_or_reply(event, "`I don't think this is a group.`")
         return
     """ For .admins command, list all of the admins of the chat. """
-    poppo = await edit_or_reply(event, "processing...")
+    poppo = await friday.edit_or_reply(event, "processing...")
     info = await event.client.get_entity(event.chat_id)
     title = info.title if info.title else "this chat"
     mentions = f"<b>Admins in {title}:</b> \n"
@@ -592,12 +592,12 @@ async def pin(event):
     creator = chat.creator
     # If not admin and not creator, return
     if not admin and not creator:
-        poppo = await edit_or_reply(event, NO_ADMIN)
+        poppo = await friday.edit_or_reply(event, NO_ADMIN)
         return
     to_pin = event.reply_to_msg_id
 
     if not to_pin:
-        poppo = await edit_or_reply(event, "`Reply to a message to pin it.`")
+        poppo = await friday.edit_or_reply(event, "`Reply to a message to pin it.`")
         return
 
     options = event.pattern_match.group(1)
@@ -610,10 +610,10 @@ async def pin(event):
     try:
         await event.client(UpdatePinnedMessageRequest(event.to_id, to_pin, is_silent))
     except BadRequestError:
-        poppo = await edit_or_reply(event, NO_PERM)
+        poppo = await friday.edit_or_reply(event, NO_PERM)
         return
     h = str(event.chat_id).replace("-100", "")
-    poppo = await edit_or_reply(event, f"I Have Pinned This [Message](http://t.me/c/{h}/{to_pin})")
+    poppo = await friday.edit_or_reply(event, f"I Have Pinned This [Message](http://t.me/c/{h}/{to_pin})")
     user = await get_user_sender_id(event.sender_id, event)
 
     if BOTLOG:
@@ -633,7 +633,7 @@ async def kick(event):
     if event.fwd_from:
         return
     if not event.is_group:
-        poppo = await edit_or_reply(event, "`I don't think this is a group.`")
+        poppo = await friday.edit_or_reply(event, "`I don't think this is a group.`")
         return
     """ For .kick command, kicks the replied/tagged person from the group. """
     # Admin or creator check
@@ -643,15 +643,15 @@ async def kick(event):
 
     # If not admin and not creator, return
     if not admin and not creator:
-        poppo = await edit_or_reply(event, NO_ADMIN)
+        poppo = await friday.edit_or_reply(event, NO_ADMIN)
         return
 
     user, reason = await get_user_from_event(event)
     if not user:
-        poppo = await edit_or_reply(event, "`Couldn't fetch user.`")
+        poppo = await friday.edit_or_reply(event, "`Couldn't fetch user.`")
         return
 
-    poppo = await edit_or_reply(event, "`Kicking...`")
+    poppo = await friday.edit_or_reply(event, "`Kicking...`")
 
     try:
         await event.client.kick_participant(event.chat_id, user.id)
@@ -683,7 +683,7 @@ async def get_users(event):
     if event.fwd_from:
         return
     if not event.is_group:
-        poppo = await edit_or_reply(event, "`I don't think this is a group.`")
+        poppo = await friday.edit_or_reply(event, "`I don't think this is a group.`")
         return
     """ For .users command, list all of the users in a chat. """
     info = await event.client.get_entity(event.chat_id)
@@ -712,9 +712,9 @@ async def get_users(event):
     except ChatAdminRequiredError as err:
         mentions += " " + str(err) + "\n"
     try:
-        poppo = await edit_or_reply(event, mentions)
+        poppo = await friday.edit_or_reply(event, mentions)
     except MessageTooLongError:
-        poppo = await edit_or_reply(event, "Damn, this is a huge group. Uploading users lists as file.")
+        poppo = await friday.edit_or_reply(event, "Damn, this is a huge group. Uploading users lists as file.")
         file = open("userslist.txt", "w+")
         file.write(mentions)
         file.close()
@@ -732,13 +732,13 @@ async def rm_deletedacc(event):
     if event.fwd_from:
         return
     if not event.is_group:
-        poppo = await edit_or_reply(event, "`I don't think this is a group.`")
+        poppo = await friday.edit_or_reply(event, "`I don't think this is a group.`")
         return
     con = event.pattern_match.group(1).lower()
     del_u = 0
     del_status = "`No deleted accounts found, Group is clean`"
     if con != "clean":
-        poppo = await edit_or_reply(event, "`Searching for ghost/deleted/zombie accounts...`")
+        poppo = await friday.edit_or_reply(event, "`Searching for ghost/deleted/zombie accounts...`")
         async for user in event.client.iter_participants(event.chat_id):
 
             if user.deleted:
@@ -748,15 +748,15 @@ async def rm_deletedacc(event):
             del_status = f"Found **{del_u}** ghost/deleted/zombie account(s) in this group,\
             \nclean them by using `.zombies clean`"
 
-        poppo = await edit_or_reply(event, del_status)
+        poppo = await friday.edit_or_reply(event, del_status)
         return
     chat = await event.get_chat()
     admin = chat.admin_rights
     creator = chat.creator
     if not admin and not creator:
-        poppo = await edit_or_reply(event, "`I am not an admin here!`")
+        poppo = await friday.edit_or_reply(event, "`I am not an admin here!`")
         return
-    poppo = await edit_or_reply(event, "`Deleting deleted accounts...\nOh I can do that?!?!`")
+    poppo = await friday.edit_or_reply(event, "`Deleting deleted accounts...\nOh I can do that?!?!`")
     del_u = 0
     del_a = 0
     async for user in event.client.iter_participants(event.chat_id):
@@ -827,7 +827,7 @@ async def on_snip(event):
 async def on_snip_save(event):
     if event.fwd_from:
         return
-    hitler = await edit_or_reply(event, "Processing....")
+    hitler = await friday.edit_or_reply(event, "Processing....")
     name = event.pattern_match.group(1)
     msg = await event.get_reply_message()
     if msg:
@@ -865,7 +865,7 @@ async def on_snip_save(event):
 async def on_snip_list(event):
     if event.fwd_from:
         return
-    indiaislove = await edit_or_reply(event, "Processing....")
+    indiaislove = await friday.edit_or_reply(event, "Processing....")
     all_snips = get_all_filters(event.chat_id)
     OUT_STR = "Available Filters in the Current Chat:\n"
     if len(all_snips) > 0:
@@ -894,7 +894,7 @@ async def on_snip_list(event):
 async def on_snip_delete(event):
     if event.fwd_from:
         return
-    iloveindia = await edit_or_reply(event, "Processing...")
+    iloveindia = await friday.edit_or_reply(event, "Processing...")
     name = event.pattern_match.group(1)
     remove_filter(event.chat_id, name)
     await iloveindia.edit(f"filter {name} deleted successfully")

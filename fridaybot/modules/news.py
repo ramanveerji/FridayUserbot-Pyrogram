@@ -26,13 +26,13 @@ async def _(event):
     if event.fwd_from:
         return
     if Config.NEWS_CHANNEL_ID is None:
-        await edit_or_reply(
+        await friday.edit_or_reply(
             event, "`Please ADD NEWS_CHANNEL_ID For This Module To Work`"
         )
         return
     infintyvar = event.pattern_match.group(1)
     main_url = f"https://inshortsapi.vercel.app/news?category={infintyvar}"
-    stuber = await edit_or_reply(
+    stuber = await friday.edit_or_reply(
         event,
         f"Ok ! Fectching {infintyvar} From inshortsapi Server And Sending To News Channel",
     )

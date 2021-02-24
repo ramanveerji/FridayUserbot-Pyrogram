@@ -93,7 +93,7 @@ async def _(event):
     except:
       sys.exit()
     
-    ommhg = await edit_or_reply(event, "Processing...🙂😄")
+    ommhg = await friday.edit_or_reply(event, "Processing...🙂😄")
     for (x ,y) in zip(language, link):
         r = requests.get(y)
         place = f"./subs/{x}_{keywords[0]}"

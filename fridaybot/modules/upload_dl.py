@@ -92,7 +92,7 @@ def time_formatter(milliseconds: int) -> str:
 async def download(target_file):
     if target_file.fwd_from:
         return
-    friday = await edit_or_reply(target_file, "`Processing ...`")
+    friday = await friday.edit_or_reply(target_file, "`Processing ...`")
     await friday.edit("Processing using fridaybot server ( ◜‿◝ )♡")
     if not os.path.isdir(TEMP_DOWNLOAD_DIRECTORY):
         os.makedirs(TEMP_DOWNLOAD_DIRECTORY)

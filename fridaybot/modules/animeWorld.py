@@ -25,13 +25,13 @@ async def _(event):
     if event.fwd_from:
         return
     input_str = event.pattern_match.group(1)
-    ommhg = await edit_or_reply(event, "Searching For Anime.....")
+    ommhg = await friday.edit_or_reply(event, "Searching For Anime.....")
     lmao = input_str.split(":", 1)
     try:
        site = lmao[1]
     except:
        site = "animeonline360"
-       await edit_or_reply(event, "Please Provide Site Name From Next Time. Now Continuing With Default Site.")
+       await friday.edit_or_reply(event, "Please Provide Site Name From Next Time. Now Continuing With Default Site.")
 
     lol = lmao[0]
     why = site.lower()
@@ -63,7 +63,7 @@ async def _(event):
     if event.fwd_from:
         return
     input_str = event.pattern_match.group(1)
-    Zp = await edit_or_reply(event, "Please Wait....🚶‍♂️🚶‍♂️🚶‍♂️")
+    Zp = await friday.edit_or_reply(event, "Please Wait....🚶‍♂️🚶‍♂️🚶‍♂️")
     search = AnimeSearch(input_str)
     ID = search.results[0].mal_id
     anime = Anime(ID)
@@ -105,7 +105,7 @@ async def _(event):
     if event.fwd_from:
         return
     input_str = event.pattern_match.group(1)
-    LeO = await edit_or_reply(event, "Please Wait....🚶‍♂️🚶‍♂️🚶‍♂️")
+    LeO = await friday.edit_or_reply(event, "Please Wait....🚶‍♂️🚶‍♂️🚶‍♂️")
     search = MangaSearch(input_str)
     ID = search.results[0].mal_id
     manga = Manga(ID)

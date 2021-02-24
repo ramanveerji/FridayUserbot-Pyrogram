@@ -33,7 +33,7 @@ async def morning(event):
     if event.fwd_from:
         return    
     txt = random.choice(GDMORNING)
-    await edit_or_reply(event, txt)
+    await friday.edit_or_reply(event, txt)
 
 
 
@@ -42,7 +42,7 @@ async def noon(event):
     if event.fwd_from:
         return    
     txt = random.choice(GDNOON)
-    await edit_or_reply(event, txt)
+    await friday.edit_or_reply(event, txt)
 
 
 
@@ -51,7 +51,7 @@ async def night(event):
     if event.fwd_from:
         return    
     txt = random.choice(GDNIGHT)
-    await edit_or_reply(event, txt)
+    await friday.edit_or_reply(event, txt)
 
 
 
@@ -59,7 +59,7 @@ async def night(event):
 async def gm(event):
     if event.fwd_from:
         return    
-    await edit_or_reply(
+    await friday.edit_or_reply(
         event,
         "｡♥｡･ﾟ♡ﾟ･｡♥｡･｡･｡･｡♥｡･｡♥｡･ﾟ♡ﾟ･\n╱╱╱╱╱╱╱╭╮╱╱╱╱╱╱╱╱╱╱╭╮\n╭━┳━┳━┳╯┃╭━━┳━┳┳┳━┳╋╋━┳┳━╮\n┃╋┃╋┃╋┃╋┃┃┃┃┃╋┃╭┫┃┃┃┃┃┃┃╋┃\n┣╮┣━┻━┻━╯╰┻┻┻━┻╯╰┻━┻┻┻━╋╮┃\n╰━╯╱╱╱╱╱╱╱╱╱╱╱╱╱╱╱╱╱╱╱╱╰━╯\n｡♥｡･ﾟ♡ﾟ･｡♥｡･｡･｡･｡♥｡･｡♥｡･ﾟ♡ﾟ･",
     )

@@ -35,7 +35,7 @@ async def _(event):
         return
     replied_user, error_i_a = await get_full_user(event)
     if replied_user is None:
-        await edit_or_reply(event, str(error_i_a))
+        await friday.edit_or_reply(event, str(error_i_a))
         return False
     replied_user_profile_photos = await borg(
         GetUserPhotosRequest(

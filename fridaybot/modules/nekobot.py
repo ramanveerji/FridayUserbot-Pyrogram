@@ -31,7 +31,7 @@ async def noobishere(event):
     elif reply.text:
         ipman = reply.message
     else:
-        await edit_or_reply(event, "Trump : What Should I Tweet For You ?")
+        await friday.edit_or_reply(event, "Trump : What Should I Tweet For You ?")
         return
 
     url = f"https://nekobot.xyz/api/imagegen?type=trumptweet&text={ipman}"
@@ -39,7 +39,7 @@ async def noobishere(event):
     meikobot = starkgang.get("message")
     tweetimg = meikobot
     starkxd = f"Trump Has Tweeted {ipman}"
-    await edit_or_reply(event, "Trump : Wait I Am Tweeting Your Texts")
+    await friday.edit_or_reply(event, "Trump : Wait I Am Tweeting Your Texts")
     await event.client.send_file(
         event.chat_id, tweetimg, caption=starkxd, reply_to=reply_to_id
     )
@@ -74,7 +74,7 @@ async def noobishere(event):
     meikobot = starkgang.get("message")
     tweetimg = meikobot
     starkxd = f"{starky} Has Tweeted {ipman}"
-    await edit_or_reply(event, f"{starky} : Wait I Am Tweeting Your Texts")
+    await friday.edit_or_reply(event, f"{starky} : Wait I Am Tweeting Your Texts")
     await event.client.send_file(
         event.chat_id, tweetimg, caption=starkxd, reply_to=reply_to_id
     )

@@ -28,7 +28,7 @@ async def _(event):
         return
     input_str = event.pattern_match.group(1)
     lool = 0
-    KkK = await edit_or_reply(event, "searching for the book...")
+    KkK = await friday.edit_or_reply(event, "searching for the book...")
     lin = "https://b-ok.cc/s/"
     text = input_str
     link = lin+text
@@ -41,7 +41,7 @@ async def _(event):
     for nb in total.descendants:
       nbx = nb.replace("(", "").replace(")", "")
     if nbx == "0":
-        await edit_or_reply(event, "No Books Found with that name.")
+        await friday.edit_or_reply(event, "No Books Found with that name.")
     else:
 
         for tr in soup.find_all('td'):

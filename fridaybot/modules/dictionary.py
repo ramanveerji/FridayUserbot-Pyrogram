@@ -26,7 +26,7 @@ from fridaybot import CMD_HELP
 @friday.on(friday_on_cmd("meaning (.*)"))	
 @friday.on(sudo_cmd("meaning (.*)", allow_sudo=True))	
 async def _(event):	
-    omg = await edit_or_reply(event, "Finding Meaning.....")	
+    omg = await friday.edit_or_reply(event, "Finding Meaning.....")	
     if event.fwd_from:	
       return	
     input_str = event.pattern_match.group(1)

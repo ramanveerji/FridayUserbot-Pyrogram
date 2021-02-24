@@ -95,7 +95,7 @@ if not os.path.isdir(sedpath):
 async def download(target_file):
     if target_file.fwd_from:
         return
-    friday = await edit_or_reply(target_file, "`Processing ...`")
+    friday = await friday.edit_or_reply(target_file, "`Processing ...`")
     if Config.VIRUSTOTAL_API_KEY is None:
         await friday.edit(
             "Need to get an API key from https://virustotal.com\nModule stopping!"

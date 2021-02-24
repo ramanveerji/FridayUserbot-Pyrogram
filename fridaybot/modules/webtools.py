@@ -28,7 +28,7 @@ async def _(event):
     if event.fwd_from:
         return
     urlissed = event.pattern_match.group(1)
-    sedlyfstarky = await edit_or_reply(event, "Capturing Webshot, Stay Tuned.")
+    sedlyfstarky = await friday.edit_or_reply(event, "Capturing Webshot, Stay Tuned.")
     driver = webdriver.Chrome()
     driver.get(urlissed)
     driver.get_screenshot_as_file("Webshot-@fridayot.png")
@@ -59,7 +59,7 @@ async def _(event):
     if event.fwd_from:
         return
     try:
-        tfbro = await edit_or_reply(event, "Wait Fetching Website Info")
+        tfbro = await friday.edit_or_reply(event, "Wait Fetching Website Info")
         gone = event.pattern_match.group(1)
         url = f"https://api.ip2whois.com/v1?key=free&domain=" + gone
         await event.edit(
@@ -87,7 +87,7 @@ async def _(event):
     if event.fwd_from:
         return
     try:
-        tfsir = await edit_or_reply(event, "Wait Fetching Bin Info")
+        tfsir = await friday.edit_or_reply(event, "Wait Fetching Bin Info")
         kek = event.pattern_match.group(1)
         url = f"https://lookup.binlist.net/{kek}"
         midhunkm = requests.get(url=url).json()
@@ -113,7 +113,7 @@ async def _(event):
     api = f"https://openiban.com/validate/{inputs}?getBIC=true&validateBankCode=true"
     lol = requests.get(url=api).json()
     try:
-        tfhm = await edit_or_reply(event, "Wait Fetching IBAN Info")
+        tfhm = await friday.edit_or_reply(event, "Wait Fetching IBAN Info")
         banks = lol["bankData"]
         kek = (
             f"<b><u>VALID</u></b> ➠ <code>{lol['valid']}</code> \n"
@@ -135,7 +135,7 @@ async def _(event):
     if event.fwd_from:
         return
     try:
-        kekman = await edit_or_reply(event, "Fetching Repo")
+        kekman = await friday.edit_or_reply(event, "Fetching Repo")
         inputs = event.pattern_match.group(1)
         sed = event.pattern_match.group(1)
         if sed:
@@ -161,7 +161,7 @@ async def _(event):
         return
     try:
         fin = event.pattern_match.group(1)
-        stark_result = await edit_or_reply(event, "Fectching Result this May Take Time")
+        stark_result = await friday.edit_or_reply(event, "Fectching Result this May Take Time")
         results = YoutubeSearch(f"{fin}", max_results=5).to_dict()
         noob = "<b>YOUTUBE SEARCH</b> \n\n"
         for moon in results:

@@ -159,10 +159,10 @@ async def _(event):
     if event.fwd_from:
         return
     if not event.reply_to_msg_id:
-        await edit_or_reply(event, "Reply To Any Image Idiot.")
+        await friday.edit_or_reply(event, "Reply To Any Image Idiot.")
         return
     reply_message = await event.get_reply_message()
-    kok = await edit_or_reply(event, "`Processing...`")
+    kok = await friday.edit_or_reply(event, "`Processing...`")
     IdkWtf = await is_nsfw(reply_message)
     if IdkWtf is False:
       await kok.edit("**IMAGE-RESULT** \n**NSFW :** `False`")
@@ -211,7 +211,7 @@ async def _(event):
     
     url = "https://thispersondoesnotexist.com/image"
     response = requests.get(url)
-    poppy = await edit_or_reply(event, "Creating a fake face for you... 🌚")
+    poppy = await friday.edit_or_reply(event, "Creating a fake face for you... 🌚")
     if response.status_code == 200:
       with open("FRIDAYOT.jpg", 'wb') as f:
         f.write(response.content)
@@ -889,10 +889,10 @@ async def _(event):
         return
     await event.edit("Oh Wait Let Me Get Wear Glasses")
     if not event.reply_to_msg_id:
-        ommhg = await edit_or_reply(event, "Reply To Any Image.")
+        ommhg = await friday.edit_or_reply(event, "Reply To Any Image.")
         return
     reply_message = await event.get_reply_message()
-    ommhg = await edit_or_reply(event, "Processing. please wait.")
+    ommhg = await friday.edit_or_reply(event, "Processing. please wait.")
     img = await convert_to_image(event, borg)
     image = open(img, 'rb')
     url_s = upload_file(image)

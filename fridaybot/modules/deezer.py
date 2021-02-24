@@ -101,7 +101,7 @@ async def _(event):
     input_str = event.pattern_match.group(1)
     credits = "By Friday. Get Your Friday From @FridayOT."
     link = f"https://api.deezer.com/search?q={input_str}&limit=1"
-    ommhg = await edit_or_reply(event, "Searching For The Song 🧐🔍")
+    ommhg = await friday.edit_or_reply(event, "Searching For The Song 🧐🔍")
     dato = requests.get(url=link).json()
     match = dato.get("data")
     urlhp= (match[0])

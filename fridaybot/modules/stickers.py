@@ -49,7 +49,7 @@ async def _(event):
     input_str = event.pattern_match.group(1)
     if input_str:
         sticker_emoji = input_str
-    moods = await edit_or_reply(
+    moods = await friday.edit_or_reply(
         event, "`Hello, This Sticker Looks Noice. Mind if I steal it`"
     )
     user = await bot.get_me()
@@ -209,7 +209,7 @@ async def _(event):
 @friday.on(friday_on_cmd(pattern="packinfo"))
 @friday.on(sudo_cmd(pattern="packinfo ?(.*)", allow_sudo=True))
 async def _(event):
-    moods = await edit_or_reply(event, "`HeHe , Me Gonna Leech Pack Info`")
+    moods = await friday.edit_or_reply(event, "`HeHe , Me Gonna Leech Pack Info`")
     if event.fwd_from:
         return
     if not event.is_reply:

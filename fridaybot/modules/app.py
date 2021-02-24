@@ -17,7 +17,7 @@ async def apk(event):
     if event.fwd_from:
         return
     app_name = event.pattern_match.group(1)
-    event = await edit_or_reply(event, "Searching!")
+    event = await friday.edit_or_reply(event, "Searching!")
     try:
         remove_space = app_name.split(" ")
         final_name = "+".join(remove_space)
@@ -89,7 +89,7 @@ async def apkr(event):
     if event.fwd_from:
         return
     app_name = event.pattern_match.group(1)
-    event = await edit_or_reply(event, "searching!")
+    event = await friday.edit_or_reply(event, "searching!")
     try:
         remove_space = app_name.split(" ")
         final_name = "+".join(remove_space)

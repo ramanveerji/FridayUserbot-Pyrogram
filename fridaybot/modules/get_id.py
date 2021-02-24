@@ -9,7 +9,7 @@ from fridaybot.utils import edit_or_reply, friday_on_cmd, sudo_cmd
 @friday.on(friday_on_cmd("get_id"))
 @friday.on(sudo_cmd("get_id", allow_sudo=True))
 async def _(event):
-    starkisgreat = await edit_or_reply(event, "Processing")
+    starkisgreat = await friday.edit_or_reply(event, "Processing")
     if event.fwd_from:
         return
     if event.reply_to_msg_id:

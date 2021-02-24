@@ -39,7 +39,7 @@ async def waifu(animu):
         if animu.is_reply:
             text = (await animu.get_reply_message()).message
         else:
-            await edit_or_reply(
+            await friday.edit_or_reply(
                 animu, "`You haven't written any article, Waifu is going away.`"
             )
             return

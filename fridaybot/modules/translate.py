@@ -35,7 +35,7 @@ async def _(event):
     elif "|" in input_str:
         lan, text = input_str.split("|")
     else:
-        await edit_or_reply(event, "`.tr LanguageCode` as reply to a message")
+        await friday.edit_or_reply(event, "`.tr LanguageCode` as reply to a message")
         return
 
     lan = lan.strip()
@@ -62,7 +62,7 @@ async def _(event):
             starky = f"Translated Text Was Too Big, Never Mind I Have Pasted It [Here]({url2})"
         else:
             starky = output_str
-        await edit_or_reply(event, starky)
+        await friday.edit_or_reply(event, starky)
     except:
         translator = google_translator()
         translated = translator.translate(text ,lang_tgt=lan)
@@ -89,7 +89,7 @@ async def _(event):
             starky = f"Translated Text Was Too Big, Never Mind I Have Pasted It [Here]({url2})"
         else:
             starky = output_str
-        await edit_or_reply(event, starky)
+        await friday.edit_or_reply(event, starky)
 
 CMD_HELP.update(
     {

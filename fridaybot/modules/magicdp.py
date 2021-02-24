@@ -40,7 +40,7 @@ async def _(event):
     if event.fwd_from:
         return
     
-    ommhg = await edit_or_reply(event, "Starting Your Magic Dp")
+    ommhg = await friday.edit_or_reply(event, "Starting Your Magic Dp")
     
     while True:
         await magic()

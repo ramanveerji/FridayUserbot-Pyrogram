@@ -36,7 +36,7 @@ async def on_new_message(event):
 async def on_add_black_list(event):
     if event.fwd_from:
         return
-    starksayxd = await edit_or_reply(event, "Trying To Set This Text As Blacklist xD")
+    starksayxd = await friday.edit_or_reply(event, "Trying To Set This Text As Blacklist xD")
     text = event.pattern_match.group(1)
     to_blacklist = list(
         set(trigger.strip() for trigger in text.split("\n") if trigger.strip())
@@ -55,7 +55,7 @@ async def on_add_black_list(event):
 async def on_view_blacklist(event):
     if event.fwd_from:
         return
-    sensibleleecher = await edit_or_reply(event, "Listing Blacklist xD")
+    sensibleleecher = await friday.edit_or_reply(event, "Listing Blacklist xD")
     all_blacklisted = sql.get_chat_blacklist(event.chat_id)
     OUT_STR = "Blacklists in the Current Chat:\n"
     if len(all_blacklisted) > 0:
@@ -84,7 +84,7 @@ async def on_view_blacklist(event):
 async def on_delete_blacklist(event):
     if event.fwd_from:
         return
-    sensibleisleecher = await edit_or_reply(event, "Ok Removing This Blacklist xD")
+    sensibleisleecher = await friday.edit_or_reply(event, "Ok Removing This Blacklist xD")
     text = event.pattern_match.group(1)
     to_unblacklist = list(
         set(trigger.strip() for trigger in text.split("\n") if trigger.strip())

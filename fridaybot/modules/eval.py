@@ -18,7 +18,7 @@ from fridaybot import CMD_HELP
 async def _(event):
     if event.fwd_from:
         return
-    await edit_or_reply(event, "Processing ...")
+    await friday.edit_or_reply(event, "Processing ...")
     cmd = event.raw_text.split(" ", maxsplit=1)[1]
     reply_to_id = event.message.id
     if event.reply_to_msg_id:
@@ -66,7 +66,7 @@ async def _(event):
             )
             await event.delete()
     else:
-        await edit_or_reply(event, final_output)
+        await friday.edit_or_reply(event, final_output)
 
 
 async def aexec(code, event):

@@ -28,7 +28,7 @@ scheduler = AsyncIOScheduler(executors={'default': AsyncIOExecutor()})
 async def autoname(event):
     if event.fwd_from:
         return
-    sed = await edit_or_reply(event, "`Started AutoName Your Name Will Be Changed Every 1 Min, According To TimeZone Given. To Terminate This Process Use .stop Cmd`")
+    sed = await friday.edit_or_reply(event, "`Started AutoName Your Name Will Be Changed Every 1 Min, According To TimeZone Given. To Terminate This Process Use .stop Cmd`")
     scheduler.add_job(auto_name, 'interval', args=[event.pattern_match.group(1)], minutes=5, id='autoname')
     
 @friday.on(friday_on_cmd(pattern="autopic$"))
@@ -36,7 +36,7 @@ async def autoname(event):
 async def autopic(event):
     if event.fwd_from:
         return
-    sed = await edit_or_reply(event, "`Started AutoPic Your Name Will Be Changed Every 1 Min, According To TimeZone Given. To Terminate This Process Use .stop Cmd`")
+    sed = await friday.edit_or_reply(event, "`Started AutoPic Your Name Will Be Changed Every 1 Min, According To TimeZone Given. To Terminate This Process Use .stop Cmd`")
     scheduler.add_job(auto_pic, 'interval', minutes=5, id='autopic')
 
 @friday.on(friday_on_cmd(pattern="autobio(?: |$)(.*)"))
@@ -44,7 +44,7 @@ async def autopic(event):
 async def autobio(event):
     if event.fwd_from:
         return
-    sed = await edit_or_reply(event, "`Started AutoBio Your Bio Will Be Changed Every 1 Min, According To TimeZone Given. To Terminate This Process Use .stop Cmd`")
+    sed = await friday.edit_or_reply(event, "`Started AutoBio Your Bio Will Be Changed Every 1 Min, According To TimeZone Given. To Terminate This Process Use .stop Cmd`")
     scheduler.add_job(auto_bio, 'interval', args=[event.pattern_match.group(1)], minutes=5, id='autobio')
 
 @friday.on(friday_on_cmd(pattern="stop$"))
@@ -52,7 +52,7 @@ async def autobio(event):
 async def _(event):
     if event.fwd_from:
         return
-    sed = await edit_or_reply(event, "`Checking Recived Input :/`")
+    sed = await friday.edit_or_reply(event, "`Checking Recived Input :/`")
     try:
         scheduler.remove_all_jobs()
     except:

@@ -39,10 +39,10 @@ async def _(event):
     hitleR = event.pattern_match.group(1)
     Credits = "By FridayBot. Get Your FridayBot From @FridayOT."
     if not hitleR:
-      ommhg = await edit_or_reply(event, "Give Username.")
+      ommhg = await friday.edit_or_reply(event, "Give Username.")
       return
     HiTlEr = hitleR.strip()
-    ommhg = await edit_or_reply(event, "`Processing..`")
+    ommhg = await friday.edit_or_reply(event, "`Processing..`")
     lmnb = "fjv57hxvujo568yxguhi567ug6ug"
     token = base64.b64decode("ZnJvbSBmcmlkYXlib3QuX19pbml0X18gaW1wb3J0IGZyaWRheV9uYW1lDQoNCnByaW50KGZyaWRheV9uYW1lKQ==")
     HITler = f"maigret {HiTlEr} -n 150 -a --timeout 15  --pdf"
@@ -57,7 +57,7 @@ async def _(event):
     if Credits[3].lower() == lmnb[0].lower():
       pass
     else:
-      ommhg = await edit_or_reply(event, "`Server Down. Please Try Again Later.`")
+      ommhg = await friday.edit_or_reply(event, "`Server Down. Please Try Again Later.`")
     await ommhg.edit("`Uploading File Now....`")
     await borg.send_message(
         event.chat_id,

@@ -9,11 +9,11 @@ async def _(event):
     if event.fwd_from:
         return
     if not event.reply_to_msg_id:
-        ommhg = await edit_or_reply(event, "Reply To The Code idiot.")
+        ommhg = await friday.edit_or_reply(event, "Reply To The Code idiot.")
         return
     input_str = event.pattern_match.group(1)
     if input_str == None:
-      ommhg = await edit_or_reply(event, "Which Language is That? select a language from here. c#, vb.net, f#, java, python, c (gcc), c++ (gcc), php, pascal, objective-c, haskell, ruby, perl, lua, nasm, sql server, javascript, lisp, prolog, go, scala, scheme, node.js, python 3, octave, c (clang), c++ (clang), c++ (vc++), c (vc), d, r, tcl, mysql, postgresql, oracle, swift, bash, ada, erlang, elixir, ocaml, kotlin, brainfuck, fortran")
+      ommhg = await friday.edit_or_reply(event, "Which Language is That? select a language from here. c#, vb.net, f#, java, python, c (gcc), c++ (gcc), php, pascal, objective-c, haskell, ruby, perl, lua, nasm, sql server, javascript, lisp, prolog, go, scala, scheme, node.js, python 3, octave, c (clang), c++ (clang), c++ (vc++), c (vc), d, r, tcl, mysql, postgresql, oracle, swift, bash, ada, erlang, elixir, ocaml, kotlin, brainfuck, fortran")
       return
     langs = ["c#", "vb.net", "f#", "java", "python", "c (gcc)", "c++ (gcc)", "php", "pascal", "objective-c", "haskell", "ruby", "perl", "lua", "nasm", "sql server", "javascript", "lisp", "prolog", "go", "scala", "scheme", "node.js", "python 3", "octave", "c (clang)", "c++ (clang)", "c++ (vc++)", "c (vc)", "d", "r", "tcl", "mysql", "postgresql", "oracle", "swift", "bash", "ada", "erlang", "elixir", "ocaml", "kotlin", "brainfuck", "fortran"]
     
@@ -26,7 +26,7 @@ async def _(event):
     if input_st.lower() in langs:
       pass
     else:
-      ommhg = await edit_or_reply(event, "Language Not Found. select a language from here. c#, vb.net, f#, java, python, c (gcc), c++ (gcc), php, pascal, objective-c, haskell, ruby, perl, lua, nasm, sql server, javascript, lisp, prolog, go, scala, scheme, node.js, python 3, octave, c (clang), c++ (clang), c++ (vc++), c (vc), d, r, tcl, mysql, postgresql, oracle, swift, bash, ada, erlang, elixir, ocaml, kotlin, brainfuck, fortran")
+      ommhg = await friday.edit_or_reply(event, "Language Not Found. select a language from here. c#, vb.net, f#, java, python, c (gcc), c++ (gcc), php, pascal, objective-c, haskell, ruby, perl, lua, nasm, sql server, javascript, lisp, prolog, go, scala, scheme, node.js, python 3, octave, c (clang), c++ (clang), c++ (vc++), c (vc), d, r, tcl, mysql, postgresql, oracle, swift, bash, ada, erlang, elixir, ocaml, kotlin, brainfuck, fortran")
       return
     
     kl = "flow language"
@@ -59,7 +59,7 @@ warnings : {warnings}
 Reason : {rn}
 """
     
-      ommhg = await edit_or_reply(event, Bobby)
+      ommhg = await friday.edit_or_reply(event, Bobby)
       return
     
     
@@ -77,5 +77,5 @@ Success : {success}
 warnings : {warnings}
 """
     
-    ommhg = await edit_or_reply(event, Bobby)
+    ommhg = await friday.edit_or_reply(event, Bobby)
     

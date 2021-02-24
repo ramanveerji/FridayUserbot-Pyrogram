@@ -94,7 +94,7 @@ async def download_video(v_url):
     """ For .ytdl command, download media from YouTube and many other sites. """
     url = v_url.pattern_match.group(2)
     type = v_url.pattern_match.group(1).lower()
-    friday = await edit_or_reply(v_url, "Trying To Download......")
+    friday = await friday.edit_or_reply(v_url, "Trying To Download......")
     await friday.edit("`Preparing to download...`")
 
     if type == "a":
@@ -225,7 +225,7 @@ async def download_video(v_url):
     """ For .ytdl command, download media from YouTube and many other sites. """
     
     url = v_url.pattern_match.group(1)
-    friday = await edit_or_reply(v_url, "Trying To Download......")
+    friday = await friday.edit_or_reply(v_url, "Trying To Download......")
     await friday.edit("`Preparing to download...`")
 
     if 1==1:

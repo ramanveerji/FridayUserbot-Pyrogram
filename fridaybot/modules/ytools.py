@@ -48,7 +48,7 @@ async def _(event):
         return
     urlissed = event.pattern_match.group(1)
     print(urlissed)
-    myself_stark = await edit_or_reply(
+    myself_stark = await friday.edit_or_reply(
         event, f"`Getting {urlissed} From Youtube Servers. Please Wait.`"
     )
     search = SearchVideos(f"{urlissed}", offset=1, mode="dict", max_results=1)
@@ -130,7 +130,7 @@ async def _(event):
     if event.fwd_from:
         return
     urlissed = event.pattern_match.group(1)
-    myself_stark = await edit_or_reply(
+    myself_stark = await friday.edit_or_reply(
         event, f"`Getting {urlissed} From Youtube Servers. Please Wait.`"
     )
     search = SearchVideos(f"{urlissed}", offset=1, mode="dict", max_results=1)
@@ -204,7 +204,7 @@ async def _(event):
     if event.fwd_from:
         return
     urlissed = event.pattern_match.group(1)
-    myself_stark = await edit_or_reply(
+    myself_stark = await friday.edit_or_reply(
         event, f"`Getting {urlissed} From Youtube Servers. Please Wait.`"
     )
     search = SearchVideos(f"{urlissed}", offset=1, mode="dict", max_results=1)

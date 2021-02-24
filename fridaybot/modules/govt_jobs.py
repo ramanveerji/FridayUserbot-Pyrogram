@@ -17,7 +17,7 @@ async def _(givejob):
         r = requests.get(url)
         return r.text
 
-    await edit_or_reply(givejob, "Trying To Fetch Jobs...")
+    await friday.edit_or_reply(givejob, "Trying To Fetch Jobs...")
 
     htmldata = getdata("https://www.sarkariresult.com/latestjob.php")
 

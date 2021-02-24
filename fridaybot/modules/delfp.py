@@ -32,7 +32,7 @@ async def remove_profilepic(delpfp):
             )
         )
     await delpfp.client(DeletePhotosRequest(id=input_photos))
-    await edit_or_reply(
+    await friday.edit_or_reply(
         delpfp, f"`Successfully deleted {len(input_photos)} profile picture(s).`"
     )
 

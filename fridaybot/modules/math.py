@@ -13,7 +13,7 @@ async def _(car):
     if car.fwd_from:
         return
     cmd = car.text.split(" ", maxsplit=1)[1]
-    event = await edit_or_reply(car, "Calculating ...")
+    event = await friday.edit_or_reply(car, "Calculating ...")
     old_stderr = sys.stderr
     old_stdout = sys.stdout
     redirected_output = sys.stdout = io.StringIO()

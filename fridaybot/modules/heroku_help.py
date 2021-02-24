@@ -35,7 +35,7 @@ async def dyno_usage(dyno):
     """
     Get your account Dyno Usage
     """
-    await edit_or_reply(dyno, "`Trying To Fetch Dyno Usage....`")
+    await friday.edit_or_reply(dyno, "`Trying To Fetch Dyno Usage....`")
     useragent = (
         "Mozilla/5.0 (Linux; Android 10; SM-G975F) "
         "AppleWebKit/537.36 (KHTML, like Gecko) "
@@ -50,7 +50,7 @@ async def dyno_usage(dyno):
     path = "/accounts/" + user_id + "/actions/get-quota"
     r = requests.get(heroku_api + path, headers=headers)
     if r.status_code != 200:
-        return await edit_or_reply(
+        return await friday.edit_or_reply(
             dyno, "`Error: something bad happened`\n\n" f">.`{r.reason}`\n"
         )
     result = r.json()
@@ -79,7 +79,7 @@ async def dyno_usage(dyno):
 
     await asyncio.sleep(1.5)
 
-    return await edit_or_reply(
+    return await friday.edit_or_reply(
         dyno,
         "**Dyno Usage Data**:\n\n"
         f"✗ **APP NAME =>** `{Config.HEROKU_APP_NAME}` \n"
@@ -108,23 +108,23 @@ async def variable(var):
     if Config.HEROKU_APP_NAME is not None:
         app = Heroku.app(Config.HEROKU_APP_NAME)
     else:
-        return await edit_or_reply(
+        return await friday.edit_or_reply(
             var, "`[HEROKU]:" "\nPlease setup your` **HEROKU_APP_NAME**"
         )
     exe = var.pattern_match.group(1)
     heroku_var = app.config()
     if exe == "get":
-        await edit_or_reply(var, "`Getting information...`")
+        await friday.edit_or_reply(var, "`Getting information...`")
         await asyncio.sleep(1.5)
         try:
             variable = var.pattern_match.group(2).split()[0]
             if variable in heroku_var:
-                return await edit_or_reply(
+                return await friday.edit_or_reply(
                     var,
                     "**ConfigConfigs**:" f"\n\n`{variable} = {heroku_var[variable]}`\n",
                 )
             else:
-                return await edit_or_reply(
+                return await friday.edit_or_reply(
                     var, "**ConfigConfigs**:" f"\n\n`Error:\n-> {variable} don't exists`"
                 )
         except IndexError:
@@ -141,7 +141,7 @@ async def variable(var):
                         caption="`Output too large, sending it as a file`",
                     )
                 else:
-                    await edit_or_reply(
+                    await friday.edit_or_reply(
                         var,
                         "`[HEROKU]` ConfigConfigs:\n\n"
                         "================================"
@@ -151,41 +151,41 @@ async def variable(var):
             os.remove("configs.json")
             return
     elif exe == "set":
-        await edit_or_reply(var, "`Setting information...`")
+        await friday.edit_or_reply(var, "`Setting information...`")
         variable = var.pattern_match.group(2)
         if not variable:
-            return await edit_or_reply(var, ">`.set var <ConfigConfigs-name> <value>`")
+            return await friday.edit_or_reply(var, ">`.set var <ConfigConfigs-name> <value>`")
         value = var.pattern_match.group(3)
         if not value:
             variable = variable.split()[0]
             try:
                 value = var.pattern_match.group(2).split()[1]
             except IndexError:
-                return await edit_or_reply(var, ">`.set var <ConfigConfigs-name> <value>`")
+                return await friday.edit_or_reply(var, ">`.set var <ConfigConfigs-name> <value>`")
         await asyncio.sleep(1.5)
         if variable in heroku_var:
-            await edit_or_reply(
+            await friday.edit_or_reply(
                 var, f"**{variable}**  `successfully changed to`  ->  **{value}**"
             )
         else:
-            await edit_or_reply(
+            await friday.edit_or_reply(
                 var, f"**{variable}**  `successfully added with value`  ->  **{value}**"
             )
         heroku_var[variable] = value
     elif exe == "del":
-        await edit_or_reply(var, "`Getting information to deleting variable...`")
+        await friday.edit_or_reply(var, "`Getting information to deleting variable...`")
         try:
             variable = var.pattern_match.group(2).split()[0]
         except IndexError:
-            return await edit_or_reply(
+            return await friday.edit_or_reply(
                 var, "`Please specify ConfigConfigs you want to delete`"
             )
         await asyncio.sleep(1.5)
         if variable in heroku_var:
-            await edit_or_reply(var, f"**{variable}**  `successfully deleted`")
+            await friday.edit_or_reply(var, f"**{variable}**  `successfully deleted`")
             del heroku_var[variable]
         else:
-            return await edit_or_reply(var, f"**{variable}**  `is not exists`")
+            return await friday.edit_or_reply(var, f"**{variable}**  `is not exists`")
 
 
 @friday.on(friday_on_cmd(pattern="shp ?(.*)"))

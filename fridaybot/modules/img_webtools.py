@@ -181,14 +181,14 @@ Get Your Own Friday From @FRIDAYCHAT.</b></u>
 @friday.on(friday_on_cmd(pattern="(img|image|googleimage|gi) ?(.*)"))
 @friday.on(sudo_cmd(pattern="(img|image|googleimage|gi) ?(.*)", allow_sudo=True))
 async def img_sampler(event):
-    await edit_or_reply(event, "`Processing...`")
+    await friday.edit_or_reply(event, "`Processing...`")
     reply = await event.get_reply_message()
     if event.pattern_match.group(2):
         query = event.pattern_match.group(2)
     elif reply:
         query = reply.message
     else:
-        await edit_or_reply(
+        await friday.edit_or_reply(
             event, "`um, mind mentioning what I actually need to search for ;_;`"
         )
         return

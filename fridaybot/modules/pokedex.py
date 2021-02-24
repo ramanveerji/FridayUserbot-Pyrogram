@@ -30,7 +30,7 @@ async def _(event):
     if pokemon.get("error") is not None:
           kk = f"""
 Error:   {pokemon.get("error")}"""
-          ommhg = await edit_or_reply(event, kk)
+          ommhg = await friday.edit_or_reply(event, kk)
           return
     name = str(pokemon.get("name"))
     number = str(pokemon.get("number"))

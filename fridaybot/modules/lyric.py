@@ -16,7 +16,7 @@ GENIUS = os.environ.get("GENIUS_API_TOKEN", None)
 async def _(event):
     if event.fwd_from:
         return
-    await edit_or_reply(event, "Searching For Lyrics.....")
+    await friday.edit_or_reply(event, "Searching For Lyrics.....")
     reply_to_id = event.message.id
     if event.reply_to_msg_id:
         reply_to_id = event.reply_to_msg_id
@@ -26,7 +26,7 @@ async def _(event):
     elif reply.text:
         query = reply.message
     else:
-        await edit_or_reply(event, "`What I am Supposed to find `")
+        await friday.edit_or_reply(event, "`What I am Supposed to find `")
         return
 
     song = ""
@@ -52,7 +52,7 @@ async def _(event):
             )
             await event.delete()
     else:
-        await edit_or_reply(event, reply)
+        await friday.edit_or_reply(event, reply)
 
 
 @friday.on(friday_on_cmd(outgoing=True, pattern="glyrics(?: |$)(.*)"))
