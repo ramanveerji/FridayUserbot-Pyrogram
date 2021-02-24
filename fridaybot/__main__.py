@@ -12,6 +12,7 @@
 #    along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 import logging
+import pytz
 from pathlib import Path
 from sys import argv
 import os
@@ -145,9 +146,9 @@ if Config.ENABLE_ASSISTANTBOT == "ENABLE":
             path1 = Path(f.name)
             shortname = path1.stem
             start_assistant(shortname.replace(".py", ""))
-    wsta = "Friday And Assistant Bot Have Been Installed Successfully !"
+    wsta = "Friday And Assistant Bot Have Been Installed / Restarted Successfully !"
 else:
-    wsta = "Friday Has Been Installed Sucessfully"
+    wsta = "Friday Has Been Installed / Restarted Sucessfully"
 
 total_clients = 1
 if failed2 is None:
@@ -157,7 +158,10 @@ if failed3 is None:
     
 if wsta[0].lower() != Lol[0]:
    sys.exit("Bug Detected ! // UserBot is Exiting.")
-    
+
+TZ = pytz.timezone(Config.TZ)
+datetime_tz = datetime.now(TZ)
+strk = datetime_tz.strftime(f"Date : %d/%m/%Y \nTime : %H:%M")
 sarg = (f"""{wsta}
 -------------------------------------------
 Friday-Userbot Based On Telethon V{tv}
@@ -166,6 +170,7 @@ Friday-Userbot Version : V{friday_version}
 Support Chat : @FridayChat
 Updates Channel : @FridaySupportOfficial
 Total Clients : {total_clients}
+{strk}
 -------------------------------------------""")
 fridaydevs.info(sarg)
 
