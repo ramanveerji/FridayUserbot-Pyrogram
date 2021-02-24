@@ -1,4 +1,3 @@
-
 #    Copyright (C) @DevsExpo 2020-2021
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as published by
@@ -72,7 +71,7 @@ async def _(event):
                         )
                     )
         except Exception as e:
-            kk.edit(f'`Failed To Add : {user_id} ! \nReason : {e}`")
+            await kk.edit(f"`Failed To Add : {user_id} ! \nReason : {e}`")
             return
     else:
         try:
@@ -83,7 +82,7 @@ async def _(event):
                         )
                     )
         except Exception as e:
-            await event.edit(f'`Failed To Add : {user_id} ! \nReason : {e}`")
+            await kk.edit(f'`Failed To Add : {user_id} ! \nReason : {e}`")
             return
 afk_cmd = str(Config.COMMAND_HAND_LER) + "afk ?(.*)"
 @friday.on(
@@ -92,9 +91,9 @@ afk_cmd = str(Config.COMMAND_HAND_LER) + "afk ?(.*)"
 async def _(event):
     if event.fwd_from:
         return
-    global USER_AFK  # pylint:disable=E0602
-    global afk_time  # pylint:disable=E0602
-    global last_afk_message  # pylint:disable=E0602
+    global USER_AFK
+    global afk_time
+    global last_afk_message
     global afk_start
     global afk_end
     global reason
@@ -105,13 +104,13 @@ async def _(event):
     start_1 = datetime.now()
     afk_start = start_1.replace(microsecond=0)
     reason = event.pattern_match.group(1)
-    if not USER_AFK:  # pylint:disable=E0602
-        last_seen_status = await borg(  # pylint:disable=E0602
+    if not USER_AFK:
+        last_seen_status = await event.client(
             functions.account.GetPrivacyRequest(types.InputPrivacyKeyStatusTimestamp())
         )
         if isinstance(last_seen_status.rules, types.PrivacyValueAllowAll):
-            afk_time = datetime.datetime.now()  # pylint:disable=E0602
-        USER_AFK = f"yes: {reason}"  # pylint:disable=E0602
+            afk_time = datetime.datetime.now()
+        USER_AFK = f"yes: {reason}"
         if reason:
             await borg.send_message(
                 event.chat_id,
@@ -122,15 +121,14 @@ async def _(event):
         await asyncio.sleep(5)
         await event.delete()
         try:
-            await borg.send_message(  # pylint:disable=E0602
-                Config.PRIVATE_GROUP_ID,  # pylint:disable=E0602
+            await borg.send_message(
+                Config.PRIVATE_GROUP_ID,
                 f"#AfkLogger Afk Is Active And Reason is {reason}",
             )
-        except Exception as e:  # pylint:disable=C0103,W0703
-            logger.warn(str(e))  # pylint:disable=E0602
+        except Exception as e:
+            logger.warn(str(e))
 
-
-@friday.on(events.NewMessage(outgoing=True))  # pylint:disable=E0602
+@friday.on(events.NewMessage(outgoing=True))
 async def set_not_afk(event):
     global USER_AFK  # pylint:disable=E0602
     global afk_time  # pylint:disable=E0602
@@ -189,8 +187,6 @@ async def on_afk(event):
     afk_since = "**a while ago**"
     current_message_text = event.message.message.lower()
     if "afk" in current_message_text:
-        # fridaybot's should not reply to other fridaybot's
-        # https://core.telegram.org/bots/faq#why-doesn-39t-my-bot-see-messages-from-other-bots
         return False
     if USER_AFK and not (await event.get_sender()).bot:  # pylint:disable=E0602
         if afk_time:  # pylint:disable=E0602
