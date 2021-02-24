@@ -57,17 +57,18 @@ afk_start = {}
 async def _(event):
     if event.fwd_from:
         return
-    user_id = event.pattern_match.group(1)
+    id_f = event.pattern_match.group(1)
     kk = await edit_or_reply(event, "`Processing...`")
     if event.is_private:
         await kk.edit("`This Plugin Only Works In Groups!`")
         return
+    user_id = int(id_f) if id_f.isdigit() else str(id_f)
     if event.is_group:
         try:
             await kk.edit(f"`Trying To Add {user_id} !`")
             await event.client(
                         functions.messages.AddChatUserRequest(
-                            chat_id=event.chat_id, user_id=user_id, fwd_limit=1000
+                            chat_id=event.chat_id, user_id=user_id, fwd_limit=0
                         )
                     )
         except Exception as e:
