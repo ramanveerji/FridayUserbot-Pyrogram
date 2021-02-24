@@ -58,7 +58,7 @@ async def _(event):
     if event.fwd_from:
         return
     user_id = event.pattern_match.group(1)
-    kk = await event_or_reply(event, "`Processing...`")
+    kk = await edit_or_reply(event, "`Processing...`")
     if event.is_private:
         await kk.edit("`This Plugin Only Works In Groups!`")
         return
