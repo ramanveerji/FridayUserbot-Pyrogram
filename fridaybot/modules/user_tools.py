@@ -345,10 +345,9 @@ async def _(event):
         await poppo.edit("Reply To Some Message.")
         return
     if hmm and hmm.media:
-        ok = await borg.download_media(hmm.media, sedpath)
         for channelz in all_chnnl:
             try:
-                await borg.send_file(int(channelz.chat_id), file=ok, caption=hmm.text)
+                await borg.send_file(int(channelz.chat_id), file=hmm.media, caption=hmm.text)
                 total_count += 1
             except Exception as e:
                 total_errors += 1
@@ -362,7 +361,7 @@ async def _(event):
             except Exception as e:
                 total_errors += 1
     elif hmm.message.poll:
-        await poppo.edit("Bruh, This Can't Be Broadcasted.")
+        await poppo.edit("`Bruh, This Can't Be Broadcasted!`")
         return
     await poppo.edit(
         f"BroadCast Success In : {total_count} \nFailed In : {total_errors} \nTotal Channel In DB : {total_chnnl}"
@@ -389,16 +388,16 @@ async def _(event):
     errorno = ""
     total_chnnl = len(all_chnnl)
     if event.reply_to_msg_id:
-        hmm = await event.get_reply_message()
+        hmm_k = await event.get_reply_message()
     else:
         await edit_or_reply(event, "Reply To Some Message.")
         return
-    try:
-        for forbard in all_chnnl:
-            await borg.forward_messages(forbard.chat_id, hmm)
+    for forbard in all_chnnl:
+        try:
+            await hmm_k.forward_to(forbard.chat_id)
             total_count += 1
-    except Exception as e:
-        total_errors += 1
+        except:
+            total_errors += 1
     poppo = await edit_or_reply(event, 
         f"Forward Success in {total_count} And Failed In {total_errors} And Total Channel In Db is {total_chnnl}"
     )
@@ -410,8 +409,8 @@ async def _(event):
     except:
         pass
 
-@friday.on(friday_on_cmd(pattern="bstat"))
-@friday.on(sudo_cmd(pattern="bstat", allow_sudo=True))
+@friday.on(friday_on_cmd(pattern="bstat$"))
+@friday.on(sudo_cmd(pattern="bstat$", allow_sudo=True))
 async def _(event):
     if event.fwd_from:
         return
@@ -446,7 +445,7 @@ CMD_HELP.update(
         \n**Usage :** Removes Everything From DataBase.\
         \n\n**Syntax : **`.broadcast <Reply-To-Msg>`\
         \n**Usage :**  Broadcasts To All Channel in DB, Even Supports Media.\
-        \n\n**Syntax : **`.forward <Reply-To-Msg>`\
+        \n\n**Syntax : **`.bforward <Reply-To-Msg>`\
         \n**Usage :** Forwards To All Channel in Database.\
         \n\n**Syntax : **`.bstat`\
         \n**Usage :** Shows list of channels/groups in database."
