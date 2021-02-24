@@ -59,8 +59,8 @@ def friday_on_command(**args):
     if pattern != None:
         try:
             try:
-                args['pattern'] = re.compile(str(cmdhandler) + pattern)
-                cmd = re.compile(cmdhandler + pattern)
+                args['pattern'] = re.compile(cmdhandler + pattern)
+                cmd = cmdhandler + pattern
             except:
                 pass
             try:
