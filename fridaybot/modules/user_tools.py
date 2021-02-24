@@ -82,8 +82,9 @@ async def _(event):
                         )
                     )
         except Exception as e:
-            await kk.edit(f'`Failed To Add : {user_id} ! \nReason : {e}`")
+            await kk.edit(f"`Failed To Add : {user_id} ! \nReason : {e}`")
             return
+        
 afk_cmd = str(Config.COMMAND_HAND_LER) + "afk ?(.*)"
 @friday.on(
     events.NewMessage(pattern=afk_cmd, outgoing=True)
@@ -130,9 +131,9 @@ async def _(event):
 
 @friday.on(events.NewMessage(outgoing=True))
 async def set_not_afk(event):
-    global USER_AFK  # pylint:disable=E0602
-    global afk_time  # pylint:disable=E0602
-    global last_afk_message  # pylint:disable=E0602
+    global USER_AFK  
+    global afk_time  
+    global last_afk_message  
     global afk_start
     global afk_end
     back_alive = datetime.now()
@@ -140,7 +141,7 @@ async def set_not_afk(event):
     if afk_start != {}:
         total_afk_time = str((afk_end - afk_start))
     current_message = event.message.message
-    if ".afk" not in current_message and "yes" in USER_AFK:  # pylint:disable=E0602
+    if ".afk" not in current_message and "yes" in USER_AFK:  
         shite = await borg.send_message(
             event.chat_id,
             "__Pro is Back Alive__\n**No Longer afk.**\n `I Was afk for:``"
@@ -148,12 +149,12 @@ async def set_not_afk(event):
             + "`",
         )
         try:
-            await borg.send_message(  # pylint:disable=E0602
-                Config.PRIVATE_GROUP_ID,  # pylint:disable=E0602
+            await borg.send_message(  
+                Config.PRIVATE_GROUP_ID,  
                 "#AfkLogger User is Back Alive ! No Longer Afk ",
             )
         except Exception as e:  # pylint:disable=C0103,W0703
-            await borg.send_message(  # pylint:disable=E0602
+            await borg.send_message(  
                 event.chat_id,
                 "Please set `PRIVATE_GROUP_ID` "
                 + "for the proper functioning of afk functionality "
@@ -163,21 +164,21 @@ async def set_not_afk(event):
             )
         await asyncio.sleep(10)
         await shite.delete()
-        USER_AFK = {}  # pylint:disable=E0602
-        afk_time = None  # pylint:disable=E0602
+        USER_AFK = {}  
+        afk_time = None  
 
 
 @friday.on(
-    events.NewMessage(  # pylint:disable=E0602
+    events.NewMessage(  
         incoming=True, func=lambda e: bool(e.mentioned or e.is_private)
     )
 )
 async def on_afk(event):
     if event.fwd_from:
         return
-    global USER_AFK  # pylint:disable=E0602
-    global afk_time  # pylint:disable=E0602
-    global last_afk_message  # pylint:disable=E0602
+    global USER_AFK  
+    global afk_time  
+    global last_afk_message  
     global afk_start
     global afk_end
     back_alivee = datetime.now()
@@ -188,10 +189,10 @@ async def on_afk(event):
     current_message_text = event.message.message.lower()
     if "afk" in current_message_text:
         return False
-    if USER_AFK and not (await event.get_sender()).bot:  # pylint:disable=E0602
-        if afk_time:  # pylint:disable=E0602
+    if USER_AFK and not (await event.get_sender()).bot:  
+        if afk_time:  
             now = datetime.datetime.now()
-            datime_since_afk = now - afk_time  # pylint:disable=E0602
+            datime_since_afk = now - afk_time  
             time = float(datime_since_afk.seconds)
             days = time // (24 * 3600)
             time = time % (24 * 3600)
@@ -223,9 +224,9 @@ async def on_afk(event):
         await asyncio.sleep(10)
         # Spechide Bad
         await msg.delete()
-        if event.chat_id in last_afk_message:  # pylint:disable=E0602
-            await last_afk_message[event.chat_id].delete()  # pylint:disable=E0602
-        last_afk_message[event.chat_id] = msg  # pylint:disable=E0602
+        if event.chat_id in last_afk_message:  
+            await last_afk_message[event.chat_id].delete()  
+        last_afk_message[event.chat_id] = msg  
 
 
 CMD_HELP.update(
@@ -525,7 +526,7 @@ async def _(event):
     await borg(functions.account.UpdateProfileRequest(about=user_bio))
     pfile = await borg.upload_file(profile_pic)  # pylint:disable=E060
     await borg(
-        functions.photos.UploadProfilePhotoRequest(pfile)  # pylint:disable=E0602
+        functions.photos.UploadProfilePhotoRequest(pfile)  
     )
     # message_id_to_reply = event.message.reply_to_msg_id
     # if not message_id_to_reply:
