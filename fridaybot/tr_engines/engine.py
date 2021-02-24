@@ -7,7 +7,7 @@ k = logging.getLogger("TR-ENGINE")
 lang = Config.LANG
 
 if not os.path.exists(f'fridaybot/tr_engines/languages_json/{lang}.devsexpojson'):
-    k.logger.warning("Invalid Language. Using Default Language - English")
+    k.warning("Invalid Language. Using Default Language - English")
     lang_path = f"fridaybot/tr_engines/languages_json/en.devsexpojson"
 else:
     lang_path = f"fridaybot/tr_engines/languages_json/{lang}.devsexpojson"
