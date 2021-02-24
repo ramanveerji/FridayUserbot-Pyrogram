@@ -75,7 +75,7 @@ pytz
 qrcode
 regex
 requests
-git+https://github.com/bisoncorps/search-engine-parser
+search-engine-parser
 selenium
 speedtest-cli>=2.0.2
 sqlalchemy>=1.2
