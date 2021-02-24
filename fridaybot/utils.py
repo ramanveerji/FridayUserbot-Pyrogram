@@ -37,18 +37,15 @@ def friday_on_command(**args):
         del args['group_only']
     if "disable_errors" in args:
         del args['disable_errors']
-    if "insecure" in args:
-        del args['insecure']
     if add_sudo:
         args["from_users"] = list(Config.SUDO_USERS)
     if "pm_only" in args:
         del args['pm_only']
-    reg = re.compile('(.*)')
     if pattern != None:
         try:
             try:
-                args['pattern'] = re.compile(cmdhandler + str(args['pattern'])
-                cmd = re.compile(cmdhandler + str(args['pattern'])
+                args['pattern'] = re.compile(cmdhandler + str(args['pattern']))
+                cmd = re.compile(cmdhandler + str(args['pattern']))
             except:
                 pass
             try:
