@@ -25,27 +25,42 @@ bothandler = Config.BOT_HANDLER
 from datetime import datetime
 
 def friday_on_command(**args):
+    stack = inspect.stack()
+    previous_stack_frame = stack[1]
+    file_test = Path(previous_stack_frame.filename)
+    file_test = file_test.stem.replace(".py", "")
     pattern = args.get('pattern', None)
     group_only = args.get('group_only', False)
-    add_sudo = args.get('add_sudo', True)
+    allow_sudo = args.get('allow_sudo', True)
+    out_going = args.get('out_going', True)
     pm_only = args.get('pm_only', False)
     chnnl_only = args.get('chnnl_only', False)
     disable_errors = args.get('disable_errors', False)
+    if out_going:
+        args['outgoing'] = True
+    else:
+        args['outgoing'] = False  
+    if 'out_going' in args:
+        del args['out_going']  
     if "chnnl_only" in args:
         del args['chnnl_only']
     if "group_only" in args:
         del args['group_only']
     if "disable_errors" in args:
         del args['disable_errors']
-    if add_sudo:
+    if 'allow_sudo' in args:
+        del args['allow_sudo']    
+    if allow_sudo:
         args["from_users"] = list(Config.SUDO_USERS)
     if "pm_only" in args:
         del args['pm_only']
+    if 'pattern' in args:
+        del args['pattern']    
     if pattern != None:
         try:
             try:
-                args['pattern'] = re.compile(cmdhandler + str(args['pattern']))
-                cmd = re.compile(cmdhandler + str(args['pattern']))
+                args['pattern'] = re.compile(str(cmdhandler) + pattern)
+                cmd = re.compile(cmdhandler + pattern)
             except:
                 pass
             try:
