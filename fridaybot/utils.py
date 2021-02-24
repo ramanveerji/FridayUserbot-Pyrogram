@@ -1,11 +1,10 @@
+import pytz
 import functools
 import inspect
 import logging
 import re
 from pathlib import Path
-
 from telethon import events
-
 from fridaybot import CMD_LIST, LOAD_PLUG, SUDO_LIST, bot, client2, client3, CMD_HELP
 from fridaybot.Configs import Config
 from fridaybot.wraptools import (
@@ -15,14 +14,117 @@ from fridaybot.wraptools import (
     ignore_grp,
     ignore_pm,
 )
+import sys, os
+from asyncio import create_subprocess_shell as asyncsubshell
+from asyncio import subprocess as asyncsub
+from traceback import format_exc
 from fridaybot.Configs import Config
-sedprint = logging.getLogger("PLUGINS")
+sedprint = logging.getLogger("UTILS")
 cmdhandler = Config.COMMAND_HAND_LER
 bothandler = Config.BOT_HANDLER
+from datetime import datetime
+
+def friday_on_command(**args):
+    pattern = args.get('pattern', None)
+    group_only = args.get('group_only', False)
+    add_sudo = args.get('add_sudo', True)
+    pm_only = args.get('pm_only', False)
+    chnnl_only = args.get('chnnl_only', False)
+    disable_errors = args.get('disable_errors', False)
+    if "chnnl_only" in args:
+        del args['chnnl_only']
+    if "group_only" in args:
+        del args['group_only']
+    if "disable_errors" in args:
+        del args['disable_errors']
+    if "insecure" in args:
+        del args['insecure']
+    if add_sudo:
+        args["from_users"] = list(Config.SUDO_USERS)
+    if "pm_only" in args:
+        del args['pm_only']
+    reg = re.compile('(.*)')
+    if pattern != None:
+        try:
+            try:
+                args['pattern'] = re.compile(cmdhandler + str(args['pattern'])
+                cmd = re.compile(cmdhandler + str(args['pattern'])
+            except:
+                pass
+            try:
+                   CMD_LIST[file_test].append(cmd)
+            except:
+                   CMD_LIST.update({file_test: [cmd]})
+        except:
+            pass
+    def decorator(func):
+        async def wrapper(check):
+            # Ignore Fwds
+            if check.fwd_from:
+                return
+            # Works Only In Groups
+            if group_only and not check.is_group:
+                await check.respond("`Are you sure this is a group?`")
+                return
+            # Works Only in Channel    
+            if chnnl_only and not check.is_channel:
+                await check.respond("This Command Only Works In Channel!")
+                return    
+            # Works Only in Private Chat
+            if pm_only and not check.is_private:
+                await check.respond("`This Cmd Only Works On PM!`")
+                return
+            # Don't Give Access To Others Using Inline Search.    
+            if check.via_bot_id and check.out:
+                return
+            try:
+                await func(check)
+            except events.StopPropagation:
+                raise events.StopPropagation
+            except KeyboardInterrupt:
+                pass
+            except BaseException as e:
+                sedprint.exception(str(e))
+                if not disable_errors:
+                    TZ = pytz.timezone(Config.TZ)
+                    datetime_tz = datetime.now(TZ)
+                    text = "ERROR - REPORT\n\n"
+                    text += datetime_tz.strftime("Date : %Y-%m-%d \nTime : %H:%M:%S")
+                    text += "\nGroup ID: " + str(check.chat_id)
+                    text += "\nSender ID: " + str(check.sender_id)
+                    text += "\n\nEvent Trigger:\n"
+                    text += str(check.text)
+                    text += "\n\nTraceback info:\n"
+                    text += str(format_exc())
+                    text += "\n\nError text:\n"
+                    text += str(sys.exc_info()[1])
+                    file = open("error.log", "w+")
+                    file.write(text)
+                    file.close()
+                    try:
+                        await check.client.send_file(
+                                Config.PRIVATE_GROUP_ID,
+                                "error.log",
+                                caption="Error LoG, Please Forward To @FridayChat!",
+                            )
+                    except:
+                        await check.client.send_file(
+                                bot.uid,
+                                "error.log",
+                                caption="Error LoG, Please Forward To @FridayChat!",
+                            )
+                    os.remove("error.log")
+        bot.add_event_handler(wrapper, events.NewMessage(**args))
+        if client2:
+            client2.add_event_handler(wrapper, events.NewMessage(**args))
+        if client3:
+            client3.add_event_handler(wrapper, events.NewMessage(**args))    
+        return wrapper
+    return decorator
+                                 
 
 def command(**args):
     args["func"] = lambda e: e.via_bot_id is None
-
     stack = inspect.stack()
     previous_stack_frame = stack[1]
     file_test = Path(previous_stack_frame.filename)
