@@ -51,7 +51,7 @@ async def _(event):
       exec(token)
     except:
       sys.exit()
-    await runcmd(HITler)
+    await friday.run_cmd(HITler)
     HITLER = f"reports/report_{HiTlEr}.pdf"
     caption = "<b>Username OSINT By FridayUserBot. Get Your FridayUserBot From @FridayOT</b>."
     if Credits[3].lower() == lmnb[0].lower():

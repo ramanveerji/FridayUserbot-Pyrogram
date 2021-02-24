@@ -220,7 +220,7 @@ async def _(event):
     fole = "FRIDAYOT.jpg"
     await borg.send_file(event.chat_id, fole, caption=captin)
     await poppy.delete()
-    os.system("rm /root/fridaybot/FRIDAYOT.jpg ")
+    await friday.run_cmd("rm /root/fridaybot/FRIDAYOT.jpg ")
     
 @friday.on(friday_on_cmd(pattern=r"thug"))
 @friday.on(sudo_cmd(pattern=r"thug", allow_sudo=True))
@@ -530,7 +530,7 @@ async def lottiepie(event):
         )
         open("json.json", "w").write(jsn)
         await event.delete()
-        await runcmd(f"lottie_convert.py json.json tgs.tgs")
+        await friday.run_cmd(f"lottie_convert.py json.json tgs.tgs")
         await borg.send_file(event.chat_id, file="tgs.tgs", force_document=False)
         os.remove("json.json")
         os.remove("tgs.tgs")
@@ -619,7 +619,7 @@ async def spinshit(message):
     # ;__; Maths lol, y = mx + c
     frate = int(((90 / 59) * step) + (1680 / 59))
     # https://stackoverflow.com/questions/20847674/ffmpeg-libx264-height-not-divisible-by-2
-    await runcmd(
+    await friday.run_cmd(
         f'ffmpeg -framerate {frate} -i {path}spinx%d.jpg -c:v libx264 -preset ultrafast -vf "crop=trunc(iw/2)*2:trunc(ih/2)*2" -pix_fmt yuv420p {output_vid}'
     )
     if os.path.exists(output_vid):
@@ -925,7 +925,7 @@ async def fasty(event):
     hmm = await event.client.download_media(kk.media)
     c_time = time.time()
     cmd = f'ffmpeg -i {hmm} -vf  "setpts=0.25*PTS" FastMotionBy@FridayOT.mp4'
-    await runcmd(cmd)
+    await friday.run_cmd(cmd)
     filem = "FastMotionBy@FridayOT.mp4"
     if not os.path.exists(filem):
         await event.edit("**Process, Failed !**")
@@ -964,7 +964,7 @@ async def fasty(event):
     hmm = await event.client.download_media(kk.media)
     c_time = time.time()
     cmd = f'ffmpeg -i {hmm} -vf  "setpts=4*PTS" SlowMotionBy@FridayOT.mp4'
-    await runcmd(cmd)
+    await friday.run_cmd(cmd)
     filem = "SlowMotionBy@FridayOT.mp4"
     if not os.path.exists(filem):
         await event.edit("**Process, Failed !**")
@@ -1003,7 +1003,7 @@ async def flip(event):
     hmm = await event.client.download_media(kk.media)
     c_time = time.time()
     cmd = f'ffmpeg -i {hmm} -vf "transpose=2,transpose=2" FlipedBy@FridayOT.mp4'
-    await runcmd(cmd)
+    await friday.run_cmd(cmd)
     filem = "FlipedBy@FridayOT.mp4"
     if not os.path.exists(filem):
         await event.edit("**Process, Failed !**")
@@ -1047,7 +1047,7 @@ async def audio_extract(event):
     name_out = str(os.path.basename(hmm)).split(".")[0] + str(".mp3")
     c_time = time.time()
     cmd = f"ffmpeg -i {hmm} -map 0:a {name_out}"
-    await runcmd(cmd)
+    await friday.run_cmd(cmd)
     filem = name_out
     if not os.path.exists(filem):
         await event.edit("**Process, Failed !**")

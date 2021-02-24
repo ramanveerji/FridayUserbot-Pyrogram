@@ -18,7 +18,7 @@ COLLECTION_STRING = [
     "demonic-wallpapers",
 ]
 async def magic():
-    os.system("rm -rf donot.jpg")
+    await friday.run_cmd("rm -rf donot.jpg")
     rnd = random.randint(0, len(COLLECTION_STRING) - 1)
     pack = COLLECTION_STRING[rnd]
     pc = requests.get("http://getwallpapers.com/collection/" + pack).text
@@ -49,7 +49,7 @@ async def _(event):
 
         await event.client(functions.photos.UploadProfilePhotoRequest(file))
 
-        os.system("rm -rf donottouch.jpg")
+        await friday.run_cmd("rm -rf donottouch.jpg")
 
         await asyncio.sleep(400)
 

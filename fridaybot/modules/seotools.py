@@ -31,7 +31,7 @@ async def _(event):
     try:
       
       cmd = "seoanalyze " + site + " --output-format html > seo.html"
-      os.system(cmd)
+      await friday.run_cmd(cmd)
     
       await event.client.send_file(
         event.chat_id,
@@ -39,12 +39,12 @@ async def _(event):
         caption=f"**Site SEO Analysed Successfully\n\nNote: Open This File With Chrome Or Any Browser\n\n\nSite Analysed By Friday\nGet Your Friday From** @FRIDAYCHAT",
       )
       com = "rm seo.html"
-      os.system(com)
+      await friday.run_cmd(com)
       await event.delete()
     except:
       await event.edit("Make Sure The Given Website URL is valid.")
     com = "rm seo.html"
-    os.system(com)
+    await friday.run_cmd(com)
     await event.delete()
     
     

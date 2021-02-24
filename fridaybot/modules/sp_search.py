@@ -20,7 +20,7 @@ async def sp_search(event):
 
     command = "sp --json " + search_str + " > out.json"
 
-    os.system(command)
+    await friday.run_cmd(command)
 
     f = open("out.json", "r").read()
 
