@@ -28,6 +28,7 @@ from fridaybot.Configs import Config
 
 fridaydevs = logging.getLogger("Friday")
 
+
 async def add_bot(bot_token):
     await bot.start(bot_token)
     bot.me = await bot.get_me()
@@ -157,7 +158,7 @@ if failed3 is None:
 if wsta[0].lower() != Lol[0]:
    sys.exit("Bug Detected ! // UserBot is Exiting.")
     
-fridaydevs.info(f"""{wsta}
+sarg = (f"""{wsta}
 -------------------------------------------
 Friday-Userbot Based On Telethon V{tv}
 Python Version : {platform.python_version()}
@@ -166,7 +167,17 @@ Support Chat : @FridayChat
 Updates Channel : @FridaySupportOfficial
 Total Clients : {total_clients}
 -------------------------------------------""")
-        
+fridaydevs.info(sarg)
+
+async def restart_log(bot):
+    try:
+        await bot.send_message(Config.PRIVATE_GROUP_ID, sarg)
+    except:
+        logger.warning("Invalid LOG Group ID! Please Check Your Log Group Id. For Now Friday is Exiting, Bye!")
+        exit(1)
+    return    
+
+bot.loop.run_until_complete(restart_log(bot))
 bot.tgbot.loop.run_until_complete(check_inline_on_warner(bot.tgbot))
 
 if len(argv) not in (1, 3, 4):
