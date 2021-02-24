@@ -1,4 +1,4 @@
-#    Copyright (C) Midhun KM 2020-2021
+#    Copyright (C) @DevsExpo 2020-2021
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as published by
 #    the Free Software Foundation, either version 3 of the License, or
@@ -26,6 +26,7 @@ import platform
 from fridaybot import bot, client2, client3, friday_version
 from fridaybot.Configs import Config
 from telethon.tl.types import InputMessagesFilterDocument
+from fridaybot.tr_engines.engine import tr_engine
 from fridaybot.utils import load_module, start_assistant, load_module_dclient, edit_or_reply
 from fridaybot.Configs import Config
 from fridaybot.function import runcmd, convert_to_image
@@ -37,6 +38,7 @@ fridaydevs = logging.getLogger("Friday")
 async def add_bot(bot_token):
     await bot.start(bot_token)
     bot.me = await bot.get_me()
+    bot.tr_engine = tr_engine
     bot.upload_to_server = upload_file
     bot.cig = convert_to_image
     bot.edit_or_reply = edit_or_reply
@@ -56,6 +58,7 @@ Lol = "folyl's Token"
 async def lol_s(client):
     client.me = await client.get_me()
     client.upload_to_server = upload_file
+    client.tr_engine = tr_engine
     client.cig = convert_to_image
     client.run_cmd = runcmd
     client.edit_or_reply = edit_or_reply
