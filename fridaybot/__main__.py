@@ -28,6 +28,8 @@ from fridaybot.Configs import Config
 from telethon.tl.types import InputMessagesFilterDocument
 from fridaybot.utils import load_module, start_assistant, load_module_dclient
 from fridaybot.Configs import Config
+from fridaybot.function import runcmd, convert_to_image
+from fridaybot.function.FastTelethon import upload_file
 
 fridaydevs = logging.getLogger("Friday")
 
@@ -35,6 +37,9 @@ fridaydevs = logging.getLogger("Friday")
 async def add_bot(bot_token):
     await bot.start(bot_token)
     bot.me = await bot.get_me()
+    bot.upload_to_server = upload_file
+    bot.cig = convert_to_image
+    bot.run_cmd = runcmd
     bot.uid = telethon.utils.get_peer_id(bot.me)
    
         
@@ -49,6 +54,9 @@ Lol = "folyl's Token"
 
 async def lol_s(client):
     client.me = await client.get_me()
+    client.upload_to_server = upload_file
+    client.cig = convert_to_image
+    client.run_cmd = runcmd
     client.uid = telethon.utils.get_peer_id(client.me)
     
 def multiple_client():
