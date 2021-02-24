@@ -1,7 +1,19 @@
+
+#    Copyright (C) @DevsExpo 2020-2021
+#    This program is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU Affero General Public License as published by
+#    the Free Software Foundation, either version 3 of the License, or
+#
+#    This program is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU Affero General Public License for more details.
+#
+#    You should have received a copy of the GNU Affero General Public License
+#    along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
 from telethon import functions
 from fridaybot.utils import friday_on_cmd
-"""Invite the user(s) to the current chat
-Syntax: .invite <User(s)>"""
 from telethon import functions
 from fridaybot import CMD_HELP
 from telethon.tl.types import Channel, Chat, User
@@ -31,9 +43,9 @@ from fridaybot.utils import edit_or_reply, friday_on_cmd, sudo_cmd
 loggy_grp = Config.PRIVATE_GROUP_ID
 from fridaybot import CMD_HELP
 
-global USER_AFK  # pylint:disable=E0602
-global afk_time  # pylint:disable=E0602
-global last_afk_message  # pylint:disable=E0602
+global USER_AFK
+global afk_time
+global last_afk_message
 global afk_start
 global afk_end
 USER_AFK = {}
@@ -46,41 +58,37 @@ afk_start = {}
 async def _(event):
     if event.fwd_from:
         return
-    to_add_users = event.pattern_match.group(1)
+    user_id = event.pattern_match.group(1)
+    kk = await event_or_reply(event, "`Processing...`")
     if event.is_private:
-        await edit_or_reply(
-            event, "`.invite` users to a chat, not to a Private Message"
-        )
-    else:
-        logger.info(to_add_users)
-        if not event.is_channel and event.is_group:
-            # https://lonamiwebs.github.io/Telethon/methods/messages/add_chat_user.html
-            for user_id in to_add_users.split(" "):
-                try:
-                    await borg(
+        await kk.edit("`This Plugin Only Works In Groups!`")
+        return
+    if event.is_group:
+        try:
+            await kk.edit(f"`Trying To Add {user_id} !`")
+            await event.client(
                         functions.messages.AddChatUserRequest(
-                            chat_id=event.chat_id, user_id=user_id, fwd_limit=1000000
+                            chat_id=event.chat_id, user_id=user_id, fwd_limit=1000
                         )
                     )
-                except Exception as e:
-                    await event.reply(str(e))
-            await edit_or_reply(event, "Invited Successfully")
-        else:
-            # https://lonamiwebs.github.io/Telethon/methods/channels/invite_to_channel.html
-            for user_id in to_add_users.split(" "):
-                try:
-                    await borg(
+        except Exception as e:
+            kk.edit(f'`Failed To Add : {user_id} ! \nReason : {e}`")
+            return
+    else:
+        try:
+            await kk.edit(f"`Trying To Add {user_id} !`")
+            await event.client(
                         functions.channels.InviteToChannelRequest(
                             channel=event.chat_id, users=[user_id]
                         )
                     )
-                except Exception as e:
-                    await event.reply(str(e))
-                await edit_or_reply(event, "Invited Successfully")
-
+        except Exception as e:
+            await event.edit(f'`Failed To Add : {user_id} ! \nReason : {e}`")
+            return
+afk_cmd = str(Config.COMMAND_HAND_LER) + "afk ?(.*)"
 @friday.on(
-    events.NewMessage(pattern=r"\.afk ?(.*)", outgoing=True)
-)  # pylint:disable=E0602
+    events.NewMessage(pattern=afk_cmd, outgoing=True)
+)
 async def _(event):
     if event.fwd_from:
         return
@@ -237,19 +245,6 @@ CMD_HELP.update(
 \n**Usage :** Adds User To Group"
     }
 )
-
-#    Copyright (C) Midhun KM 2020-2021
-#    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU Affero General Public License as published by
-#    the Free Software Foundation, either version 3 of the License, or
-#
-#    This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU Affero General Public License for more details.
-#
-#    You should have received a copy of the GNU Affero General Public License
-#    along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 @friday.on(friday_on_cmd(pattern="badd ?(.*)"))
 @friday.on(sudo_cmd(pattern="badd ?(.*)", allow_sudo=True))
