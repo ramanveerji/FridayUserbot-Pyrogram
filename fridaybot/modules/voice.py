@@ -20,6 +20,8 @@ from gtts import gTTS
 import gtts
 from fridaybot import CMD_HELP
 from fridaybot.utils import friday_on_cmd
+import asyncio
+import time
 
 
 @friday.on(friday_on_cmd(pattern="tts(?: |$)(.*)"))
