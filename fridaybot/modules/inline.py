@@ -808,4 +808,6 @@ async def anime(event):
                 title=f"{json['title']['romaji']}",
                 text=msg,
                 buttons=buttonz
+            )
+            )
         await event.answer(results)        
