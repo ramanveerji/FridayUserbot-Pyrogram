@@ -6,7 +6,7 @@ from uniborg.util import friday_on_cmd
 from fridaybot import CMD_HELP
 
 
-@friday.on(friday_on_cmd(pattern="quote ?(.*)"))
+@friday.on(friday_on_cmd(pattern="qote ?(.*)"))
 async def quote_search(event):
     if event.fwd_from:
         return
@@ -27,15 +27,15 @@ async def quote_search(event):
     else:
         result = None
     if result:
-        await event.edit(result.replace("<code>", "`").replace("</code>", "`"))
+        await event.edit(result, parse_mode='HTML')
     else:
-        await event.edit("Zero results found")
+        await event.edit("`No Results Found!`")
 
 
 CMD_HELP.update(
     {
-        "quote": "**Quote**\
-\n\n**Syntax : **`.quote <text>`\
+        "qote": "**Quote**\
+\n\n**Syntax : **`.qote <text>`\
 \n**Usage :** Gets quotes about given text."
     }
 )
