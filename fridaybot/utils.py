@@ -25,6 +25,7 @@ bothandler = Config.BOT_HANDLER
 from datetime import datetime
 
 def friday_on_command(**args):
+    args["func"] = lambda e: e.via_bot_id is None
     stack = inspect.stack()
     previous_stack_frame = stack[1]
     file_test = Path(previous_stack_frame.filename)
@@ -32,16 +33,10 @@ def friday_on_command(**args):
     pattern = args.get('pattern', None)
     group_only = args.get('group_only', False)
     allow_sudo = args.get('allow_sudo', True)
-    out_going = args.get('out_going', True)
     pm_only = args.get('pm_only', False)
     chnnl_only = args.get('chnnl_only', False)
     disable_errors = args.get('disable_errors', False)
-    if out_going:
-        args['outgoing'] = True
-    else:
-        args['outgoing'] = False  
-    if 'out_going' in args:
-        del args['out_going']  
+    args['outgoing'] = True
     if "chnnl_only" in args:
         del args['chnnl_only']
     if "group_only" in args:
@@ -58,7 +53,7 @@ def friday_on_command(**args):
     if pattern != None:
         try:
             cmd = (cmdhandler + pattern).replace("$", "").replace("\\", "").replace("^", "")
-            args["pattern"] = "(?i)" + cmdhandler + pattern
+            args["pattern"] = re.compile(cmdhandler + pattern)
             try:
                 CMD_LIST[file_test].append(cmd)
             except:
