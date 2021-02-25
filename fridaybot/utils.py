@@ -52,21 +52,17 @@ def friday_on_command(**args):
         del args['allow_sudo']    
     if allow_sudo:
         args["from_users"] = list(Config.SUDO_USERS)
+        args["incoming"] = True
     if "pm_only" in args:
-        del args['pm_only']
-    if 'pattern' in args:
-        del args['pattern']    
+        del args['pm_only']    
     if pattern != None:
         try:
+            cmd = (cmdhandler + pattern).replace("$", "").replace("\\", "").replace("^", "")
+            args["pattern"] = cmd
             try:
-                cmd = cmdhandler + pattern
-                args['pattern'] = cmd
-            except Exception as e:
-                sedprint.info(str(e))
-            try:
-                   CMD_LIST[file_test].append(cmd)
+                CMD_LIST[file_test].append(cmd)
             except:
-                   CMD_LIST.update({file_test: [cmd]})
+                CMD_LIST.update({file_test: [cmd]})
         except:
             pass
     def decorator(func):
