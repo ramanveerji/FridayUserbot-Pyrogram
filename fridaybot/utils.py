@@ -58,7 +58,7 @@ def friday_on_command(**args):
     if pattern != None:
         try:
             cmd = (cmdhandler + pattern).replace("$", "").replace("\\", "").replace("^", "")
-            args["pattern"] = cmd
+            args["pattern"] = "(?i)" + cmdhandler + pattern
             try:
                 CMD_LIST[file_test].append(cmd)
             except:
