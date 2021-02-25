@@ -144,3 +144,18 @@ def manga_sauce(query):
     variables = {'search': query}
     resp = requests.post(url, json={'query': manga_query, 'variables': variables})
     return resp.json()
+
+def shorten(description, info='anilist.co'):
+    ms_g = ''
+    if len(description) > 700:
+        description = description[0:500] + '....'
+        ms_g += f'\n**Description**: __{description}__[Read More]({info})'
+    else:
+        ms_g += f'\n**Description**: __{description}__'
+    return (
+        ms_g.replace('<br>', '')
+        .replace('</br>', '')
+        .replace('<i>', '')
+        .replace('</i>', '')
+    )
+
