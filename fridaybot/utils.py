@@ -37,6 +37,12 @@ def friday_on_command(**args):
     chnnl_only = args.get('chnnl_only', False)
     disable_errors = args.get('disable_errors', False)
     args['outgoing'] = True
+    if pattern is not None:
+        cmd = (cmdhandler + pattern).replace("$", "").replace("\\", "").replace("^", "")
+        args["pattern"] = re.compile(cmdhandler + pattern)
+    if allow_sudo:
+        args["from_users"] = list(Config.SUDO_USERS)
+        args["incoming"] = True       
     if "chnnl_only" in args:
         del args['chnnl_only']
     if "group_only" in args:
@@ -45,18 +51,8 @@ def friday_on_command(**args):
         del args['disable_errors']
     if 'allow_sudo' in args:
         del args['allow_sudo']    
-    if allow_sudo:
-        args["from_users"] = list(Config.SUDO_USERS)
-        args["incoming"] = True
     if "pm_only" in args:
-        del args['pm_only']    
-    if pattern is not None:
-        cmd = (cmdhandler + pattern).replace("$", "").replace("\\", "").replace("^", "")
-        args["pattern"] = re.compile(cmdhandler + pattern)
-        try:
-            CMD_LIST[file_test].append(cmd)
-        except:
-            CMD_LIST.update({file_test: [cmd]})            
+        del args['pm_only']            
     def decorator(func):
         async def wrapper(check):
             # Ignore Fwds
@@ -119,6 +115,10 @@ def friday_on_command(**args):
             client2.add_event_handler(wrapper, events.NewMessage(**args))
         if client3:
             client3.add_event_handler(wrapper, events.NewMessage(**args))    
+        try:
+            CMD_LIST[file_test].append(cmd)
+        except:
+            CMD_LIST.update({file_test: [cmd]})     
         return wrapper
     return decorator
                                  
