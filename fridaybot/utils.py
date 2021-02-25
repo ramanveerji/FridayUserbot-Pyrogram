@@ -42,10 +42,10 @@ def friday_on_command(**args):
         args["pattern"] = re.compile(cmdhandler + pattern)   
     args['outgoing'] = True
     if allow_sudo:
+        del args['allow_sudo']
         if sudo_users:
             args["from_users"] = sudo_users
             args["incoming"] = True 
-            del args['allow_sudo']
         else:
             pass
     elif "incoming" in args and not args["incoming"]:
