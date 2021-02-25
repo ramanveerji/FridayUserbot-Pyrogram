@@ -39,18 +39,19 @@ def friday_on_command(**args):
     args['outgoing'] = True
     if pattern is not None:
         cmd = (cmdhandler + pattern).replace("$", "").replace("\\", "").replace("^", "")
-        args["pattern"] = cmdhandler + pattern
+        args["pattern"] = re.compile(cmdhandler + pattern)
     if allow_sudo:
         args["from_users"] = list(Config.SUDO_USERS)
-        args["incoming"] = True       
+        args["incoming"] = True  
+        del args['allow_sudo']  
+    elif "incoming" in args and not args["incoming"]:
+        args["outgoing"] = True    
     if "chnnl_only" in args:
         del args['chnnl_only']
     if "group_only" in args:
         del args['group_only']
     if "disable_errors" in args:
-        del args['disable_errors']
-    if 'allow_sudo' in args:
-        del args['allow_sudo']    
+        del args['disable_errors']  
     if "pm_only" in args:
         del args['pm_only']            
     def decorator(func):
