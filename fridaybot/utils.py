@@ -32,7 +32,7 @@ def friday_on_command(**args):
     file_test = file_test.stem.replace(".py", "")
     pattern = args.get('pattern', None)
     group_only = args.get('group_only', False)
-    allow_sudo = args.get('allow_sudo', True)
+    allow_sudo = args.get('allow_sudo', False)
     pm_only = args.get('pm_only', False)
     chnnl_only = args.get('chnnl_only', False)
     disable_errors = args.get('disable_errors', False)
