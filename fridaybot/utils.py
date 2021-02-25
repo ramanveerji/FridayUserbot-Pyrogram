@@ -39,7 +39,10 @@ def friday_on_command(allow_sudo=True, **args):
     if allow_sudo:
         args["from_users"] = list(Config.SUDO_USERS)
         args["incoming"] = True  
-        del args['allow_sudo']  
+        try:
+            del args['allow_sudo']  
+        except:
+            pass
     elif "incoming" in args and not args["incoming"]:
         args["outgoing"] = True 
     if pattern is not None:
