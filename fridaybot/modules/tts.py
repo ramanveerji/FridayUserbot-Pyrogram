@@ -17,6 +17,7 @@ import subprocess
 from datetime import datetime
 from langdetect import detect
 from gtts import gTTS
+from googletrans import LANGUAGES
 import gtts
 from fridaybot import CMD_HELP
 from fridaybot.utils import friday_on_cmd
@@ -24,13 +25,13 @@ import asyncio
 import time
 
 
-@friday.on(friday_on_cmd(pattern="tts(?: |$)(.*)"))
+@friday.on(friday_on_cmd(pattern="(tts|voice|texttospeech|speech)(?: |$)(.*)"))
 async def _(event):
     if event.fwd_from:
         return
     stime = time.time()
     await event.edit("`Processing...`")
-    input_str = event.pattern_match.group(1)
+    input_str = event.pattern_match.group(2)
     start = datetime.now()
     if not event.reply_to_msg_id:
         await event.reply("`Please Reply To Message To Convert To Speech!`")
@@ -53,7 +54,8 @@ async def _(event):
     dec = detect(text)
     etime = time.time()
     hmm_time = round(etime-stime)
-    owo = f"**TTS** \n**Detected Text Language :** `{dec}` \n**Speech Text :** `{language}` \n**Time Taken :** `{hmm_time}`"
+    dec_s = LANGUAGES.get(dec)
+    owo = f"**TTS** \n**Detected Text Language :** `{dec_s.capitalize()}` \n**Speech Text :** `{kk.get(language)}` \n**Time Taken :** `{hmm_time}s` \n__Powered By @FridayOT__"
     await friday.send_file(event.chat_id,
                           file=f'{kk.get(language)}.ogg',
                           caption=owo,
@@ -64,9 +66,7 @@ async def _(event):
     await event.delete()
     os.remove(f'{kk.get(language)}.ogg')
         
-        
-
-
+       
 CMD_HELP.update(
     {
         "voice": " Google Text to Speech\
