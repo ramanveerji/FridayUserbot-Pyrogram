@@ -37,16 +37,19 @@ def friday_on_command(**args):
     pm_only = args.get('pm_only', False)
     chnnl_only = args.get('chnnl_only', False)
     disable_errors = args.get('disable_errors', False)
-    args['outgoing'] = True
-    if allow_sudo:
-        args["from_users"] = sudo_users
-        args["incoming"] = True 
-        del args['allow_sudo']
-    elif "incoming" in args and not args["incoming"]:
-        args["outgoing"] = True 
     if pattern is not None:
         cmd = (cmdhandler + pattern).replace("$", "").replace("\\", "").replace("^", "")
         args["pattern"] = re.compile(cmdhandler + pattern)   
+    args['outgoing'] = True
+    if allow_sudo:
+        if sudo_users:
+            args["from_users"] = sudo_users
+            args["incoming"] = True 
+            del args['allow_sudo']
+        else:
+            pass
+    elif "incoming" in args and not args["incoming"]:
+        args["outgoing"] = True 
     if "chnnl_only" in args:
         del args['chnnl_only']
     if "group_only" in args:
