@@ -39,7 +39,7 @@ def friday_on_command(**args):
     args['outgoing'] = True
     if pattern is not None:
         cmd = (cmdhandler + pattern).replace("$", "").replace("\\", "").replace("^", "")
-        args["pattern"] = re.compile(cmdhandler + pattern)
+        args["pattern"] = cmdhandler + pattern
     if allow_sudo:
         args["from_users"] = list(Config.SUDO_USERS)
         args["incoming"] = True       
