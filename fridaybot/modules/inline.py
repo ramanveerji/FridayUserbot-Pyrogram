@@ -25,7 +25,7 @@ from fridaybot.Configs import Config
 from youtube_search import YoutubeSearch
 from search_engine_parser import GoogleSearch
 from fridaybot.function import _ytdl, fetch_json, _deezer_dl, all_pro_s
-from fridaybot.function.nana_remix_sause import anime_sauce
+from fridaybot.function.nana_remix_sauce import anime_sauce
 from urllib.parse import quote
 import requests
 from telethon import Button, custom, events, functions
