@@ -58,6 +58,21 @@ async def inline_handler(event):
     builder = event.builder
     result = None
     query = event.text
+    if not query:
+        if event.query.user_id not in o:
+            resultm = builder.article(
+                title="403: Forbidden",
+                text=f"You Are Forbidden To Use This Bot, You Can Deploy You Own From [Here](https://github.com/DevsExpo/FridayUserbot)",
+            )
+            await event.answer([resultm])
+            return
+        results = builder.article(
+                title="Hello Boss, This is Your Assistant!",
+                text=f"Wonder What All You Can Do With Me? Click Below To Know More.",
+                buttons=custom.Button.inline("Explore!", data="explore")
+            )
+        await event.answer([results])
+        return
     if event.query.user_id in o and query.startswith("Friday"):
         rev_text = query[::-1]
         buttons = paginate_help(0, CMD_HELP, "helpme")
@@ -138,6 +153,45 @@ async def inline_handler(event):
         )
         await event.answer([result])    
         
+@tgbot.on(events.callbackquery.CallbackQuery(data=re.compile(b"explore")))
+async def explore(event):     
+    tbot = await tgbot.get_me()
+    tbot_username = tbot.username
+    oof_stark = f"""**Assistant-Bot Powered By @FridayOT**
+**Ever Wondered What All Can I Do?**
+
+**- Search Youtube Video's / Download In Any Chat Itself!**
+**How? :** `@{tbot_username} yt <query>`
+**Example :** `@{tbot_username} yt fridayuserbot`
+
+**- Google Search!**
+**How? :** `@{tbot_username} google <query>`
+**Example :** `@{tbot_username} google fridayUserbot github`
+
+**- Deezer Search!**
+**How? :** `@{tbot_username} deezer <query>`
+**Example :** `@{tbot_username} deezer why we lose`
+
+**- Whisper Secret Messages!**
+**How? :** `@{tbot_username} Secret <user>;<message>`
+**Example :** `@{tbot_username} Secret @Midhun_xD;Hello, How are you?`
+
+**- Not For You Message**
+**How? :** `@{tbot_username} Not4u <user>;<message>`
+**Example :** `@{tbot_username} Not4u  @Midhun_xD;You Can't Read It.`
+
+**- Xkcd - Meme Like Comics**
+**How? :** `@{tbot_username} xkcd <query>`
+**Example :** `@{tbot_username} xkcd python`
+
+**- Porn-Hub Search**
+**How? :** `@{tbot_username} ph <query>`
+**Example :** `@{tbot_username} ph nohorny`
+
+**Note :** `Many More Coming! SoonTM`
+    	"""
+    await event.edit(oof_stark)
+    
 @tgbot.on(events.callbackquery.CallbackQuery(data=re.compile(b"n4u_(.*)")))
 async def wew_reverse(event):
     sshh = event.data_match.group(1).decode("UTF-8")
@@ -657,7 +711,7 @@ async def inline_id_handler(event):
         return
     results = []
     input_str = event.pattern_match.group(1)
-    link = f"https://api.deezer.com/search?q={input_str}&limit=7"
+    link = f"https://api.deezer.com/search?q={input_str}&limit=10"
     dato = requests.get(url=link).json()
     #data_s = json.loads(data_s)
     for match in dato.get("data"):
