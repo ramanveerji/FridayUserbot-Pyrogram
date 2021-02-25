@@ -24,7 +24,7 @@ cmdhandler = Config.COMMAND_HAND_LER
 bothandler = Config.BOT_HANDLER
 from datetime import datetime
 
-def friday_on_command(**args):
+def friday_on_command(allow_sudo=True, **args):
     args["func"] = lambda e: e.via_bot_id is None
     stack = inspect.stack()
     previous_stack_frame = stack[1]
@@ -32,20 +32,19 @@ def friday_on_command(**args):
     file_test = file_test.stem.replace(".py", "")
     pattern = args.get('pattern', None)
     group_only = args.get('group_only', False)
-    allow_sudo = args.get('allow_sudo', False)
     pm_only = args.get('pm_only', False)
     chnnl_only = args.get('chnnl_only', False)
     disable_errors = args.get('disable_errors', False)
     args['outgoing'] = True
-    if pattern is not None:
-        cmd = (cmdhandler + pattern).replace("$", "").replace("\\", "").replace("^", "")
-        args["pattern"] = re.compile(cmdhandler + pattern)
     if allow_sudo:
         args["from_users"] = list(Config.SUDO_USERS)
         args["incoming"] = True  
         del args['allow_sudo']  
     elif "incoming" in args and not args["incoming"]:
-        args["outgoing"] = True    
+        args["outgoing"] = True 
+    if pattern is not None:
+        cmd = (cmdhandler + pattern).replace("$", "").replace("\\", "").replace("^", "")
+        args["pattern"] = re.compile(cmdhandler + pattern)   
     if "chnnl_only" in args:
         del args['chnnl_only']
     if "group_only" in args:
