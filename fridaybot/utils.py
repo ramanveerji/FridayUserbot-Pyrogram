@@ -59,9 +59,8 @@ def friday_on_command(**args):
     if pattern != None:
         try:
             try:
-                sedr = re.compile(str(cmdhandler) + str(pattern))
-                args['pattern'] = sedr
                 cmd = cmdhandler + pattern
+                args['pattern'] = cmd
             except Exception as e:
                 sedprint.info(str(e))
             try:
