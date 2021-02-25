@@ -734,6 +734,7 @@ async def inline_id_handler(event):
             await event.answer(results)
         except TypeError:
             pass
+                     
 @tgbot.on(events.InlineQuery(pattern=r"anime ?(.*)"))
 async def anime(event):
     builder = event.builder
@@ -810,4 +811,4 @@ async def anime(event):
                 buttons=buttonz
             )
             )
-        await event.answer(results)        
+    await event.answer(results)        
