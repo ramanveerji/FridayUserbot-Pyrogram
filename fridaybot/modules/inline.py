@@ -747,7 +747,7 @@ async def anime(event):
         return
     results = []
     string = event.pattern_match.group(1)
-    json = anime_sauce(string.split(None, 1)[1])['data'].get('Media', None)
+    json = anime_sauce(string.lower())['data'].get('Media', None)
     if json:
         msg = (
             '**{}** (`{}`)\n'
