@@ -75,7 +75,7 @@ def friday_on_command(**args):
                 await check.respond("`This Cmd Only Works On PM!`")
                 return
             # Don't Give Access To Others Using Inline Search.    
-            if check.via_bot_id and check.out:
+            if check.via_bot_id:
                 return
             try:
                 await func(check)
@@ -105,13 +105,13 @@ def friday_on_command(**args):
                         await check.client.send_file(
                                 Config.PRIVATE_GROUP_ID,
                                 "error.log",
-                                caption="Error LoG, Please Forward To @FridayChat!",
+                                caption="Error LoG, Please Forward To @FridayChat!, If You Think Its A Error.",
                             )
                     except:
                         await check.client.send_file(
                                 bot.uid,
                                 "error.log",
-                                caption="Error LoG, Please Forward To @FridayChat!",
+                                caption="Error LoG, Please Forward To @FridayChat!, If You Think Its A Error.",
                             )
                     os.remove("error.log")
         bot.add_event_handler(wrapper, events.NewMessage(**args))
