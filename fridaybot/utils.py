@@ -22,7 +22,7 @@ from fridaybot.Configs import Config
 sedprint = logging.getLogger("UTILS")
 cmdhandler = Config.COMMAND_HAND_LER
 bothandler = Config.BOT_HANDLER
-sudo_users = list(Config.SUDO_USERS) if Config.SUDO_USERS else ''
+sudo_users = list(Config.SUDO_USERS) if list(Config.SUDO_USERS) else ''
 from datetime import datetime
 
 def friday_on_command(**args):
