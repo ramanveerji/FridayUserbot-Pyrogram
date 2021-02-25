@@ -25,6 +25,7 @@ from fridaybot.Configs import Config
 from youtube_search import YoutubeSearch
 from search_engine_parser import GoogleSearch
 from fridaybot.function import _ytdl, fetch_json, _deezer_dl, all_pro_s
+from fridaybot.function.nana_remix_sause import anime_sauce
 from urllib.parse import quote
 import requests
 from telethon import Button, custom, events, functions
@@ -733,3 +734,78 @@ async def inline_id_handler(event):
             await event.answer(results)
         except TypeError:
             pass
+@tgbot.on(events.InlineQuery(pattern=r"anime ?(.*)"))
+async def anime(event):
+    builder = event.builder
+    o = await all_pro_s(Config, client1, client2, client3)
+    if event.query.user_id not in o:
+        resultm = builder.article(
+            title="- Not Allowded -",
+            text=f"You Can't Use This Bot. \nDeploy Friday To Get Your Own Assistant, Repo Link [Here](https://github.com/StarkGang/FridayUserbot)",
+        )
+        await event.answer([resultm])
+        return
+    results = []
+    string = event.pattern_match.group(1)
+    json = anime_sauce(string.split(None, 1)[1])['data'].get('Media', None)
+    if json:
+        msg = (
+            '**{}** (`{}`)\n'
+            '**Type**: {}\n'
+            '**Status**: {}\n'
+            '**Episodes**: {}\n'
+            '**Duration**: {}'
+            'Per Ep.\n**Score**: {}\n**Genres**: `'
+        ).format(
+            json['title']['romaji'],
+            json['title']['native'],
+            json['format'],
+            json['status'],
+            json.get('episodes', 'N/A'),
+            json.get('duration', 'N/A'),
+            json['averageScore'],
+        )
+        for x in json['genres']:
+            msg += f'{x}, '
+        msg = msg[:-2] + '`\n'
+        msg += '**Studios**: `'
+        for x in json['studios']['nodes']:
+            msg += f"{x['name']}, "
+        msg = msg[:-2] + '`\n'
+        info = json.get('siteUrl')
+        trailer = json.get('trailer', None)
+        if trailer:
+            trailer_id = trailer.get('id', None)
+            site = trailer.get('site', None)
+            if site == 'youtube':
+                trailer = 'https://youtu.be/' + trailer_id
+        description = (
+            json.get('description', 'N/A')
+            .replace('<i>', '')
+            .replace('</i>', '')
+            .replace('<br>', '')
+        )
+        msg += shorten(description, info)
+        image = f'https://img.anili.st/media/{json["id"]}'
+        buttonz = []
+        if trailer:
+            buttonz.append(Button.url("Trailer", trailer))
+        buttonz.append(Button.url('More Info', info))    
+        if image:
+            results.append(
+            await event.builder.document(
+                file=image,
+                title=f"{json['title']['romaji']}",
+                description=f"{json['format']}",
+                text=msg,
+                include_media=True,
+                buttons=buttonz
+              )
+        )
+        else:
+            results.append(
+            await event.builder.article(
+                title=f"{json['title']['romaji']}",
+                text=msg,
+                buttons=buttonz
+        await event.answer(results)        
