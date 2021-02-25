@@ -19,7 +19,6 @@ from fridaybot.utils import edit_or_reply, friday_on_cmd, sudo_cmd
 import os
 import random
 import string
-from pathlib import Path
 
 @friday.on(friday_on_cmd(pattern="(shazam|sreverse|identify)$"))
 @friday.on(sudo_cmd(pattern="(shazam|sreverse|identify)$", allow_sudo=True))
