@@ -50,16 +50,13 @@ def friday_on_command(**args):
         args["incoming"] = True
     if "pm_only" in args:
         del args['pm_only']    
-    if pattern != None:
+    if pattern is not None:
+        cmd = (cmdhandler + pattern).replace("$", "").replace("\\", "").replace("^", "")
+        args["pattern"] = re.compile(cmdhandler + pattern)
         try:
-            cmd = (cmdhandler + pattern).replace("$", "").replace("\\", "").replace("^", "")
-            args["pattern"] = re.compile(cmdhandler + pattern)
-            try:
-                CMD_LIST[file_test].append(cmd)
-            except:
-                CMD_LIST.update({file_test: [cmd]})
+            CMD_LIST[file_test].append(cmd)
         except:
-            pass
+            CMD_LIST.update({file_test: [cmd]})            
     def decorator(func):
         async def wrapper(check):
             # Ignore Fwds
