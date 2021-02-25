@@ -22,12 +22,13 @@ from fridaybot import CMD_HELP
 from fridaybot.utils import friday_on_cmd
 
 
-@friday.on(friday_on_cmd(pattern="(voice|tts|speech|texttospeech)(?: |$)(.*)"))
+@friday.on(friday_on_cmd(pattern="tts(?: |$)(.*)"))
 async def _(event):
     if event.fwd_from:
         return
     stime = time.time()
-    input_str = event.pattern_match.group(2)
+    await event.edit("`Processing...`")
+    input_str = event.pattern_match.group(1)
     start = datetime.now()
     if not event.reply_to_msg_id:
         await event.reply("`Please Reply To Message To Convert To Speech!`")
