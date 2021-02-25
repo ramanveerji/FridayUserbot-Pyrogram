@@ -22,6 +22,7 @@ from fridaybot.Configs import Config
 sedprint = logging.getLogger("UTILS")
 cmdhandler = Config.COMMAND_HAND_LER
 bothandler = Config.BOT_HANDLER
+sudo_users = list(Config.SUDO_USERS) if Config.SUDO_USERS else ''
 from datetime import datetime
 
 def friday_on_command(allow_sudo=True, **args):
@@ -37,12 +38,8 @@ def friday_on_command(allow_sudo=True, **args):
     disable_errors = args.get('disable_errors', False)
     args['outgoing'] = True
     if allow_sudo:
-        args["from_users"] = list(Config.SUDO_USERS)
+        args["from_users"] = sudo_users
         args["incoming"] = True  
-        try:
-            del args['allow_sudo']  
-        except:
-            pass
     elif "incoming" in args and not args["incoming"]:
         args["outgoing"] = True 
     if pattern is not None:
