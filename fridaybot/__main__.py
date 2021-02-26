@@ -189,15 +189,15 @@ Total Clients : {total_clients}
 -------------------------------------------""")
 fridaydevs.info(sarg)
 
-async def restart_log(bot):
-    try:
-        await bot.send_message(Config.PRIVATE_GROUP_ID, sarg)
-    except:
-        logger.warning("Invalid LOG Group ID! Please Check Your Log Group Id. For Now Friday is Exiting, Bye!")
-        exit(1)
-    return    
+#async def restart_log(bot):
+#    try:
+#        await bot.send_message(Config.PRIVATE_GROUP_ID, sarg)
+#    except:
+#        logger.warning("Invalid LOG Group ID! Please Check Your Log Group Id. For Now Friday is Exiting, Bye!")
+#        exit(1)
+#    return    
 
-bot.loop.run_until_complete(restart_log(bot))
+#bot.loop.run_until_complete(restart_log(bot))
 bot.tgbot.loop.run_until_complete(check_inline_on_warner(bot.tgbot))
 
 if len(argv) not in (1, 3, 4):
