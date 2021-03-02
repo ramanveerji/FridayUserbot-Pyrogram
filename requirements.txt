@@ -2,6 +2,7 @@ Pillow
 google-trans-new
 nospamplus
 img2pdf
+mal
 pymediainfo
 tinydb
 spotdl
