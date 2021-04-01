@@ -80,7 +80,7 @@ async def set_varr(client, message, app_):
   if not _var:
         await msg_.edit("`Here is Usage Syntax : .setvar KEY VALUE`")
         return
-  if not '|' in _var:
+  if not ' ' in _var:
         await msg_.edit("`Here is Usage Syntax : .setvar KEY VALUE`")
         return
   var_ = _var.split(' ', 1)
