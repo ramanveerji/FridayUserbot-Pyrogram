@@ -7,15 +7,17 @@ assignees: ''
 
 ---
 
+<!-- WARNING: Ignoring this template could lead to the issue being closed as invalid -->
+
 ## Checklist
 - [ ] I Am Using Latest Version.
 - [ ] I have searched Issues And Pull Requests And I Confirm That This is Not A Duplicate Issue.
 
 ## Command Which Causes This Issue.
-A Detailed Info And About Command
+Command Name, Filename, And Function name.
 
 ## Description
-A detailed description of bug.
+A detailed description of the Bug.
 
 ## Traceback
 TraceBack Of Bug (if any)
