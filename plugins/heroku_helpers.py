@@ -68,7 +68,7 @@ async def gib_logs(client, message, happ):
   await edit_or_send_as_file(logs, msg_, client, capt, "logs")
 
 @friday_on_cmd(
-    ['setvar'],
+    ['setvar', 'set var'],
     cmd_help={
         "help": "Set Var From telegram Itself, Please Seperate Var And Value With '|'",
         "example": "{ch}setvar LOAD_UNOFFICIAL_PLUGINS|False"})
@@ -78,21 +78,21 @@ async def set_varr(client, message, app_):
   heroku_var = app_.config()
   _var = get_text(message)
   if not _var:
-        await msg_.edit("`Here is Usage Syntax : .setvar KEY|VALUE`")
+        await msg_.edit("`Here is Usage Syntax : .setvar KEY VALUE`")
         return
   if not '|' in _var:
-        await msg_.edit("`Here is Usage Syntax : .setvar KEY|VALUE`")
+        await msg_.edit("`Here is Usage Syntax : .setvar KEY VALUE`")
         return
-  var_ = _var.split('|')
+  var_ = _var.split(' ', 1)
   if len(var_) > 2:
-        await msg_.edit("`Here is Usage Syntax : .setvar KEY|VALUE`")
+        await msg_.edit("`Here is Usage Syntax : .setvar KEY VALUE`")
         return
   _varname, _varvalue = var_
   await msg_.edit(f"`Variable {_varname} Added With Value {_varvalue}!`")
   heroku_var[_varname] = _varvalue
 
 @friday_on_cmd(
-    ['delvar'],
+    ['delvar', 'del var'],
     cmd_help={
         "help": "Delete Var From telegram Itself",
         "example": "{ch}delvar LOAD_UNOFFICIAL_PLUGINS"})
