@@ -15,15 +15,11 @@ from datetime import datetime
 import heroku3
 from git.exc import GitCommandError, InvalidGitRepositoryError, NoSuchPathError
 from main_startup.helper_func.logger_s import LogIt
+from main_startup.core.startup_helpers import run_cmd
 
 REPO_ = Config.UPSTREAM_REPO
 BRANCH_ = Config.U_BRANCH
 
-def gen_change_Log(repo, diff):
-    ch_log = ""
-    for c in repo.iter_commits(diff):
-        ch_log += f"🔨 **#{c.count()} :** [{c.summary}]({Config.UPSTREAM_REPO}/commit/{c}) 👷 __{c.author}__ \n"
-    return ch_log
 
 @friday_on_cmd(["update"],
   cmd_help={
