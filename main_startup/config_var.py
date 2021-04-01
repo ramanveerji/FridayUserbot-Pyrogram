@@ -19,7 +19,11 @@ def fetch_heroku_git_url(api_key, app_name):
     if not app_name:
         return None
     heroku = heroku3.from_key(api_key)
-    heroku_applications = heroku.apps()
+    try:
+        heroku_applications = heroku.apps()
+    except:
+        return None
+    heroku_app = None
     for app in heroku_applications:
         if app.name == app_name:
             heroku_app = app
