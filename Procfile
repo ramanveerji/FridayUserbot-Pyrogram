@@ -1,1 +1,1 @@
-fridaybot: python -m fridaybot
+bot: python -m main_startup

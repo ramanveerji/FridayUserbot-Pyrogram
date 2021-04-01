@@ -5,12 +5,5 @@
 # Please see < https://github.com/DevsExpo/blob/master/LICENSE >
 #
 # All rights reserved.
-
-FROM python:3.9
-WORKDIR .
-ENV PYTHONUNBUFFERED=1
-COPY requirements.txt .
-COPY startup.sh .
-RUN bash startup.sh
-COPY . .
-CMD ["python3", "-m", "main_startup"]
+from main_startup.config_var import Config
+from main_startup.helper_func.basic_helpers import edit_or_reply, is_admin_or_owner
