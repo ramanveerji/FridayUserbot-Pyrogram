@@ -13,7 +13,7 @@ req_file="./xtraplugins/req.txt"
 make_xtra_dir () {
   if [ -d "$xtra_fold" ] 
   then
-    rm -r "$xtra_fold"
+    rmdir "$xtra_fold"
     mkdir "$xtra_fold"
   else
     mkdir "$xtra_fold"
