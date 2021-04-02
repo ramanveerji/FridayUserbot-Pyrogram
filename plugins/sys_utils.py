@@ -62,7 +62,10 @@ async def amialive(client, message):
 ➠ **Python Version :** __{platform.python_version()}__
 ➠ **(C) @DEVSEXPO 2020-2021**
 """
-    await client.send_photo(img_, caption=alive, reply_to_message_id=message.reply_to_message.message_id)
+    if message.reply_to_message:
+        await client.send_photo(message.chat.id, img_, caption=alive, reply_to_message_id=message.reply_to_message.message_id)
+    else:
+        await client.send_photo(message.chat.id, img_, caption=alive)
 
 
 @friday_on_cmd(
