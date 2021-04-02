@@ -154,7 +154,7 @@ async def is_nsfw(client, message, is_reply=True):
         return False
     f = {"file": (img, open(img, "rb"))}
     try:
-        r = requests.post("https://starkapi.herokuapp.com/nsfw/", files=f).json()
+        r = requests.post("https://starkapis.herokuapp.com/nsfw/", files=f).json()
     except JSONDecodeError:
         return False
     if r.get("success") is False:

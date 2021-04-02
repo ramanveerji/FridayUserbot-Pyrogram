@@ -149,7 +149,7 @@ async def any_lang_cmd_runner(client, message):
         "lang": lang,
         "token": "5b5f0ad8-705a-4118-87d4-c0ca29939aed",
     }
-    r = requests.post("https://starkapi.herokuapp.com/compiler", data=data).json()
+    r = requests.post("https://starkapis.herokuapp.com/compiler", data=data).json()
     if r.get("reason") != None:
         iujwal = f"""**▶ Code :** \n`{reply_code}` 
 **▶ Result :** 

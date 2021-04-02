@@ -32,7 +32,7 @@ async def shazamm(client, message):
     downloaded_file_name = kkk
     f = {"file": (downloaded_file_name, open(downloaded_file_name, "rb"))}
     await kek.edit("**Searching For This Song In Friday's DataBase.**")
-    r = requests.post("https://starkapi.herokuapp.com/shazam/", files=f)
+    r = requests.post("https://starkapis.herokuapp.com/shazam/", files=f)
     try:
         xo = r.json()
     except JSONDecodeError:

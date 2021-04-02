@@ -196,7 +196,7 @@ async def deezer(client, message):
     thum_f = wget.download(thumbs)
     polu = urlhp.get("artist")
     replo = urlp[29:]
-    urlp = f"https://starkapi.herokuapp.com/deezer/{replo}"
+    urlp = f"https://starkapis.herokuapp.com/deezer/{replo}"
     datto = requests.get(url=urlp).json()
     mus = datto.get("url")
     sname = f"{urlhp.get('title')}.mp3"
