@@ -11,21 +11,21 @@ from database import db_x
 db_y = db_x["PMPERMIT"]
 
 
-def approve_user(user_id):
-    cd = db_y.find_one({"_id": "PmPermit"})
+async def approve_user(user_id):
+    cd = await db_y.find_one({"_id": "PmPermit"})
     if cd:
-        db_y.update_one({"_id": "PmPermit"}, {"$push": {"user_id": user_id}})
+        await db_y.update_one({"_id": "PmPermit"}, {"$push": {"user_id": user_id}})
     elif not cd:
         user_idc = [user_id]
-        db_y.insert_one({"_id": "PmPermit", "user_id": user_idc})
+        await db_y.insert_one({"_id": "PmPermit", "user_id": user_idc})
 
 
-def disapprove_user(user_id):
-    db_y.update_one({"_id": "PmPermit"}, {"$pull": {"user_id": user_id}})
+async def disapprove_user(user_id):
+    await db_y.update_one({"_id": "PmPermit"}, {"$pull": {"user_id": user_id}})
 
 
-def is_user_approved(user_id):
-    sm = db_y.find_one({"_id": "PmPermit"})
+async def is_user_approved(user_id):
+    sm = await db_y.find_one({"_id": "PmPermit"})
     if sm:
         kek = list(sm.get("user_id"))
         if user_id in kek:
@@ -36,8 +36,8 @@ def is_user_approved(user_id):
         return False
 
 
-def user_list():
-    sm = db_y.find_one({"_id": "PmPermit"})
+async def user_list():
+    sm = await db_y.find_one({"_id": "PmPermit"})
     if sm:
         return list(sm.get("user_id"))
     else:

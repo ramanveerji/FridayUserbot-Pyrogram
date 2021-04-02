@@ -54,10 +54,10 @@ async def gmute_him(client, message):
     if userz.id in Config.AFS:
         await g.edit("`Sudo Users Can't Be Gmutted! Remove Him And Try Again!`")
         return
-    if is_gmuted(userz.id):
+    if await is_gmuted(userz.id):
         await g.edit("`Re-Gmute? Seriously? :/`")
         return
-    gmute(userz.id, reason)
+    await gmute(userz.id, reason)
     gmu = f"**#Gmutted** \n**User :** `{userz.id}` \n**Reason :** `{reason}`"
     await g.edit(gmu)
     log = LogIt(message)
@@ -89,10 +89,10 @@ async def gmute_him(client, message):
     if userz.id in Config.AFS:
         await ug.edit("`Sudo Users Can't Be Un-Gmutted! Remove Him And Try Again!`")
         return
-    if not is_gmuted(userz.id):
+    if not await is_gmuted(userz.id):
         await ug.edit("`Un-Gmute A Non Gmutted User? Seriously? :/`")
         return
-    ungmute(userz.id)
+    await ungmute(userz.id)
     ugmu = f"**#Un-Gmutted** \n**User :** `{userz.id}`"
     await ug.edit(ugmu)
     log = LogIt(message)
@@ -130,7 +130,7 @@ async def gbun_him(client, message):
     if userz.id in Config.AFS:
         await gbun.edit("`Sudo Users Can't Be Gbanned! Remove Him And Try Again!`")
         return
-    if gban_info(userz.id):
+    if await gban_info(userz.id):
         await gbun.edit("`Re-Gban? Seriously? :/`")
         return
     await gbun.edit("`Please, Wait Fectching Your Chats!`")
@@ -145,7 +145,7 @@ async def gbun_him(client, message):
             await client.kick_chat_member(ujwal, int(userz.id))
         except:
             failed += 1
-    gban_user(userz.id, reason)
+    await gban_user(userz.id, reason)
     gbanned = f"**#GBanned** \n**User :** [{userz.first_name}](tg://user?id={userz.id}) \n**Reason :** `{reason}` \n**Affected Chats :** `{chat_len-failed}`"
     await gbun.edit(gbanned)
     log = LogIt(message)
@@ -175,7 +175,7 @@ async def ungbun_him(client, message):
     if userz.id == (await client.get_me()).id:
         await ungbun.edit("`Oh, This is So Funny Btw :/`")
         return
-    if not gban_info(userz.id):
+    if not await gban_info(userz.id):
         await ungbun.edit("`Un-Gban A Ungbanned User? Seriously? :/`")
         return
     await ungbun.edit("`Please, Wait Fectching Your Chats!`")
@@ -190,7 +190,7 @@ async def ungbun_him(client, message):
             await client.unban_chat_member(ujwal, int(userz.id))
         except:
             failed += 1
-    ungban_user(userz.id)
+    await ungban_user(userz.id)
     ungbanned = f"**#Un_GBanned** \n**User :** [{userz.first_name}](tg://user?id={userz.id}) \n**Affected Chats :** `{chat_len-failed}`"
     await ungbun.edit(ungbanned)
     log = LogIt(message)
@@ -204,12 +204,12 @@ async def delete_user_msgs(client, message):
     if not message.from_user:
         message.continue_propagation()
     user = message.from_user.id
-    if is_gmuted(user):
+    if await is_gmuted(user):
         try:
             await message.delete()
         except:
             message.continue_propagation()
-    if gban_info(user):
+    if await gban_info(user):
         me_ = await message.chat.get_member(int(client.me.id))
         if not me_.can_restrict_members:
             message.continue_propagation()
@@ -234,7 +234,7 @@ async def delete_user_msgs(client, message):
 async def give_glist(client, message):
     oof = "**#GBanList** \n\n"
     glist = await edit_or_reply(message, "`Processing..`")
-    list_ = gban_list()
+    list_ = await gban_list()
     if len(list_) == 0:
         await glist.edit("`No User is Gbanned Till Now!`")
         return

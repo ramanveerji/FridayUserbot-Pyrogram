@@ -11,17 +11,17 @@ from database import db_x
 gmuteh = db_x["GMUTE"]
 
 
-def is_gmuted(sender_id):
-    kk = gmuteh.find_one({"sender_id": sender_id})
+async def is_gmuted(sender_id):
+    kk = await gmuteh.find_one({"sender_id": sender_id})
     if not kk:
         return False
     else:
         return True
 
 
-def gmute(sender_id, reason="#GMuted"):
-    gmuteh.insert_one({"sender_id": sender_id, "reason": reason})
+async def gmute(sender_id, reason="#GMuted"):
+    await gmuteh.insert_one({"sender_id": sender_id, "reason": reason})
 
 
-def ungmute(sender_id):
-    gmuteh.delete_one({"sender_id": sender_id})
+async def ungmute(sender_id):
+    await gmuteh.delete_one({"sender_id": sender_id})

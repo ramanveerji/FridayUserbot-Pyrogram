@@ -39,16 +39,16 @@ async def set_afk(client, message):
     if msge:
         msg = f"**My Master Seems To Be Too Busy 👀.** \n__He Going Afk Because Of__ `{msge}`"
         await log.log_msg(client, f"#AfkLogger Afk Is Active And Reason is {msge}",)
-        go_afk(afk_start, msge)
+        await go_afk(afk_start, msge)
     else:
         msg = f"**I Am Busy And I Am Going Afk**."
         await log.log_msg(client, f"#AfkLogger Afk Is Active",)
-        go_afk(afk_start) 
+        await go_afk(afk_start) 
     await pablo.edit(msg)
         
 @listen(filters.mentioned & ~filters.me & ~filters.bot & ~filters.edited & filters.incoming)
 async def afk_er(client, message):
-    lol = check_afk()
+    lol = await check_afk()
     if not lol:
         message.continue_propagation()
     reason = lol["reason"]
@@ -67,7 +67,7 @@ async def afk_er(client, message):
         
 @listen(filters.outgoing & filters.me)
 async def no_afke(client, message):
-    lol = check_afk()
+    lol = await check_afk()
     if not lol:
         message.continue_propagation()
     back_alivee = datetime.now()
@@ -76,7 +76,7 @@ async def no_afke(client, message):
     total_afk_time = str((afk_end - afk_start))
     kk = await message.reply(f"""__Pro is Back Alive__\n**No Longer afk.**\n `I Was afk for:``{total_afk_time}`""",)
     await kk.delete()
-    no_afk()
+    await no_afk()
     log = LogIt(message)
     await log.log_msg(client, f"#AfkLogger User is Back Alive ! No Longer Afk\n AFK for : {total_afk_time} ")
     message.continue_propagation()

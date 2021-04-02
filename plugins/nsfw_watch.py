@@ -23,7 +23,7 @@ from main_startup.helper_func.plugin_helpers import is_nsfw
 )
 async def add_nsfw(client, message):
     pablo = await edit_or_reply(message, "`Processing..`")
-    if is_chat_in_db(message.chat.id):
+    if await is_chat_in_db(message.chat.id):
         await pablo.edit("`This Chat is Already In My DB`")
         return
     me = await client.get_me()
@@ -31,7 +31,7 @@ async def add_nsfw(client, message):
     if not lol:
         await pablo.edit("`I Am Not An Admin!`")
         return
-    add_chat(message.chat.id)
+    await add_chat(message.chat.id)
     await pablo.edit("Successfully Added Chat To NSFW Watch.")
 
 
@@ -42,19 +42,19 @@ async def add_nsfw(client, message):
 )
 async def remove_nsfw(client, message):
     pablo = await edit_or_reply(message, "`Processing..`")
-    if not is_chat_in_db(message.chat.id):
+    if not await is_chat_in_db(message.chat.id):
         await pablo.edit("`This Chat is Not in dB.`")
         return
-    rm_chat(message.chat.id)
+    await rm_chat(message.chat.id)
     await pablo.edit("`Successfully Removed Chat From NSFW Watch.`")
 
 
 @listen(filters.incoming & filters.media & ~filters.private & ~filters.channel)
 async def nsfw_watch(client, message):
-    lol = get_all_nsfw_chats()
+    lol = await get_all_nsfw_chats()
     if len(lol) == 0:
         message.continue_propagation()
-    if not is_chat_in_db(message.chat.id):
+    if not await is_chat_in_db(message.chat.id):
         message.continue_propagation()
     hot = await is_nsfw(client, message, False)
     if not hot:

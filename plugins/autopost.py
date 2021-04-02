@@ -43,10 +43,10 @@ async def autopost(client, message):
             await pablo.edit("`Invalid Chat ID / Username!`")
             return
         kk = str(u_.id).replace("-100", "")
-    if check_if_autopost_in_db(message.chat.id, kk):
+    if await check_if_autopost_in_db(message.chat.id, kk):
         await pablo.edit("Channel Already In DB")
         return
-    add_new_autopost(message.chat.id, kk)
+    await add_new_autopost(message.chat.id, kk)
     await pablo.edit(f"`Added AutoPosting To This Channel From {chnnl}`")
 
 
@@ -75,10 +75,10 @@ async def rmautopost(client, message):
             await pablo.edit("`Invalid Chat ID / Username!`")
             return
         kk = str(u_.id).replace("-100", "")
-    if not check_if_autopost_in_db(message.chat.id, kk):
+    if not await check_if_autopost_in_db(message.chat.id, kk):
         await pablo.edit("Channel Not In DB")
         return
-    del_autopost(message.chat.id, kk)
+    await del_autopost(message.chat.id, kk)
     await pablo.edit(f"`Removed AutoPosting To This Channel From {chnnl}`")
 
 
@@ -90,9 +90,9 @@ async def rmautopost(client, message):
 )
 async def autoposterz(client, message):
     chat_id = str(message.chat.id).replace("-100", "")
-    if not get_autopost(int(chat_id)):
+    if not await get_autopost(int(chat_id)):
         message.continue_propagation()
-    channels_set = get_autopost(int(chat_id))
+    channels_set = await get_autopost(int(chat_id))
     if not channels_set:
         message.continue_propagation()
     for chat in channels_set:

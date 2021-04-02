@@ -62,9 +62,9 @@ async def whois(client, message):
     user_info += f"✱ <b>Total Groups In Common :</b> <code>{len(common)}</code> \n"
     if user_.id in devs_id:
         user_info += f"\n <code>Wow! This User is One Of My Developer</code> \n"
-    if gban_info(user_.id):
+    if await gban_info(user_.id):
         user_info += f"\n This User Is Gbanned For Reason : <code>{gban_info(user_.id)}</code> \n"
-    if is_gmuted(user_.id):
+    if await is_gmuted(user_.id):
         user_info += f"\n This User Is Gmutted! \n"
     if user_photo:
         await msg_.delete()

@@ -37,6 +37,7 @@ $ pip(3) install -r requirements.txt
 $ python(3) -m main_startup
 ```
 
+
 ### Mandatory Configs 📒
 ```
 [+] Make Sure You Add All These Mandatory Vars. 

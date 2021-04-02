@@ -46,9 +46,9 @@ async def set_custom_pm_texts(client, message):
         )
         return
     if ptext == "default":
-        add_pm_text()
+        await add_pm_text()
     else:
-        add_pm_text(ptext)
+        await add_pm_text(ptext)
     await message.edit(f"PM-Message Sucessfully Changed To `{ptext}`")
 
 
@@ -73,7 +73,7 @@ async def set_custom_pm_texts(client, message):
     if int(ptext) >= 20:
         await message.edit("`Pm Limit Should Be In Numbers From 3-20`")
         return
-    set_pm_spam_limit(int(ptext))
+    await set_pm_spam_limit(int(ptext))
     await message.edit(f"PM-Message-Limit Sucessfully Changed To `{ptext}`")
 
 
@@ -88,8 +88,8 @@ async def blockz(client, message):
     if message.chat.type == "private":
         user_ = await client.get_users(message.chat.id)
         firstname = user_.first_name
-        if is_user_approved(message.chat.id):
-            disapprove_user(message.chat.id)
+        if await is_user_approved(message.chat.id):
+            await disapprove_user(message.chat.id)
         await message.edit(
             "Blocked [{}](tg://user?id={})".format(firstname, message.chat.id)
         )
@@ -102,8 +102,8 @@ async def blockz(client, message):
             return
         user_ = await client.get_users(message.reply_to_message.from_user.id)
         firstname = user_.first_name
-        if is_user_approved(message.reply_to_message.from_user.id):
-            disapprove_user(message.reply_to_message.from_user.id)
+        if await is_user_approved(message.reply_to_message.from_user.id):
+            await disapprove_user(message.reply_to_message.from_user.id)
         await message.edit(
             "Blocked [{}](tg://user?id={})".format(
                 firstname, message.reply_to_message.from_user.id
@@ -154,8 +154,8 @@ async def allow(client, message):
             await OLD_MSG[message.chat.id].delete()
         user_ = await client.get_users(message.chat.id)
         firstname = user_.first_name
-        if not is_user_approved(message.chat.id):
-            approve_user(message.chat.id)
+        if not await is_user_approved(message.chat.id):
+            await approve_user(message.chat.id)
         else:
             await message.edit("`User is Already Approved!`")
             await asyncio.sleep(3)
@@ -172,8 +172,8 @@ async def allow(client, message):
             return
         user_ = await client.get_users(message.reply_to_message.from_user.id)
         firstname = user_.first_name
-        if not is_user_approved(message.reply_to_message.from_user.id):
-            approve_user(message.reply_to_message.from_user.id)
+        if not await is_user_approved(message.reply_to_message.from_user.id):
+            await approve_user(message.reply_to_message.from_user.id)
         else:
             await message.edit("`User is Already Approved!`")
             await asyncio.sleep(3)
@@ -199,8 +199,8 @@ async def disallow(client, message):
     if message.chat.type == "private":
         user_ = await client.get_users(message.chat.id)
         firstname = user_.first_name
-        if is_user_approved(message.chat.id):
-            disapprove_user(message.chat.id)
+        if await is_user_approved(message.chat.id):
+            await disapprove_user(message.chat.id)
         else:
             await message.edit(
                 "`This User Was Never Approved. How Should I Disapprove?`"
@@ -219,8 +219,8 @@ async def disallow(client, message):
             return
         user_ = await client.get_users(message.reply_to_message.from_user.id)
         firstname = user_.first_name
-        if is_user_approved(message.reply_to_message.from_user.id):
-            disapprove_user(message.reply_to_message.from_user.id)
+        if await is_user_approved(message.reply_to_message.from_user.id):
+            await disapprove_user(message.reply_to_message.from_user.id)
         else:
             await message.edit(
                 "`This User Was Never Approved. How Should I Disapprove?`"
@@ -241,10 +241,10 @@ async def disallow(client, message):
 async def pmPermit(client, message):
     if not message.from_user:
         message.continue_propagation()
-    if is_user_approved(message.chat.id):
+    if await is_user_approved(message.chat.id):
         message.continue_propagation()
     if message.from_user.id in devs_id:
-        approve_user(message.chat.id)
+        await approve_user(message.chat.id)
         message.continue_propagation()
     user_ = await client.get_users(message.chat.id)
     if user_.is_contact:
@@ -261,9 +261,9 @@ async def pmPermit(client, message):
         message.continue_propagation()
     if user_.is_support:
         message.continue_propagation()
-    text = get_pm_text()
+    text = await get_pm_text()
     log = LogIt(message)
-    capt = get_thumb()
+    capt = await get_thumb()
     if message.chat.id not in PM_WARNS:
         PM_WARNS[message.chat.id] = 0
     elif PM_WARNS[message.chat.id] >= get_pm_spam_limit():

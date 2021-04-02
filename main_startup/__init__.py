@@ -9,8 +9,7 @@
 import logging
 import os
 import time
-from pymongo import MongoClient
-from pymongo.errors import ConnectionFailure
+import motor.motor_asyncio
 from pyrogram import Client
 from .config_var import Config
 
@@ -27,14 +26,7 @@ logging.getLogger("pyrogram").setLevel(logging.ERROR)
 logging.getLogger("apscheduler").setLevel(logging.ERROR)
 
 
-mongo_client = MongoClient(Config.MONGO_DB)
-
-try:
-    mongo_client.server_info()
-except ConnectionFailure:
-    logging.error("Invalid Mongo DB URL. Please Check Your Credentials! Friday is Exiting...")
-    quit(1)
-
+mongo_client = motor.motor_asyncio.AsyncIOMotorClient(Config.MONGO_DB)
 
 CMD_LIST = {}
 XTRA_CMD_LIST = {}
@@ -58,23 +50,23 @@ if not Config.API_HASH:
 # Clients - Upto 4 Clients is Supported!
 if Config.STRINGSESSION:
     Friday = Client(
-        Config.STRINGSESSION, api_id=Config.API_ID, api_hash=Config.API_HASH, sleep_threshold=1800
+        Config.STRINGSESSION, api_id=Config.API_ID, api_hash=Config.API_HASH, sleep_threshold=180
     )
 if Config.STRINGSESSION_2:
     Friday2 = Client(
-        Config.STRINGSESSION_2, api_id=Config.API_ID, api_hash=Config.API_HASH, sleep_threshold=1800
+        Config.STRINGSESSION_2, api_id=Config.API_ID, api_hash=Config.API_HASH, sleep_threshold=180
     )
 else:
     Friday2 = None
 if Config.STRINGSESSION_3:
     Friday3 = Client(
-        Config.Config.STRINGSESSION_3, api_id=Config.API_ID, api_hash=Config.API_HASH, sleep_threshold=1800
+        Config.Config.STRINGSESSION_3, api_id=Config.API_ID, api_hash=Config.API_HASH, sleep_threshold=180
     )
 else:
     Friday3 = None
 if Config.STRINGSESSION_4:
     Friday4 = Client(
-        Config.Config.STRINGSESSION_4, api_id=Config.API_ID, api_hash=Config.API_HASH, sleep_threshold=1800
+        Config.Config.STRINGSESSION_4, api_id=Config.API_ID, api_hash=Config.API_HASH, sleep_threshold=180
     )
 else:
     Friday4 = None
@@ -85,7 +77,7 @@ if Config.BOT_TOKEN:
         api_id=Config.API_ID,
         api_hash=Config.API_HASH,
         bot_token=Config.BOT_TOKEN,
-        sleep_threshold=1800
+        sleep_threshold=180
     )
 else:
     bot = None

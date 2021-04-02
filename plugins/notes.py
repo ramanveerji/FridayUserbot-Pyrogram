@@ -33,21 +33,21 @@ async def notes(client, message):
     note_name = note_name.lower()
     msg = message.reply_to_message
     copied_msg = await msg.copy(Config.LOG_GRP)
-    add_note(note_name, message.chat.id, copied_msg.message_id)
+    await add_note(note_name, message.chat.id, copied_msg.message_id)
     await note_.edit(f"`Done! {note_name} Added To Notes List!`")
 
 
 @listen(filters.incoming & filters.regex("\#(\S+)"))
 async def lmao(client, message):
-    if all_note(message.chat.id):
+    if await all_note(message.chat.id):
         pass
     else:
         message.continue_propagation()
     owo = message.matches[0].group(1)
     if owo is None:
         message.continue_propagation()
-    if note_info(owo, message.chat.id):
-        sed = note_info(owo, message.chat.id)
+    if await note_info(owo, message.chat.id):
+        sed = await note_info(owo, message.chat.id)
         await client.copy_message(
             from_chat_id=Config.LOG_GRP,
             chat_id=message.chat.id,
@@ -68,10 +68,10 @@ async def notes(client, message):
         await note_.edit("`Give A Note Name!`")
         return
     note_name = note_name.lower()
-    if not note_info(note_name, message.chat.id):
+    if not await note_info(note_name, message.chat.id):
         await note_.edit("`Note Not Found!`")
         return
-    del_note(note_name, message.chat.id)
+    await del_note(note_name, message.chat.id)
     await note_.edit(f"`Note {note_name} Deleted Successfully!`")
 
 
@@ -81,11 +81,11 @@ async def notes(client, message):
 )
 async def noteses(client, message):
     pablo = await edit_or_reply(message, "`Processing..`")
-    poppy = all_note(message.chat.id)
+    poppy = await all_note(message.chat.id)
     if poppy is False:
         await pablo.edit("`No Notes Found In This Chat...`")
         return
-    del_notes(message.chat.id)
+    await del_notes(message.chat.id)
     await pablo.edit("Deleted All The Notes Successfully!!")
 
 
@@ -95,7 +95,7 @@ async def noteses(client, message):
 )
 async def noteses(client, message):
     pablo = await edit_or_reply(message, "`Processing..`")
-    poppy = all_note(message.chat.id)
+    poppy = await all_note(message.chat.id)
     if poppy is False:
         await pablo.edit("`No Notes Found In This Chat...`")
         return

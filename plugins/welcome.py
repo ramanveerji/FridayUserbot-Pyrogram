@@ -28,7 +28,7 @@ async def save_welcome(client, message):
         return
     msg = message.reply_to_message
     cool = await msg.copy(Config.LOG_GRP)
-    add_welcome(message.chat.id, cool.message_id)
+    await add_welcome(message.chat.id, cool.message_id)
     await note_.edit(f"`Done! Welcome Message Saved!`")
 
 
@@ -38,9 +38,9 @@ async def welcomenibba(client, message):
         message.continue_propagation()
     if not message.chat:
         message.continue_propagation()
-    if not welcome_info(message.chat.id):
+    if not await welcome_info(message.chat.id):
         message.continue_propagation()
-    sed = welcome_info(message.chat.id)
+    sed = await welcome_info(message.chat.id)
     await client.copy_message(
         from_chat_id=Config.LOG_GRP,
         chat_id=message.chat.id,
@@ -56,10 +56,10 @@ async def welcomenibba(client, message):
 )
 async def del_welcomez(client, message):
     note_ = await edit_or_reply(message, "`Processing..`")
-    if not welcome_info(message.chat.id):
+    if not await welcome_info(message.chat.id):
         await note_.edit("`Welcome Message Not Found In This Chat!`")
         return
-    del_welcome(message.chat.id)
+    await del_welcome(message.chat.id)
     await note_.edit(f"`Welcome Message Deleted Successfully!`")
 
 
@@ -69,7 +69,7 @@ async def del_welcomez(client, message):
 )
 async def show_welcome(client, message):
     pablo = await edit_or_reply(message, "`Processing..`")
-    sed = welcome_info(message.chat.id)
+    sed = await welcome_info(message.chat.id)
     if sed is False:
         await pablo.edit("`No Welcome Found In This Chat...`")
         return

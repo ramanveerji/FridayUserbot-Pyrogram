@@ -39,8 +39,8 @@ async def badd(client, message):
             if dialog.chat.type in zxz:
                 x = await client.get_chat_member(dialog.chat.id, message.from_user.id)
                 if x.status in nd:
-                    if not is_broadcast_chat_in_db(dialog.chat.id):
-                        add_broadcast_chat(dialog.chat.id)
+                    if not await is_broadcast_chat_in_db(dialog.chat.id):
+                        await add_broadcast_chat(dialog.chat.id)
                         oks += 1
                     else:
                         sed += 1
@@ -52,10 +52,10 @@ async def badd(client, message):
             if not chnl_id:
                 await pablo.edit("`Invalid Channel Id/Username`")
                 return
-            if is_broadcast_chat_in_db(chnl_id):
+            if await is_broadcast_chat_in_db(chnl_id):
                 await pablo.edit("`This Channel is Already In dB!`")
                 return
-            add_broadcast_chat(chnl_id)
+            await add_broadcast_chat(chnl_id)
             await pablo.edit(f"`Successfully Added {bd} in dB!`")
 
 @friday_on_cmd(
@@ -74,9 +74,9 @@ async def brm(client, message):
         return
     if bd.lower() == "all":
         await pablo.edit("`Removing All Channel From DB.`")
-        all = get_all_broadcast_chats()
+        all = await get_all_broadcast_chats()
         for chnnl in all:
-            rmbroadcast_chat(chnnl["chat_id"])
+            await rmbroadcast_chat(chnnl["chat_id"])
             Jill += 1
         await pablo.edit(f"Successfully Removed {Jill} Groups/Channels from dB")
     else:
@@ -84,10 +84,10 @@ async def brm(client, message):
         if not chnl_id:
             await pablo.edit("`Invalid Channel Id/Username`")
             return
-        if not is_broadcast_chat_in_db(chnl_id):
+        if not await is_broadcast_chat_in_db(chnl_id):
             await pablo.edit("`This Channel is Not In dB!`")
             return
-        add_broadcast_chat(chnl_id)
+        await add_broadcast_chat(chnl_id)
         await pablo.edit(f"`Successfully Added {bd} in dB!`")
 
 
@@ -102,7 +102,7 @@ async def broadcast(client, message):
     pablo = await edit_or_reply(
         message, "**Fine. Broadcasting in Progress. Kindly Wait !**"
     )
-    leat = get_all_broadcast_chats()
+    leat = await get_all_broadcast_chats()
     S = 0
     F = 0
     if len(leat) == 0:

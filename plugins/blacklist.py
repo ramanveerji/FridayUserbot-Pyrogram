@@ -44,11 +44,11 @@ async def addblacklist(client, message):
     if not blacklist:
         await pablo.edit("`Give Word To Blacklist!`")
         return
-    if is_blacklist_in_db(message.chat.id, blacklist):
+    if await is_blacklist_in_db(message.chat.id, blacklist):
         await pablo.edit("`Given Word Already Blacklisted!`")
         return
     blacklist = blacklist.lower()
-    add_to_blacklist(blacklist, message.chat.id)
+    await add_to_blacklist(blacklist, message.chat.id)
     await pablo.edit(f"`{blacklist}` `Successfully Added To Blacklist`")
 
 
@@ -58,11 +58,11 @@ async def addblacklist(client, message):
 )
 async def listblacklist(client, message):
     pablo = await edit_or_reply(message, "`Processing..`")
-    if not get_chat_blacklist(message.chat.id):
+    if not await get_chat_blacklist(message.chat.id):
         await pablo.edit("This Chat Has No Blacklist")
         return
     OUT_STR = "Blacklists in the Current Chat:\n"
-    for midhun in get_chat_blacklist(message.chat.id):
+    for midhun in await get_chat_blacklist(message.chat.id):
         OUT_STR += f"👉 `{midhun['trigger']}` \n"
     await edit_or_send_as_file(OUT_STR, pablo, client, "Blacklist", "blacklist")
 
@@ -80,17 +80,17 @@ async def delblacklist(client, message):
     if not blacklist:
         await pablo.edit("`Give Word To Remove From Blacklist!`")
         return
-    if not is_blacklist_in_db(message.chat.id, blacklist):
+    if not await is_blacklist_in_db(message.chat.id, blacklist):
         await pablo.edit("`Given Word Is Not Blacklisted!`")
         return
     blacklist = blacklist.lower()
-    del_blacklist(blacklist, message.chat.id)
+    await del_blacklist(blacklist, message.chat.id)
     await pablo.edit(f"`{blacklist}` `Successfully Removed From Blacklist`")
 
 
 @listen(filters.incoming & ~filters.edited & filters.group)
 async def activeblack(client, message):
-    if not get_chat_blacklist(message.chat.id):
+    if not await get_chat_blacklist(message.chat.id):
         message.continue_propagation()
     owo = message.text
     if owo is None:
@@ -98,7 +98,7 @@ async def activeblack(client, message):
     owoo = owo.lower()
     tges = owoo.split(" ")
     for owo in tges:
-        if is_blacklist_in_db(message.chat.id, owo):
+        if await is_blacklist_in_db(message.chat.id, owo):
             try:
                 await message.delete()
             except Exception as e:
@@ -119,8 +119,8 @@ async def activeblack(client, message):
 )
 async def delblacklists(client, message):
     pablo = await edit_or_reply(message, "`Processing..`")
-    if not get_chat_blacklist(message.chat.id):
+    if not await get_chat_blacklist(message.chat.id):
         await pablo.edit("This Chat Has No Blacklist")
         return
-    blacklists_del(message.chat.id)
+    await blacklists_del(message.chat.id)
     await pablo.edit("`All Chat Blacklists Have Been Removed!`")
