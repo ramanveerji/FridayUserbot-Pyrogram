@@ -32,7 +32,7 @@ async def update_it(client, message):
     try:
         repo = Repo()
     except GitCommandError:
-        return msg_.edit("`Invalid Git Command. Please Report This Bug To @FridayOT`")
+        return await msg_.edit("`Invalid Git Command. Please Report This Bug To @FridayOT`")
     except InvalidGitRepositoryError:
         repo = Repo.init()
         if "upstream" in repo.remotes:
