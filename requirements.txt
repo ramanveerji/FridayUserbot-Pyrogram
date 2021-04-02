@@ -39,7 +39,7 @@ TgCrypto>=1.2.2
 pytz>=2021.1
 apscheduler>=3.7.0
 requests>=2.25.1
-youtube_dl
+git+https://github.com/ytdl-org/youtube-dl
 Pillow
 pyshorteners>=1.0.1
 telegraph>=1.4.1
