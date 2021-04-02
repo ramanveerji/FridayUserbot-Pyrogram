@@ -266,9 +266,10 @@ async def pmPermit(client, message):
     capt = await get_thumb()
     if message.chat.id not in PM_WARNS:
         PM_WARNS[message.chat.id] = 0
-    elif PM_WARNS[message.chat.id] >= get_pm_spam_limit():
+    pm_s = await get_pm_spam_limit()
+    elif PM_WARNS[message.chat.id] >= pm_s:
         await message.reply_text(
-            f"`Thats It! I Gave You {get_pm_spam_limit()} Warning. Now Fuck Off. Blocked And Reported!`"
+            f"`Thats It! I Gave You {pm_s} Warning. Now Fuck Off. Blocked And Reported!`"
         )
         await client.block_user(user_.id)
         if message.chat.id in OLD_MSG:
@@ -278,7 +279,7 @@ async def pmPermit(client, message):
         blockeda = f"**#Blocked_PMPERMIT** \n**User :** `{user_.id}` \n**Reason :** `Spam Limit Reached.`"
         await log.log_msg(client, blockeda)
         message.continue_propagation()
-    warnings_got = f"{int(PM_WARNS[message.chat.id]) + 1}/{get_pm_spam_limit()}"
+    warnings_got = f"{int(PM_WARNS[message.chat.id]) + 1}/{pm_s}"
     user_firstname = message.from_user.first_name
     me_f = client.me.first_name
     holy = await message.reply_photo(
