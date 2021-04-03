@@ -63,7 +63,7 @@ async def whois(client, message):
     if user_.id in devs_id:
         user_info += f"\n <code>Wow! This User is One Of My Developer</code> \n"
     if await gban_info(user_.id):
-        user_info += f"\n This User Is Gbanned For Reason : <code>{gban_info(user_.id)}</code> \n"
+        user_info += f"\n This User Is Gbanned For Reason : <code>{await gban_info(user_.id)}</code> \n"
     if await is_gmuted(user_.id):
         user_info += f"\n This User Is Gmutted! \n"
     if user_photo:
