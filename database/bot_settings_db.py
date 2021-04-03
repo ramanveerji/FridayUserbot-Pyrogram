@@ -32,9 +32,9 @@ async def add_pm_text(text=default_text):
 async def add_pm_thumb(thumb=default_thumb):
     ujwal = await bsdb.find_one({"_id": "PM_START_THUMB"})
     if ujwal:
-        await bsdb.update_one({"_id": "PM_START_THUMB"}, {"$set": {"pm_img": text}})
+        await bsdb.update_one({"_id": "PM_START_THUMB"}, {"$set": {"pm_img": thumb}})
     else:
-        await bsdb.insert_one({"_id": "PM_START_THUMB", "pm_img": text})
+        await bsdb.insert_one({"_id": "PM_START_THUMB", "pm_img": thumb})
 
 
 async def get_thumb():
