@@ -80,6 +80,9 @@ async def tr_pls(client, message):
     text = message.reply_to_message.text
     translator = google_translator()
     source_lan = detect(text)
+    if not LANGUAGES.get(lang):
+        await event.edit("`Language Not Supported.`")
+        return
     transl_lan = LANGUAGES.get(lang, 'English')
     translated = translator.translate(text, lang_tgt=lang)
     tr_text = f"""**Source ({source_lan.capitalize()})**:
