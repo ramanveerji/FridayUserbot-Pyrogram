@@ -219,7 +219,7 @@ async def delete_user_msgs(client, message):
             message.continue_propagation()
         await client.send_message(
             message.chat.id,
-            f"**#GbanWatch** \n**Chat ID :** `{message.chat.id}` \n**User :** `{user}` \n**Reason :** `{gban_info(user)}`",
+            f"**#GbanWatch** \n**Chat ID :** `{message.chat.id}` \n**User :** `{user}` \n**Reason :** `{await gban_info(user)}`",
         )
     message.continue_propagation()
 
@@ -239,7 +239,7 @@ async def give_glist(client, message):
         await glist.edit("`No User is Gbanned Till Now!`")
         return
     for lit in list_:
-        oof += f"**User :** `{lit['user']}` \n**Reason :** `{lit['reason']}`"
+        oof += f"**User :** `{lit['user']}` \n**Reason :** `{lit['reason']}` \n\n"
     await edit_or_send_as_file(oof, message, client, "GbanList", "Gban-List")
 
 @friday_on_cmd(
