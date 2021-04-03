@@ -81,7 +81,7 @@ async def packinfo(client, message):
     packname = f"@{nm} Kang Pack {pack}"
     packshortname = f"FRIDAY_{message.from_user.id}_{pack}"
     non = [None, "None"]
-    
+    emoji = None
     try:
        Hell = Hell.strip()
        if not Hell.isalpha():
@@ -95,7 +95,7 @@ async def packinfo(client, message):
     is_anim = False
     if message.reply_to_message.sticker:
         if not Hell:
-            emoji = message.reply_to_message.sticker.emoji
+            emoji = message.reply_to_message.sticker.emoji or "😁"
         is_anim = message.reply_to_message.sticker.is_animated
         if is_anim:
             packshortname +="_animated"
