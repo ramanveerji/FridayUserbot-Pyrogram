@@ -24,7 +24,8 @@ from pyrogram.types import (
 from tinydb import Query, TinyDB
 from youtubesearchpython import SearchVideos
 from youtube_dl import YoutubeDL
-from main_startup import CMD_LIST, bot, friday_version, XTRA_CMD_LIST
+from main_startup import CMD_LIST, bot, friday_version, XTRA_CMD_LIST, Friday
+import logging
 from main_startup.helper_func.basic_helpers import (
     cb_wrapper,
     get_all_pros,
@@ -104,9 +105,9 @@ async def owo(client, inline_query):
         user, msg = ok.split(";")
         fu = int(user) if user.isdigit() else user
         try:
-            ui = await client.get_users(fu)
+            ui = await Friday.get_users(fu)
         except BaseException as e:
-            logger.error(str(e))
+            logging.error(str(e))
             return
         owo = (
             f"@{ui.username}"
@@ -143,9 +144,9 @@ async def owo(client, inline_query):
         user, msg = ok.split(";")
         fu = int(user) if user.isdigit() else user
         try:
-            ui = await client.get_users(fu)
+            ui = await Friday.get_users(fu)
         except BaseException as e:
-            logger.error(str(e))
+            logging.error(str(e))
             return
         owo = (
             f"@{ui.username}"
