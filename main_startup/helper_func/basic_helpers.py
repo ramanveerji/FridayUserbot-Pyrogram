@@ -73,7 +73,7 @@ async def edit_or_reply(message, text, parse_mode="md"):
 
 async def is_admin_or_owner(message, user_id) -> bool:
     """Check If A User Is Creator Or Admin Of The Current Group"""
-    if message.chat.type == "private":
+    if message.chat.type in ["private", "bot"]:
         # You Are Boss Of Pvt Chats.
         return True
     user_s = await message.chat.get_member(int(user_id))
