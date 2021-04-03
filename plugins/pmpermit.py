@@ -22,7 +22,7 @@ from telegraph import Telegraph, exceptions, upload_file
 import os
 from database.pmdb import approve_user, disapprove_user, is_user_approved
 from main_startup.core.decorators import friday_on_cmd, listen
-from main_startup.helper_func.basic_helpers import get_text
+from main_startup.helper_func.basic_helpers import get_text, edit_or_reply
 from main_startup.helper_func.logger_s import LogIt
 from main_startup.helper_func.plugin_helpers import convert_to_image
 
@@ -31,9 +31,12 @@ OLD_MSG = {}
 
 from plugins import devs_id
 
-telegraph = Telegraph()
-r = telegraph.create_account(short_name="FridayUserBot.")
-auth_url = r["auth_url"]
+try:
+    telegraph = Telegraph()
+    r = telegraph.create_account(short_name="FridayUserBot.")
+    auth_url = r["auth_url"]
+except:
+    pass
 
 @friday_on_cmd(
     ["setpmtext"],
