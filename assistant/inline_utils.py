@@ -97,8 +97,6 @@ async def owo(client, inline_query):
                 )
             )
         await client.answer_inline_query(inline_query.id, cache_time=0, results=results)
-            
-            #to do
     elif "not4u" in string_given:
         if not ";" in string_given:
             return
@@ -107,8 +105,9 @@ async def owo(client, inline_query):
         fu = int(user) if user.isdigit() else user
         try:
             ui = await client.get_users(fu)
-        except:
-            pass
+        except BaseException as e:
+            logger.error(str(e))
+            return
         owo = (
             f"@{ui.username}"
             if ui.username
@@ -145,8 +144,9 @@ async def owo(client, inline_query):
         fu = int(user) if user.isdigit() else user
         try:
             ui = await client.get_users(fu)
-        except:
-            pass
+        except BaseException as e:
+            logger.error(str(e))
+            return
         owo = (
             f"@{ui.username}"
             if ui.username
