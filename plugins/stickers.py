@@ -81,7 +81,7 @@ async def packinfo(client, message):
     packname = f"@{nm} Kang Pack {pack}"
     packshortname = f"FRIDAY_{message.from_user.id}_{pack}"
     non = [None, "None"]
-    emoji = None
+    emoji = "😁"
     try:
        Hell = Hell.strip()
        if not Hell.isalpha():
