@@ -22,6 +22,18 @@ from database.afk import (
 
 afk_sanity_check: dict = {}
 
+    
+async def is_afk_(f, client, message):
+    af_k_c = await check_afk()
+    if af_k_c:
+        return bool(True)
+    else:
+        return bool(False)
+    
+is_afk = filters.create(
+    func=is_afk_,
+    name="is_afk_"
+)
 
 @friday_on_cmd(
     ["afk"],
@@ -47,7 +59,7 @@ async def set_afk(client, message):
         await go_afk(afk_start) 
     await pablo.edit(msg)
         
-@listen(filters.mentioned & ~filters.me & ~filters.bot & ~filters.edited & filters.incoming & (filters.private|filters.group))
+@listen(is_afk & filters.mentioned & ~filters.me & ~filters.bot & ~filters.edited & filters.incoming & (filters.private|filters.group))
 async def afk_er(client, message):
     if not message:
         message.continue_propagation()
@@ -69,9 +81,6 @@ async def afk_er(client, message):
         message.continue_propagation()
         return
     lol = await check_afk()
-    if not lol:
-        message.continue_propagation()
-        return
     reason = lol["reason"]
     if reason == "":
         reason = None
@@ -86,12 +95,9 @@ async def afk_er(client, message):
     await LL.delete()
     message.continue_propagation()
         
-@listen(filters.outgoing & filters.me)
+@listen(filters.outgoing & filters.me & is_afk)
 async def no_afke(client, message):
     lol = await check_afk()
-    if not lol:
-        message.continue_propagation()
-        return
     back_alivee = datetime.now()
     afk_start = lol["time"]
     afk_end = back_alivee.replace(microsecond=0)
