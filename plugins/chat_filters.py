@@ -82,13 +82,13 @@ async def s_filters(client, message):
 
 @listen(filters.incoming & ~filters.edited & filters.group)
 async def filter_s(client, message):
-    if await all_filters(message.chat.id):
-        pass
-    else:
-        message.continue_propagation()
     owo = message.text
     if owo is None:
         message.continue_propagation()
+        return
+    if not await all_filters(message.chat.id):
+        message.continue_propagation()
+        return
     owoo = owo.lower()
     tges = owoo.split(" ")
     for owo in tges:

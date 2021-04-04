@@ -54,11 +54,14 @@ async def nsfw_watch(client, message):
     lol = await get_all_nsfw_chats()
     if len(lol) == 0:
         message.continue_propagation()
+        return
     if not await is_chat_in_db(message.chat.id):
         message.continue_propagation()
+        return
     hot = await is_nsfw(client, message, False)
     if not hot:
         message.continue_propagation()
+        return
     else:
         try:
             await message.delete()

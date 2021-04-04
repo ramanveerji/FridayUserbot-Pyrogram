@@ -36,10 +36,13 @@ async def save_welcome(client, message):
 async def welcomenibba(client, message):
     if not message:
         message.continue_propagation()
+        return
     if not message.chat:
         message.continue_propagation()
+        return
     if not await welcome_info(message.chat.id):
         message.continue_propagation()
+        return
     sed = await welcome_info(message.chat.id)
     await client.copy_message(
         from_chat_id=Config.LOG_GRP,
