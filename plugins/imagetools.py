@@ -609,7 +609,8 @@ async def spin(client, message):
     await pablo.edit("🌀 `Tighten your seatbelts, sh*t is about to get wild ...`")
     spin_dir = 1
     path = "./rotate-disc/"
-    os.mkdir(path)
+    if not os.path.exists(path):
+        os.mkdir(path)
     im = Image.open(pic_loc)
     if im.mode != "RGB":
         im = im.convert("RGB")
