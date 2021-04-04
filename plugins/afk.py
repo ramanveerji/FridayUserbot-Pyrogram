@@ -20,6 +20,7 @@ from database.afk import (
     check_afk
 )
 
+afk_sanity_check: dict = {}
 
 
 @friday_on_cmd(
@@ -46,11 +47,31 @@ async def set_afk(client, message):
         await go_afk(afk_start) 
     await pablo.edit(msg)
         
-@listen(filters.mentioned & ~filters.me & ~filters.bot & ~filters.edited & filters.incoming)
+@listen(filters.mentioned & ~filters.me & ~filters.bot & ~filters.edited & filters.incoming & filters.private)
 async def afk_er(client, message):
+    if not message:
+        message.continue_propagation()
+        return
+    if not message.from_user:
+        message.continue_propagation()
+        return
+    use_r = int(message.from_user.id)
+    if use_r not in afk_sanity_check.keys():
+        afk_sanity_check[use_r] = 1
+    else:
+        afk_sanity_check[use_r] += 1
+    if afk_sanity_check[use_r] == 5:
+        await message.reply_text("`I Told You 5 Times Thats My Master Isn't Available, Now I Will Not Reply To You. ;(`")
+        afk_sanity_check[use_r] += 1
+        message.continue_propagation()
+        return
+    if afk_sanity_check[use_r] > 5:
+        message.continue_propagation()
+        return
     lol = await check_afk()
     if not lol:
         message.continue_propagation()
+        return
     reason = lol["reason"]
     if reason == "":
         reason = None
@@ -70,6 +91,7 @@ async def no_afke(client, message):
     lol = await check_afk()
     if not lol:
         message.continue_propagation()
+        return
     back_alivee = datetime.now()
     afk_start = lol["time"]
     afk_end = back_alivee.replace(microsecond=0)
