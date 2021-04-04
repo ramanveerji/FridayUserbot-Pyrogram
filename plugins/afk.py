@@ -59,7 +59,7 @@ async def set_afk(client, message):
         await go_afk(afk_start) 
     await pablo.edit(msg)
         
-@listen(is_afk & filters.mentioned & ~filters.me & ~filters.bot & ~filters.edited & filters.incoming & (filters.private|filters.group))
+@listen(is_afk & (filters.mentioned | filters.private) & ~filters.me & ~filters.bot & ~filters.edited & filters.incoming)
 async def afk_er(client, message):
     if not message:
         message.continue_propagation()
@@ -91,8 +91,6 @@ async def afk_er(client, message):
     afk_since = "**a while ago**"
     message_to_reply = (f"I Am **[AFK]** Right Now. \n**Last Seen :** `{total_afk_time}`\n**Reason** : `{reason}`" if reason else f"I Am **[AFK]** Right Now. \n**Last Seen :** `{total_afk_time}`")
     LL = await message.reply(message_to_reply)
-    await asyncio.sleep(8)
-    await LL.delete()
     message.continue_propagation()
         
 @listen(filters.outgoing & filters.me & is_afk)
