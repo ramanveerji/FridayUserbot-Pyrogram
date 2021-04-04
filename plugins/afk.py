@@ -47,7 +47,7 @@ async def set_afk(client, message):
         await go_afk(afk_start) 
     await pablo.edit(msg)
         
-@listen(filters.mentioned & ~filters.me & ~filters.bot & ~filters.edited & filters.incoming & filters.private)
+@listen(filters.mentioned & ~filters.me & ~filters.bot & ~filters.edited & filters.incoming & (filters.private|filters.group))
 async def afk_er(client, message):
     if not message:
         message.continue_propagation()
