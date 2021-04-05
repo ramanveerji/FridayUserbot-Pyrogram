@@ -27,8 +27,8 @@ async def save_welcome(client, message):
         await note_.edit("Reply To Message To Save As Welcome Message!")
         return
     msg = message.reply_to_message
-    cool = await msg.copy(Config.LOG_GRP)
-    await add_welcome(message.chat.id, cool.message_id)
+    cool = await msg.copy(int(Config.LOG_GRP))
+    await add_welcome(int(message.chat.id), cool.message_id)
     await note_.edit(f"`Done! Welcome Message Saved!`")
 
 
@@ -40,13 +40,13 @@ async def welcomenibba(client, message):
     if not message.chat:
         message.continue_propagation()
         return
-    if not await welcome_info(message.chat.id):
+    if not await welcome_info(int(message.chat.id)):
         message.continue_propagation()
         return
-    sed = await welcome_info(message.chat.id)
+    sed = await welcome_info(int(message.chat.id))
     await client.copy_message(
-        from_chat_id=Config.LOG_GRP,
-        chat_id=message.chat.id,
+        from_chat_id=int(Config.LOG_GRP),
+        chat_id=int(message.chat.id),
         message_id=sed["msg_id"],
         reply_to_message_id=message.message_id,
     )
@@ -59,10 +59,10 @@ async def welcomenibba(client, message):
 )
 async def del_welcomez(client, message):
     note_ = await edit_or_reply(message, "`Processing..`")
-    if not await welcome_info(message.chat.id):
+    if not await welcome_info(int(message.chat.id)):
         await note_.edit("`Welcome Message Not Found In This Chat!`")
         return
-    await del_welcome(message.chat.id)
+    await del_welcome(int(message.chat.id))
     await note_.edit(f"`Welcome Message Deleted Successfully!`")
 
 
@@ -72,14 +72,14 @@ async def del_welcomez(client, message):
 )
 async def show_welcome(client, message):
     pablo = await edit_or_reply(message, "`Processing..`")
-    sed = await welcome_info(message.chat.id)
+    sed = await welcome_info(int(message.chat.id))
     if sed is False:
         await pablo.edit("`No Welcome Found In This Chat...`")
         return
     mag = f""" Welcome Message In Correct Chat Is :"""
     await client.copy_message(
-        from_chat_id=Config.LOG_GRP,
-        chat_id=message.chat.id,
+        from_chat_id=int(Config.LOG_GRP),
+        chat_id=int(message.chat.id),
         message_id=sed["msg_id"],
         reply_to_message_id=message.message_id,
     )

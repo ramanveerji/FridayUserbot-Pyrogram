@@ -96,14 +96,14 @@ async def set_custom_pm_texts(client, message):
 )
 async def blockz(client, message):
     if message.chat.type == "private":
-        user_ = await client.get_users(message.chat.id)
+        user_ = await client.get_users(int(message.chat.id))
         firstname = user_.first_name
-        if await is_user_approved(message.chat.id):
-            await disapprove_user(message.chat.id)
+        if await is_user_approved(int(message.chat.id)):
+            await disapprove_user(int(message.chat.id))
         await message.edit(
-            "Blocked [{}](tg://user?id={})".format(firstname, message.chat.id)
+            "Blocked [{}](tg://user?id={})".format(firstname, int(message.chat.id))
         )
-        await client.block_user(message.chat.id)
+        await client.block_user(int(message.chat.id))
         await asyncio.sleep(3)
         await message.delete()
     elif message.chat.type == "supergroup":
@@ -160,19 +160,19 @@ async def unmblock(client, message):
 )
 async def allow(client, message):
     if message.chat.type == "private":
-        if message.chat.id in OLD_MSG:
-            await OLD_MSG[message.chat.id].delete()
-        user_ = await client.get_users(message.chat.id)
+        if int(message.chat.id) in OLD_MSG:
+            await OLD_MSG[int(message.chat.id)].delete()
+        user_ = await client.get_users(int(message.chat.id))
         firstname = user_.first_name
-        if not await is_user_approved(message.chat.id):
-            await approve_user(message.chat.id)
+        if not await is_user_approved(int(message.chat.id)):
+            await approve_user(int(message.chat.id))
         else:
             await message.edit("`User is Already Approved!`")
             await asyncio.sleep(3)
             await message.delete()
             return
         await message.edit(
-            "Approved to pm [{}](tg://user?id={})".format(firstname, message.chat.id)
+            "Approved to pm [{}](tg://user?id={})".format(firstname, int(message.chat.id))
         )
         await asyncio.sleep(3)
         await message.delete()
@@ -207,10 +207,10 @@ async def allow(client, message):
 )
 async def disallow(client, message):
     if message.chat.type == "private":
-        user_ = await client.get_users(message.chat.id)
+        user_ = await client.get_users(int(message.chat.id))
         firstname = user_.first_name
-        if await is_user_approved(message.chat.id):
-            await disapprove_user(message.chat.id)
+        if await is_user_approved(int(message.chat.id)):
+            await disapprove_user(int(message.chat.id))
         else:
             await message.edit(
                 "`This User Was Never Approved. How Should I Disapprove?`"
@@ -219,7 +219,7 @@ async def disallow(client, message):
             await message.delete()
             return
         await message.edit(
-            "DisApproved to pm [{}](tg://user?id={})".format(firstname, message.chat.id)
+            "DisApproved to pm [{}](tg://user?id={})".format(firstname, int(message.chat.id))
         )
         await asyncio.sleep(3)
         await message.delete()
@@ -279,14 +279,14 @@ async def pmPermit(client, message):
     if not message.from_user:
         message.continue_propagation()
         return
-    if await is_user_approved(message.chat.id):
+    if await is_user_approved(int(message.chat.id)):
         message.continue_propagation()
         return
     if message.from_user.id in devs_id:
-        await approve_user(message.chat.id)
+        await approve_user(int(message.chat.id))
         message.continue_propagation()
         return
-    user_ = await client.get_users(message.chat.id)
+    user_ = await client.get_users(int(message.chat.id))
     if user_.is_contact:
         message.continue_propagation()
         return
@@ -311,22 +311,22 @@ async def pmPermit(client, message):
     log = LogIt(message)
     capt = await get_thumb()
     pm_s_ = await get_pm_spam_limit()
-    if message.chat.id not in PM_WARNS:
-        PM_WARNS[message.chat.id] = 0
-    elif PM_WARNS[message.chat.id] >= int(pm_s_):
+    if int(message.chat.id) not in PM_WARNS:
+        PM_WARNS[int(message.chat.id)] = 0
+    elif PM_WARNS[int(message.chat.id)] >= int(pm_s_):
         await message.reply_text(
             f"`Thats It! I Gave You {int(pm_s_)} Warning. Now Fuck Off. Blocked And Reported!`"
         )
         await client.block_user(user_.id)
-        if message.chat.id in OLD_MSG:
-            OLD_MSG.pop(message.chat.id)
-        if message.chat.id in PM_WARNS:
-            PM_WARNS.pop(message.chat.id)
+        if int(message.chat.id) in OLD_MSG:
+            OLD_MSG.pop(int(message.chat.id))
+        if int(message.chat.id) in PM_WARNS:
+            PM_WARNS.pop(int(message.chat.id))
         blockeda = f"**#Blocked_PMPERMIT** \n**User :** `{user_.id}` \n**Reason :** `Spam Limit Reached.`"
         await log.log_msg(client, blockeda)
         message.continue_propagation()
         return
-    warnings_got = f"{int(PM_WARNS[message.chat.id]) + 1}/{int(pm_s_)}"
+    warnings_got = f"{int(PM_WARNS[int(message.chat.id)]) + 1}/{int(pm_s_)}"
     user_firstname = message.from_user.first_name
     me_f = client.me.first_name
     holy = await message.reply_photo(
@@ -335,8 +335,8 @@ async def pmPermit(client, message):
             user_firstname=user_firstname, warns=warnings_got, boss_firstname=me_f
         ),
     )
-    PM_WARNS[message.chat.id] += 1
-    if message.chat.id in OLD_MSG:
-        await OLD_MSG[message.chat.id].delete()
-    OLD_MSG[message.chat.id] = holy
+    PM_WARNS[int(message.chat.id)] += 1
+    if int(message.chat.id) in OLD_MSG:
+        await OLD_MSG[int(message.chat.id)].delete()
+    OLD_MSG[int(message.chat.id)] = holy
     message.continue_propagation()
