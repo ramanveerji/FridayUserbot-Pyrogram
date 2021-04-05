@@ -30,8 +30,6 @@ hachoir>=3.1.2
 google-trans-new>=1.1.9
 googletrans>=3.0.0
 beautifulsoup4>=4.9.3
-git+https://github.com/chsaiujwal/maigret
-git+https://github.com/gleitz/howdoi
 tinydb>=4.4.0
 img2pdf>=0.4.0
 gitpython>=3.1.14
