@@ -83,23 +83,23 @@ async def s_filters(client, message):
 @listen(filters.incoming & ~filters.edited & filters.group)
 async def filter_s(client, message):
     owo = message.text
-    if owo is None:
+    if not owo:
         message.continue_propagation()
         return
-    if not await all_filters(message.chat.id):
+    al_fil = await all_filters(message.chat.id)
+    if not al_fil:
         message.continue_propagation()
         return
     owoo = owo.lower()
-    tges = owoo.split(" ")
-    for owo in tges:
-        if await filters_info(owo, message.chat.id):
-            sed = await filters_info(owo, message.chat.id)
+    if owoo in al_fil:
+        f_info = await filters_info(owoo, message.chat.id)
+        if f_info:
             await client.copy_message(
-                from_chat_id=Config.LOG_GRP,
-                chat_id=message.chat.id,
-                message_id=sed["msg_id"],
-                reply_to_message_id=message.message_id,
-            )
+                    from_chat_id=Config.LOG_GRP,
+                    chat_id=message.chat.id,
+                    message_id=sed["msg_id"],
+                    reply_to_message_id=message.message_id,
+             )
     message.continue_propagation()
 
 
