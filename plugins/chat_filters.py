@@ -83,6 +83,7 @@ async def s_filters(client, message):
 @listen(filters.incoming & ~filters.edited & filters.group)
 async def filter_s(client, message):
     owo = message.text
+    al_fill = []
     if not owo:
         message.continue_propagation()
         return
@@ -90,8 +91,10 @@ async def filter_s(client, message):
     if not al_fil:
         message.continue_propagation()
         return
+    for all_fil in al_fil:
+        al_fill.append(all_fil.get('keyword'))
     owoo = owo.lower()
-    if owoo in al_fil:
+    if owoo in al_fill:
         f_info = await filters_info(owoo, message.chat.id)
         if f_info:
             await client.copy_message(
