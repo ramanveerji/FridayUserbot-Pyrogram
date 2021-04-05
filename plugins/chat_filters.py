@@ -100,7 +100,7 @@ async def filter_s(client, message):
             await client.copy_message(
                     from_chat_id=Config.LOG_GRP,
                     chat_id=message.chat.id,
-                    message_id=sed["msg_id"],
+                    message_id=f_info["msg_id"],
                     reply_to_message_id=message.message_id,
              )
     message.continue_propagation()
