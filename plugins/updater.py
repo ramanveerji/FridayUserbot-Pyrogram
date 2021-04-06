@@ -60,6 +60,7 @@ async def update_it(client, message):
         await msg_.edit("`Updated Sucessfully! Give Me A min To Restart!`")
         args = [sys.executable, "-m", "main_startup"]
         execle(sys.executable, *args, environ)
+        exit()
         return
     else:
         await msg_.edit("`Heroku Detected! Pushing, Please Halt!`")
