@@ -135,6 +135,8 @@ def listen(filter_s):
                     await client.send_message(Config.LOG_GRP, text)
                 except Exception:
                     pass
+                message.continue_propagation()
+                return
         Friday.add_handler(MessageHandler(wrapper, filters=filter_s), group=0)
         if Friday2:
             Friday2.add_handler(MessageHandler(wrapper, filters=filter_s), group=0)
