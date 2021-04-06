@@ -201,22 +201,27 @@ async def ungbun_him(client, message):
 async def delete_user_msgs(client, message):
     if not message:
         message.continue_propagation()
+        return
     if not message.from_user:
         message.continue_propagation()
+        return
     user = message.from_user.id
     if await is_gmuted(user):
         try:
             await message.delete()
         except:
             message.continue_propagation()
+            return
     if await gban_info(user):
         me_ = await message.chat.get_member(int(client.me.id))
         if not me_.can_restrict_members:
             message.continue_propagation()
+            return
         try:
             await client.kick_chat_member(message.chat.id, int(user))
         except:
             message.continue_propagation()
+            return
         await client.send_message(
             message.chat.id,
             f"**#GbanWatch** \n**Chat ID :** `{message.chat.id}` \n**User :** `{user}` \n**Reason :** `{await gban_info(user)}`",
