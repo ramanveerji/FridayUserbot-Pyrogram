@@ -30,7 +30,7 @@ async def vid(client, message):
         message, f"`Processing...`"
     )
     if not input_str:
-        await pablo.edit("Invalid Command Syntax, Please Check Help Menu To Know More!")
+        await pablo.edit("`Please Give Me A Valid Input. You Can Check Help Menu To Know More!`")
         return
     await pablo.edit(
         f"`Getting {input_str} From Youtube Servers. Please Wait.`"
@@ -101,7 +101,7 @@ async def ytmusic(client, message):
         message, f"`Getting {input_str} From Youtube Servers. Please Wait.`"
     )
     if not input_str:
-        await pablo.edit("Invalid Command Syntax, Please Check Help Menu To Know More!")
+        await pablo.edit("`Please Give Me A Valid Input. You Can Check Help Menu To Know More!`")
         return
     search = SearchVideos(str(input_str), offset=1, mode="dict", max_results=1)
     rt = search.result()
@@ -181,7 +181,7 @@ async def deezer(client, message):
     pablo = await edit_or_reply(message, "`Searching For Song.....`")
     sgname = get_text(message)
     if not sgname:
-        await pablo.edit("Invalid Command Syntax, Please Check Help Menu To Know More!")
+        await pablo.edit("`Please Give Me A Valid Input. You Can Check Help Menu To Know More!`")
         return
     link = f"https://api.deezer.com/search?q={sgname}&limit=1"
     dato = requests.get(url=link).json()

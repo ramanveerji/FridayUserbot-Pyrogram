@@ -647,14 +647,14 @@ async def ph(client, message):
     pablo = await edit_or_reply(message, "`Processing.....`")
     Hell = get_text(message)
     if not Hell:
-        await pablo.edit("Invalid Command Syntax, Please Check Help Menu To Know More!")
+        await pablo.edit("`Please Give Me A Valid Input. You Can Check Help Menu To Know More!`")
         return
     Escobar = Hell.split(":")
     username = Escobar[0]
     try:
         texto = Escobar[1]
     except:
-        await pablo.edit("Invalid Command Syntax, Please Check Help Menu To Know More!")
+        await pablo.edit("`Please Give Me A Valid Input. You Can Check Help Menu To Know More!`")
         return
     img = Image.open("./bot_utils_files/image_templates/ph_comment_templete.jpg")
     d1 = ImageDraw.Draw(img)
@@ -688,14 +688,14 @@ async def fgs(client, message):
     pablo = await edit_or_reply(message, "`Processing.....`")
     Hell = get_text(message)
     if not Hell:
-        await pablo.edit("Invalid Command Syntax, Please Check Help Menu To Know More!")
+        await pablo.edit("`Please Give Me A Valid Input. You Can Check Help Menu To Know More!`")
         return
     Escobar = Hell.split(":")
     search = Escobar[0]
     try:
         result = Escobar[1]
     except:
-        await pablo.edit("Invalid Command Syntax, Please Check Help Menu To Know More!")
+        await pablo.edit("`Please Give Me A Valid Input. You Can Check Help Menu To Know More!`")
         return
     photo = Image.open("./bot_utils_files/image_templates/google_search_templete.jpg")
     drawing = ImageDraw.Draw(photo)
@@ -731,7 +731,7 @@ async def jail(client, message):
     pablo = await edit_or_reply(message, "`Processing.....`")
     Hell = get_text(message)
     if not Hell and not message.reply_to_message:
-        await pablo.edit("Invalid Command Syntax, Please Check Help Menu To Know More!")
+        await pablo.edit("`Please Give Me A Valid Input. You Can Check Help Menu To Know More!`")
         return
     if message.reply_to_message:
         img = await convert_to_image(message, client)
@@ -813,7 +813,7 @@ async def slogo(client, message):
     event = await edit_or_reply(message, "`Processing.....`")
     text = get_text(message)
     if not text:
-        await event.edit("Invalid Command Syntax, Please Check Help Menu To Know More!")
+        await event.edit("`Please Give Me A Valid Input. You Can Check Help Menu To Know More!`")
         return
     img = Image.open("./bot_utils_files/image_templates/yellow_bg_for_logo.jpg")
     draw = ImageDraw.Draw(img)
@@ -864,7 +864,7 @@ async def adityalogo(client, message):
     event = await edit_or_reply(message, "`Processing.....`")
     text = get_text(message)
     if not text:
-        await event.edit("Invalid Command Syntax, Please Check Help Menu To Know More!")
+        await event.edit("`Please Give Me A Valid Input. You Can Check Help Menu To Know More!`")
         return
     img = Image.open("./bot_utils_files/image_templates/black_blank_image.jpg")
     draw = ImageDraw.Draw(img)

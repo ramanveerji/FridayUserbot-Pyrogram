@@ -183,7 +183,7 @@ async def upload(client, message):
     file = get_text(message)
     c_time = time.time()
     if not file:
-        await pablo.edit("Invalid Command Syntax, Please Check Help Menu To Know More!")
+        await pablo.edit("`Please Give Me A Valid Input. You Can Check Help Menu To Know More!`")
         return
     if not os.path.exists(file):
         await pablo.edit("`404 : File Not Found.`")

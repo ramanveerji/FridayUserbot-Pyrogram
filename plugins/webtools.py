@@ -45,7 +45,7 @@ async def vom(client, message):
     link = get_text(message)
     if not link:
         await event.edit(
-            "`Invalid Command Syntax, Please Check Help Menu To Know More!`"
+            "``Please Give Me A Valid Input. You Can Check Help Menu To Know More!``"
         )
         return
     sed = pyshorteners.Shortener()
@@ -78,7 +78,7 @@ async def nobin(client, message):
     bin = get_text(message)
     if not bin:
         await stark_m.edit(
-            "Invalid Command Syntax, Please Check Help Menu To Know More!"
+            "`Please Give Me A Valid Input. You Can Check Help Menu To Know More!`"
         )
         return
     url = f"https://lookup.binlist.net/{bin}"
@@ -106,7 +106,7 @@ async def ibanbanem(client, message):
     iban = get_text(message)
     if not iban:
         await stark_m.edit(
-            "Invalid Command Syntax, Please Check Help Menu To Know More!"
+            "`Please Give Me A Valid Input. You Can Check Help Menu To Know More!`"
         )
         return
     api = f"https://openiban.com/validate/{iban}?getBIC=true&validateBankCode=true"
@@ -136,7 +136,7 @@ async def giveapkbro(client, message):
     app_name = get_text(message)
     if not app_name:
         await stark_m.edit(
-            "Invalid Command Syntax, Please Check Help Menu To Know More!"
+            "`Please Give Me A Valid Input. You Can Check Help Menu To Know More!`"
         )
         return
     c_time = time.time()
