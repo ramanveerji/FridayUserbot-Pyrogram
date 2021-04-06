@@ -34,7 +34,7 @@ if not os.path.isdir(sedpath):
     ["lg"],
     cmd_help={
         "help": "Mess The Animated Sticker!",
-        "example": "{ch}reverse (Reply To Animated Sticker)",
+        "example": "{ch}lg (Reply To Animated Sticker)",
     },
 )
 async def lgo(client, message):
@@ -209,7 +209,7 @@ Get Your Own Friday From @FRIDAYCHAT.</b></u>
         "example": "{ch}img fridayuserbot",
     },
 )
-async def img(client, message):
+async def img_search(client, message):
     pablo = await edit_or_reply(message, "`Processing...`")
     query = get_text(message)
     if not query:
@@ -228,12 +228,13 @@ async def img(client, message):
         "no_directory": "no_directory",
     }
     paths = response.download(arguments)
-    
     lst = paths[0][query]
-    
     Beast = []
     for x in lst:
-        Beast.append(InputMediaPhoto(str(x)))
+        try:
+            Beast.append(InputMediaPhoto(str(x)))
+        except:
+            pass
     await client.send_media_group(message.chat.id, media=Beast)
     shutil.rmtree(os.path.dirname(os.path.abspath(lst[0])))
     await pablo.delete()
