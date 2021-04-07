@@ -12,7 +12,7 @@ import time
 import uuid
 import logging
 import img2pdf
-
+from fsplit.filesplit import Filesplit
 from main_startup.core.decorators import friday_on_cmd
 from main_startup.helper_func.basic_helpers import (
     edit_or_reply,
@@ -69,6 +69,25 @@ async def chnnlzip(client, message):
     shutil.make_archive(str(chnnl), "zip", dirz)
     await pablo.edit("`Zipped! Uploading Now!`")
     zip_name = f"{chnnl}.zip"
+    siz_e = os.stat(zip_name).st_size
+    list_ = []
+    if siz_e > 2000000000:
+        fs = Filesplit()
+        if not os.path.exists(f'./splitted_{chnnl}'):
+            os.makedirs(f'./splitted_{chnnl}')
+        fs.split(file=zip_name, split_size=2000000000, output_dir=f'./splitted_{chnnl}')
+        file_list(siz_e, list_)
+        for oof in file_list:
+            await client.send_document(
+            message.chat.id,
+            oof,
+            caption=f"**Total :** `{total}` \n**Total Media :** `{media_count}` \n**Total Text :** `{text_count}`",
+        )
+        shutil.rmtree(dirz)
+        shutil.rmtree(f'./splitted_{chnnl}')
+        if os.path.exists(zip_name):
+            os.remove(zip_name)
+        return
     await client.send_document(
         message.chat.id,
         zip_name,
@@ -76,6 +95,12 @@ async def chnnlzip(client, message):
     )
     os.remove(zip_name)
     shutil.rmtree(dirz)
+    
+def file_list(path, lisT):
+    pathlib.Path(path)
+    for filepath in pathlib.Path(path).glob("**/*"):
+        lisT.append(filepath.absolute())
+    return lisT
 
 
 @friday_on_cmd(
