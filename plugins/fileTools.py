@@ -76,7 +76,7 @@ async def chnnlzip(client, message):
         if not os.path.exists(f'./splitted_{chnnl}'):
             os.makedirs(f'./splitted_{chnnl}')
         fs.split(file=zip_name, split_size=2000000000, output_dir=f'./splitted_{chnnl}')
-        file_list(siz_e, list_)
+        file_list(f'./splitted_{chnnl}', list_)
         for oof in file_list:
             await client.send_document(
             message.chat.id,
