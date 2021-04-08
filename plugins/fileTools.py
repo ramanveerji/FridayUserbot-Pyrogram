@@ -91,6 +91,7 @@ async def chnnlzip(client, message):
         shutil.rmtree(f'./splitted_{chnnl}_{rndm}')
         if os.path.exists(zip_name):
             os.remove(zip_name)
+        await pablo.delete()
         return
     await client.send_document(
         message.chat.id,
@@ -99,6 +100,7 @@ async def chnnlzip(client, message):
     )
     os.remove(zip_name)
     shutil.rmtree(dirz)
+    await pablo.delete()
     
 def file_list(path, lisT):
     pathlib.Path(path)
@@ -150,6 +152,7 @@ async def chnnlpdf(client, message):
     await client.send_document(message.chat.id, "imagetopdf@fridayot.pdf", caption=capt)
     os.remove("imagetopdf@fridayot.pdf")
     shutil.rmtree(dirz)
+    await pablo.delete()
 
 
 @friday_on_cmd(
