@@ -154,10 +154,9 @@ def add_help_menu(cmd, stack, is_official=True, cmd_help="No One Gonna Help You"
         if "xtraplugins" in previous_stack_frame.filename:
             is_official = False
         file_name = os.path.basename(
-            previous_stack_frame.filename.replace(".py", "").replace("_", " ")
-        ).title()
+            previous_stack_frame.filename.replace(".py", ""))
     cmd_helpz = example.format(ch=Config.COMMAND_HANDLER)
-    cmd_helper = f"**Module Name :** `{file_name}` \n\n**Command :** `{Config.COMMAND_HANDLER}{cmd}` \n**Help :** `{cmd_help}` \n**Example :** `{cmd_helpz}`"
+    cmd_helper = f"**Module Name :** `{file_name.replace('_', ' ').title()}` \n\n**Command :** `{Config.COMMAND_HANDLER}{cmd}` \n**Help :** `{cmd_help}` \n**Example :** `{cmd_helpz}`"
     if is_official:
         if file_name not in CMD_LIST.keys():
             CMD_LIST[file_name] = cmd_helper

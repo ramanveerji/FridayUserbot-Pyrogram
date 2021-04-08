@@ -140,7 +140,7 @@ def paginate_help(page_number, loaded_modules, prefix, is_official=True):
     modules = [
         InlineKeyboardButton(
             text="{} {} {}".format(
-                Config.CUSTOM_HELP_EMOJI, x, Config.CUSTOM_HELP_EMOJI
+                Config.CUSTOM_HELP_EMOJI, x.replace('_', ' ').title(), Config.CUSTOM_HELP_EMOJI
             ),
             callback_data="us_plugin_{}|{}_{}".format(x, page_number, is_official),
         )
