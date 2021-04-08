@@ -67,18 +67,18 @@ async def chnnlzip(client, message):
     await pablo.edit(
         f"**Total Media :** `{total}` \n**Downloaded Media :** `{media_count}` \n**Total Texts Appended :** `{text_count}` \n**Now Zipping Files.**"
     )
-    shutil.make_archive(str(chnnl), "zip", dirz)
+    shutil.make_archive(str(f"{dirz}{chnnl}_ZippedByFridayUB.zip"), "zip", dirz)
     await pablo.edit("`Zipped! Uploading Now!`")
-    zip_name = f"{chnnl}.zip"
+    zip_name = f"{dirz}{chnnl}_ZippedByFridayUB.zip"
     siz_e = os.stat(zip_name).st_size
     list_ = []
     if siz_e > 2040108421:
         await pablo.edit("`File Over 2GB, Telegram Doesn't Allow This. Trying To Split Files!`")
         fs = Filesplit()
-        if not os.path.exists(f'./splitted_{chnnl}'):
-            os.makedirs(f'./splitted_{chnnl}')
-        fs.split(file=zip_name, split_size=2040108421, output_dir=f'./splitted_{chnnl}')
-        file_list(f'./splitted_{chnnl}', list_)
+        if not os.path.exists(f'./splitted_{chnnl}_{rndm}'):
+            os.makedirs(f'./splitted_{chnnl}_{rndm}')
+        fs.split(file=zip_name, split_size=2040108421, output_dir=f'./splitted_{chnnl}_{rndm}')
+        file_list(f'./splitted_{chnnl}_{rndm}', list_)
         for oof in list_:
             if oof == "fs_manifest.csv":
                 return
@@ -88,7 +88,7 @@ async def chnnlzip(client, message):
             caption=f"**Total :** `{total}` \n**Total Media :** `{media_count}` \n**Total Text :** `{text_count}`",
         )
         shutil.rmtree(dirz)
-        shutil.rmtree(f'./splitted_{chnnl}')
+        shutil.rmtree(f'./splitted_{chnnl}_{rndm}')
         if os.path.exists(zip_name):
             os.remove(zip_name)
         return
