@@ -67,7 +67,7 @@ def friday_on_cmd(
         async def wrapper(client, message):
             chat_type = message.chat.type
             if only_if_admin and not await is_admin_or_owner(
-                message, (await client.get_me()).id
+                message, (client.me).id
             ):
                 await edit_or_reply(
                     message, "`This Command Only Works, If You Are Admin Of The Chat!`"
