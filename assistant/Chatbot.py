@@ -52,18 +52,18 @@ other_cmd_list = ["start", "help", "alive", "promote", "demote", "users", "id", 
 
 @bot.on_message(filters.private & filters.incoming & ~owner_f & ~filters.command(other_cmd_list))
 async def chat_bot(client, message):
-    if is_user_blacklisted(message.chat.id):
+    if await is_user_blacklisted(message.chat.id):
         return
     my_id = (await Friday.get_me()).id
     owo = await message.forward(my_id)
-    add_msg_in_db(owo.message_id, message.from_user.id, message.message_id)
+    await add_msg_in_db(owo.message_id, message.from_user.id, message.message_id)
     
     
 @bot.on_message(filters.private & filters.incoming & owner_f & ~filters.edited & ~filters.command(other_cmd_list))
 async def reply_handler(client, message):
     if not message.reply_to_message:
         return
-    msg_ = get_user_id_frm_msg_id(message.reply_to_message.message_id)
+    msg_ = await get_user_id_frm_msg_id(message.reply_to_message.message_id)
     if not msg_:
         return
     try:
@@ -76,13 +76,13 @@ async def rip_blocked(client, message):
     if not message.reply_to_message:
         await message.reply_text("`Please Reply To A User!`")
         return
-    msg_ = get_user_id_frm_msg_id(message.reply_to_message.message_id)
+    msg_ = await get_user_id_frm_msg_id(message.reply_to_message.message_id)
     if not msg_:
         return
-    if is_user_blacklisted(msg_['sender_id']):
+    if await is_user_blacklisted(msg_['sender_id']):
         await message.reply_text("`This User is Already Blacklisted 😥`")
         return
-    add_blacklisted_user(msg_['sender_id'])
+    await add_blacklisted_user(msg_['sender_id'])
     await message.reply_text("`Sucessfully Blocked This User!`")
     
     
@@ -91,11 +91,11 @@ async def rip_unblocked(client, message):
     if not message.reply_to_message:
         await message.reply_text("`Please Reply To A User!`")
         return
-    msg_ = get_user_id_frm_msg_id(message.reply_to_message.message_id)
+    msg_ = await get_user_id_frm_msg_id(message.reply_to_message.message_id)
     if not msg_:
         return
-    if not is_user_blacklisted(msg_['sender_id']):
+    if not await is_user_blacklisted(msg_['sender_id']):
         await message.reply_text("`This User is Not Blacklisted 😥`")
         return
-    rm_blacklisted_user(msg_['sender_id'])
+    await rm_blacklisted_user(msg_['sender_id'])
     await message.reply_text("`Sucessfully Un-Blocked This User!`")
