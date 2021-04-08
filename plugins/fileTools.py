@@ -14,6 +14,7 @@ import logging
 import img2pdf
 from fsplit.filesplit import Filesplit
 from main_startup.core.decorators import friday_on_cmd
+import pathlib
 from main_startup.helper_func.basic_helpers import (
     edit_or_reply,
     get_text,
@@ -71,13 +72,16 @@ async def chnnlzip(client, message):
     zip_name = f"{chnnl}.zip"
     siz_e = os.stat(zip_name).st_size
     list_ = []
-    if siz_e > 2000000000:
+    if siz_e > 2040108421:
+        await pablo.edit("`File Over 2GB, Telegram Doesn't Allow This. Trying To Split Files!`")
         fs = Filesplit()
         if not os.path.exists(f'./splitted_{chnnl}'):
             os.makedirs(f'./splitted_{chnnl}')
-        fs.split(file=zip_name, split_size=2000000000, output_dir=f'./splitted_{chnnl}')
+        fs.split(file=zip_name, split_size=2040108421, output_dir=f'./splitted_{chnnl}')
         file_list(f'./splitted_{chnnl}', list_)
-        for oof in file_list:
+        for oof in list_:
+            if oof == "fs_manifest.csv":
+                return
             await client.send_document(
             message.chat.id,
             oof,
