@@ -116,16 +116,16 @@ def get_readable_time(seconds: int) -> int:
 async def get_all_pros() -> list:
     """Get All Users , Sudo + Owners + Other Clients"""
     users = list(Config.SUDO_USERS)
-    ujwal = await Friday.get_me()
+    ujwal = Friday.me
     users.append(ujwal.id)
     if Friday2:
-        ujwal2 = await Friday2.get_me()
+        ujwal2 = Friday2.me
         users.append(ujwal2.id)
     if Friday3:
-        ujwal3 = await Friday3.get_me()
+        ujwal3 = Friday3.me
         users.append(ujwal3.id)
     if Friday4:
-        ujwal4 = await Friday4.get_me()
+        ujwal4 = Friday4.me
         users.append(ujwal4.id)
     return users
 

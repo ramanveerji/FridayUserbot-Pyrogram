@@ -86,7 +86,7 @@ async def cmdgiv(client, cb):
 @bot.on_message(filters.command(["alive"]) & filters.incoming)
 @_check_owner_or_sudos
 async def alive(client, message):
-    lol = await bot.get_me()
+    lol = client.me
     await message.reply(
         f"`Yo ! {message.from_user.first_name} , I am Alive. Need Help ? How Are You? 🤟`"
     )
@@ -118,7 +118,7 @@ async def promote_me(client, message):
     if not message.reply_to_message:
         await pablo.edit("Please Reply To A User")
         return
-    lol = await bot.get_me()
+    lol = client.me
     user_s = await message.chat.get_member(lol.id)
     if user_s.status in ("creator", "administrator"):
         pass
@@ -152,7 +152,7 @@ async def demote_you(client, message):
     if not message.reply_to_message:
         await pablo.edit("Please Reply To A User")
         return
-    lol = await bot.get_me()
+    lol = client.me
     user_s = await message.chat.get_member(lol.id)
     if user_s.status in ("creator", "administrator"):
         pass

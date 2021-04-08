@@ -23,7 +23,7 @@ from main_startup.helper_func.basic_helpers import edit_or_reply, get_text
 async def help(client, message):
     help_t = "<b>Command Names :</b> \n\n"
     if bot:
-        starkbot = await bot.get_me()
+        starkbot = bot.me
         bot_username = starkbot.username
         nice = await client.get_inline_bot_results(bot=bot_username, query="help")
         await client.send_inline_bot_result(
