@@ -67,7 +67,7 @@ async def chnnlzip(client, message):
     await pablo.edit(
         f"**Total Media :** `{total}` \n**Downloaded Media :** `{media_count}` \n**Total Texts Appended :** `{text_count}` \n**Now Zipping Files.**"
     )
-    shutil.make_archive(str(f"{dirz}{chnnl}_ZippedByFridayUB.zip"), "zip", dirz)
+    shutil.make_archive(str(f"{dirz}{chnnl}_ZippedByFridayUB"), "zip", dirz)
     await pablo.edit("`Zipped! Uploading Now!`")
     zip_name = f"{dirz}{chnnl}_ZippedByFridayUB.zip"
     siz_e = os.stat(zip_name).st_size
