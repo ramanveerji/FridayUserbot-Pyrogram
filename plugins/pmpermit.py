@@ -306,7 +306,7 @@ async def pmPermit(client, message):
     if user_.is_verified:
         message.continue_propagation()
         return
-    if user_.id == (await client.get_me()).id:
+    if user_.id == (client.me).id:
         message.continue_propagation()
         return
     if user_.is_scam:

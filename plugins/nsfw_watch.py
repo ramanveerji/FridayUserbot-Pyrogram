@@ -26,7 +26,7 @@ async def add_nsfw(client, message):
     if await is_chat_in_db(int(message.chat.id)):
         await pablo.edit("`This Chat is Already In My DB`")
         return
-    me = await client.get_me()
+    me = client.me
     lol = await is_admin_or_owner(message, me.id)
     if not lol:
         await pablo.edit("`I Am Not An Admin!`")

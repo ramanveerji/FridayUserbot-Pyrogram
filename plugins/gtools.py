@@ -45,7 +45,7 @@ async def gmute_him(client, message):
         return
     if not reason:
         reason = "Just_Gmutted!"
-    if userz.id == (await client.get_me()).id:
+    if userz.id == (client.me).id:
         await g.edit("`Oh, This is So Funny Btw :/`")
         return
     if userz.id in devs_id:
@@ -83,7 +83,7 @@ async def gmute_him(client, message):
     except:
         await ug.edit(f"`404 : User Doesn't Exists In This Chat !`")
         return
-    if userz.id == (await client.get_me()).id:
+    if userz.id == (client.me).id:
         await ug.edit("`Oh, This is So Funny Btw :/`")
         return
     if userz.id in Config.AFS:
@@ -121,7 +121,7 @@ async def gbun_him(client, message):
         return
     if not reason:
         reason = "Private Reason!"
-    if userz.id == (await client.get_me()).id:
+    if userz.id == (client.me).id:
         await gbun.edit("`Oh, This is So Funny Btw :/`")
         return
     if userz.id in devs_id:
@@ -172,7 +172,7 @@ async def ungbun_him(client, message):
     except:
         await ungbun.edit(f"`404 : User Doesn't Exists!`")
         return
-    if userz.id == (await client.get_me()).id:
+    if userz.id == (client.me).id:
         await ungbun.edit("`Oh, This is So Funny Btw :/`")
         return
     if not await gban_info(userz.id):

@@ -184,7 +184,7 @@ async def ujwalzombie(client, message):
         return
     sgname = message.text.split(None, 1)[1]
     if sgname.lower().strip() == "clean":
-        me = await client.get_me()
+        me = client.me
         lol = await is_admin_or_owner(message, me.id)
         if not lol:
             await pablo.edit("`I am not an admin here!`")
@@ -219,7 +219,7 @@ async def ujwalzombie(client, message):
 )
 async def ban_world(client, message):
     bun = await edit_or_reply(message, "`Trying To Ban User!`")
-    me_m = await client.get_me()
+    me_m = client.me
     me_ = await message.chat.get_member(int(me_m.id))
     if not me_.can_restrict_members:
         await bun.edit("`Boss, You Don't Have Ban Permission!`")
@@ -267,7 +267,7 @@ async def ban_world(client, message):
 )
 async def unban_world(client, message):
     unbun = await edit_or_reply(message, "`Trying To Un-Ban User!`")
-    me_m = await client.get_me()
+    me_m = client.me
     me_ = await message.chat.get_member(int(me_m.id))
     if not me_.can_restrict_members:
         await unbun.edit("`Boss, You Don't Have Un-Ban Permission!`")
@@ -311,7 +311,7 @@ async def unban_world(client, message):
 )
 async def ujwal_mote(client, message):
     pablo = await edit_or_reply(message, "`Trying To Promote User!`")
-    me_m = await client.get_me()
+    me_m = client.me
     me_ = await message.chat.get_member(int(me_m.id))
     if not me_.can_promote_members:
         await pablo.edit("`Boss, You Don't Have Promote Permission!`")
@@ -370,7 +370,7 @@ async def ujwal_mote(client, message):
 )
 async def ujwal_demote(client, message):
     pablo = await edit_or_reply(message, "`Trying To Demote User!`")
-    me_m = await client.get_me()
+    me_m = client.me
     await message.chat.get_member(int(me_m.id))
     asplit = get_text(message)
     usero = get_user(message, asplit)[0]
@@ -422,7 +422,7 @@ async def ujwal_demote(client, message):
 )
 async def ujwal_mute(client, message):
     pablo = await edit_or_reply(message, "`Trying To Mute User!`")
-    me_m = await client.get_me()
+    me_m = client.me
     me_ = await message.chat.get_member(int(me_m.id))
     if not me_.can_restrict_members:
         await pablo.edit("`Boss, You Don't Have Mute Permission!`")
@@ -467,7 +467,7 @@ async def ujwal_mute(client, message):
 )
 async def ujwal_unmute(client, message):
     pablo = await edit_or_reply(message, "`Trying To Un-Mute User!`")
-    me_m = await client.get_me()
+    me_m = client.me
     me_ = await message.chat.get_member(int(me_m.id))
     if not me_.can_restrict_members:
         await pablo.edit("`Boss, You Don't Have Un-Mute Permission!`")
@@ -543,7 +543,7 @@ async def purge(client, message):
     message_ids = []
     purge_len = 0
     event = await edit_or_reply(message, "`Starting To Purge Messages!`")
-    me_m = await client.get_me()
+    me_m = client.me
     if message.chat.type in ["supergroup", "channel"]:
         me_ = await message.chat.get_member(int(me_m.id))
         if not me_.can_delete_messages:

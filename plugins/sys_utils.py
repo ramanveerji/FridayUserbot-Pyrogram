@@ -36,7 +36,7 @@ async def pingy(client, message):
     start = datetime.now()
     hmm = await edit_or_reply(message, "`Pong!`")
     uptime = get_readable_time((time.time() - start_time))
-    myself = await client.get_me()
+    myself = client.me
     if not myself.username:
         mys = myself.id
     else:

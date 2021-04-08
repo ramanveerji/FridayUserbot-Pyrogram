@@ -18,7 +18,7 @@ from main_startup.__main__ import Friday, bot
 
 
 async def my_id_(f, client, message):
-    me = (await Friday.get_me()).id
+    me = Friday.me.id
     if message.from_user.id == me:
         return bool(True)
     else:
@@ -51,7 +51,7 @@ other_cmd_list = [
 async def chat_bot(client, message):
     if await is_user_blacklisted(message.chat.id):
         return
-    my_id = (await Friday.get_me()).id
+    my_id = Friday.me.id
     owo = await message.forward(my_id)
     await add_msg_in_db(owo.message_id, message.from_user.id, message.message_id)
 

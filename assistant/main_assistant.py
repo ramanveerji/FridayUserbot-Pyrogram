@@ -34,7 +34,7 @@ from main_startup.helper_func.basic_helpers import get_all_pros, get_readable_ti
 @bot.on_message(filters.command(["start"]) & filters.incoming)
 async def start(client, message):
     all_user_s = await get_all_pros()
-    starkbot = await client.get_me()
+    starkbot = client.me
     bot_name = starkbot.first_name
     bot_username = starkbot.username
     firstname = message.from_user.first_name
@@ -42,9 +42,6 @@ async def start(client, message):
     starttext = f"`Hello, {firstname} ! Nice To Meet You, Well I Am {bot_name}, An Powerfull Assistant Bot To Talk And Do Many Things For My Master!`. \n\nPowered By [Friday Userbot](t.me/FridayOT)"
     mypic = Config.ASSISTANT_START_PIC
     if user_id not in all_user_s:
-        kok = await check_user(user_id)
-        if not kok:
-            await add_user(user_id)
         await client.send_photo(
             message.chat.id,
             mypic,
@@ -53,6 +50,9 @@ async def start(client, message):
                 [[InlineKeyboardButton("Help Me ❓", url="t.me/Fridayot")]]
             ),
         )
+        kok = await check_user(user_id)
+        if not kok:
+            await add_user(user_id)
     else:
         message87 = f"Hi Master, It's Me {bot_name}, Your Assistant ! \nWhat You Wanna Do today ?"
         await client.send_photo(
