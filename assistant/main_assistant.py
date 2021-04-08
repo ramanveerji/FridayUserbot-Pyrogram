@@ -48,9 +48,9 @@ async def start(client, message):
     starttext = f"`Hello, {firstname} ! Nice To Meet You, Well I Am {bot_name}, An Powerfull Assistant Bot To Talk And Do Many Things For My Master!`. \n\nPowered By [Friday Userbot](t.me/FridayOT)"
     mypic = Config.ASSISTANT_START_PIC
     if user_id not in all_user_s:
-        kok = check_user(user_id)
+        kok = await check_user(user_id)
         if not kok:
-            add_user(user_id)
+            await add_user(user_id)
         await client.send_photo(message.chat.id, mypic, starttext, reply_markup = InlineKeyboardMarkup([[InlineKeyboardButton("Help Me ❓", url = "t.me/Fridayot")]]))
     else:
         message87 = f"Hi Master, It's Me {bot_name}, Your Assistant ! \nWhat You Wanna Do today ?"
@@ -79,7 +79,7 @@ async def fuckinhelp(client, message):
 @_check_owner_or_sudos
 async def user_s(client, message):
     users_list = "List Of Total Users In Bot. \n\n"
-    total_users = get_all_users()
+    total_users = await get_all_users()
     for starked in total_users:
             users_list += ("==> {} \n").format(int(starked.get("user_id")))
     with open('users.txt', 'w') as f:
@@ -287,7 +287,7 @@ async def broadcast(client, message):
         return
     s = 0
     f = 0
-    total_users = get_all_users()
+    total_users = await get_all_users()
     tett = "**▶ You Received A BroadCast Message :**"
     for user in total_users:
         user_id = user.get("user_id")
