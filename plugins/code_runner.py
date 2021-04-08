@@ -6,11 +6,13 @@
 #
 # All rights reserved.
 
+import asyncio
 import io
 import sys
 import traceback
-import asyncio
+
 import requests
+
 from main_startup.core.decorators import friday_on_cmd
 from main_startup.core.startup_helpers import run_cmd
 from main_startup.helper_func.basic_helpers import (
@@ -79,7 +81,9 @@ async def eval(client, message):
     stark = await edit_or_reply(message, "`Running Code... Please Wait!`")
     cmd = get_text(message)
     if not cmd:
-        await stark.edit("`Please Give Me A Valid Input. You Can Check Help Menu To Know More!`")
+        await stark.edit(
+            "`Please Give Me A Valid Input. You Can Check Help Menu To Know More!`"
+        )
         return
     if message.reply_to_message:
         message.reply_to_message.message_id
@@ -131,7 +135,9 @@ async def aexec(code, client, message):
 async def any_lang_cmd_runner(client, message):
     stark = await edit_or_reply(message, "`Running Code... Please Wait!`")
     if len(message.text.split()) == 1:
-        await stark.edit("`Please Give Me A Valid Input. You Can Check Help Menu To Know More!`")
+        await stark.edit(
+            "`Please Give Me A Valid Input. You Can Check Help Menu To Know More!`"
+        )
         return
     if not message.reply_to_message:
         await stark.edit("`Reply To A Code, My Master!`")
@@ -192,12 +198,14 @@ async def sed_terminal(client, message):
     stark = await edit_or_reply(message, "`Please Wait!`")
     cmd = get_text(message)
     if not cmd:
-        await stark.edit("`Please Give Me A Valid Input. You Can Check Help Menu To Know More!`")
+        await stark.edit(
+            "`Please Give Me A Valid Input. You Can Check Help Menu To Know More!`"
+        )
         return
     cmd = message.text.split(None, 1)[1]
     if message.reply_to_message:
         message.reply_to_message.message_id
-    
+
     pid, err, out, ret = await run_command(cmd)
     if not out:
         out = "No OutPut!"
@@ -217,6 +225,7 @@ async def sed_terminal(client, message):
 `{ret}`
 """
     await edit_or_send_as_file(friday, message, client, cmd, "bash-result")
+
 
 async def run_command(cmd):
     process = await asyncio.create_subprocess_shell(

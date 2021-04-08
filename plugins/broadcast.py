@@ -6,6 +6,8 @@
 #
 # All rights reserved.
 
+import logging
+
 from database.broadcast_db import (
     add_broadcast_chat,
     get_all_broadcast_chats,
@@ -14,7 +16,7 @@ from database.broadcast_db import (
 )
 from main_startup.core.decorators import friday_on_cmd
 from main_startup.helper_func.basic_helpers import edit_or_reply, get_text
-import logging
+
 
 @friday_on_cmd(
     ["badd"],
@@ -48,15 +50,16 @@ async def badd(client, message):
             f"Successfully Added {oks} Groups/Channels to DB.\nTotal Groups/Channels in dB {oks+sed} "
         )
     else:
-            chnl_id = await get_final_id(bd, client)
-            if not chnl_id:
-                await pablo.edit("`Invalid Channel Id/Username`")
-                return
-            if await is_broadcast_chat_in_db(chnl_id):
-                await pablo.edit("`This Channel is Already In dB!`")
-                return
-            await add_broadcast_chat(chnl_id)
-            await pablo.edit(f"`Successfully Added {bd} in dB!`")
+        chnl_id = await get_final_id(bd, client)
+        if not chnl_id:
+            await pablo.edit("`Invalid Channel Id/Username`")
+            return
+        if await is_broadcast_chat_in_db(chnl_id):
+            await pablo.edit("`This Channel is Already In dB!`")
+            return
+        await add_broadcast_chat(chnl_id)
+        await pablo.edit(f"`Successfully Added {bd} in dB!`")
+
 
 @friday_on_cmd(
     ["brm"],
@@ -125,6 +128,7 @@ async def broadcast(client, message):
     await pablo.edit(
         f"Successfully Broadcasted Message in {S} groups/channels. Failed in {F}"
     )
+
 
 async def get_final_id(query, client):
     is_int = True

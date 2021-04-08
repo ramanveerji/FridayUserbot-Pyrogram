@@ -83,7 +83,7 @@ async def tr_pls(client, message):
     if not LANGUAGES.get(lang):
         await event.edit("`Language Not Supported.`")
         return
-    transl_lan = LANGUAGES.get(lang, 'English')
+    transl_lan = LANGUAGES.get(lang, "English")
     translated = translator.translate(text, lang_tgt=lang)
     tr_text = f"""**Source ({source_lan.capitalize()})**:
 `{text}`

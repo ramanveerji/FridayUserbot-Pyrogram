@@ -46,15 +46,17 @@ async def welcomenibba(client, message):
     sed = await welcome_info(int(message.chat.id))
     if message.message_id:
         await client.copy_message(
-             from_chat_id=int(Config.LOG_GRP),
-             chat_id=int(message.chat.id),
-             message_id=sed["msg_id"],
-             reply_to_message_id=message.message_id)
+            from_chat_id=int(Config.LOG_GRP),
+            chat_id=int(message.chat.id),
+            message_id=sed["msg_id"],
+            reply_to_message_id=message.message_id,
+        )
     else:
         await client.copy_message(
-             from_chat_id=int(Config.LOG_GRP),
-             chat_id=int(message.chat.id),
-             message_id=sed["msg_id"])
+            from_chat_id=int(Config.LOG_GRP),
+            chat_id=int(message.chat.id),
+            message_id=sed["msg_id"],
+        )
     message.continue_propagation()
 
 

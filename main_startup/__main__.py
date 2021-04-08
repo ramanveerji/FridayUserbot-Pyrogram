@@ -9,9 +9,19 @@
 import logging
 import os
 import platform
+
 import pyrogram
 from pyrogram import __version__
-from main_startup import Friday, Friday2, Friday3, Friday4, bot, friday_version, mongo_client
+
+from main_startup import (
+    Friday,
+    Friday2,
+    Friday3,
+    Friday4,
+    bot,
+    friday_version,
+    mongo_client,
+)
 from main_startup.core.startup_helpers import (
     load_plugin,
     load_xtra_mod,
@@ -30,7 +40,8 @@ async def mongo_check():
         logging.error("Something Isn't Right With Mongo! Please Check Your URL")
         logging.error(str(e))
         quit(1)
-        
+
+
 async def load_unofficial_modules():
     """Load Extra Plugins."""
     logging.info("Loading X-Tra Plugins!")
@@ -40,7 +51,9 @@ async def load_unofficial_modules():
         try:
             load_xtra_mod(mods)
         except Exception as e:
-            logging.error("[USER][XTRA-PLUGINS] - Failed To Load : " + f"{mods} - {str(e)}")
+            logging.error(
+                "[USER][XTRA-PLUGINS] - Failed To Load : " + f"{mods} - {str(e)}"
+            )
 
 
 async def fetch_plugins_from_channel():

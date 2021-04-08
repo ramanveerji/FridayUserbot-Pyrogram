@@ -7,7 +7,9 @@
 # All rights reserved.
 
 from functools import wraps
-from main_startup.helper_func.basic_helpers import is_admin_or_owner, get_all_pros
+
+from main_startup.helper_func.basic_helpers import get_all_pros, is_admin_or_owner
+
 
 def _check_admin(func):
     @wraps(func)
@@ -17,8 +19,10 @@ def _check_admin(func):
             await func(client, message)
         else:
             await message.reply_text("`>> You Should Be Admin / Owner To Do This! >>`")
+
     return magic_admin
-  
+
+
 def _check_owner_or_sudos(func):
     @wraps(func)
     async def magic_owner(client, message):
@@ -27,4 +31,5 @@ def _check_owner_or_sudos(func):
             await func(client, message)
         else:
             await message.reply_text("`>> You Should Be Owner / Sudo To Do This! >>`")
+
     return magic_owner

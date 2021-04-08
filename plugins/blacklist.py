@@ -6,8 +6,10 @@
 #
 # All rights reserved.
 
-from pyrogram import filters
 import logging
+
+from pyrogram import filters
+
 from database.blacklistdb import (
     add_to_blacklist,
     blacklists_del,
@@ -110,7 +112,7 @@ async def activeblack(client, message):
                     client,
                     f"**Blacklist Warning**\n\nI am Not Admin In **{message.chat.title}**, So I cannot Delete That Group's Blacklist messages",
                 )
-    message.continue_propagation()      
+    message.continue_propagation()
 
 
 @friday_on_cmd(

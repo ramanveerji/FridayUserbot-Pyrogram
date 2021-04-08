@@ -6,15 +6,17 @@
 #
 # All rights reserved.
 
+import logging
 import os
+import pathlib
 import shutil
 import time
 import uuid
-import logging
+
 import img2pdf
 from fsplit.filesplit import Filesplit
+
 from main_startup.core.decorators import friday_on_cmd
-import pathlib
 from main_startup.helper_func.basic_helpers import (
     edit_or_reply,
     get_text,
@@ -73,22 +75,28 @@ async def chnnlzip(client, message):
     siz_e = os.stat(zip_name).st_size
     list_ = []
     if siz_e > 2040108421:
-        await pablo.edit("`File Over 2GB, Telegram Doesn't Allow This. Trying To Split Files!`")
+        await pablo.edit(
+            "`File Over 2GB, Telegram Doesn't Allow This. Trying To Split Files!`"
+        )
         fs = Filesplit()
-        if not os.path.exists(f'./splitted_{chnnl}_{rndm}'):
-            os.makedirs(f'./splitted_{chnnl}_{rndm}')
-        fs.split(file=zip_name, split_size=2040108421, output_dir=f'./splitted_{chnnl}_{rndm}')
-        file_list(f'./splitted_{chnnl}_{rndm}', list_)
+        if not os.path.exists(f"./splitted_{chnnl}_{rndm}"):
+            os.makedirs(f"./splitted_{chnnl}_{rndm}")
+        fs.split(
+            file=zip_name,
+            split_size=2040108421,
+            output_dir=f"./splitted_{chnnl}_{rndm}",
+        )
+        file_list(f"./splitted_{chnnl}_{rndm}", list_)
         for oof in list_:
             if oof == "fs_manifest.csv":
                 return
             await client.send_document(
-            message.chat.id,
-            oof,
-            caption=f"**Total :** `{total}` \n**Total Media :** `{media_count}` \n**Total Text :** `{text_count}`",
-        )
+                message.chat.id,
+                oof,
+                caption=f"**Total :** `{total}` \n**Total Media :** `{media_count}` \n**Total Text :** `{text_count}`",
+            )
         shutil.rmtree(dirz)
-        shutil.rmtree(f'./splitted_{chnnl}_{rndm}')
+        shutil.rmtree(f"./splitted_{chnnl}_{rndm}")
         if os.path.exists(zip_name):
             os.remove(zip_name)
         await pablo.delete()
@@ -101,7 +109,8 @@ async def chnnlzip(client, message):
     os.remove(zip_name)
     shutil.rmtree(dirz)
     await pablo.delete()
-    
+
+
 def file_list(path, lisT):
     pathlib.Path(path)
     for filepath in pathlib.Path(path).glob("**/*"):
@@ -215,7 +224,9 @@ async def upload(client, message):
     file = get_text(message)
     c_time = time.time()
     if not file:
-        await pablo.edit("`Please Give Me A Valid Input. You Can Check Help Menu To Know More!`")
+        await pablo.edit(
+            "`Please Give Me A Valid Input. You Can Check Help Menu To Know More!`"
+        )
         return
     if not os.path.exists(file):
         await pablo.edit("`404 : File Not Found.`")

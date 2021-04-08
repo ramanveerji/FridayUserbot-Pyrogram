@@ -6,8 +6,10 @@
 #
 # All rights reserved.
 
-from pyrogram import filters
 import logging
+
+from pyrogram import filters
+
 from database.autopostingdb import (
     add_new_autopost,
     check_if_autopost_in_db,
@@ -101,5 +103,7 @@ async def autoposterz(client, message):
         try:
             await message.copy(int(chat["to_channel"]))
         except Exception as e:
-            logging.error(f"[AUTOPOST] | {e} | {chat['to_channel']} | {message.chat.id}")
+            logging.error(
+                f"[AUTOPOST] | {e} | {chat['to_channel']} | {message.chat.id}"
+            )
     message.continue_propagation()

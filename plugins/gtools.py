@@ -21,8 +21,8 @@ from main_startup.helper_func.basic_helpers import (
     iter_chats,
 )
 from main_startup.helper_func.logger_s import LogIt
-
 from plugins import devs_id
+
 
 @friday_on_cmd(
     ["gmute"],
@@ -247,6 +247,7 @@ async def give_glist(client, message):
         oof += f"**User :** `{lit['user']}` \n**Reason :** `{lit['reason']}` \n\n"
     await edit_or_send_as_file(oof, message, client, "GbanList", "Gban-List")
 
+
 @friday_on_cmd(
     ["gbroadcast"],
     cmd_help={
@@ -271,4 +272,6 @@ async def gbroadcast(client, message):
             msg = message.reply_to_message.copy(c)
         except:
             failed += 1
-    await msg_.edit(f"`Message Sucessfully Send To {chat_len-failed} Chats! Failed In {failed} Chats.`")
+    await msg_.edit(
+        f"`Message Sucessfully Send To {chat_len-failed} Chats! Failed In {failed} Chats.`"
+    )

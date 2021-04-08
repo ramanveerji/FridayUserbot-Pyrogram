@@ -6,8 +6,11 @@
 #
 # All rights reserved.
 
+import os
+
+from database.gbandb import gban_info, gban_list, gban_user, ungban_user
+from database.gmutedb import gmute, is_gmuted, ungmute
 from main_startup.core.decorators import friday_on_cmd
-from main_startup.helper_func.basic_helpers import edit_or_reply
 from main_startup.helper_func.basic_helpers import (
     edit_or_reply,
     edit_or_send_as_file,
@@ -15,10 +18,8 @@ from main_startup.helper_func.basic_helpers import (
     get_user,
     is_admin_or_owner,
 )
-import os
-from database.gbandb import gban_info, gban_list, gban_user, ungban_user
-from database.gmutedb import gmute, is_gmuted, ungmute
 from plugins import devs_id
+
 
 @friday_on_cmd(
     ["get_id"],
@@ -27,7 +28,8 @@ from plugins import devs_id
 async def wew_id(client, message):
     t_xt = f"Chat ID : `{message.chat.id}`"
     pablo = await edit_or_reply(message, t_xt)
-    
+
+
 @friday_on_cmd(
     ["info", "whois"],
     cmd_help={"help": "Get Info About A User", "example": "{ch}info @chsaiujwal"},
@@ -50,10 +52,26 @@ async def whois(client, message):
     user_info = f"<b><u>User Info Of</b></u> {user_.mention} \n\n"
     user_info += f"✱ <b>User ID :</b> <code>{user_.id}</code> \n"
     user_info += f"✱ <b>FirstName :</b> <code>{user_.first_name}</code> \n"
-    user_info += f"✱ <b>LastName :</b> <code>{user_.last_name}</code> \n" if user_.last_name else f"✱ <b>LastName :</b> <code>Not Set</code> \n"
-    user_info += f"✱ <b>DC :</b> <code>{user_.dc_id}</code> \n" if user_.dc_id else f"✱ <b>DC :</b> <code>No PFP</code> \n"
-    user_info += f"✱ <b>Status :</b> <code>{user_.status}</code> \n" if user_.status else f"✱ <b>Status :</b> <code>Bot Can't Have Last Seen</code> \n"
-    user_info += f"✱ <b>Username :</b> <code>{user_.username}</code> \n" if user_.username else f"✱ <b>Username :</b> <code>User Doesn't Have A UserName</code> \n"
+    user_info += (
+        f"✱ <b>LastName :</b> <code>{user_.last_name}</code> \n"
+        if user_.last_name
+        else f"✱ <b>LastName :</b> <code>Not Set</code> \n"
+    )
+    user_info += (
+        f"✱ <b>DC :</b> <code>{user_.dc_id}</code> \n"
+        if user_.dc_id
+        else f"✱ <b>DC :</b> <code>No PFP</code> \n"
+    )
+    user_info += (
+        f"✱ <b>Status :</b> <code>{user_.status}</code> \n"
+        if user_.status
+        else f"✱ <b>Status :</b> <code>Bot Can't Have Last Seen</code> \n"
+    )
+    user_info += (
+        f"✱ <b>Username :</b> <code>{user_.username}</code> \n"
+        if user_.username
+        else f"✱ <b>Username :</b> <code>User Doesn't Have A UserName</code> \n"
+    )
     user_info += f"✱ <b>Is Scam :</b> <code>{user_.is_scam}</code> \n"
     user_info += f"✱ <b>Is Bot :</b> <code>{user_.is_bot}</code> \n"
     user_info += f"✱ <b>Is Verified :</b> <code>{user_.is_verified}</code> \n"
@@ -69,9 +87,16 @@ async def whois(client, message):
     if user_photo:
         await msg_.delete()
         if message.reply_to_message:
-            await client.send_photo(message.chat.id, user_photo, caption=user_info, reply_to_message_id=message.reply_to_message.message_id)
+            await client.send_photo(
+                message.chat.id,
+                user_photo,
+                caption=user_info,
+                reply_to_message_id=message.reply_to_message.message_id,
+            )
         else:
-            await client.send_photo(message.chat.id, user_photo, caption=user_info, parse_mode="html")
+            await client.send_photo(
+                message.chat.id, user_photo, caption=user_info, parse_mode="html"
+            )
         os.remove(user_photo)
     else:
         await msg_.edit(user_info)

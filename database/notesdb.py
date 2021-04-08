@@ -19,7 +19,9 @@ async def add_note(keyword, chat_id, message_id):
             {"$set": {"chat_id": chat_id, "msg_id": message_id}},
         )
     else:
-        await notes.insert_one({"keyword": keyword, "chat_id": chat_id, "msg_id": message_id})
+        await notes.insert_one(
+            {"keyword": keyword, "chat_id": chat_id, "msg_id": message_id}
+        )
 
 
 async def del_note(keyword, chat_id):

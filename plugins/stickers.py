@@ -6,8 +6,6 @@
 #
 # All rights reserved.
 
-from main_startup.core.decorators import friday_on_cmd
-from main_startup.helper_func.basic_helpers import edit_or_reply, get_text
 import asyncio
 import datetime
 import math
@@ -15,12 +13,17 @@ import os
 import zipfile
 from collections import defaultdict
 from io import BytesIO
+
 from PIL import Image
 from pyrogram import emoji
+from pyrogram.errors import StickersetInvalid, YouBlockedUser
 from pyrogram.raw.functions.messages import GetStickerSet
 from pyrogram.raw.types import InputStickerSetShortName
+
+from main_startup.core.decorators import friday_on_cmd
+from main_startup.helper_func.basic_helpers import edit_or_reply, get_text
 from main_startup.helper_func.plugin_helpers import convert_to_image
-from pyrogram.errors import YouBlockedUser, StickersetInvalid
+
 
 @friday_on_cmd(
     ["packinfo"],
@@ -40,7 +43,10 @@ async def packinfo(client, message):
     stickerset = await client.send(
         GetStickerSet(
             stickerset=InputStickerSetShortName(
-                short_name=message.reply_to_message.sticker.set_name)))
+                short_name=message.reply_to_message.sticker.set_name
+            )
+        )
+    )
     emojis = []
     for stucker in stickerset.packs:
         if stucker.emoticon not in emojis:
@@ -56,7 +62,7 @@ async def packinfo(client, message):
 """
     await pablo.edit(output)
 
-    
+
 @friday_on_cmd(
     ["kang"],
     cmd_help={
@@ -83,12 +89,12 @@ async def packinfo(client, message):
     non = [None, "None"]
     emoji = "😁"
     try:
-       Hell = Hell.strip()
-       if not Hell.isalpha():
-         if not Hell.isnumeric():
-           emoji = Hell
-       else:
-         emoji = "😁"
+        Hell = Hell.strip()
+        if not Hell.isalpha():
+            if not Hell.isnumeric():
+                emoji = Hell
+        else:
+            emoji = "😁"
     except:
         emoji = "😁"
     exist = None
@@ -98,20 +104,20 @@ async def packinfo(client, message):
             emoji = message.reply_to_message.sticker.emoji or "😁"
         is_anim = message.reply_to_message.sticker.is_animated
         if is_anim:
-            packshortname +="_animated"
+            packshortname += "_animated"
             packname += " Animated"
         if message.reply_to_message.sticker.mime_type == "application/x-tgsticker":
             file_name = await message.reply_to_message.download("AnimatedSticker.tgs")
         else:
             cool = await convert_to_image(message, client)
             if not cool:
-               await pablo.edit("`Reply to a valid media first.`")
-               return
+                await pablo.edit("`Reply to a valid media first.`")
+                return
             file_name = resize_image(cool)
     elif message.reply_to_message.document:
         if message.reply_to_message.document.mime_type == "application/x-tgsticker":
             is_anim = True
-            packshortname +="_animated"
+            packshortname += "_animated"
             packname += " Animated"
             file_name = await message.reply_to_message.download("AnimatedSticker.tgs")
     else:
@@ -121,12 +127,11 @@ async def packinfo(client, message):
             return
         file_name = resize_image(cool)
     try:
-            exist = await client.send(
-                GetStickerSet(
-                    stickerset=InputStickerSetShortName(
-                        short_name=packshortname)))
+        exist = await client.send(
+            GetStickerSet(stickerset=InputStickerSetShortName(short_name=packshortname))
+        )
     except StickersetInvalid:
-            pass
+        pass
     if exist:
         try:
             await client.send_message("stickers", "/addsticker")
@@ -142,7 +147,7 @@ async def packinfo(client, message):
             packname = f"@{nm} Kang Pack {pack}"
             packshortname = f"FRIDAY_{message.from_user.id}_{pack}"
             if is_anim:
-                packshortname +="_animated"
+                packshortname += "_animated"
                 packname += " Animated"
             await client.send_message("stickers", packshortname)
             await asyncio.sleep(0.2)
@@ -161,39 +166,46 @@ async def packinfo(client, message):
                 await asyncio.sleep(0.5)
                 await client.send_message("stickers", "/publish")
                 if is_anim:
-                   await client.send_message("stickers", f"<{packname}>")
+                    await client.send_message("stickers", f"<{packname}>")
                 await client.send_message("stickers", "/skip")
                 await asyncio.sleep(0.5)
                 await client.send_message("stickers", packshortname)
-                await pablo.edit(f"Sticker Added To Your Pack. You Can Find It [Here](https://t.me/addstickers/{packshortname})")
+                await pablo.edit(
+                    f"Sticker Added To Your Pack. You Can Find It [Here](https://t.me/addstickers/{packshortname})"
+                )
                 return
         await client.send_document("stickers", file_name)
         await asyncio.sleep(1)
         await client.send_message("stickers", emoji)
         await asyncio.sleep(0.5)
         await client.send_message("stickers", "/done")
-        await pablo.edit(f"`Sticker Added To Your Pack. You Can Find It` [Here](https://t.me/addstickers/{packshortname})")
+        await pablo.edit(
+            f"`Sticker Added To Your Pack. You Can Find It` [Here](https://t.me/addstickers/{packshortname})"
+        )
     else:
-            if is_anim:
-                await client.send_message("stickers", "/newanimated")
-            else:
-                await client.send_message("stickers", "/newpack")
-            await client.send_message("stickers", packname)
-            await asyncio.sleep(0.2)
-            await client.send_document("stickers", file_name)
-            await asyncio.sleep(1)
-            await client.send_message("stickers", emoji)
-            await asyncio.sleep(0.5)
-            await client.send_message("stickers", "/publish")
-            await asyncio.sleep(0.5)
-            if is_anim:
-                   await client.send_message("stickers", f"<{packname}>")
-            await client.send_message("stickers", "/skip")
-            await asyncio.sleep(0.5)
-            await client.send_message("stickers", packshortname)
-            await pablo.edit(f"`Sticker Added To Your Pack. You Can Find It` [Here](https://t.me/addstickers/{packshortname})")
-            if os.path.exists(file_name):
-                os.remove(file_name)
+        if is_anim:
+            await client.send_message("stickers", "/newanimated")
+        else:
+            await client.send_message("stickers", "/newpack")
+        await client.send_message("stickers", packname)
+        await asyncio.sleep(0.2)
+        await client.send_document("stickers", file_name)
+        await asyncio.sleep(1)
+        await client.send_message("stickers", emoji)
+        await asyncio.sleep(0.5)
+        await client.send_message("stickers", "/publish")
+        await asyncio.sleep(0.5)
+        if is_anim:
+            await client.send_message("stickers", f"<{packname}>")
+        await client.send_message("stickers", "/skip")
+        await asyncio.sleep(0.5)
+        await client.send_message("stickers", packshortname)
+        await pablo.edit(
+            f"`Sticker Added To Your Pack. You Can Find It` [Here](https://t.me/addstickers/{packshortname})"
+        )
+        if os.path.exists(file_name):
+            os.remove(file_name)
+
 
 def resize_image(image):
     im = Image.open(image)
@@ -220,4 +232,3 @@ def resize_image(image):
     if os.path.exists(image):
         os.remove(image)
     return file_name
-

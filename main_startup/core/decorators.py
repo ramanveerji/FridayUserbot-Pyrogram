@@ -7,14 +7,20 @@
 # All rights reserved.
 
 import inspect
+import logging
 import os
 from datetime import datetime
 from traceback import format_exc
-import logging
+
 import pytz
-from pyrogram import StopPropagation, filters, ContinuePropagation
+from pyrogram import ContinuePropagation, StopPropagation, filters
+from pyrogram.errors.exceptions.bad_request_400 import (
+    MessageIdInvalid,
+    MessageNotModified,
+    UserNotParticipant,
+)
 from pyrogram.handlers import MessageHandler
-from pyrogram.errors.exceptions.bad_request_400 import MessageNotModified, MessageIdInvalid, UserNotParticipant
+
 from main_startup import (
     CMD_LIST,
     XTRA_CMD_LIST,
@@ -43,8 +49,20 @@ def friday_on_cmd(
     cmd_help: dict = {"help": "No One One Gonna Help You", "example": "{ch}what"},
 ):
     """- Main Decorator To Register Commands. -"""
-    filterm = (filters.me | filters.user(Config.AFS)) & filters.command(cmd, Config.COMMAND_HANDLER) & ~filters.via_bot & ~filters.forwarded
-    add_help_menu(cmd=cmd[0], stack=inspect.stack(), is_official=is_official, cmd_help=cmd_help['help'], example=cmd_help['example'])
+    filterm = (
+        (filters.me | filters.user(Config.AFS))
+        & filters.command(cmd, Config.COMMAND_HANDLER)
+        & ~filters.via_bot
+        & ~filters.forwarded
+    )
+    add_help_menu(
+        cmd=cmd[0],
+        stack=inspect.stack(),
+        is_official=is_official,
+        cmd_help=cmd_help["help"],
+        example=cmd_help["example"],
+    )
+
     def decorator(func):
         async def wrapper(client, message):
             chat_type = message.chat.type
@@ -76,13 +94,17 @@ def friday_on_cmd(
                 except MessageNotModified:
                     pass
                 except MessageIdInvalid:
-                    logging.warning("Please Don't Delete Commands While it's Processing..")
+                    logging.warning(
+                        "Please Don't Delete Commands While it's Processing.."
+                    )
                 except UserNotParticipant:
                     pass
                 except ContinuePropagation:
                     raise ContinuePropagation
                 except BaseException as e:
-                    logging.error(f"Exception - {func.__module__} - {func.__name__} : {e}")
+                    logging.error(
+                        f"Exception - {func.__module__} - {func.__name__} : {e}"
+                    )
                     TZ = pytz.timezone(Config.TZ)
                     datetime_tz = datetime.now(TZ)
                     text = "**!ERROR - REPORT!**\n\n"
@@ -97,6 +119,7 @@ def friday_on_cmd(
                         await client.send_message(Config.LOG_GRP, text)
                     except Exception:
                         pass
+
         Friday.add_handler(MessageHandler(wrapper, filters=filterm), group)
         if Friday2:
             Friday2.add_handler(MessageHandler(wrapper, filters=filterm), group)
@@ -111,6 +134,7 @@ def friday_on_cmd(
 
 def listen(filter_s):
     """Simple Decorator To Handel Custom Filters"""
+
     def decorator(func):
         async def wrapper(client, message):
             try:
@@ -128,8 +152,8 @@ def listen(filter_s):
                 text += f"\n**Plugin-Name :** `{func.__module__}`"
                 text += f"\n**Function Name :** `{func.__name__}` \n"
                 text += datetime_tz.strftime(
-                        "**Date :** `%Y-%m-%d` \n**Time :** `%H:%M:%S`"
-                    )
+                    "**Date :** `%Y-%m-%d` \n**Time :** `%H:%M:%S`"
+                )
                 text += "\n\n__You can Forward This to @FridayChat, If You Think This is A Error!__"
                 try:
                     await client.send_message(Config.LOG_GRP, text)
@@ -137,6 +161,7 @@ def listen(filter_s):
                     pass
                 message.continue_propagation()
                 return
+
         Friday.add_handler(MessageHandler(wrapper, filters=filter_s), group=0)
         if Friday2:
             Friday2.add_handler(MessageHandler(wrapper, filters=filter_s), group=0)
@@ -145,16 +170,23 @@ def listen(filter_s):
         if Friday4:
             Friday4.add_handler(MessageHandler(wrapper, filters=filter_s), group=0)
         return wrapper
+
     return decorator
 
 
-def add_help_menu(cmd, stack, is_official=True, cmd_help="No One Gonna Help You", example="{ch}what", file_name=None):
+def add_help_menu(
+    cmd,
+    stack,
+    is_official=True,
+    cmd_help="No One Gonna Help You",
+    example="{ch}what",
+    file_name=None,
+):
     if not file_name:
         previous_stack_frame = stack[1]
         if "xtraplugins" in previous_stack_frame.filename:
             is_official = False
-        file_name = os.path.basename(
-            previous_stack_frame.filename.replace(".py", ""))
+        file_name = os.path.basename(previous_stack_frame.filename.replace(".py", ""))
     cmd_helpz = example.format(ch=Config.COMMAND_HANDLER)
     cmd_helper = f"**Module Name :** `{file_name.replace('_', ' ').title()}` \n\n**Command :** `{Config.COMMAND_HANDLER}{cmd}` \n**Help :** `{cmd_help}` \n**Example :** `{cmd_helpz}`"
     if is_official:

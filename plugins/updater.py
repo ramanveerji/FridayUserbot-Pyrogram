@@ -6,45 +6,49 @@
 #
 # All rights reserved.
 
+import sys
+from datetime import datetime
+from os import environ, execle, path, remove
+
+import heroku3
+from git import Repo
+from git.exc import GitCommandError, InvalidGitRepositoryError, NoSuchPathError
+
 from main_startup.config_var import Config
 from main_startup.core.decorators import friday_on_cmd, listen
-from main_startup.helper_func.basic_helpers import edit_or_reply, get_text
-from os import environ, execle, path, remove
-import sys
-from git import Repo
-from datetime import datetime
-import heroku3
-from git.exc import GitCommandError, InvalidGitRepositoryError, NoSuchPathError
-from main_startup.helper_func.logger_s import LogIt
 from main_startup.core.startup_helpers import run_cmd
+from main_startup.helper_func.basic_helpers import edit_or_reply, get_text
+from main_startup.helper_func.logger_s import LogIt
 
 REPO_ = Config.UPSTREAM_REPO
 BRANCH_ = Config.U_BRANCH
 
 
-@friday_on_cmd(["update"],
-  cmd_help={
-    "help": "Update Your UserBot!",
-    "example": "{ch}update"
-    })
+@friday_on_cmd(
+    ["update"], cmd_help={"help": "Update Your UserBot!", "example": "{ch}update"}
+)
 async def update_it(client, message):
     msg_ = await edit_or_reply(message, "`Updating Please Wait!`")
     try:
         repo = Repo()
     except GitCommandError:
-        return await msg_.edit("`Invalid Git Command. Please Report This Bug To @FridayOT`")
+        return await msg_.edit(
+            "`Invalid Git Command. Please Report This Bug To @FridayOT`"
+        )
     except InvalidGitRepositoryError:
         repo = Repo.init()
         if "upstream" in repo.remotes:
-          origin = repo.remote("upstream")
+            origin = repo.remote("upstream")
         else:
-          origin = repo.create_remote("upstream", REPO_)
+            origin = repo.create_remote("upstream", REPO_)
         origin.fetch()
         repo.create_head(Config.U_BRANCH, origin.refs.master)
         repo.heads.master.set_tracking_branch(origin.refs.master)
         repo.heads.master.checkout(True)
     if repo.active_branch.name != Config.U_BRANCH:
-        return await msg_.edit(f"`Seems Like You Are Using Custom Branch - {repo.active_branch.name}! Please Switch To {Config.U_BRANCH} To Make This Updater Function!`")
+        return await msg_.edit(
+            f"`Seems Like You Are Using Custom Branch - {repo.active_branch.name}! Please Switch To {Config.U_BRANCH} To Make This Updater Function!`"
+        )
     try:
         repo.create_remote("upstream", REPO_)
     except BaseException:
@@ -55,8 +59,8 @@ async def update_it(client, message):
         try:
             ups_rem.pull(Config.U_BRANCH)
         except GitCommandError:
-            repo.git.reset('--hard', 'FETCH_HEAD')
-        await run_cmd('pip3 install --no-cache-dir -r requirements.txt')
+            repo.git.reset("--hard", "FETCH_HEAD")
+        await run_cmd("pip3 install --no-cache-dir -r requirements.txt")
         await msg_.edit("`Updated Sucessfully! Give Me A min To Restart!`")
         args = [sys.executable, "-m", "main_startup"]
         execle(sys.executable, *args, environ)

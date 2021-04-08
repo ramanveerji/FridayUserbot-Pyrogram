@@ -6,13 +6,13 @@
 #
 # All rights reserved.
 
+import logging
+import re
 import string
-from pyrogram.types import InputMediaDocument
-import time
-import os
 from random import choice
-from pyrogram.types import InputMediaPhoto, InputMediaVideo, InputMediaAudio
-import wget
+
+import requests
+from bs4 import BeautifulSoup
 from pyrogram import __version__, filters
 from pyrogram.types import (
     InlineKeyboardButton,
@@ -22,28 +22,15 @@ from pyrogram.types import (
     InputTextMessageContent,
 )
 from tinydb import Query, TinyDB
-from youtubesearchpython import SearchVideos
-from youtube_dl import YoutubeDL
-from main_startup import CMD_LIST, bot, friday_version, XTRA_CMD_LIST, Friday
-import logging
+
+from main_startup import CMD_LIST, XTRA_CMD_LIST, Friday, bot, friday_version
+from main_startup.config_var import Config
 from main_startup.helper_func.basic_helpers import (
     cb_wrapper,
     get_all_pros,
     inline_wrapper,
     paginate_help,
 )
-from main_startup.config_var import Config
-from main_startup.helper_func.basic_helpers import (
-    edit_or_reply,
-    get_text,
-    humanbytes,
-    cb_progress,
-)
-
-import re
-import requests
-import wget
-from bs4 import BeautifulSoup
 
 db_m = TinyDB("./main_startup/Cache/secret.json")
 db_s = TinyDB("./main_startup/Cache/not4u.json")
@@ -59,7 +46,9 @@ async def owo(client, inline_query):
         string_given = inline_query.query.lower()
         sgname = string_given.split(" ", maxsplit=1)[1]
         print(sgname)
-        PabloEscobar = (f"https://an1.com/tags/MOD/?story={sgname}&do=search&subaction=search")
+        PabloEscobar = (
+            f"https://an1.com/tags/MOD/?story={sgname}&do=search&subaction=search"
+        )
         r = requests.get(PabloEscobar)
         results = []
         soup = BeautifulSoup(r.content, "html5lib")
@@ -71,7 +60,7 @@ async def owo(client, inline_query):
             pH9 = sucker.find("a").contents[0]
             file_name = pH9
             pH = sucker.findAll("img")
-            imme = (pH[0]["src"])
+            imme = pH[0]["src"]
             Pablo = Pop[0].a["href"]
             ro = requests.get(Pablo)
             soupe = BeautifulSoup(ro.content, "html5lib")
@@ -80,17 +69,18 @@ async def owo(client, inline_query):
             mydis0 = soupe.find_all("a", {"class": "get-product"})
             Lol9 = mydis0[0]
             lemk = "https://an1.com" + Lol9["href"]
-            
+
             results.append(
                 InlineQueryResultPhoto(
                     photo_url=imme,
-                    title = file_name,
+                    title=file_name,
                     caption=capt,
                     reply_markup=InlineKeyboardMarkup(
                         [
                             [
                                 InlineKeyboardButton(
-                                    text="<<! Download Link!>>", callback_data=f"apk_{lemk}"
+                                    text="<<! Download Link!>>",
+                                    callback_data=f"apk_{lemk}",
                                 ),
                             ]
                         ]
@@ -177,11 +167,27 @@ async def owo(client, inline_query):
         ]
         await client.answer_inline_query(inline_query.id, cache_time=0, results=ok_s)
     elif "help" in string_given:
-        bttn = [[InlineKeyboardButton(text="Main Command Help", callback_data=f"make_basic_button_True")]]
+        bttn = [
+            [
+                InlineKeyboardButton(
+                    text="Main Command Help", callback_data=f"make_basic_button_True"
+                )
+            ]
+        ]
         if Config.LOAD_UNOFFICIAL_PLUGINS:
             bttn = [
-                [InlineKeyboardButton(text="Xtra Command Help", callback_data=f"make_basic_button_False")],
-                [InlineKeyboardButton(text="Main Command Help", callback_data=f"make_basic_button_True")]
+                [
+                    InlineKeyboardButton(
+                        text="Xtra Command Help",
+                        callback_data=f"make_basic_button_False",
+                    )
+                ],
+                [
+                    InlineKeyboardButton(
+                        text="Main Command Help",
+                        callback_data=f"make_basic_button_True",
+                    )
+                ],
             ]
         nice_text = f"**FridayUserBot Commands** \n**Friday Version :** __{friday_version}__ \n**PyroGram Version :** __{__version__}__ \n**Total Plugins Loaded :** __{len(CMD_LIST)}__"
         await client.answer_inline_query(
@@ -252,15 +258,19 @@ async def nothing_here(client, cb):
 async def wow_nice(client, cb):
     nice = True
     if cb.matches[0].group(1) == "False":
-         nice = False
+        nice = False
     if nice is False:
         v_t = XTRA_CMD_LIST
         bttn = paginate_help(0, XTRA_CMD_LIST, "helpme", is_official=nice)
     else:
         v_t = CMD_LIST
         bttn = paginate_help(0, CMD_LIST, "helpme", is_official=nice)
-    await cb.edit_message_text(f"Command List & Help \n**Total Commands :** `{len(v_t)}` \n**(C) @FRIDAYOT**", reply_markup=InlineKeyboardMarkup(bttn))
-    
+    await cb.edit_message_text(
+        f"Command List & Help \n**Total Commands :** `{len(v_t)}` \n**(C) @FRIDAYOT**",
+        reply_markup=InlineKeyboardMarkup(bttn),
+    )
+
+
 @bot.on_callback_query(filters.regex(pattern="cleuse"))
 @cb_wrapper
 async def close_it_please(client, cb):
@@ -296,7 +306,8 @@ async def give_plugin_cmds(client, cb):
             [
                 [
                     InlineKeyboardButton(
-                        text="Go Back", callback_data=f"backme_{page_number}_{is_official}"
+                        text="Go Back",
+                        callback_data=f"backme_{page_number}_{is_official}",
                     )
                 ]
             ]
@@ -312,7 +323,9 @@ async def give_next_page(client, cb):
     if cb.matches[0].group(2) == "False":
         is_official = False
     cmd_list = CMD_LIST if is_official else XTRA_CMD_LIST
-    buttons = paginate_help(current_page_number + 1, cmd_list, "helpme", is_official=is_official)
+    buttons = paginate_help(
+        current_page_number + 1, cmd_list, "helpme", is_official=is_official
+    )
     await cb.edit_message_reply_markup(reply_markup=InlineKeyboardMarkup(buttons))
 
 
@@ -324,9 +337,10 @@ async def give_old_page(client, cb):
     if cb.matches[0].group(2) == "False":
         is_official = False
     cmd_list = CMD_LIST if is_official else XTRA_CMD_LIST
-    buttons = paginate_help(current_page_number - 1, cmd_list, "helpme", is_official=is_official)
+    buttons = paginate_help(
+        current_page_number - 1, cmd_list, "helpme", is_official=is_official
+    )
     await cb.edit_message_reply_markup(reply_markup=InlineKeyboardMarkup(buttons))
-
 
 
 @bot.on_callback_query(filters.regex(pattern="apk_(.*)"))
@@ -335,10 +349,14 @@ async def ytv_(client, cb):
     lemk = cb.matches[0].group(1)
     rr = requests.get(lemk)
     soup = BeautifulSoup(rr.content, "html5lib")
-    script = soup.find("script",  type="text/javascript")
+    script = soup.find("script", type="text/javascript")
     leek = re.search(r'href=[\'"]?([^\'" >]+)', script.text).group()
     dl_link = leek[5:]
-    await cb.edit_message_reply_markup(reply_markup = InlineKeyboardMarkup([[InlineKeyboardButton("Download Link", url = lemk)], [InlineKeyboardButton("Direct Download Link", url = dl_link)]]))
-    
-
-
+    await cb.edit_message_reply_markup(
+        reply_markup=InlineKeyboardMarkup(
+            [
+                [InlineKeyboardButton("Download Link", url=lemk)],
+                [InlineKeyboardButton("Direct Download Link", url=dl_link)],
+            ]
+        )
+    )

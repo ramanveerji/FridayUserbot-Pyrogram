@@ -6,10 +6,12 @@
 #
 # All rights reserved.
 
+import os
+
 from main_startup.core.decorators import friday_on_cmd
 from main_startup.core.startup_helpers import load_plugin
 from main_startup.helper_func.basic_helpers import edit_or_reply
-import os
+
 
 @friday_on_cmd(
     ["install"],
@@ -35,7 +37,7 @@ async def installer(client, message):
         await pablo.edit("`Only Py Files :(`")
         return
     Escobar = await message.reply_to_message.download(file_name="./plugins/")
-    base_name = (os.path.basename(Escobar))
+    base_name = os.path.basename(Escobar)
     file_n = base_name.split(".")[0]
     try:
         load_plugin(file_n)

@@ -7,14 +7,16 @@
 # All rights reserved.
 
 import json
+import logging
 import os
 import subprocess
 import textwrap
 from json import JSONDecodeError
+
 import requests
 from PIL import Image, ImageDraw, ImageFont
 from pymediainfo import MediaInfo
-import logging
+
 from main_startup.core.startup_helpers import run_cmd
 
 

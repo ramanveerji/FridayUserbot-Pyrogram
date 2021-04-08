@@ -26,7 +26,9 @@ async def duckduckgo(client, message):
     pablo = await edit_or_reply(message, "`Processing..`")
     query = get_text(message)
     if not query:
-        await pablo.edit("`Please Give Me A Valid Input. You Can Check Help Menu To Know More!`")
+        await pablo.edit(
+            "`Please Give Me A Valid Input. You Can Check Help Menu To Know More!`"
+        )
         return
     sample_url = "https://duckduckgo.com/?q={}".format(query.replace(" ", "+"))
     link = sample_url.rstrip()
@@ -43,7 +45,9 @@ async def grs(client, message):
     pablo = await edit_or_reply(message, "`Processing..`")
     query = get_text(message)
     if not query:
-        await pablo.edit("`Please Give Me A Valid Input. You Can Check Help Menu To Know More!`")
+        await pablo.edit(
+            "`Please Give Me A Valid Input. You Can Check Help Menu To Know More!`"
+        )
         return
     query = urllib.parse.quote_plus(query)
     number_result = 8
@@ -81,7 +85,7 @@ async def grs(client, message):
         del titles[x]
         del descriptions[x]
     msg = ""
-    
+
     for tt, liek, d in zip(titles, clean_links, descriptions):
         msg += f"[{tt}]({liek})\n`{d}`\n\n"
     await pablo.edit("**Search Query:**\n`" + query + "`\n\n**Results:**\n" + msg)

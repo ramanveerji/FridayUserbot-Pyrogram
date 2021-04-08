@@ -7,22 +7,22 @@
 # All rights reserved.
 
 import asyncio
+import os
 
 from pyrogram import filters
+from telegraph import Telegraph, exceptions, upload_file
 
 from database.bot_settings_db import (
     add_pm_text,
+    add_pm_thumb,
     get_pm_spam_limit,
     get_pm_text,
     get_thumb,
-    add_pm_thumb,
     set_pm_spam_limit,
 )
-from telegraph import Telegraph, exceptions, upload_file
-import os
 from database.pmdb import approve_user, disapprove_user, is_user_approved
 from main_startup.core.decorators import friday_on_cmd, listen
-from main_startup.helper_func.basic_helpers import get_text, edit_or_reply
+from main_startup.helper_func.basic_helpers import edit_or_reply, get_text
 from main_startup.helper_func.logger_s import LogIt
 from main_startup.helper_func.plugin_helpers import convert_to_image
 
@@ -37,6 +37,7 @@ try:
     auth_url = r["auth_url"]
 except:
     pass
+
 
 @friday_on_cmd(
     ["setpmtext"],
@@ -172,7 +173,9 @@ async def allow(client, message):
             await message.delete()
             return
         await message.edit(
-            "Approved to pm [{}](tg://user?id={})".format(firstname, int(message.chat.id))
+            "Approved to pm [{}](tg://user?id={})".format(
+                firstname, int(message.chat.id)
+            )
         )
         await asyncio.sleep(3)
         await message.delete()
@@ -219,7 +222,9 @@ async def disallow(client, message):
             await message.delete()
             return
         await message.edit(
-            "DisApproved to pm [{}](tg://user?id={})".format(firstname, int(message.chat.id))
+            "DisApproved to pm [{}](tg://user?id={})".format(
+                firstname, int(message.chat.id)
+            )
         )
         await asyncio.sleep(3)
         await message.delete()
@@ -245,15 +250,22 @@ async def disallow(client, message):
         )
         await asyncio.sleep(3)
         await message.delete()
-        
-@friday_on_cmd(['setpmpic', 'spp'],
-   cmd_help={
+
+
+@friday_on_cmd(
+    ["setpmpic", "spp"],
+    cmd_help={
         "help": "Set Replied Image As Your Pm Permit Image.",
         "example": "{ch}setpmpic (reply to image)",
-    })
+    },
+)
 async def set_my_pic(client, message):
     ms_ = await edit_or_reply(message, "`Please Wait!`")
-    if not (message.reply_to_message or message.reply_to_message.photo or message.reply_to_message.sticker):
+    if not (
+        message.reply_to_message
+        or message.reply_to_message.photo
+        or message.reply_to_message.sticker
+    ):
         await ms_.edit("`Reply To Image To Set As Your Pm Permit Pic.`")
         return
     if message.reply_to_message.sticker:
@@ -263,16 +275,14 @@ async def set_my_pic(client, message):
     try:
         media_url = upload_file(m_d)
     except exceptions.TelegraphException as exc:
-        await ms_.edit(
-                f"`Unable To Upload Media To Telegraph! \nTraceBack : {exc}`"
-            )
+        await ms_.edit(f"`Unable To Upload Media To Telegraph! \nTraceBack : {exc}`")
         os.remove(m_d)
         return
     media_url = f"https://telegra.ph/{media_url[0]}"
     await add_pm_thumb(media_url)
     await ms_.edit("`Sucessfully Set This Image As Pm Permit Image!`")
     os.remove(m_d)
-        
+
 
 @listen(filters.incoming & filters.private & ~filters.edited & ~filters.me)
 async def pmPermit(client, message):

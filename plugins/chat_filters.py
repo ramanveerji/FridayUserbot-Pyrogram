@@ -92,17 +92,17 @@ async def filter_s(client, message):
         message.continue_propagation()
         return
     for all_fil in al_fil:
-        al_fill.append(all_fil.get('keyword'))
+        al_fill.append(all_fil.get("keyword"))
     owoo = owo.lower()
     if owoo in al_fill:
         f_info = await filters_info(owoo, int(message.chat.id))
         if f_info:
             await client.copy_message(
-                    from_chat_id=int(Config.LOG_GRP),
-                    chat_id=int(message.chat.id),
-                    message_id=f_info["msg_id"],
-                    reply_to_message_id=message.message_id,
-             )
+                from_chat_id=int(Config.LOG_GRP),
+                chat_id=int(message.chat.id),
+                message_id=f_info["msg_id"],
+                reply_to_message_id=message.message_id,
+            )
     message.continue_propagation()
 
 

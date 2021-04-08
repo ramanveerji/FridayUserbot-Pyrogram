@@ -9,10 +9,12 @@
 import asyncio
 import os
 import time
+
 import requests
 import wget
 from youtube_dl import YoutubeDL
 from youtubesearchpython import SearchVideos
+
 from main_startup.core.decorators import friday_on_cmd
 from main_startup.helper_func.basic_helpers import edit_or_reply, get_text, progress
 
@@ -26,15 +28,13 @@ from main_startup.helper_func.basic_helpers import edit_or_reply, get_text, prog
 )
 async def vid(client, message):
     input_str = get_text(message)
-    pablo = await edit_or_reply(
-        message, f"`Processing...`"
-    )
+    pablo = await edit_or_reply(message, f"`Processing...`")
     if not input_str:
-        await pablo.edit("`Please Give Me A Valid Input. You Can Check Help Menu To Know More!`")
+        await pablo.edit(
+            "`Please Give Me A Valid Input. You Can Check Help Menu To Know More!`"
+        )
         return
-    await pablo.edit(
-        f"`Getting {input_str} From Youtube Servers. Please Wait.`"
-    )
+    await pablo.edit(f"`Getting {input_str} From Youtube Servers. Please Wait.`")
     search = SearchVideos(str(input_str), offset=1, mode="dict", max_results=1)
     rt = search.result()
     result_s = rt["search_result"]
@@ -101,7 +101,9 @@ async def ytmusic(client, message):
         message, f"`Getting {input_str} From Youtube Servers. Please Wait.`"
     )
     if not input_str:
-        await pablo.edit("`Please Give Me A Valid Input. You Can Check Help Menu To Know More!`")
+        await pablo.edit(
+            "`Please Give Me A Valid Input. You Can Check Help Menu To Know More!`"
+        )
         return
     search = SearchVideos(str(input_str), offset=1, mode="dict", max_results=1)
     rt = search.result()
@@ -181,7 +183,9 @@ async def deezer(client, message):
     pablo = await edit_or_reply(message, "`Searching For Song.....`")
     sgname = get_text(message)
     if not sgname:
-        await pablo.edit("`Please Give Me A Valid Input. You Can Check Help Menu To Know More!`")
+        await pablo.edit(
+            "`Please Give Me A Valid Input. You Can Check Help Menu To Know More!`"
+        )
         return
     link = f"https://api.deezer.com/search?q={sgname}&limit=1"
     dato = requests.get(url=link).json()

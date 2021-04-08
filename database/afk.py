@@ -10,6 +10,7 @@ from database import db_x
 
 afk = db_x["AFK"]
 
+
 async def go_afk(time, reason=""):
     midhun = await afk.find_one({"_id": "AFK"})
     if midhun:
@@ -17,11 +18,13 @@ async def go_afk(time, reason=""):
     else:
         await afk.insert_one({"_id": "AFK", "time": time, "reason": reason})
 
+
 async def no_afk():
     midhun = await afk.find_one({"_id": "AFK"})
     if midhun:
-       await afk.delete_one({"_id": "AFK"})
-    
+        await afk.delete_one({"_id": "AFK"})
+
+
 async def check_afk():
     midhun = await afk.find_one({"_id": "AFK"})
     if midhun:

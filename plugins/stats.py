@@ -6,9 +6,10 @@
 #
 # All rights reserved.
 
+from datetime import datetime
+
 from main_startup.core.decorators import friday_on_cmd
 from main_startup.helper_func.basic_helpers import edit_or_reply, get_text, progress
-from datetime import datetime
 
 
 @friday_on_cmd(
@@ -19,9 +20,7 @@ from datetime import datetime
     },
 )
 async def stats(client, message):
-    pablo = await edit_or_reply(
-        message, f"`Processing...`"
-    )
+    pablo = await edit_or_reply(message, f"`Processing...`")
     start = datetime.now()
     u = 0
     g = 0
@@ -32,19 +31,19 @@ async def stats(client, message):
     group = ["supergroup", "group"]
     async for dialog in client.iter_dialogs():
         if dialog.chat.type == "private":
-            u+=1
+            u += 1
         elif dialog.chat.type == "bot":
-            b+=1
+            b += 1
         elif dialog.chat.type == "group":
-            g+=1
+            g += 1
         elif dialog.chat.type == "supergroup":
             sg += 1
             user_s = await dialog.chat.get_member(int(client.me.id))
             if user_s.status in ("creator", "administrator"):
                 a_chat += 1
         elif dialog.chat.type == "channel":
-            c+=1
-        
+            c += 1
+
     end = datetime.now()
     ms = (end - start).seconds
     await pablo.edit(

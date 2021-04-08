@@ -9,18 +9,20 @@
 import platform
 import re
 import socket
+import sys
 import time
 import uuid
 from datetime import datetime
-import sys
+from os import environ, execle, path, remove
+
 import psutil
 from pyrogram import __version__
-from os import environ, execle, path, remove
-from main_startup import friday_version, start_time, Config
+
+from main_startup import Config, friday_version, start_time
 from main_startup.core.decorators import friday_on_cmd
 from main_startup.helper_func.basic_helpers import (
-    edit_or_reply,
     delete_or_pass,
+    edit_or_reply,
     get_readable_time,
     humanbytes,
 )
@@ -67,7 +69,12 @@ async def amialive(client, message):
 ➔ **DISK USAGE :** __{disk}__
 """
     if message.reply_to_message:
-        await client.send_photo(message.chat.id, img_, caption=alive, reply_to_message_id=message.reply_to_message.message_id)
+        await client.send_photo(
+            message.chat.id,
+            img_,
+            caption=alive,
+            reply_to_message_id=message.reply_to_message.message_id,
+        )
     else:
         await client.send_photo(message.chat.id, img_, caption=alive)
     await delete_or_pass(message)
@@ -112,6 +119,7 @@ async def give_sysinfo(client, message):
 **DISK :** `{disk}`
     """
     await edit_or_reply(message, neat_msg)
+
 
 @friday_on_cmd(
     ["restart"],

@@ -7,13 +7,15 @@
 # All rights reserved.
 
 import asyncio
+import logging
 import math
 import os
 import shlex
 import time
 from math import ceil
-from typing import Tuple
 from traceback import format_exc
+from typing import Tuple
+
 from pyrogram import Client
 from pyrogram.errors import FloodWait, MessageNotModified
 from pyrogram.types import (
@@ -25,7 +27,7 @@ from pyrogram.types import (
 
 from main_startup import Friday, Friday2, Friday3, Friday4
 from main_startup.config_var import Config
-import logging
+
 
 def get_user(message: Message, text: str) -> [int, str, None]:
     """Get User From Message"""
@@ -140,7 +142,9 @@ def paginate_help(page_number, loaded_modules, prefix, is_official=True):
     modules = [
         InlineKeyboardButton(
             text="{} {} {}".format(
-                Config.CUSTOM_HELP_EMOJI, x.replace('_', ' ').title(), Config.CUSTOM_HELP_EMOJI
+                Config.CUSTOM_HELP_EMOJI,
+                x.replace("_", " ").title(),
+                Config.CUSTOM_HELP_EMOJI,
             ),
             callback_data="us_plugin_{}|{}_{}".format(x, page_number, is_official),
         )
@@ -158,12 +162,16 @@ def paginate_help(page_number, loaded_modules, prefix, is_official=True):
             (
                 InlineKeyboardButton(
                     text="⏪ Previous",
-                    callback_data="{}_prev({})_{}".format(prefix, modulo_page, is_official),
+                    callback_data="{}_prev({})_{}".format(
+                        prefix, modulo_page, is_official
+                    ),
                 ),
                 InlineKeyboardButton(text="Close", callback_data="cleuse"),
                 InlineKeyboardButton(
                     text="Next ⏩",
-                    callback_data="{}_next({})_{}".format(prefix, modulo_page, is_official),
+                    callback_data="{}_next({})_{}".format(
+                        prefix, modulo_page, is_official
+                    ),
                 ),
             )
         ]
@@ -215,6 +223,7 @@ def inline_wrapper(func):
             )
         else:
             await func(client, inline_query)
+
     return wrapper
 
 
@@ -276,7 +285,9 @@ async def progress(current, total, message, start, type_of_ps, file_name=None):
         )
         if file_name:
             try:
-                await message.edit("{}\n**File Name:** `{}`\n{}".format(type_of_ps, file_name, tmp))
+                await message.edit(
+                    "{}\n**File Name:** `{}`\n{}".format(type_of_ps, file_name, tmp)
+                )
             except FloodWait as e:
                 await asyncio.sleep(e.x)
             except MessageNotModified:
@@ -288,6 +299,7 @@ async def progress(current, total, message, start, type_of_ps, file_name=None):
                 await asyncio.sleep(e.x)
             except MessageNotModified:
                 pass
+
 
 async def cb_progress(current, total, cb, start, type_of_ps, file_name=None):
     """Progress Bar For Showing Progress While Uploading / Downloading File - Inline"""
@@ -311,7 +323,9 @@ async def cb_progress(current, total, cb, start, type_of_ps, file_name=None):
         )
         if file_name:
             try:
-                await cb.edit_message_text("{}\n**File Name:** `{}`\n{}".format(type_of_ps, file_name, tmp))
+                await cb.edit_message_text(
+                    "{}\n**File Name:** `{}`\n{}".format(type_of_ps, file_name, tmp)
+                )
             except FloodWait as e:
                 await asyncio.sleep(e.x)
             except MessageNotModified:

@@ -6,34 +6,30 @@
 #
 # All rights reserved.
 
+import asyncio
+from datetime import datetime
+
 from pyrogram import filters
+
+from database.afk import check_afk, go_afk, no_afk
 from main_startup.config_var import Config
 from main_startup.core.decorators import friday_on_cmd, listen
 from main_startup.helper_func.basic_helpers import edit_or_reply, get_text
-from datetime import datetime
-import asyncio
 from main_startup.helper_func.logger_s import LogIt
-
-from database.afk import (
-    no_afk,
-    go_afk,
-    check_afk
-)
 
 afk_sanity_check: dict = {}
 
-    
+
 async def is_afk_(f, client, message):
     af_k_c = await check_afk()
     if af_k_c:
         return bool(True)
     else:
         return bool(False)
-    
-is_afk = filters.create(
-    func=is_afk_,
-    name="is_afk_"
-)
+
+
+is_afk = filters.create(func=is_afk_, name="is_afk_")
+
 
 @friday_on_cmd(
     ["afk"],
@@ -51,15 +47,29 @@ async def set_afk(client, message):
     log = LogIt(message)
     if msge:
         msg = f"**My Master Seems To Be Too Busy 👀.** \n__He Going Afk Because Of__ `{msge}`"
-        await log.log_msg(client, f"#AfkLogger Afk Is Active And Reason is {msge}",)
+        await log.log_msg(
+            client,
+            f"#AfkLogger Afk Is Active And Reason is {msge}",
+        )
         await go_afk(afk_start, msge)
     else:
         msg = f"**I Am Busy And I Am Going Afk**."
-        await log.log_msg(client, f"#AfkLogger Afk Is Active",)
-        await go_afk(afk_start) 
+        await log.log_msg(
+            client,
+            f"#AfkLogger Afk Is Active",
+        )
+        await go_afk(afk_start)
     await pablo.edit(msg)
-        
-@listen(is_afk & (filters.mentioned | filters.private) & ~filters.me & ~filters.bot & ~filters.edited & filters.incoming)
+
+
+@listen(
+    is_afk
+    & (filters.mentioned | filters.private)
+    & ~filters.me
+    & ~filters.bot
+    & ~filters.edited
+    & filters.incoming
+)
 async def afk_er(client, message):
     if not message:
         message.continue_propagation()
@@ -73,7 +83,9 @@ async def afk_er(client, message):
     else:
         afk_sanity_check[use_r] += 1
     if afk_sanity_check[use_r] == 5:
-        await message.reply_text("`I Told You 5 Times That My Master Isn't Available, Now I Will Not Reply To You. ;(`")
+        await message.reply_text(
+            "`I Told You 5 Times That My Master Isn't Available, Now I Will Not Reply To You. ;(`"
+        )
         afk_sanity_check[use_r] += 1
         message.continue_propagation()
         return
@@ -89,10 +101,15 @@ async def afk_er(client, message):
     afk_end = back_alivee.replace(microsecond=0)
     total_afk_time = str((afk_end - afk_start))
     afk_since = "**a while ago**"
-    message_to_reply = (f"I Am **[AFK]** Right Now. \n**Last Seen :** `{total_afk_time}`\n**Reason** : `{reason}`" if reason else f"I Am **[AFK]** Right Now. \n**Last Seen :** `{total_afk_time}`")
+    message_to_reply = (
+        f"I Am **[AFK]** Right Now. \n**Last Seen :** `{total_afk_time}`\n**Reason** : `{reason}`"
+        if reason
+        else f"I Am **[AFK]** Right Now. \n**Last Seen :** `{total_afk_time}`"
+    )
     LL = await message.reply(message_to_reply)
     message.continue_propagation()
-        
+
+
 @listen(filters.outgoing & filters.me & is_afk)
 async def no_afke(client, message):
     lol = await check_afk()
@@ -100,9 +117,14 @@ async def no_afke(client, message):
     afk_start = lol["time"]
     afk_end = back_alivee.replace(microsecond=0)
     total_afk_time = str((afk_end - afk_start))
-    kk = await message.reply(f"""__Pro is Back Alive__\n**No Longer afk.**\n `I Was afk for:``{total_afk_time}`""",)
+    kk = await message.reply(
+        f"""__Pro is Back Alive__\n**No Longer afk.**\n `I Was afk for:``{total_afk_time}`""",
+    )
     await kk.delete()
     await no_afk()
     log = LogIt(message)
-    await log.log_msg(client, f"#AfkLogger User is Back Alive ! No Longer Afk\n AFK for : {total_afk_time} ")
+    await log.log_msg(
+        client,
+        f"#AfkLogger User is Back Alive ! No Longer Afk\n AFK for : {total_afk_time} ",
+    )
     message.continue_propagation()
