@@ -129,4 +129,5 @@ async def wow_restart(client, message):
     await edit_or_reply(message, "`🔁 Restarting... 🔁`")
     args = [sys.executable, "-m", "main_startup"]
     execle(sys.executable, *args, environ)
+    exit()
     return
