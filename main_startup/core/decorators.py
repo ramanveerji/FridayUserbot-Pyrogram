@@ -143,8 +143,7 @@ def listen(filter_s):
             except ContinuePropagation:
                 raise ContinuePropagation
             except UserNotParticipant:
-                message.continue_propagation()
-                return
+                pass
             except BaseException as e:
                 logging.error(f"Exception - {func.__module__} - {func.__name__}")
                 TZ = pytz.timezone(Config.TZ)
@@ -161,8 +160,7 @@ def listen(filter_s):
                     await client.send_message(Config.LOG_GRP, text)
                 except BaseException:
                     logging.error(text)
-                message.continue_propagation()
-                return
+            message.continue_propagation()
         Friday.add_handler(MessageHandler(wrapper, filters=filter_s), group=0)
         if Friday2:
             Friday2.add_handler(MessageHandler(wrapper, filters=filter_s), group=0)
