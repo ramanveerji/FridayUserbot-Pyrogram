@@ -39,20 +39,13 @@
       "description": "A Group ID Where You Want To Log Important Logs.",
       "value": ""
     },
-    "PLUGIN_CHANNEL": {
-      "description": "Channel ID Where You Save Your Plugins.",
-      "value": "",
-      "required": false
-    },
     "HEROKU_API_KEY": {
       "description": "Go to https://dashboard.heroku.com/account, scroll down and press Reveal API.",
-      "value": "",
-      "required": false
+      "value": ""
     },
     "HEROKU_APP_NAME": {
       "description": "Heroku App Name That You Filled Above.",
-      "value": "",
-      "required": false
+      "value": ""
     },
     "UPSTREAM_REPO": {
       "description": "Your Upstream URL HERE. If You're Beginner, Don't Change This.",
