@@ -10,6 +10,7 @@ import os
 
 import heroku3
 from dotenv import load_dotenv
+from distutils.util import strtobool
 
 if os.path.exists("local.env"):
     load_dotenv("local.env")
@@ -47,11 +48,8 @@ class Config(object):
     STRINGSESSION_2 = os.environ.get("STRINGSESSION_2", None)
     STRINGSESSION_3 = os.environ.get("STRINGSESSION_3", None)
     STRINGSESSION_4 = os.environ.get("STRINGSESSION_4", None)
-    LOAD_UNOFFICIAL_PLUGINS = os.environ.get("LOAD_UNOFFICIAL_PLUGINS", False)
-    PLUGIN_CHANNEL_S = os.environ.get("PLUGIN_CHANNEL", "-100").replace("-100", "")
-    PLUGIN_CHANNEL = (
-        int(PLUGIN_CHANNEL_S) if PLUGIN_CHANNEL_S.isdigit() else str(PLUGIN_CHANNEL_S)
-    )
+    LOAD_UNOFFICIAL_PLUGINS = bool(strtobool(str(os.environ.get("LOAD_UNOFFICIAL_PLUGINS", False))))
+    PLUGIN_CHANNEL_S = int(os.environ.get("PLUGIN_CHANNEL", False))
     TZ = os.environ.get("TZ", "Asia/Kolkata")
     MONGO_DB = os.environ.get("MONGO_DB", None)
     LOG_GRP = int(os.environ.get("LOG_GRP", False))
@@ -73,6 +71,6 @@ class Config(object):
     HEROKU_URL = fetch_heroku_git_url(HEROKU_API_KEY, HEROKU_APP_NAME)
     V_T_KEY = os.environ.get("VIRUSTOTAL_API_KEY", None)
     TAG_LOGGER = os.environ.get("TAG_LOGGER", False)
-    PM_PSW = os.environ.get("PM_PSW", True)
+    PM_PSW = bool(strtobool(str(os.environ.get("PM_PSW", True))))
     MAIN_NO_LOAD = [x for x in os.environ.get("MAIN_NO_LOAD", "").split(',')]
     XTRA_NO_LOAD = [x for x in os.environ.get("XTRA_NO_LOAD", "").split(',')]
