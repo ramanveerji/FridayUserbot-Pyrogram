@@ -10,6 +10,7 @@ import asyncio
 import glob
 import importlib
 import logging
+from main_startup import Config
 import ntpath
 import shlex
 from typing import Tuple
@@ -17,10 +18,11 @@ from typing import Tuple
 
 def load_xtra_mod(plugin_name):
     """Load All Extra Plugins Using ImportLib"""
-    plugin_path = "xtraplugins." + plugin_name
-    loader_type = "[USER][XTRA-PLUGINS]"
-    importlib.import_module(plugin_path)
-    logging.info(f"{loader_type} - Loaded : " + str(plugin_name))
+    if plugin_name not in Config.XTRA_NO_LOAD:
+        plugin_path = "xtraplugins." + plugin_name
+        loader_type = "[USER][XTRA-PLUGINS]"
+        importlib.import_module(plugin_path)
+        logging.info(f"{loader_type} - Loaded : " + str(plugin_name))
 
 
 def load_plugin(plugin_name, assistant=False):
@@ -28,13 +30,14 @@ def load_plugin(plugin_name, assistant=False):
     if plugin_name.endswith("__"):
         pass
     else:
-        if assistant:
-            plugin_path = "assistant." + plugin_name
-        else:
-            plugin_path = "plugins." + plugin_name
-        loader_type = "[Assistant]" if assistant else "[User]"
-        importlib.import_module(plugin_path)
-        logging.info(f"{loader_type} - Loaded : " + str(plugin_name))
+        if plugin_name not in Config.MAIN_NO_LOAD:
+            if assistant:
+                plugin_path = "assistant." + plugin_name
+            else:
+                plugin_path = "plugins." + plugin_name
+            loader_type = "[Assistant]" if assistant else "[User]"
+            importlib.import_module(plugin_path)
+            logging.info(f"{loader_type} - Loaded : " + str(plugin_name))
 
 
 def plugin_collecter(path):

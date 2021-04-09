@@ -36,7 +36,9 @@ try:
     r = telegraph.create_account(short_name="FridayUserBot.")
     auth_url = r["auth_url"]
 except:
-    pass
+    telegraph = None
+    r = None
+    auth_url = None
 
 
 @friday_on_cmd(
@@ -47,8 +49,14 @@ except:
     },
 )
 async def set_custom_pm_texts(client, message):
+    if not Config.PM_PSW:
+        await ms_.edit("`Pm Permit Is Disabled. Whats The Use Of Adding Custom Pm Text?`")
+        return
     ptext = get_text(message)
     if not ptext:
+        if not message.reply_to_message:
+            await message.edit("`Reply To Text Message Or Give To Text As Input To SetAs Custom PM Text`")
+            return
         if message.reply_to_message.text:
             ptext = message.reply_to_message.text
     if not ptext:
@@ -71,6 +79,9 @@ async def set_custom_pm_texts(client, message):
     },
 )
 async def set_custom_pm_texts(client, message):
+    if not Config.PM_PSW:
+        await ms_.edit("`Pm Permit Is Disabled. Whats The Use Of Setting Pm Limit?`")
+        return
     ptext = get_text(message)
     if not ptext:
         await message.edit("`Give Number Input!`")
@@ -160,6 +171,9 @@ async def unmblock(client, message):
     },
 )
 async def allow(client, message):
+    if not Config.PM_PSW:
+        await ms_.edit("`Pm Permit Is Disabled. Whats The Use Of Approving User?`")
+        return
     if message.chat.type == "private":
         if int(message.chat.id) in OLD_MSG:
             await OLD_MSG[int(message.chat.id)].delete()
@@ -209,6 +223,9 @@ async def allow(client, message):
     },
 )
 async def disallow(client, message):
+    if not Config.PM_PSW:
+        await ms_.edit("`Pm Permit Is Disabled. Whats The Use Of Dis-Approving Users?`")
+        return
     if message.chat.type == "private":
         user_ = await client.get_users(int(message.chat.id))
         firstname = user_.first_name
@@ -261,11 +278,13 @@ async def disallow(client, message):
 )
 async def set_my_pic(client, message):
     ms_ = await edit_or_reply(message, "`Please Wait!`")
-    if not (
-        message.reply_to_message
-        or message.reply_to_message.photo
-        or message.reply_to_message.sticker
-    ):
+    if not Config.PM_PSW:
+        await ms_.edit("`Pm Permit Is Disabled. Whats The Use Of Adding A Pm Pic?`")
+        return
+    if not message.reply_to_message:
+        await ms_.edit("`Reply To Image To Set As Your Pm Permit Pic.`")
+        return
+    if not (message.reply_to_message.photo or message.reply_to_message.sticker):
         await ms_.edit("`Reply To Image To Set As Your Pm Permit Pic.`")
         return
     if message.reply_to_message.sticker:
@@ -286,6 +305,9 @@ async def set_my_pic(client, message):
 
 @listen(filters.incoming & filters.private & ~filters.edited & ~filters.me)
 async def pmPermit(client, message):
+    if not Config.PM_PSW:
+        message.continue_propagation()
+        return
     if not message.from_user:
         message.continue_propagation()
         return

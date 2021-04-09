@@ -103,7 +103,7 @@ def friday_on_cmd(
                     raise ContinuePropagation
                 except BaseException as e:
                     logging.error(
-                        f"Exception - {func.__module__} - {func.__name__} : {e}"
+                        f"Exception - {func.__module__} - {func.__name__}"
                     )
                     TZ = pytz.timezone(Config.TZ)
                     datetime_tz = datetime.now(TZ)
@@ -117,8 +117,8 @@ def friday_on_cmd(
                     text += "\n\n__You can Forward This to @FridayChat, If You Think This is Serious A Error!__"
                     try:
                         await client.send_message(Config.LOG_GRP, text)
-                    except Exception:
-                        pass
+                    except BaseException:
+                        logging.error(text)
 
         Friday.add_handler(MessageHandler(wrapper, filters=filterm), group)
         if Friday2:
@@ -134,7 +134,6 @@ def friday_on_cmd(
 
 def listen(filter_s):
     """Simple Decorator To Handel Custom Filters"""
-
     def decorator(func):
         async def wrapper(client, message):
             try:
@@ -143,8 +142,11 @@ def listen(filter_s):
                 raise StopPropagation
             except ContinuePropagation:
                 raise ContinuePropagation
+            except UserNotParticipant:
+                message.continue_propagation()
+                return
             except BaseException as e:
-                logging.error(f"Exception - {func.__module__} - {func.__name__} : {e}")
+                logging.error(f"Exception - {func.__module__} - {func.__name__}")
                 TZ = pytz.timezone(Config.TZ)
                 datetime_tz = datetime.now(TZ)
                 text = "**!ERROR WHILE HANDLING UPDATES!**\n\n"
@@ -157,11 +159,10 @@ def listen(filter_s):
                 text += "\n\n__You can Forward This to @FridayChat, If You Think This is A Error!__"
                 try:
                     await client.send_message(Config.LOG_GRP, text)
-                except Exception:
-                    pass
+                except BaseException:
+                    logging.error(text)
                 message.continue_propagation()
                 return
-
         Friday.add_handler(MessageHandler(wrapper, filters=filter_s), group=0)
         if Friday2:
             Friday2.add_handler(MessageHandler(wrapper, filters=filter_s), group=0)

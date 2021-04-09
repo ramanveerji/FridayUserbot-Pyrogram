@@ -56,30 +56,14 @@ async def get_pm_text():
 async def set_pm_spam_limit(psl=3):
     stark = await bsdb.find_one({"_id": "LIMIT_PM"})
     if stark:
-        await bsdb.update_one({"_id": "LIMIT_PM"}, {"$set": {"psl": psl}})
+        await bsdb.update_one({"_id": "LIMIT_PM"}, {"$set": {"psl": int(psl)}})
     else:
-        await bsdb.insert_one({"_id": "LIMIT_PM", "psl": psl})
+        await bsdb.insert_one({"_id": "LIMIT_PM", "psl": int(psl)})
 
 
 async def get_pm_spam_limit():
     meisnub = await bsdb.find_one({"_id": "LIMIT_PM"})
     if meisnub:
-        return meisnub["psl"]
+        return int(meisnub["psl"])
     else:
         return 3
-
-
-async def pm_permit_should_work(sw=True):
-    die = await bsdb.find_one({"_id": "PM"})
-    if die:
-        await bsdb.update_one({"_id": "PM"}, {"$set": {"pm_s": sw}})
-    else:
-        await bsdb.insert_one({"_id": "PM", "pm_s": sw})
-
-
-async def get_pm_setting_s():
-    stark = await bsdb.find_one({"_id": "PM"})
-    if stark:
-        return stark["pm_s"]
-    else:
-        return True

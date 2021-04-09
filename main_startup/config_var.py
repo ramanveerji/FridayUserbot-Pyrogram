@@ -73,3 +73,6 @@ class Config(object):
     HEROKU_URL = fetch_heroku_git_url(HEROKU_API_KEY, HEROKU_APP_NAME)
     V_T_KEY = os.environ.get("VIRUSTOTAL_API_KEY", None)
     TAG_LOGGER = os.environ.get("TAG_LOGGER", False)
+    PM_PSW = os.environ.get("PM_PSW", True)
+    MAIN_NO_LOAD = [x for x in os.environ.get("MAIN_NO_LOAD", "").split(',')]
+    XTRA_NO_LOAD = [x for x in os.environ.get("XTRA_NO_LOAD", "").split(',')]
