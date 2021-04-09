@@ -119,7 +119,7 @@ def friday_on_cmd(
                         await client.send_message(Config.LOG_GRP, text)
                     except BaseException:
                         logging.error(text)
-
+            message.continue_propagation()
         Friday.add_handler(MessageHandler(wrapper, filters=filterm), group)
         if Friday2:
             Friday2.add_handler(MessageHandler(wrapper, filters=filterm), group)
