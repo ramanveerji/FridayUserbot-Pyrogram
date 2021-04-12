@@ -33,6 +33,7 @@ is_afk = filters.create(func=is_afk_, name="is_afk_")
 
 @friday_on_cmd(
     ["afk"],
+    propagate_to_next_handler=False,
     cmd_help={
         "help": "Set AFK!",
         "example": "{ch}afk",
