@@ -74,3 +74,4 @@ class Config(object):
     PM_PSW = bool(strtobool(str(os.environ.get("PM_PSW", True))))
     MAIN_NO_LOAD = [x for x in os.environ.get("MAIN_NO_LOAD", "").split(',')]
     XTRA_NO_LOAD = [x for x in os.environ.get("XTRA_NO_LOAD", "").split(',')]
+    DISABLED_SUDO_CMD_S = set(x for x in os.environ.get("DISABLED_SUDO_CMD_S", "").split()) 

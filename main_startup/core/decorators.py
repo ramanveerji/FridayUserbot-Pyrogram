@@ -122,13 +122,7 @@ def friday_on_cmd(
                         logging.error(text)
             if propagate_to_next_handler:
                 message.continue_propagation()
-        Friday.add_handler(MessageHandler(wrapper, filters=filterm), group)
-        if Friday2:
-            Friday2.add_handler(MessageHandler(wrapper, filters=filterm), group)
-        if Friday3:
-            Friday3.add_handler(MessageHandler(wrapper, filters=filterm), group)
-        if Friday4:
-            Friday4.add_handler(MessageHandler(wrapper, filters=filterm), group)
+        add_handler(filterm, wrapper, cmd)
         return wrapper
 
     return decorator
@@ -204,3 +198,19 @@ def add_help_menu(
             XTRA_CMD_LIST[
                 file_name
             ] += f"\n\n**Command :** `{Config.COMMAND_HANDLER}{cmd}` \n**Help :** `{cmd_help}` \n**Example :** `{cmd_helpz}`"
+
+
+def add_handler(filter_s, func_, cmd):
+    d_c_l = Config.DISABLED_SUDO_CMD_S
+    if d_c_l:
+        if "dev" in d_c_l:
+            d_c_l = ['eval', 'bash', 'install'] 
+        if any(item in list(d_c_l) for item in list(cmd)): 
+            filter_s = (filters.me & filters.command(cmd, Config.COMMAND_HANDLER) & ~filters.via_bot & ~filters.forwarded)
+    Friday.add_handler(MessageHandler(func_, filters=filter_s), group=0)
+    if Friday2:
+        Friday2.add_handler(MessageHandler(func_, filters=filter_s), group=0)
+    if Friday3:
+        Friday3.add_handler(MessageHandler(func_, filters=filter_s), group=0)
+    if Friday4:
+        Friday4.add_handler(MessageHandler(func_, filters=filter_s), group=0)    
