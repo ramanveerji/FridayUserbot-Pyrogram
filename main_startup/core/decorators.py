@@ -44,6 +44,7 @@ def friday_on_cmd(
     chnnl_only: bool = False,
     only_if_admin: bool = False,
     ignore_errors: bool = False,
+    propagate_to_next_handler: bool = True,
     file_name: str = None,
     is_official: bool = True,
     cmd_help: dict = {"help": "No One One Gonna Help You", "example": "{ch}what"},
@@ -119,7 +120,8 @@ def friday_on_cmd(
                         await client.send_message(Config.LOG_GRP, text)
                     except BaseException:
                         logging.error(text)
-            message.continue_propagation()
+            if propagate_to_next_handler:
+                message.continue_propagation()
         Friday.add_handler(MessageHandler(wrapper, filters=filterm), group)
         if Friday2:
             Friday2.add_handler(MessageHandler(wrapper, filters=filterm), group)
