@@ -31,7 +31,7 @@ async def help(client, message):
             await client.send_inline_bot_result(
                 message.chat.id, nice.query_id, nice.results[0].id, hide_via=True
             )
-        expect BaseExpection as e:
+        except BaseExpection as e:
             return await f_.edit(f"`Unable To Open Help Menu Here.` \n**ERROR :** `{e}`")
         await f_.delete()
     else:
@@ -39,7 +39,7 @@ async def help(client, message):
         if not cmd_:
             for i in CMD_LIST:
                 if i:
-                    help_t += f"▶ {i} \n"
+                    help_t += f"▶ <code>{i}</code> \n"
             help_t += f"If You Wanna Check Command Info And List About A Specfic Plugin, Use <code>{Config.COMMAND_HANDLER}help (file_name)</code>"
             await f_.edit(help_t)
         else:
@@ -63,7 +63,7 @@ async def help_(client, message):
     if not cmd_:
         for i in CMD_LIST:
             if i:
-                help_t += f"➲ {i} \n"
+               help_t += f"▶ <code>{i}</code> \n"
         help_t += f"\nIf You Wanna Check Command Info And List About A Specfic Plugin, Use <code>{Config.COMMAND_HANDLER}ahelp (file_name)</code>"
         await f_.edit(help_t)
     else:
