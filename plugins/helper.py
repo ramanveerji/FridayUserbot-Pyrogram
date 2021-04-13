@@ -21,17 +21,20 @@ from main_startup.helper_func.basic_helpers import edit_or_reply, get_text
     },
 )
 async def help(client, message):
+    f_ = await edit_or_reply(message, "`Please Wait!`")
     help_t = "<b>Command Names :</b> \n\n"
     if bot:
         starkbot = bot.me
         bot_username = starkbot.username
-        nice = await client.get_inline_bot_results(bot=bot_username, query="help")
-        await client.send_inline_bot_result(
-            message.chat.id, nice.query_id, nice.results[0].id, hide_via=True
-        )
-        await message.delete()
+        try:
+            nice = await client.get_inline_bot_results(bot=bot_username, query="help")
+            await client.send_inline_bot_result(
+                message.chat.id, nice.query_id, nice.results[0].id, hide_via=True
+            )
+        expect BaseExpection as e:
+            return await f_.edit(f"`Unable To Open Help Menu Here.` \n**ERROR :** `{e}`")
+        await f_.delete()
     else:
-        f_ = await edit_or_reply(message, "`Please Wait!`")
         cmd_ = get_text(message)
         if not cmd_:
             for i in CMD_LIST:
@@ -61,7 +64,7 @@ async def help_(client, message):
         for i in CMD_LIST:
             if i:
                 help_t += f"➲ {i} \n"
-        help_t += f"\nIf You Wanna Check Command Info And List About A Specfic Plugin, Use <code>{Config.COMMAND_HANDLER}help (file_name)</code>"
+        help_t += f"\nIf You Wanna Check Command Info And List About A Specfic Plugin, Use <code>{Config.COMMAND_HANDLER}ahelp (file_name)</code>"
         await f_.edit(help_t)
     else:
         if cmd_ not in CMD_LIST.keys():
