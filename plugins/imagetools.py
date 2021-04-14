@@ -44,46 +44,6 @@ auth_url = r["auth_url"]
 
 
 @friday_on_cmd(
-    ["ytc"],
-    cmd_help={
-        "help": "Create Youtube Comment!",
-        "example": "{ch}ytc (reply to Someone) (text comment)",
-    },
-)
-async def ytc(client, message):
-    pablo = await edit_or_reply(message, "`Processing...`")
-    comment = get_text(message)
-    if not comment:
-        await pablo.edit("`Provide Some Text For Comment!`")
-        return
-    if not message.reply_to_message:
-        await pablo.edit("`Reply To Someone!`")
-        return
-    try:
-        lol = await client.get_profile_photos(
-            message.reply_to_message.from_user.id, limit=1
-        )
-        H = await client.download_media(lol[0].file_id)
-        media_url = upload_file(H)
-        link = "https://telegra.ph/{media_url[0]}"
-        os.remove(H)
-    except Exception as e:
-        print(e)
-        link = "https://telegra.ph/file/b9684cda357dfbe6f5748.jpg"
-    first_name = html.escape(message.reply_to_message.from_user.first_name)
-    if first_name is not None:
-        first_name = first_name.replace("\u2060", "")
-    imglink = link
-    lolul = f"https://some-random-api.ml/canvas/youtube-comment?avatar={imglink}&username={first_name}&comment={comment}"
-    r = requests.get(lolul)
-    open("ytc.png", "wb").write(r.content)
-    lolbruh = "ytc.png"
-    await pablo.delete()
-    await client.send_photo(message.chat.id, lolbruh, caption="`Hmm Nice.`")
-    os.remove(lolbruh)
-
-
-@friday_on_cmd(
     ["hwn", "Improvisenote"],
     cmd_help={
         "help": "enhance the replied notes!",
