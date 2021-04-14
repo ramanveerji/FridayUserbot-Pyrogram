@@ -114,7 +114,7 @@ async def eval(client, message):
         capt = "Eval Result!"
     else:
         capt = cmd
-    await edit_or_send_as_file(final_output, message, client, capt, "eval-result")
+    await edit_or_send_as_file(final_output, stark, client, capt, "eval-result")
 
 
 async def aexec(code, client, message):
@@ -185,7 +185,7 @@ async def any_lang_cmd_runner(client, message):
  `{r.get("warnings")}`
  """
     await edit_or_send_as_file(
-        iujwal, message, client, "`Result of Your Code!`", "rc-result"
+        iujwal, stark, client, "`Result of Your Code!`", "rc-result"
     )
 
 
@@ -224,7 +224,7 @@ async def sed_terminal(client, message):
 **▶ Return Code :** 
 `{ret}`
 """
-    await edit_or_send_as_file(friday, message, client, cmd, "bash-result")
+    await edit_or_send_as_file(friday, stark, client, cmd, "bash-result")
 
 
 async def run_command(cmd):

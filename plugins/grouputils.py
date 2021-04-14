@@ -115,7 +115,7 @@ async def midhunadmin(client, message):
 """
     await edit_or_send_as_file(
         messag,
-        message,
+        pablo,
         client,
         f"`AdminList Of {holy}!`",
         "admin-lookup-result",

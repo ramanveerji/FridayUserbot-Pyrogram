@@ -245,7 +245,7 @@ async def give_glist(client, message):
         return
     for lit in list_:
         oof += f"**User :** `{lit['user']}` \n**Reason :** `{lit['reason']}` \n\n"
-    await edit_or_send_as_file(oof, message, client, "GbanList", "Gban-List")
+    await edit_or_send_as_file(oof, glist, client, "GbanList", "Gban-List")
 
 
 @friday_on_cmd(

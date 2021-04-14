@@ -179,12 +179,13 @@ async def create_poll(client, message):
     },
 )
 async def dumb_er(client, message):
+    ow = await edit_or_reply(message, "`Dumping...`")
     if message.reply_to_message:
         m_sg = message.reply_to_message
     else:
         m_sg = message
     owo = f"{m_sg}"
-    await edit_or_send_as_file(owo, message, client, "Json-Dump", "Dump", "md")
+    await edit_or_send_as_file(owo, ow, client, "Json-Dump", "Dump", "md")
 
 
 @friday_on_cmd(
