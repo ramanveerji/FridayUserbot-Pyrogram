@@ -17,7 +17,8 @@ from pyrogram import ContinuePropagation, StopPropagation, filters
 from pyrogram.errors.exceptions.bad_request_400 import (
     MessageIdInvalid,
     MessageNotModified,
-    UserNotParticipant,
+    MessageEmpty,
+    UserNotParticipant
 )
 from pyrogram.handlers import MessageHandler
 
@@ -139,6 +140,8 @@ def listen(filter_s):
             except ContinuePropagation:
                 raise ContinuePropagation
             except UserNotParticipant:
+                pass
+            except MessageEmpty:
                 pass
             except BaseException as e:
                 logging.error(f"Exception - {func.__module__} - {func.__name__}")

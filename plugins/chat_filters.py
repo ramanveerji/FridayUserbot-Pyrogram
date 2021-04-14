@@ -84,6 +84,7 @@ async def s_filters(client, message):
 async def filter_s(client, message):
     owo = message.text
     al_fill = []
+    is_m = False
     if not owo:
         message.continue_propagation()
         return
@@ -96,15 +97,36 @@ async def filter_s(client, message):
     owoo = owo.lower()
     if owoo in al_fill:
         f_info = await filters_info(owoo, int(message.chat.id))
-        if f_info:
-            await client.copy_message(
-                from_chat_id=int(Config.LOG_GRP),
+        m_s = await client.get_messages(int(Config.LOG_GRP), f_info["msg_id"])
+        if await is_media(m_s):
+            text_ = m_s.caption or ""
+            is_m = True
+        else:
+            text_ = m_s.text or ""
+        if text_ != "":
+            mention = message.from_user.mention
+            user_id = message.from_user.id
+            user_name = message.from_user.username or "No Username"
+            first_name = message.from_user.first_name
+            last_name = message.from_user.last_name or "No Last Name"
+            text_ = text_.format(mention=mention, user_id=user_id, user_name=user_name, first_name=first_name, last_name=last_name)
+        if not is_m:
+            await client.send_message(
+                message.chat.id,
+                text_,
+                reply_to_message_id=message.message_id)
+        else:
+            await m_s.copy(
                 chat_id=int(message.chat.id),
-                message_id=f_info["msg_id"],
+                caption=text_,
                 reply_to_message_id=message.message_id,
-            )
+        )
     message.continue_propagation()
 
+async def is_media(message):
+    if not (message.photo or message.video or message.document or message.audio or message.sticker or message.animation or message.voice or message.video_note):
+        return False
+    return True
 
 @friday_on_cmd(
     ["delfilters"],
