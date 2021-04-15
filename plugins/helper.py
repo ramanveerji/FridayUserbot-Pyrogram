@@ -7,7 +7,7 @@
 # All rights reserved.
 
 
-from main_startup import CMD_LIST, bot
+from main_startup import CMD_LIST, bot, XTRA_CMD_LIST
 from main_startup.core.decorators import Config, friday_on_cmd
 from main_startup.core.startup_helpers import run_cmd
 from main_startup.helper_func.basic_helpers import edit_or_reply, get_text
@@ -22,7 +22,6 @@ from main_startup.helper_func.basic_helpers import edit_or_reply, get_text
 )
 async def help(client, message):
     f_ = await edit_or_reply(message, "`Please Wait!`")
-    help_t = "<b>Command Names :</b> \n\n"
     if bot:
         starkbot = bot.me
         bot_username = starkbot.username
@@ -37,16 +36,14 @@ async def help(client, message):
     else:
         cmd_ = get_text(message)
         if not cmd_:
-            for i in CMD_LIST:
-                if i:
-                    help_t += f"▶ <code>{i}</code> \n"
-            help_t += f"If You Wanna Check Command Info And List About A Specfic Plugin, Use <code>{Config.COMMAND_HANDLER}help (file_name)</code>"
+            help_t = prepare_cmd_list()            
             await f_.edit(help_t)
         else:
-            if cmd_ not in CMD_LIST.keys():
-                await f_.edit("`404: Plugin Not Found!`")
+            help_s = get_help_str(cmd_)
+            if not help_s:
+                await f_.edit("<code>404: Plugin Not Found!</code>")
                 return
-            await f_.edit(CMD_LIST[cmd_])
+            await f_.edit(help_s)
 
 
 @friday_on_cmd(
@@ -57,17 +54,36 @@ async def help(client, message):
     },
 )
 async def help_(client, message):
-    help_t = "<b>Command Names :</b> \n\n"
-    f_ = await edit_or_reply(message, "`Please Wait!`")
+    f_ = await edit_or_reply(message, "`Please Wait.`")
     cmd_ = get_text(message)
     if not cmd_:
-        for i in CMD_LIST:
-            if i:
-               help_t += f"▶ <code>{i}</code> \n"
-        help_t += f"\nIf You Wanna Check Command Info And List About A Specfic Plugin, Use <code>{Config.COMMAND_HANDLER}ahelp (file_name)</code>"
+        help_t = prepare_cmd_list()            
         await f_.edit(help_t)
     else:
-        if cmd_ not in CMD_LIST.keys():
-            await f_.edit("`404: Plugin Not Found!`")
+        help_s = get_help_str(cmd_)
+        if not help_s:
+            await f_.edit("<code>404: Plugin Not Found!</code>")
             return
-        await f_.edit(CMD_LIST[cmd_])
+        await f_.edit(help_s)
+
+        
+def get_help_str(string):
+    if string not in CMD_LIST.keys():
+        if string not in XTRA_CMD_LIST.keys():
+            return None
+        return XTRA_CMD_LIST[string]
+    return CMD_LIST[string]
+    
+def prepare_cmd_list():
+    main_l = f"<b><u>📡 Friday Command List 📡</b></u> \n\n<b>⚒ Main Command List ({len(CMD_LIST)}) :</b> \n\n"
+    for i in CMD_LIST:
+        if i:
+            main_l += f"<code>{i}</code>    "
+    if Config.LOAD_UNOFFICIAL_PLUGINS:
+        main_l += f"\n\n<b>⚒ Xtra Command List ({len(XTRA_CMD_LIST)}) :</b> \n\n"
+        for i in XTRA_CMD_LIST:
+            if i:
+                main_l += f"<code>{i}</code>    "
+    main_l += f"\n\nUse <code>{Config.COMMAND_HANDLER}ahelp (cmd-name)</code> To Know More About A Plugin."
+    return main_l 
+    
