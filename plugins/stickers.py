@@ -34,7 +34,10 @@ from main_startup.helper_func.plugin_helpers import convert_to_image
 )
 async def packinfo(client, message):
     pablo = await edit_or_reply(message, "`Processing...`")
-    if not (message.reply_to_message or message.reply_to_message.sticker):
+    if not message.reply_to_message:
+        await pablo.edit("Please Reply To Sticker...")
+        return
+    if not message.reply_to_message.sticker:
         await pablo.edit("Please Reply To Sticker...")
         return
     if not message.reply_to_message.sticker.set_name:
@@ -71,7 +74,7 @@ async def packinfo(client, message):
     },
 )
 async def packinfo(client, message):
-    pablo = await edit_or_reply(message, "`Processing...`")
+    pablo = await edit_or_reply(message, "`Using Megic To Kang This Sticker...`")
     if not message.reply_to_message:
         await pablo.edit("Please Reply To Sticker...")
         return
@@ -137,13 +140,15 @@ async def packinfo(client, message):
             await client.send_message("stickers", "/addsticker")
         except YouBlockedUser:
             await pablo.edit("`Please Unblock @Stickers`")
-            return
+            await client.unblock_user("stickers")
         await client.send_message("stickers", packshortname)
         await asyncio.sleep(0.2)
         limit = "50" if is_anim else "120"
         messi = (await client.get_history("stickers", 1))[0]
         while limit in messi.text:
             pack += 1
+            prev_pack = int(pack) - 1
+            await pablo.edit(f"Kang Pack Vol __{prev_pack}__ is Full! Switching To Vol __{pack}__ Kang Pack")
             packname = f"@{nm} Kang Pack {pack}"
             packshortname = f"FRIDAY_{message.from_user.id}_{pack}"
             if is_anim:
@@ -171,7 +176,7 @@ async def packinfo(client, message):
                 await asyncio.sleep(0.5)
                 await client.send_message("stickers", packshortname)
                 await pablo.edit(
-                    f"Sticker Added To Your Pack. You Can Find It [Here](https://t.me/addstickers/{packshortname})"
+                    f"Sticker Added To Your Pack With Emoji - {emoji}. You Can Find It [Here](https://t.me/addstickers/{packshortname})"
                 )
                 return
         await client.send_document("stickers", file_name)
@@ -180,7 +185,7 @@ async def packinfo(client, message):
         await asyncio.sleep(0.5)
         await client.send_message("stickers", "/done")
         await pablo.edit(
-            f"`Sticker Added To Your Pack. You Can Find It` [Here](https://t.me/addstickers/{packshortname})"
+            f"`Sticker Added To Your Pack With Emoji - {emoji}. You Can Find It` [Here](https://t.me/addstickers/{packshortname})"
         )
     else:
         if is_anim:
@@ -201,7 +206,7 @@ async def packinfo(client, message):
         await asyncio.sleep(0.5)
         await client.send_message("stickers", packshortname)
         await pablo.edit(
-            f"`Sticker Added To Your Pack. You Can Find It` [Here](https://t.me/addstickers/{packshortname})"
+            f"`Sticker Added To Your Pack With Emoji - {emoji}. You Can Find It` [Here](https://t.me/addstickers/{packshortname})"
         )
         if os.path.exists(file_name):
             os.remove(file_name)
@@ -227,7 +232,7 @@ def resize_image(image):
         im = im.resize(sizenew)
     else:
         im.thumbnail(maxsize)
-    file_name = "@FridayOT.png"
+    file_name = "Sticker_FridayUB.png"
     im.save(file_name, "PNG")
     if os.path.exists(image):
         os.remove(image)
