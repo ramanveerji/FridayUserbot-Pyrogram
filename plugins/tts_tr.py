@@ -74,12 +74,18 @@ async def tr_pls(client, message):
     lang = get_text(message)
     if not lang:
         lang = "en"
-    if not message.reply_to_message and not message.reply_to_message.text:
+    if not message.reply_to_message:
+        await event.edit("`Reply To Message To Translate It!`")
+        return
+    if not message.reply_to_message.text:
         await event.edit("`Reply To Message To Translate It!`")
         return
     text = message.reply_to_message.text
     translator = google_translator()
-    source_lan = detect(text)
+    try:
+        source_lan = translator.detect(text)[1]
+    except:
+        source_lan = translator.detect(text)[0]
     if not LANGUAGES.get(lang):
         await event.edit("`Language Not Supported.`")
         return
