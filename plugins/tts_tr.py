@@ -33,7 +33,10 @@ async def gibspeech(client, message):
     stime = time.time()
     event = await edit_or_reply(message, "`Processing...`")
     ttslang = get_text(message)
-    if not message.reply_to_message or not message.reply_to_message.text:
+    if not message.reply_to_message:
+        await event.edit("`Reply To Message To Convert Into Speech!`")
+        return
+    if not message.reply_to_message.text:
         await event.edit("`Reply To Message To Convert Into Speech!`")
         return
     text = message.reply_to_message.text
