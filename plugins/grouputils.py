@@ -509,11 +509,14 @@ async def ujwal_unmute(client, message):
 async def owo_chat_info(client, message):
     s = await edit_or_reply(message, "`Trying To Get ChatInfo!`")
     ujwal = await client.get_chat(message.chat.id)
+    peer = await client.resolve_peer(message.chat.id)
+    online_ = await client.send(pyrogram.raw.functions.messages.GetOnlines(peer=peer))
     msg = "**Chat Info** \n\n"
     msg += f"**Chat-ID :** __{ujwal.id}__ \n"
     msg += f"**Verified :** __{ujwal.is_verified}__ \n"
     msg += f"**Is Scam :** __{ujwal.is_scam}__ \n"
     msg += f"**Chat Title :** __{ujwal.title}__ \n"
+    msg += f"**Users Online :** __{online_.onlines}__ \n"
     if ujwal.photo:
         msg += f"**Chat DC :** __{ujwal.dc_id}__ \n"
     if ujwal.username:
@@ -521,7 +524,6 @@ async def owo_chat_info(client, message):
     if ujwal.description:
         msg += f"**Chat Description :** __{ujwal.description}__ \n"
     msg += f"**Chat Members Count :** __{ujwal.members_count}__ \n"
-
     if ujwal.photo:
         kek = await client.download_media(ujwal.photo.big_file_id)
         await client.send_photo(message.chat.id, photo=kek, caption=msg)
