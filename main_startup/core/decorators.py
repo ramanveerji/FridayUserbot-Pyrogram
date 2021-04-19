@@ -121,8 +121,6 @@ def friday_on_cmd(
                         await client.send_message(Config.LOG_GRP, text)
                     except BaseException:
                         logging.error(text)
-            if propagate_to_next_handler:
-                message.continue_propagation()
         add_handler(filterm, wrapper, cmd)
         return wrapper
 
