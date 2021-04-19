@@ -15,6 +15,7 @@ from database.filterdb import (
     filters_del,
     filters_info,
 )
+import re
 from main_startup.config_var import Config
 from main_startup.core.decorators import friday_on_cmd, listen
 from main_startup.helper_func.basic_helpers import edit_or_reply, get_text
@@ -85,7 +86,7 @@ async def filter_s(client, message):
     if not message:
         message.continue_propagation()
         return
-    owo = message.text
+    owo = message.text or message.caption
     al_fill = []
     is_m = False
     if not owo:
@@ -98,28 +99,30 @@ async def filter_s(client, message):
     for all_fil in al_fil:
         al_fill.append(all_fil.get("keyword"))
     owoo = owo.lower()
-    if owoo in al_fill:
-        f_info = await filters_info(owoo, int(message.chat.id))
-        m_s = await client.get_messages(int(Config.LOG_GRP), f_info["msg_id"])
-        if await is_media(m_s):
-            text_ = m_s.caption or ""
-            is_m = True
-        else:
-            text_ = m_s.text or ""
-        if text_ != "":
-            mention = message.from_user.mention
-            user_id = message.from_user.id
-            user_name = message.from_user.username or "No Username"
-            first_name = message.from_user.first_name
-            last_name = message.from_user.last_name or "No Last Name"
-            text_ = text_.format(mention=mention, user_id=user_id, user_name=user_name, first_name=first_name, last_name=last_name)
-        if not is_m:
-            await client.send_message(
+    for filter_s in all_fill:
+        pattern = r"( |^|[^\w])" + re.escape(filter_s) + r"( |$|[^\w])"
+        if re.search(pattern, owo, flags=re.IGNORECASE):
+            f_info = await filters_info(filter_s, int(message.chat.id))
+            m_s = await client.get_messages(int(Config.LOG_GRP), f_info["msg_id"])
+            if await is_media(m_s):
+                text_ = m_s.caption or ""
+                is_m = True
+            else:
+                text_ = m_s.text or ""
+            if text_ != "":
+                mention = message.from_user.mention
+                user_id = message.from_user.id
+                user_name = message.from_user.username or "No Username"
+                first_name = message.from_user.first_name
+                last_name = message.from_user.last_name or "No Last Name"
+                text_ = text_.format(mention=mention, user_id=user_id, user_name=user_name, first_name=first_name, last_name=last_name)
+            if not is_m:
+                await client.send_message(
                 message.chat.id,
                 text_,
                 reply_to_message_id=message.message_id)
-        else:
-            await m_s.copy(
+            else:
+                await m_s.copy(
                 chat_id=int(message.chat.id),
                 caption=text_,
                 reply_to_message_id=message.message_id,
