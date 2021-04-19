@@ -99,7 +99,7 @@ async def reply_filter_(client, message):
     for all_fil in al_fil:
         al_fill.append(all_fil.get("keyword"))
     owoo = owo.lower()
-    for filter_s in all_fill:
+    for filter_s in al_fill:
         pattern = r"( |^|[^\w])" + re.escape(filter_s) + r"( |$|[^\w])"
         if re.search(pattern, owo, flags=re.IGNORECASE):
             f_info = await filters_info(filter_s, int(message.chat.id))
