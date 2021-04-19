@@ -73,10 +73,8 @@ async def set_afk(client, message):
 )
 async def afk_er(client, message):
     if not message:
-        message.continue_propagation()
         return
     if not message.from_user:
-        message.continue_propagation()
         return
     use_r = int(message.from_user.id)
     if use_r not in afk_sanity_check.keys():
@@ -88,10 +86,8 @@ async def afk_er(client, message):
             "`I Told You 5 Times That My Master Isn't Available, Now I Will Not Reply To You. ;(`"
         )
         afk_sanity_check[use_r] += 1
-        message.continue_propagation()
         return
     if afk_sanity_check[use_r] > 5:
-        message.continue_propagation()
         return
     lol = await check_afk()
     reason = lol["reason"]
@@ -108,7 +104,6 @@ async def afk_er(client, message):
         else f"I Am **[AFK]** Right Now. \n**Last Seen :** `{total_afk_time}`"
     )
     LL = await message.reply(message_to_reply)
-    message.continue_propagation()
 
 
 @listen(filters.outgoing & filters.me & is_afk)
@@ -128,4 +123,3 @@ async def no_afke(client, message):
         client,
         f"#AfkLogger User is Back Alive ! No Longer Afk\n AFK for : {total_afk_time} ",
     )
-    message.continue_propagation()

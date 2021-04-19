@@ -35,13 +35,13 @@ async def save_welcome(client, message):
 @listen(filters.new_chat_members & filters.group)
 async def welcomenibba(client, message):
     if not message:
-        message.continue_propagation()
+        
         return
     if not await welcome_info(int(message.chat.id)):
-        message.continue_propagation()
+        
         return
     if not message.chat:
-        message.continue_propagation()
+        
         return
     is_m = False
     sed = await welcome_info(int(message.chat.id))
@@ -69,7 +69,7 @@ async def welcomenibba(client, message):
             caption=text_,
             reply_to_message_id=message.message_id,
         )
-    message.continue_propagation()
+    
     
     
 async def is_media(message):

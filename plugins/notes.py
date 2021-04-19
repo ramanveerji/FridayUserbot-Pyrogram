@@ -42,10 +42,10 @@ async def lmao(client, message):
     if await all_note(message.chat.id):
         pass
     else:
-        message.continue_propagation()
+        
     owo = message.matches[0].group(1)
     if owo is None:
-        message.continue_propagation()
+        
     if await note_info(owo, message.chat.id):
         sed = await note_info(owo, message.chat.id)
         await client.copy_message(
@@ -54,7 +54,7 @@ async def lmao(client, message):
             message_id=sed["msg_id"],
             reply_to_message_id=message.message_id,
         )
-    message.continue_propagation()
+    
 
 
 @friday_on_cmd(

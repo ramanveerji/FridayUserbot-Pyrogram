@@ -307,38 +307,38 @@ async def set_my_pic(client, message):
 @listen(filters.incoming & filters.private & ~filters.edited & ~filters.me)
 async def pmPermit(client, message):
     if not Config.PM_PSW:
-        message.continue_propagation()
+        
         return
     if not message.from_user:
-        message.continue_propagation()
+        
         return
     if await is_user_approved(int(message.chat.id)):
-        message.continue_propagation()
+        
         return
     if message.from_user.id in devs_id:
         await approve_user(int(message.chat.id))
-        message.continue_propagation()
+        
         return
     user_ = await client.get_users(int(message.chat.id))
     if user_.is_contact:
-        message.continue_propagation()
+        
         return
     if user_.is_bot:
-        message.continue_propagation()
+        
         return
     if user_.is_verified:
-        message.continue_propagation()
+        
         return
     if user_.id == (client.me).id:
-        message.continue_propagation()
+        
         return
     if user_.is_scam:
         await message.reply_text("`Scammer Aren't Welcome To My Masters PM!`")
         await client.block_user(user_.id)
-        message.continue_propagation()
+        
         return
     if user_.is_support:
-        message.continue_propagation()
+        
         return
     text = await get_pm_text()
     log = LogIt(message)
@@ -357,7 +357,7 @@ async def pmPermit(client, message):
             PM_WARNS.pop(int(message.chat.id))
         blockeda = f"**#Blocked_PMPERMIT** \n**User :** `{user_.id}` \n**Reason :** `Spam Limit Reached.`"
         await log.log_msg(client, blockeda)
-        message.continue_propagation()
+        
         return
     warnings_got = f"{int(PM_WARNS[int(message.chat.id)]) + 1}/{int(pm_s_)}"
     user_firstname = message.from_user.first_name
@@ -372,4 +372,4 @@ async def pmPermit(client, message):
     if int(message.chat.id) in OLD_MSG:
         await OLD_MSG[int(message.chat.id)].delete()
     OLD_MSG[int(message.chat.id)] = holy
-    message.continue_propagation()
+    

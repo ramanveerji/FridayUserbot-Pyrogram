@@ -93,11 +93,11 @@ async def delblacklist(client, message):
 @listen(filters.incoming & ~filters.edited & filters.group)
 async def activeblack(client, message):
     if not await get_chat_blacklist(int(message.chat.id)):
-        message.continue_propagation()
+        
         return
     owo = message.text
     if owo is None:
-        message.continue_propagation()
+        
         return
     owoo = owo.lower()
     tges = owoo.split(" ")
@@ -112,7 +112,7 @@ async def activeblack(client, message):
                     client,
                     f"**Blacklist Warning**\n\nI am Not Admin In **{message.chat.title}**, So I cannot Delete That Group's Blacklist messages",
                 )
-    message.continue_propagation()
+    
 
 
 @friday_on_cmd(
