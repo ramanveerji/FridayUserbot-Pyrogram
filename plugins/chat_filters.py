@@ -80,8 +80,11 @@ async def s_filters(client, message):
     await note_.edit(f"`Done! {note_name} Added To Filters List!`")
 
 
-@listen(filters.incoming & ~filters.edited & filters.group)
+@listen(filters.incoming & ~filters.edited & filters.group & ~filters.private & ~filters.me)
 async def filter_s(client, message):
+    if not message:
+        message.continue_propagation()
+        return
     owo = message.text
     al_fill = []
     is_m = False
