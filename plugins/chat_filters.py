@@ -82,7 +82,7 @@ async def s_filters(client, message):
 
 
 @listen(filters.incoming & ~filters.edited & filters.group & ~filters.private & ~filters.me)
-async def filter_s(client, message):
+async def reply_filter_(client, message):
     if not message:
         message.continue_propagation()
         return
