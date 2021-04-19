@@ -84,17 +84,14 @@ async def s_filters(client, message):
 @listen(filters.incoming & ~filters.edited & filters.group & ~filters.private & ~filters.me)
 async def reply_filter_(client, message):
     if not message:
-        message.continue_propagation()
         return
     owo = message.text or message.caption
     al_fill = []
     is_m = False
     if not owo:
-        message.continue_propagation()
         return
     al_fil = await all_filters(int(message.chat.id))
     if not al_fil:
-        message.continue_propagation()
         return
     for all_fil in al_fil:
         al_fill.append(all_fil.get("keyword"))
@@ -127,7 +124,6 @@ async def reply_filter_(client, message):
                 caption=text_,
                 reply_to_message_id=message.message_id,
         )
-    message.continue_propagation()
 
 async def is_media(message):
     if not (message.photo or message.video or message.document or message.audio or message.sticker or message.animation or message.voice or message.video_note):
