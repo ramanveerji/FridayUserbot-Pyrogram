@@ -41,7 +41,10 @@ if not os.path.isdir(sedpath):
 )
 async def lgo(client, message):
     pablo = await edit_or_reply(message, "`Processing...`")
-    if not message.reply_to_message or not message.reply_to_message.sticker:
+    if not message.reply_to_message:
+        await pablo.edit("Reply to A Animated Sticker...")
+        return
+    if not message.reply_to_message.sticker:
         await pablo.edit("Reply to A Animated Sticker...")
         return
     if message.reply_to_message.sticker.mime_type != "application/x-tgsticker":
@@ -50,6 +53,10 @@ async def lgo(client, message):
     lol = await message.reply_to_message.download("tgs.tgs")
     cmdo = f"lottie_convert.py {lol} json.json"
     await runcmd(cmdo)
+    if not os.path.exists('json.json'):
+        await pablo.edit("`Invalid Tgs Sticker I Suppose.`")
+        os.remove("tgs.tgs")
+        return
     json = open("json.json", "r")
     jsn = json.read()
     json.close()
