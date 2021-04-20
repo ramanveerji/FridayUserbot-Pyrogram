@@ -10,7 +10,19 @@ import logging
 import re
 import string
 from random import choice
-
+import sys
+from datetime import datetime
+from os import environ, execle, path, remove
+import platform
+import re
+import socket
+import time
+import uuid
+import psutil
+from pyrogram import __version__
+import heroku3
+from git import Repo
+from git.exc import GitCommandError, InvalidGitRepositoryError, NoSuchPathError
 import requests
 from bs4 import BeautifulSoup
 from pyrogram import __version__, filters
@@ -22,18 +34,25 @@ from pyrogram.types import (
     InputTextMessageContent,
 )
 from tinydb import Query, TinyDB
-
+from main_startup.core.startup_helpers import run_cmd
 from main_startup import CMD_LIST, XTRA_CMD_LIST, Friday, bot, friday_version
 from main_startup.config_var import Config
 from main_startup.helper_func.basic_helpers import (
     cb_wrapper,
+    humanbytes,
     get_all_pros,
     inline_wrapper,
     paginate_help,
 )
 
+
+
 db_m = TinyDB("./main_startup/Cache/secret.json")
 db_s = TinyDB("./main_startup/Cache/not4u.json")
+
+
+REPO_ = Config.UPSTREAM_REPO
+BRANCH_ = Config.U_BRANCH
 
 
 @bot.on_inline_query()
@@ -171,26 +190,27 @@ async def owo(client, inline_query):
         bttn = [
             [
                 InlineKeyboardButton(
-                    text="Main Command Help", callback_data=f"make_basic_button_True"
+                    text="Command Help", callback_data=f"make_cmd_buttons"
                 )
-            ]
+            ],
+            [
+             InlineKeyboardButton(
+                    text="Restart UserBot", callback_data=f"restart_bot"
+                )
+            ],  
+            [
+             InlineKeyboardButton(
+                    text="Update UserBot", callback_data=f"updTe_bot"
+                )
+            ],
+            [
+             InlineKeyboardButton(
+                    text="SyS Info", callback_data=f"sys_info"
+                )
+            ],
         ]
         if Config.LOAD_UNOFFICIAL_PLUGINS:
             total_ = len(XTRA_CMD_LIST) + len(CMD_LIST)
-            bttn = [
-                [
-                    InlineKeyboardButton(
-                        text="Xtra Command Help",
-                        callback_data=f"make_basic_button_False",
-                    )
-                ],
-                [
-                    InlineKeyboardButton(
-                        text="Main Command Help",
-                        callback_data=f"make_basic_button_True",
-                    )
-                ],
-            ]
         nice_text = f"**FridayUserBot Commands** \n**Friday Version :** __{friday_version}__ \n**PyroGram Version :** __{__version__}__ \n**Total Plugins Loaded :** __{total_}__"
         await client.answer_inline_query(
             inline_query.id,
@@ -253,6 +273,197 @@ async def nothing_here(client, cb):
         )
         return
     await cb.answer(sstark[0]["msg"], cache_time=0, show_alert=True)
+    
+    
+@bot.on_callback_query(filters.regex(pattern="backO_to_help_menu"))
+@cb_wrapper
+async def black_menu(client, cb):
+    total_ = len(CMD_LIST)
+    bttn = [
+            [
+                InlineKeyboardButton(
+                    text="Command Help", callback_data=f"make_cmd_buttons"
+                )
+            ],
+            [
+             InlineKeyboardButton(
+                    text="Restart UserBot", callback_data=f"restart_bot"
+                )
+            ],  
+            [
+             InlineKeyboardButton(
+                    text="Update UserBot", callback_data=f"updTe_bot"
+                )
+            ],
+            [
+             InlineKeyboardButton(
+                    text="SyS Info", callback_data=f"sys_info"
+                )
+            ],
+        ]
+    if Config.LOAD_UNOFFICIAL_PLUGINS:
+        total_ = len(XTRA_CMD_LIST) + len(CMD_LIST)
+    nice_text = f"**FridayUserBot Commands** \n**Friday Version :** __{friday_version}__ \n**PyroGram Version :** __{__version__}__ \n**Total Plugins Loaded :** __{total_}__"
+    await cb.edit_message_text(nice_text, reply_markup=InlineKeyboardMarkup(bttn))
+
+@bot.on_callback_query(filters.regex(pattern="make_cmd_buttons"))
+@cb_wrapper
+async def cmd_buutton(client, cb):
+    bttn = [
+            [
+                InlineKeyboardButton(
+                    text="Main Command Help", callback_data=f"make_basic_button_True"
+                )
+            ],
+            [
+                InlineKeyboardButton(
+                    text="Back 🔙", callback_data=f"backO_to_help_menu"
+                )
+            ]
+        ]
+    if Config.LOAD_UNOFFICIAL_PLUGINS:
+        total_ = len(XTRA_CMD_LIST) + len(CMD_LIST)
+        bttn = [
+                [
+                    InlineKeyboardButton(
+                        text="Xtra Command Help",
+                        callback_data=f"make_basic_button_False",
+                    )
+                ],
+                [
+                    InlineKeyboardButton(
+                        text="Main Command Help",
+                        callback_data=f"make_basic_button_True",
+                    )
+                ],
+                [
+                    InlineKeyboardButton(
+                        text="Back 🔙", callback_data=f"backO_to_help_menu"
+                    )
+                ]
+            ]
+    await cb.edit_message_reply_markup(reply_markup=InlineKeyboardMarkup(bttn))
+
+@bot.on_callback_query(filters.regex(pattern="restart_bot"))
+@cb_wrapper
+async def roaststart(client, cb):
+    bttn = [
+        [
+                InlineKeyboardButton(
+                    text="Back 🔙", callback_data=f"backO_to_help_menu"
+                )
+            ]
+    ]
+    await cb.edit_message_text("`Please Wait, Restarting... This May Take A While`", reply_markup=InlineKeyboardMarkup(bttn))
+    args = [sys.executable, "-m", "main_startup"]
+    execle(sys.executable, *args, environ)
+    exit()
+
+@bot.on_callback_query(filters.regex(pattern="updTe_bot"))
+@cb_wrapper
+async def update_it(client, cb):
+    bttn = [
+        [
+                InlineKeyboardButton(
+                    text="Back 🔙", callback_data=f"backO_to_help_menu"
+                )
+            ]
+    ]
+    await cb.edit_message_text("`Updating Please Wait!`", reply_markup=InlineKeyboardMarkup(bttn))
+    try:
+        repo = Repo()
+    except GitCommandError:
+        return await cb.edit_message_text(
+            "`Invalid Git Command. Please Report This Bug To @FridayOT`",
+            reply_markup=InlineKeyboardMarkup(bttn)
+        )
+    except InvalidGitRepositoryError:
+        repo = Repo.init()
+        if "upstream" in repo.remotes:
+            origin = repo.remote("upstream")
+        else:
+            origin = repo.create_remote("upstream", REPO_)
+        origin.fetch()
+        repo.create_head(Config.U_BRANCH, origin.refs.master)
+        repo.heads.master.set_tracking_branch(origin.refs.master)
+        repo.heads.master.checkout(True)
+    if repo.active_branch.name != Config.U_BRANCH:
+        return await cb.edit_message_text(
+            f"`Seems Like You Are Using Custom Branch - {repo.active_branch.name}! Please Switch To {Config.U_BRANCH} To Make This Updater Function!`", reply_markup=InlineKeyboardMarkup(bttn))
+    try:
+        repo.create_remote("upstream", REPO_)
+    except BaseException:
+        pass
+    ups_rem = repo.remote("upstream")
+    ups_rem.fetch(Config.U_BRANCH)
+    if not Config.HEROKU_URL:
+        try:
+            ups_rem.pull(Config.U_BRANCH)
+        except GitCommandError:
+            repo.git.reset("--hard", "FETCH_HEAD")
+        await run_cmd("pip3 install --no-cache-dir -r requirements.txt")
+        await cb.edit_message_text("`Updated Sucessfully! Give Me A min To Restart!`", reply_markup=InlineKeyboardMarkup(bttn))
+        args = [sys.executable, "-m", "main_startup"]
+        execle(sys.executable, *args, environ)
+        exit()
+        return
+    else:
+        await cb.edit_message_text("`Heroku Detected! Pushing, Please Halt!`", reply_markup=InlineKeyboardMarkup(bttn))
+        if "heroku" in repo.remotes:
+            remote = repo.remote("heroku")
+            remote.set_url(Config.HEROKU_URL)
+        else:
+            remote = repo.create_remote("heroku", Config.HEROKU_URL)
+        try:
+            remote.push(refspec="HEAD:refs/heads/master", force=True)
+        except BaseException as error:
+            return await cb.edit_message_text(f"**Updater Error** \nTraceBack : `{error}`", reply_markup=InlineKeyboardMarkup(bttn))
+
+@bot.on_callback_query(filters.regex(pattern="sys_info"))
+@cb_wrapper
+async def fuck_arch_btw(client, cb):
+    bttn = [
+        [
+                InlineKeyboardButton(
+                    text="Back 🔙", callback_data=f"backO_to_help_menu"
+                )
+            ]
+    ]
+    splatform = platform.system()
+    platform_release = platform.release()
+    platform_version = platform.version()
+    architecture = platform.machine()
+    hostname = socket.gethostname()
+    ip_address = socket.gethostbyname(socket.gethostname())
+    mac_address = ":".join(re.findall("..", "%012x" % uuid.getnode()))
+    processor = platform.processor()
+    ram = humanbytes(round(psutil.virtual_memory().total))
+    cpu_freq = psutil.cpu_freq().current
+    if cpu_freq >= 1000:
+        cpu_freq = f"{round(cpu_freq / 1000, 2)}GHz"
+    else:
+        cpu_freq = f"{round(cpu_freq, 2)}MHz"
+    du = psutil.disk_usage(client.workdir)
+    psutil.disk_io_counters()
+    disk = f"{humanbytes(du.used)} / {humanbytes(du.total)} " f"({du.percent}%)"
+    cpu_len = len(psutil.Process().cpu_affinity())
+    neat_msg = f"""**System Info**
+    
+**PlatForm :** `{splatform}`
+**PlatForm - Release :** `{platform_release}`
+**PlatFork - Version :** `{platform_version}`
+**Architecture :** `{architecture}`
+**Hostname :** `{hostname}`
+**IP :** `{ip_address}`
+**Mac :** `{mac_address}`
+**Processor :** `{processor}`
+**Ram : ** `{ram}`
+**CPU :** `{cpu_len}`
+**CPU FREQ :** `{cpu_freq}`
+**DISK :** `{disk}`
+    """
+    await cb.edit_message_text(neat_msg, reply_markup=InlineKeyboardMarkup(bttn))
+
 
 
 @bot.on_callback_query(filters.regex(pattern="make_basic_button_(True|False)"))
