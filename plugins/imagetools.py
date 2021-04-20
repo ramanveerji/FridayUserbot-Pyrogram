@@ -30,8 +30,9 @@ from main_startup.core.startup_helpers import run_cmd
 from main_startup.helper_func.basic_helpers import edit_or_reply, get_text
 from main_startup.helper_func.plugin_helpers import (
     convert_to_image,
+    convert_image_to_image_note,
     convert_vid_to_vidnote,
-    generate_meme,
+    generate_meme
 )
 
 glitcher = ImageGlitcher()
@@ -177,6 +178,39 @@ async def flips(client, message):
     flipped = cv2.flip(image, 0)
     ok = "Flipped.webp"
     cv2.imwrite(ok, flipped)
+    if message.reply_to_message:
+        await client.send_sticker(
+            message.chat.id,
+            sticker=ok,
+            reply_to_message_id=message.reply_to_message.message_id,
+        )
+    else:
+        await client.send_sticker(message.chat.id, sticker=ok)
+    await owo.delete()
+    for files in (ok, img):
+        if files and os.path.exists(files):
+            os.remove(files)
+
+@friday_on_cmd(
+    ["imgnote"],
+    cmd_help={
+        "help": "Crop Image Into Round & Cool Sticker",
+        "example": "{ch}imgnote (reply to Image or sticker)",
+    },
+)
+async def c_imagenote(client, message):
+    owo = await edit_or_reply(message, "`OwO, Cropping.`")
+    img = await convert_to_image(message, client)
+    if not img:
+        await owo.edit("`Reply to a valid media first...`")
+        return
+    if not os.path.exists(img):
+        await owo.edit("`Invalid Media!`")
+        return
+    ok = await convert_image_to_image_note(img)
+    if not os.path.exists(ok):
+        await owo.edit("`Unable To Convert To Round Image.`")
+        return
     if message.reply_to_message:
         await client.send_sticker(
             message.chat.id,
