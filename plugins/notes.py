@@ -42,10 +42,10 @@ async def lmao(client, message):
     if await all_note(message.chat.id):
         pass
     else:
-        
+        return
     owo = message.matches[0].group(1)
     if owo is None:
-        
+        return
     if await note_info(owo, message.chat.id):
         sed = await note_info(owo, message.chat.id)
         await client.copy_message(

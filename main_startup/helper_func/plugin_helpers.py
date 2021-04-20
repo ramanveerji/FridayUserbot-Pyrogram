@@ -12,7 +12,8 @@ import os
 import subprocess
 import textwrap
 from json import JSONDecodeError
-
+import numpy as np
+from PIL import Image, ImageDraw
 import requests
 from PIL import Image, ImageDraw, ImageFont
 from pymediainfo import MediaInfo
@@ -120,6 +121,20 @@ async def convert_vid_to_vidnote(input_vid: str, final_path: str):
         os.remove(input_vid)
     else:
         os.rename(input_vid, final_path)
+        
+async def convert_image_to_image_note(input_path):
+    """Crop Image To Circle"""
+    img = Image.open(input_path).convert("RGB")
+    npImage = np.array(img)
+    h, w = img.size
+    alpha = Image.new('L', img.size,0)
+    draw = ImageDraw.Draw(alpha)
+    draw.pieslice([0,0,h,w],0,360,fill=255)
+    npAlpha = np.array(alpha)
+    npImage = np.dstack((npImage,npAlpha))
+    img_path = 'converted_by_FridayUB.webp'
+    Image.fromarray(npImage).save(img_path)
+    return img_path
 
 
 async def is_nsfw(client, message, is_reply=True):
