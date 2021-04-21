@@ -166,7 +166,7 @@ def paginate_help(page_number, loaded_modules, prefix, is_official=True):
                         prefix, modulo_page, is_official
                     ),
                 ),
-                InlineKeyboardButton(text="Close", callback_data="cleuse"),
+                InlineKeyboardButton(text="Back 🔙", callback_data=f"backO_to_help_menu"),
                 InlineKeyboardButton(
                     text="Next ⏩",
                     callback_data="{}_next({})_{}".format(
