@@ -110,6 +110,40 @@ async def bleck_name(client, message):
         return
     await owo.edit(f"`Lastname Sucessfully Changed To {new_lastname} !`")
 
+@friday_on_cmd(
+    ["join"],
+    cmd_help={
+        "help": "Join A Chat Easily.",
+        "example": "{ch}join (chat link or username)",
+    },
+)
+async def join_(client, message):
+    owo = await edit_or_reply(message, "`Joining Chat...`")
+    input_ = get_text(message)
+    if not input_:
+        await owo.edit("`Give A Input :/`")
+        return
+    try:
+        await client.join_chat(input_)
+    except BaseException as e:
+        await owo.edit(
+            f"`[Failed] - To Join Chat` \n**TraceBack :** `{e}`"
+        )
+        return
+    await owo.edit(f"`Sucessfully, Joined This Chat.`")
+
+@friday_on_cmd(
+    ["leave"],
+    group_only=True,
+    cmd_help={
+        "help": "Leave Chat Easily.",
+        "example": "{ch}leave",
+    },
+)
+async def leave_(client, message):
+    await edit_or_reply(message, "`GOODBYECRUELGROUP - *leaves*`")
+    await client.leave_chat(message.chat.id)
+
 
 @friday_on_cmd(
     ["updateppic", "ppic"],
