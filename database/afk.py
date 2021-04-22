@@ -8,7 +8,7 @@
 
 from database import db_x
 
-afk = db_x["AFK"]
+afk = db_x["I_AFK"]
 
 
 async def go_afk(time, reason=""):
@@ -30,4 +30,4 @@ async def check_afk():
     if midhun:
         return midhun
     else:
-        return False
+        return None
