@@ -919,7 +919,7 @@ async def ujwal_s_ticker(client, message):
     text = get_text(message)
     if not text:
         msg_.edit("`Give Me Text As Input!`")
-        returm
+        return
     sticktext = textwrap.wrap(text, width=10)
     sticktext = "\n".join(sticktext)
     R = random.randint(0, 256)
