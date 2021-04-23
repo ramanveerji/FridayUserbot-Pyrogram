@@ -284,6 +284,25 @@ async def upload(client, message):
                 progress=progress,
                 progress_args=(pablo, c_time, f"`Uploading {file_name}!`", file_name),
             )
+    elif file.endswith([".mp3", ".wav", ".m4a"]):
+        capt = f"File Name : `{file_name}` \nFile Size : `{humanbytes(size)}` \nFile Type : `Audio (Guessed)`"
+        if send_as_thumb:
+            await client.send_audio(
+                message.chat.id,
+                file,
+                thumb="./main_startup/Cache/thumb.jpg",
+                caption=capt,
+                progress=progress,
+                progress_args=(pablo, c_time, f"`Uploading {file_name}!`", file_name),
+            )
+        else:
+            await client.send_audio(
+                message.chat.id,
+                file,
+                caption=capt,
+                progress=progress,
+                progress_args=(pablo, c_time, f"`Uploading {file_name}!`", file_name),
+            )
     elif file.endswith(sticker_ext):
         await client.send_sticker(
             message.chat.id,
