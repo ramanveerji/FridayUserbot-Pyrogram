@@ -140,8 +140,10 @@ async def reverseing(client, message):
     await pablo.edit(f"[{guess}]({fetchUrl})\n\n[Visually similar images]({imgspage})")
     Beast = []
     for x in lst:
-        Beast.append(InputMediaPhoto(f"{x}"))
-
+        try:
+            Beast.append(InputMediaPhoto(f"{x}"))
+        except:
+            pass
     await client.send_media_group(message.chat.id, media=Beast)
     shutil.rmtree(os.path.dirname(os.path.abspath(lst[0])))
 
