@@ -242,17 +242,18 @@ async def pur_ge_me(client, message):
     async for msg in client.search_messages(
         message.chat.id, query="", limit=int(to_purge), from_user="me"
     ):
-        msg_ids.append(msg.message_id)
-        if len(msg_ids) >= 100:
-            await client.delete_messages(
-                chat_id=message.chat.id, message_ids=msg_ids, revoke=True
-            )
-            msg_ids.clear()
+        if message.message_id != msg.message_id:
+            msg_ids.append(msg.message_id)
+            if len(msg_ids) == 100:
+                await client.delete_messages(
+                    chat_id=message.chat.id, message_ids=msg_ids, revoke=True
+                )
+                msg_ids.clear()
     if msg_ids:
         await client.delete_messages(
             chat_id=message.chat.id, message_ids=msg_ids, revoke=True
         )
-    await client.send_message(message.chat.id, f"`Purged {to_purge} Messages!`")
+    await nice_p.edit(f"`Purged {to_purge} Messages!`")
 
 
 @friday_on_cmd(
