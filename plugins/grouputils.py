@@ -559,25 +559,25 @@ async def purge(client, message):
         offset_id=message.reply_to_message.message_id,
         reverse=True,
     ):
-        purge_len += 1
-        message_ids.append(msg.message_id)
-        if len(message_ids) >= 100:
-            await client.delete_messages(
-                chat_id=message.chat.id, message_ids=message_ids, revoke=True
-            )
-            message_ids.clear()
+        if msg.message_id != message.message_id:
+            purge_len += 1
+            message_ids.append(msg.message_id)
+            if len(message_ids) >= 100:
+                await client.delete_messages(
+                    chat_id=message.chat.id, message_ids=message_ids, revoke=True
+                )
+                message_ids.clear()
     if message_ids:
         await client.delete_messages(
             chat_id=message.chat.id, message_ids=message_ids, revoke=True
         )
     end_time = time.time()
     u_time = round(end_time - start_time)
-    h = await client.send_message(
-        message.chat.id,
+    await event.edit(
         f"**>> Flash Purge Done!** \n**>> Total Message Purged :** `{purge_len}` \n**>> Time Taken :** `{u_time}`",
     )
     await asyncio.sleep(3)
-    await h.delete()
+    await event.delete()
 
 
 @friday_on_cmd(
