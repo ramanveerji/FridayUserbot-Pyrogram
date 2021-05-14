@@ -28,6 +28,17 @@ from pyrogram.types import (
 from main_startup import Friday, Friday2, Friday3, Friday4
 from main_startup.config_var import Config
 
+import mimetypes
+
+
+def guess_mime_type(file_):
+    """Get Mime Type Of A File From Url / Path"""
+    s = mimetypes.guess_type(file_)
+    if not s[0]:
+        return None
+    else:
+        return s[0]
+
 
 def get_user(message: Message, text: str) -> [int, str, None]:
     """Get User From Message"""

@@ -11,6 +11,7 @@ import re
 import string
 from random import choice
 import sys
+#import datetime
 from datetime import datetime
 from os import environ, execle, path, remove
 import platform
@@ -37,6 +38,7 @@ from tinydb import Query, TinyDB
 from main_startup.core.startup_helpers import run_cmd
 from main_startup import CMD_LIST, XTRA_CMD_LIST, Friday, bot, friday_version
 from main_startup.config_var import Config
+from youtubesearchpython import SearchVideos
 from main_startup.helper_func.basic_helpers import (
     cb_wrapper,
     humanbytes,
@@ -44,6 +46,9 @@ from main_startup.helper_func.basic_helpers import (
     inline_wrapper,
     paginate_help,
 )
+import os
+from main_startup.helper_func.assistant_helpers import _dl, download_yt
+from pyrogram.types import InputMediaDocument, InputMediaVideo, InputMediaAudio
 
 
 
@@ -59,55 +64,7 @@ BRANCH_ = Config.U_BRANCH
 @inline_wrapper
 async def owo(client, inline_query):
     string_given = inline_query.query.lower()
-    if "modapk" in inline_query.query.lower():
-        if not " " in inline_query.query.lower():
-            return
-        string_given = inline_query.query.lower()
-        sgname = string_given.split(" ", maxsplit=1)[1]
-        print(sgname)
-        PabloEscobar = (
-            f"https://an1.com/tags/MOD/?story={sgname}&do=search&subaction=search"
-        )
-        r = requests.get(PabloEscobar)
-        results = []
-        soup = BeautifulSoup(r.content, "html5lib")
-        mydivs = soup.find_all("div", {"class": "search-results"})
-        Pop = soup.find_all("div", {"class": "title"})
-        cnte = len(mydivs)
-        for cnt in range(cnte):
-            sucker = mydivs[cnt]
-            pH9 = sucker.find("a").contents[0]
-            file_name = pH9
-            pH = sucker.findAll("img")
-            imme = pH[0]["src"]
-            Pablo = Pop[0].a["href"]
-            ro = requests.get(Pablo)
-            soupe = BeautifulSoup(ro.content, "html5lib")
-            myopo = soupe.find_all("div", {"class": "item"})
-            capt = f"**{file_name}** \n** {myopo[0].text}**\n**{myopo[1].text}**\n**{myopo[2].text}**\n**{myopo[3].text}**"
-            mydis0 = soupe.find_all("a", {"class": "get-product"})
-            Lol9 = mydis0[0]
-            lemk = "https://an1.com" + Lol9["href"]
-
-            results.append(
-                InlineQueryResultPhoto(
-                    photo_url=imme,
-                    title=file_name,
-                    caption=capt,
-                    reply_markup=InlineKeyboardMarkup(
-                        [
-                            [
-                                InlineKeyboardButton(
-                                    text="<<! Download Link!>>",
-                                    callback_data=f"apk_{lemk}",
-                                ),
-                            ]
-                        ]
-                    ),
-                )
-            )
-        await client.answer_inline_query(inline_query.id, cache_time=0, results=results)
-    elif "not4u" in string_given:
+    if string_given.startswith("not4u"):
         if not ";" in string_given:
             return
         ok = string_given.split(" ", maxsplit=1)[1]
@@ -146,7 +103,51 @@ async def owo(client, inline_query):
             )
         ]
         await client.answer_inline_query(inline_query.id, cache_time=0, results=ok_s)
-    elif "whisper" in string_given:
+    elif string_given.startswith("yt"):
+        results = []
+        try:
+            input = string_given.split(" ", maxsplit=1)[1]
+        except:
+            return
+        search = SearchVideos(str(input), offset=1, mode="dict", max_results=50)
+        rt = search.result()
+        result_s = rt["search_result"]
+        for i in result_s:
+            url = i["link"]
+            vid_title = i["title"]
+            yt_id = i["id"]
+            uploade_r = i["channel"]
+            views = i["views"]
+            thumb = f"https://img.youtube.com/vi/{yt_id}/hqdefault.jpg"
+            capt = f"""
+**Video Title :** `{vid_title}`
+**Link :** `{url}`
+**Uploader :** `{uploade_r}`
+**Views :** `{views}`
+            """
+            results.append(
+                InlineQueryResultPhoto(
+                    photo_url=thumb,
+                    title=vid_title,
+                    caption=capt,
+                    reply_markup=InlineKeyboardMarkup(
+                        [
+                            [
+                                InlineKeyboardButton(
+                                    text="Download - Audio",
+                                    callback_data=f"ytdl_{url}_audio"
+                                ),
+                                InlineKeyboardButton(
+                                    text="Download - Video",
+                                    callback_data=f"ytdl_{url}_video"
+                                )
+                            ]
+                        ]
+                    ),
+                )
+            )
+        await client.answer_inline_query(inline_query.id, cache_time=0, results=results)
+    elif string_given.startswith("whisper"):
         if not ";" in string_given:
             return
         ok = string_given.split(" ", maxsplit=1)[1]
@@ -185,7 +186,7 @@ async def owo(client, inline_query):
             )
         ]
         await client.answer_inline_query(inline_query.id, cache_time=0, results=ok_s)
-    elif "help" in string_given:
+    elif string_given.startswith("help"):
         total_ = len(CMD_LIST)
         bttn = [
             [
@@ -226,6 +227,35 @@ async def owo(client, inline_query):
             ],
         )
 
+@bot.on_callback_query(filters.regex(pattern="ytdl_(.*)_(video|audio)"))
+async def yt_dl_video(client, cb):
+    url = cb.matches[0].group(1)
+    audio_or_video = cb.matches[0].group(2)
+    if audio_or_video == "video":
+        file_name, downloaded_thumb, name, dur, u_date, uploader, views = await download_yt(url, as_video=True)
+    else:
+        file_name, downloaded_thumb, name, dur, u_date, uploader, views = await download_yt(url, as_video=False)
+    if not os.path.exists(file_name):
+        await cb.edit_message_text(file_name)
+        return
+    await cb.edit_message_text(f"`Downloaded : {name} | Now Uploading....`")
+    import datetime
+    f_size = humanbytes(os.stat(file_name).st_size)
+    caption = f"""
+**Title :** `{name}`
+**Uploader :** `{uploader}`
+**Views :** `{views}`
+**Link :** `{url}`
+**Duration :** `{datetime.timedelta(seconds=dur)}`
+**File Size :** `{f_size}`
+"""
+    if audio_or_video == "video":
+        file_ = InputMediaVideo(file_name, thumb=downloaded_thumb, supports_streaming=True, duration=dur, caption=caption)
+    else:
+        file_ = InputMediaAudio(file_name, performer=uploader, title=name, thumb=downloaded_thumb, duration=dur, caption=caption)
+    await cb.edit_message_media(file_)
+    if os.path.exists(file_name):
+        os.remove(file_name)
 
 @bot.on_callback_query(filters.regex(pattern="sc_(.*)"))
 async def no_horny(client, cb):
@@ -554,22 +584,3 @@ async def give_old_page(client, cb):
         current_page_number - 1, cmd_list, "helpme", is_official=is_official
     )
     await cb.edit_message_reply_markup(reply_markup=InlineKeyboardMarkup(buttons))
-
-
-@bot.on_callback_query(filters.regex(pattern="apk_(.*)"))
-@cb_wrapper
-async def ytv_(client, cb):
-    lemk = cb.matches[0].group(1)
-    rr = requests.get(lemk)
-    soup = BeautifulSoup(rr.content, "html5lib")
-    script = soup.find("script", type="text/javascript")
-    leek = re.search(r'href=[\'"]?([^\'" >]+)', script.text).group()
-    dl_link = leek[5:]
-    await cb.edit_message_reply_markup(
-        reply_markup=InlineKeyboardMarkup(
-            [
-                [InlineKeyboardButton("Download Link", url=lemk)],
-                [InlineKeyboardButton("Direct Download Link", url=dl_link)],
-            ]
-        )
-    )

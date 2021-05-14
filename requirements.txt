@@ -1,4 +1,4 @@
-pyrogram>=1.2.5
+git+https://github.com/pyrogram/pyrogram
 filesplit
 wget>=3.2
 CairoSVG>=2.5.2

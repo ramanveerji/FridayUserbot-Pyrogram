@@ -38,7 +38,7 @@ async def autopost(client, message):
         kk = str(chnnl).replace("-100", "")
     else:
         kk = chnnl
-    if not kk.isdigit():
+    if not kk.isnumeric():
         try:
             u_ = await client.get_chat(kk)
         except:
@@ -70,7 +70,7 @@ async def rmautopost(client, message):
         kk = str(chnnl).replace("-100", "")
     else:
         kk = chnnl
-    if not kk.isdigit():
+    if not kk.isnumeric():
         try:
             u_ = await client.get_chat(kk)
         except:

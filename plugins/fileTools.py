@@ -210,6 +210,7 @@ async def st(client, message):
 image_ext = tuple([".jpg", ".png", ".jpeg"])
 vid_ext = tuple([".mp4", ".mkv"])
 sticker_ext = tuple([".wepb", ".tgs"])
+song_ext = tuple([".mp3", ".wav", ".m4a"])
 
 
 @friday_on_cmd(
@@ -284,7 +285,7 @@ async def upload(client, message):
                 progress=progress,
                 progress_args=(pablo, c_time, f"`Uploading {file_name}!`", file_name),
             )
-    elif file.endswith([".mp3", ".wav", ".m4a"]):
+    elif file.endswith(song_ext):
         capt = f"File Name : `{file_name}` \nFile Size : `{humanbytes(size)}` \nFile Type : `Audio (Guessed)`"
         if send_as_thumb:
             await client.send_audio(

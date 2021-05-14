@@ -137,51 +137,6 @@ async def convert_image_to_image_note(input_path):
     return img_path
 
 
-async def is_nsfw(client, message, is_reply=True):
-    if not message:
-        return None
-    """ Nsfw Check """
-    img = None
-    if is_reply:
-        if not message.reply_to_message:
-            return False
-        lmao = message.reply_to_message
-        if not (
-            message.reply_to_message.video
-            or message.reply_to_message.photo
-            or message.reply_to_message.sticker
-            or message.reply_to_message.media
-        ):
-            return False
-    else:
-        lmao = message
-        if not (message.video or message.photo or message.sticker or message.media):
-            return False
-    if lmao.video:
-        fl = lmao.video.thumbs[0].file_id
-        img = await client.download_media(fl)
-    elif lmao.photo:
-        if not is_reply:
-            img = await message.download()
-        else:
-            img = await message.reply_to_message.download()
-    elif lmao.sticker:
-        img = await convert_to_image(message, client)
-    if not img:
-        return False
-    f = {"file": (img, open(img, "rb"))}
-    try:
-        r = requests.post("https://starkapis.herokuapp.com/nsfw/", files=f).json()
-    except JSONDecodeError:
-        return False
-    if r.get("success") is False:
-        is_nsfw = False
-    elif r.get("is_nsfw") is True:
-        is_nsfw = True
-    elif r.get("is_nsfw") is False:
-        is_nsfw = False
-    return is_nsfw
-
 
 def extract_w_h(file):
     """ Extract Video's Width & Height """

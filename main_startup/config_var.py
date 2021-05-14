@@ -74,4 +74,7 @@ class Config(object):
     PM_PSW = bool(strtobool(str(os.environ.get("PM_PSW", True))))
     MAIN_NO_LOAD = [x for x in os.environ.get("MAIN_NO_LOAD", "").split(',')]
     XTRA_NO_LOAD = [x for x in os.environ.get("XTRA_NO_LOAD", "").split(',')]
-    DISABLED_SUDO_CMD_S = set(x for x in os.environ.get("DISABLED_SUDO_CMD_S", "").split()) 
+    DISABLED_SUDO_CMD_S = os.environ.get("DISABLED_SUDO_CMD_S", None)
+    ENABLE_WAIFU_FOR_ALL_CHATS = bool(strtobool(str(os.environ.get("ENABLE_WAIFU_FOR_ALL_CHATS", False))))
+    CHROME_DRIVER_PATH = os.environ.get("CHROME_DRIVER_PATH", "/usr/bin/chromedriver")
+    CHROME_BIN_PATH = os.environ.get("CHROME_BIN_PATH", "/usr/bin/google-chrome-stable")

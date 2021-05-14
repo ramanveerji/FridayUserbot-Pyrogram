@@ -33,7 +33,6 @@ async def paste(client, message):
             file = await message.reply_to_message.download()
             m_list = open(file, "r").read()
             message_s = m_list
-            print(message_s)
             os.remove(file)
         elif message.reply_to_message.text:
             message_s = message.reply_to_message.text

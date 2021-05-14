@@ -42,7 +42,7 @@ async def get_thumb():
     if ujwal:
         return ujwal["pm_img"]
     else:
-        return default_thumb
+        return None 
 
 
 async def get_pm_text():

@@ -14,6 +14,15 @@ from main_startup import Config
 import ntpath
 import shlex
 from typing import Tuple
+import sys
+from datetime import datetime
+from os import environ, execle, path, remove
+import heroku3
+from git import Repo
+from git.exc import GitCommandError, InvalidGitRepositoryError, NoSuchPathError
+
+REPO_ = Config.UPSTREAM_REPO
+BRANCH_ = Config.U_BRANCH
 
 
 def load_xtra_mod(plugin_name):
@@ -56,7 +65,7 @@ def plugin_collecter(path):
         if k.endswith(".py"):
             lily = k.replace(".py", "")
             final.append(lily)
-    return final  # returns in list form.
+    return final  
 
 
 async def run_cmd(cmd: str) -> Tuple[str, str, int, int]:
@@ -72,3 +81,37 @@ async def run_cmd(cmd: str) -> Tuple[str, str, int, int]:
         process.returncode,
         process.pid,
     )
+
+
+async def update_it():
+    """Update Userbot On StartUps."""
+    try:
+        repo = Repo()
+    except GitCommandError:
+        logging.debug("Invalid Git Command. Not Updating....")
+        return
+    except InvalidGitRepositoryError:
+        repo = Repo.init()
+        if "upstream" in repo.remotes:
+            origin = repo.remote("upstream")
+        else:
+            origin = repo.create_remote("upstream", REPO_)
+        origin.fetch()
+        repo.create_head(Config.U_BRANCH, origin.refs.master)
+        repo.heads.master.set_tracking_branch(origin.refs.master)
+        repo.heads.master.checkout(True)
+    if repo.active_branch.name != Config.U_BRANCH:
+        logging.debug("You Active Branch Doesn't Match With The Default Branch. Please Make Sure You Are on Default Branch.")
+        return
+    try:
+        repo.create_remote("upstream", REPO_)
+    except BaseException:
+        pass
+    ups_rem = repo.remote("upstream")
+    ups_rem.fetch(Config.U_BRANCH)
+    try:
+        ups_rem.pull(Config.U_BRANCH)
+    except GitCommandError:
+        repo.git.reset("--hard", "FETCH_HEAD")
+    await run_cmd("pip3 install --no-cache-dir -r requirements.txt")
+    return

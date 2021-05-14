@@ -27,6 +27,7 @@ from main_startup.core.startup_helpers import (
     load_xtra_mod,
     plugin_collecter,
     run_cmd,
+    update_it
 )
 
 from .config_var import Config
@@ -76,6 +77,10 @@ async def fetch_plugins_from_channel():
 async def run_bot():
     """Run The Bot"""
     await mongo_check()
+    try:
+        await update_it()
+    except:
+        pass
     if bot:
         await bot.start()
         bot.me = await bot.get_me()

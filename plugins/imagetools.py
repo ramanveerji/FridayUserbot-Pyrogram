@@ -579,7 +579,7 @@ async def spin(client, message):
     if not lolshit:
         lolshit = "1"
     lmaodict = {"1": 1, "2": 3, "3": 6, "4": 12, "5": 24, "6": 60}
-    if not lolshit.isdigit():
+    if not lolshit.isnumeric():
         await pablo.edit("`Only Speed from 1-6 Is Allowded !`")
         return
     if int(lolshit) > 6:
