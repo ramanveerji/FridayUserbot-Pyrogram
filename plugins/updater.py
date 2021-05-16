@@ -77,4 +77,4 @@ async def update_it(client, message):
             remote.push(refspec="HEAD:refs/heads/master", force=True)
         except BaseException as error:
             return await msg_.edit(f"**Updater Error** \nTraceBack : `{error}`")
-        await msg_.edit("`Build Started! Please Wait For 10-15 Minutes!`")
+        await msg_.edit(f"`FridayUB is Already Upto-Date With Branch - [{repo.active_branch.name}].`")
