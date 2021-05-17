@@ -68,6 +68,8 @@ async def update_it(client, message):
         return
     else:
         await msg_.edit("`Heroku Detected! Pushing, Please Halt!`")
+        ups_rem.fetch(Config.U_BRANCH)
+        repo.git.reset("--hard", "FETCH_HEAD")
         if "heroku" in repo.remotes:
             remote = repo.remote("heroku")
             remote.set_url(Config.HEROKU_URL)
@@ -76,5 +78,5 @@ async def update_it(client, message):
         try:
             remote.push(refspec="HEAD:refs/heads/master", force=True)
         except BaseException as error:
-            return await msg_.edit(f"**Updater Error** \nTraceBack : `{error}`")
-        await msg_.edit(f"`FridayUB is Already Upto-Date With Branch - [{repo.active_branch.name}].`")
+            await msg_.edit(f"**Updater Error** \nTraceBack : `{error}`")
+            return repo.__del__()
