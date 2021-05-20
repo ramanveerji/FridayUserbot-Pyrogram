@@ -70,7 +70,7 @@ else:
     Friday2 = None
 if Config.STRINGSESSION_3:
     Friday3 = Client(
-        Config.Config.STRINGSESSION_3,
+        Config.STRINGSESSION_3,
         api_id=Config.API_ID,
         api_hash=Config.API_HASH,
         sleep_threshold=180,
@@ -79,7 +79,7 @@ else:
     Friday3 = None
 if Config.STRINGSESSION_4:
     Friday4 = Client(
-        Config.Config.STRINGSESSION_4,
+        Config.STRINGSESSION_4,
         api_id=Config.API_ID,
         api_hash=Config.API_HASH,
         sleep_threshold=180,
