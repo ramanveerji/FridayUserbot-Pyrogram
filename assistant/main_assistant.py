@@ -99,7 +99,7 @@ async def fuckinhelp(client, message):
     await message.reply(grabon)
 
 
-@bot.on_message(filters.regex("users") & filters.incoming)
+@bot.on_message(filters.regex("users") & filters.incoming & filters.private)
 @_check_owner_or_sudos
 async def user_s(client, message):
     users_list = "List Of Total Users In Bot. \n\n"
