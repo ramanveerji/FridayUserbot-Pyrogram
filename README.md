@@ -7,6 +7,18 @@
 <a href="https://t.me/FridaySupportOfficial"><img src="https://img.shields.io/badge/Join-Telegram%20Channel-red.svg?logo=Telegram"></a>
 <a href="https://t.me/fridayOT"><img src="https://img.shields.io/badge/Join-Telegram%20Group-blue.svg?logo=telegram"></a>
 
+## Inspiration & Credits
+* [Userge-X](https://github.com/code-rgb/USERGE-X/contributors)
+* [Userge](https://github.com/UsergeTeam/Userge)
+* [Pokurt](https://github.com/UsergeTeam/Pokurt)
+* [Pyrogram](https://github.com/pyrogram/pyrogram/contributors)
+
+## Code Owners
+* [Chsaiujwal](https://github.com/chsaiujwal)
+* [Aditya](https://github.com/Aditya-XD)
+* [Lakhac](https://github.com/Lakhac)
+* [InukaAsith](https://github.com/InukaAsith)
+* [SHRE-YANSH](https://github.com/SHRE-YANSH)
 
 # String Session - Pyrogram 🖱
 ### Repl 🧨
