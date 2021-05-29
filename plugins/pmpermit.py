@@ -293,7 +293,7 @@ async def is_media(message):
         return False
     return True
 
-@listen(filters.incoming & filters.private & ~filters.edited & ~filters.me)
+@listen(filters.incoming & filters.private & ~filters.edited & ~filters.me & ~filters.service)
 async def pmPermit(client, message):
     if not Config.PM_PSW:
         return
