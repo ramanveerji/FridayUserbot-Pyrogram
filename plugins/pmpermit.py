@@ -357,5 +357,8 @@ async def pmPermit(client, message):
             user_firstname=user_firstname, warns=warnings_got, boss_firstname=me_f, mention=user_mention),
     )      
     if int(message.chat.id) in OLD_MSG:
-        await OLD_MSG[int(message.chat.id)].delete()
+        try:
+            await OLD_MSG[int(message.chat.id)].delete()
+        except:
+            pass
     OLD_MSG[int(message.chat.id)] = holy
