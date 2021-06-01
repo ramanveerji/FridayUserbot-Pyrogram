@@ -39,7 +39,7 @@ ech_final () {
 =+---------------------------------------------------------+=
 Deployment Sucessfull.
 Docker Images Are Being Pushed, Please Wait.
-Thank You For Installing FridayUserbot Software.
+Thank You For Installing FridayUB.
 (C) @DevsExpo
 =+---------------------------------------------------------+=
 
