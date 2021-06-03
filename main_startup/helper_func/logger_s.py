@@ -30,7 +30,7 @@ class LogIt:
         else:
             try:
                 return await client.send_message(self.chat_id, text)
-            except:
+            except Exception as e:
                 logging.error(str(e))
                 return None
 
