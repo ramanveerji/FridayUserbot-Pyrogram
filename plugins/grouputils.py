@@ -450,7 +450,7 @@ async def ujwal_mute(client, message):
     except BaseException as e:
         await pablo.edit(f"`I Am UnAble To Mute That User` \n**Error :** `{e}`")
         return
-    m = f"**#Muted** \n**User :** [{user.first_name}](tg://user?id={user.id}) \n**Chat :** `{message.chat.title}`"
+    m = f"**#Muted** \n**User :**{user.mention} \n**Chat :** `{message.chat.title}`"
     await pablo.edit(m)
     log = LogIt(message)
     await log.log_msg(client, m)
@@ -495,7 +495,7 @@ async def ujwal_unmute(client, message):
     except BaseException as e:
         await pablo.edit(f"`I Am UnAble To UN-Mute That User` \n**Error :** `{e}`")
         return
-    um = f"**#Un_Muted** \n**User :** [{user.first_name}](tg://user?id={user.id}) \n**Chat :** `{message.chat.title}`"
+    um = f"**#Un_Muted** \n**User :**{user.mention} \n**Chat :** `{message.chat.title}`"
     await pablo.edit(um)
     log = LogIt(message)
     await log.log_msg(client, um)
