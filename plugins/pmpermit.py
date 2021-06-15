@@ -309,6 +309,8 @@ async def pmPermit(client, message):
         return
     if user_.is_self:
         return
+    if user_.is_contact:
+        return
     if user_.is_verified:       
         return
     if user_.is_scam:
