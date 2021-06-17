@@ -150,6 +150,7 @@ async def owo(client, inline_query):
     elif string_given.startswith("git"):
         try:
             input = string_given.split(" ", maxsplit=1)[1]
+            print(input)
         except:
             return
         results = []
