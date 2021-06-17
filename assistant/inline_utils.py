@@ -183,7 +183,7 @@ async def owo(client, inline_query):
             results.append(
                 InlineQueryResultArticle(
                    title = qw.get("name"),
-                   input_message_content=InputTextMessageContent(txt)
+                   input_message_content=InputTextMessageContent(txt, disable_web_page_preview=True)
                 )
              )
              await client.answer_inline_query(inline_query.id, cache_time=0, results=results)
