@@ -161,14 +161,25 @@ async def owo(client, inline_query):
         for X in lol:
             qw = X
             txt = f"""
-Name: {qw.get("name")}
-Full Name: {qw.get("full_name")}
-Link: {qw.get("html_url")}
-Description: {qw.get("description")}
-Language: {qw.get("language")}
-Fork Count: {qw.get("forks_count")}
-Open Issues: {qw.get("open_issues")}
+<b>Name :</b> <i>{qw.get("name")}</i>
+<b>Full Name :</b> <i>{qw.get("full_name")}</i>
+<b>Link :</b> {qw.get("html_url")}
+<b>Fork Count :</b> <i>{qw.get("forks_count")}</i>
+<b>Open Issues :</b> <i>{qw.get("open_issues")}</i>
 """
+            if qw.get("description"):
+                txt += f'<b>Description :</b> <code>{qw.get("description")}</code>'
+            if qw.get("language"):
+                txt += f'<b>Language :</b> <code>{qw.get("language")}</code>'
+            if qw.get("size"):
+                txt += f'<b>Size :</b> <code>{qw.get("size")}</code>'
+            if qw.get("score"):
+                txt += f'<b>Score :</b> <code>{qw.get("score")}</code>'
+            if qw.get("created_at"):
+                txt += f'<b>Created At :</b> <code>{qw.get("created_at")}</code>'
+            if qw.get("archived") == True:
+                txt += f"<b>This Project is Archived</b>"
+
             results.append(
                 InlineQueryResultArticle(
                    title = qw.get("name"),
