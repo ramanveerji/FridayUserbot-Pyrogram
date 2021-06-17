@@ -169,17 +169,17 @@ async def owo(client, inline_query):
 <b>Open Issues :</b> <i>{qw.get("open_issues")}</i>
 """
             if qw.get("description"):
-                txt += f'<b>Description :</b> <code>{qw.get("description")}</code>'
+                txt += f'\n<b>Description :</b> <code>{qw.get("description")}</code>'
             if qw.get("language"):
-                txt += f'<b>Language :</b> <code>{qw.get("language")}</code>'
+                txt += f'\n<b>Language :</b> <code>{qw.get("language")}</code>'
             if qw.get("size"):
-                txt += f'<b>Size :</b> <code>{qw.get("size")}</code>'
+                txt += f'\n<b>Size :</b> <code>{qw.get("size")}</code>'
             if qw.get("score"):
-                txt += f'<b>Score :</b> <code>{qw.get("score")}</code>'
+                txt += f'\n<b>Score :</b> <code>{qw.get("score")}</code>'
             if qw.get("created_at"):
-                txt += f'<b>Created At :</b> <code>{qw.get("created_at")}</code>'
+                txt += f'\n<b>Created At :</b> <code>{qw.get("created_at")}</code>'
             if qw.get("archived") == True:
-                txt += f"<b>This Project is Archived</b>"
+                txt += f"\n<b>This Project is Archived</b>"
 
             results.append(
                 InlineQueryResultArticle(
