@@ -187,7 +187,7 @@ async def owo(client, inline_query):
                    input_message_content=InputTextMessageContent(txt, disable_web_page_preview=True)
                 )
              )
-            await client.answer_inline_query(inline_query.id, cache_time=0, results=results)
+        await client.answer_inline_query(inline_query.id, cache_time=0, results=results)
     elif string_given.startswith("whisper"):
         if not ";" in string_given:
             return
