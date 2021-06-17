@@ -149,14 +149,13 @@ async def owo(client, inline_query):
         await client.answer_inline_query(inline_query.id, cache_time=0, results=results)
     elif string_given.startswith("git"):
         try:
-            input = string_given.split(" ", maxsplit=1)[1]
-            print(input)
+            input_ = string_given.split(" ", maxsplit=1)[1]
         except:
             return
         results = []
-        r = requests.get("https://api.github.com/search/repositories", params= f"q={input}")
+        r = requests.get("https://api.github.com/search/repositories", params={"q": input_})
         lool = r.json()
-        if lool.get("total_count")==0:
+        if lool.get("total_count") == 0:
             return
         lol = lool.get("items")
         for X in lol:
@@ -183,6 +182,9 @@ async def owo(client, inline_query):
 
             results.append(
                 InlineQueryResultArticle(
+                   thumb_url="https://simpleicons.org/icons/github.svg",
+                   url=qw.get("html_url"),
+                   description=qw.get("description", "No Description"),
                    title = qw.get("name"),
                    input_message_content=InputTextMessageContent(txt, disable_web_page_preview=True)
                 )
