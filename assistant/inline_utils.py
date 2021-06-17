@@ -87,7 +87,7 @@ async def owo(client, inline_query):
         texts = f"Everyone Except {owo} Can Read This Message. \nClick Below To Check Message! \n**Note :** `Only He/She Can't Open It!`"
         ok_s = [
             (
-                InlineQueryResultArticle(
+                results.append(
                     title="OwO! Not For You",
                     reply_markup=InlineKeyboardMarkup(
                         [
@@ -147,6 +147,35 @@ async def owo(client, inline_query):
                 )
             )
         await client.answer_inline_query(inline_query.id, cache_time=0, results=results)
+    elif string_given.startswith("git"):
+        try:
+            input = string_given.split(" ", maxsplit=1)[1]
+        except:
+            return
+        results = []
+        r = requests.get("https://api.github.com/search/repositories", params= f"q={input}")
+        lool = r.json()
+        if lool.get("total_count")==0:
+            return
+        lol = lool.get("items")
+        for X in lol:
+            qw = X
+            txt = f"""
+Name: {qw.get("name")}
+Full Name: {qw.get("full_name")}
+Link: {qw.get("html_url")}
+Description: {qw.get("description")}
+Language: {qw.get("language")}
+Fork Count: {qw.get("forks_count")}
+Open Issues: {qw.get("open_issues")}
+"""
+            results.append(
+                InlineQueryResultArticle(
+                   title = qw.get("name"),
+                   input_message_content=InputTextMessageContent(txt)
+                )
+             )
+             await client.answer_inline_query(inline_query.id, cache_time=0, results=results)
     elif string_given.startswith("whisper"):
         if not ";" in string_given:
             return
