@@ -78,3 +78,5 @@ class Config(object):
     ENABLE_WAIFU_FOR_ALL_CHATS = bool(strtobool(str(os.environ.get("ENABLE_WAIFU_FOR_ALL_CHATS", False))))
     CHROME_DRIVER_PATH = os.environ.get("CHROME_DRIVER_PATH", "/usr/bin/chromedriver")
     CHROME_BIN_PATH = os.environ.get("CHROME_BIN_PATH", "/usr/bin/google-chrome-stable")
+    USERBOT_LANG = os.environ.get("USERBOT_LANG", "en")
+    XTRA_PLUGINS_REPO = os.environ.get("XTRA_PLUGINS_REPO", "https://github.com/DevsExpo/Xtra-Plugins")

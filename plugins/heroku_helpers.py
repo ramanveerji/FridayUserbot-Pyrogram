@@ -33,21 +33,22 @@ if Config.HEROKU_API_KEY:
 def _check_heroku(func):
     @wraps(func)
     async def heroku_cli(client, message):
+        engine = message.Engine
         heroku_app = None
         if not heroku_client:
             await edit_or_reply(
-                message, "`Please Add Heroku API Key For This To Function To Work!`"
+                message, engine.get_string("MISSING_API_KEY").format("HEROKU_API_KEY")
             )
         elif not Config.HEROKU_APP_NAME:
             await edit_or_reply(
-                message, "`Please Add Heroku APP Name For This To Function To Work!`"
+                message, engine.get_string("MISSING_API_KEY").format("HEROKU_API_KEY")
             )
         if Config.HEROKU_APP_NAME and heroku_client:
             try:
                 heroku_app = heroku_client.app(Config.HEROKU_APP_NAME)
             except:
                 await edit_or_reply(
-                    message, "`Heroku Api Key And App Name Doesn't Match!`"
+                    message, engine.get_string("HEROKU_DONT_MATCH")
                 )
             if heroku_app:
                 await func(client, message, heroku_app)
@@ -61,7 +62,8 @@ def _check_heroku(func):
 )
 @_check_heroku
 async def gib_restart(client, message, hap):
-    msg_ = await edit_or_reply(message, "`[HEROKU] - 🔁 Restarting 🔁`")
+    engine = message.Engine
+    msg_ = await edit_or_reply(message, engine.get_string("RESTART"))
     hap.restart()
 
 
@@ -70,7 +72,8 @@ async def gib_restart(client, message, hap):
 )
 @_check_heroku
 async def gib_logs(client, message, happ):
-    msg_ = await edit_or_reply(message, "`Please Wait!`")
+    engine = message.Engine
+    msg_ = await edit_or_reply(message, engine.get_string("PROCESSING"))
     logs = happ.get_log()
     capt = f"Heroku Logs Of {Config.HEROKU_APP_NAME}"
     await edit_or_send_as_file(logs, msg_, client, capt, "logs")
@@ -85,21 +88,24 @@ async def gib_logs(client, message, happ):
 )
 @_check_heroku
 async def set_varr(client, message, app_):
-    msg_ = await edit_or_reply(message, "`Please Wait!`")
+    engine = message.Engine
+    msg_ = await edit_or_reply(message, engine.get_string("PROCESSING"))
     heroku_var = app_.config()
     _var = get_text(message)
+    syntax = f"{Config.COMMAND_HANDLER}setvar ConfigVarName ConfigVarValue" 
     if not _var:
-        await msg_.edit("`Here is Usage Syntax : .setvar KEY VALUE`")
+        await msg_.edit(engine.get_string("USAGE").format(syntax))
         return
     if not " " in _var:
-        await msg_.edit("`Here is Usage Syntax : .setvar KEY VALUE`")
+        await msg_.edit(engine.get_string("USAGE").format(syntax))
         return
     var_ = _var.split(" ", 1)
     if len(var_) > 2:
-        await msg_.edit("`Here is Usage Syntax : .setvar KEY VALUE`")
+        await msg_.edit(engine.get_string("USAGE").format(syntax))
         return
     _varname, _varvalue = var_
-    await msg_.edit(f"`Variable {_varname} Added With Value {_varvalue}!`")
+    s = engine.get_string("VAR_ADDED").format(_varname, _varvalue)
+    await msg_.edit(s)
     heroku_var[_varname] = _varvalue
 
 
@@ -112,14 +118,15 @@ async def set_varr(client, message, app_):
 )
 @_check_heroku
 async def del_varr(client, message, app_):
-    msg_ = await edit_or_reply(message, "`Please Wait!`")
+    engine = message.Engine
+    msg_ = await edit_or_reply(message, engine.get_string("PROCESSING"))
     heroku_var = app_.config()
     _var = get_text(message)
     if not _var:
-        await msg_.edit("`Give Var Name As Input!`")
+        await msg_.edit(engine.get_string("INPUT_REQ").format("Var Name"))
         return
     if not _var in heroku_var:
-        await msg_.edit("`This Var Doesn't Exists!`")
+        await msg_.edit(engine.get_string("DE"))
         return
-    await msg_.edit(f"`Sucessfully Deleted {_var} Var!`")
+    await msg_.edit(engine.get_string("DLTED_VAR").format(_var))
     del heroku_var[_var]

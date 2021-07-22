@@ -52,16 +52,17 @@ auth_url = r["auth_url"]
     },
 )
 async def hwn(client, message):
-    pablo = await edit_or_reply(message, "`Processing...`")
+    engine = message.Engine
+    pablo = await edit_or_reply(message, engine.get_string("PROCESSING"))
     if not message.reply_to_message:
-        await pablo.edit("`Reply To Notes / Document To Enhance It!`")
+        await pablo.edit(engine.get_string("NEEDS_REPLY").format("Notes / Document To Enhance It!"))
         return
     cool = await convert_to_image(message, client)
     if not cool:
-        await pablo.edit("`Reply to a valid media first.`")
+        await pablo.edit(engine.get_string("NEEDS_REPLY").format("a valid media first"))
         return
     if not os.path.exists(cool):
-        await pablo.edit("`Invalid Media!`")
+        await pablo.edit(engine.get_string("INVALID_MEDIA"))
         return
     ns = NoteShrinker([cool])
     shrunk = ns.shrink()
@@ -81,12 +82,13 @@ async def hwn(client, message):
     },
 )
 async def glitchtgi(client, message):
-    pablo = await edit_or_reply(message, "`Processing...`")
+    engine = message.Engine
+    pablo = await edit_or_reply(message, engine.get_string("PROCESSING"))
     if not message.reply_to_message:
-        await pablo.edit("Please Reply To Image For Glitching")
+        await pablo.edit(engine.get_string("NEEDS_REPLY").format("Image For Glitching"))
         return
     photolove = await convert_to_image(message, client)
-    await pablo.edit("`Gli, Glitchiiingggg.....`")
+    #await pablo.edit("`Gli, Glitchiiingggg.....`")
     pathsn = f"Glitched.gif"
     glitch_imgs = glitcher.glitch_image(photolove, 2, gif=True, color_offset=True)
     glitch_imgs[0].save(
@@ -121,17 +123,18 @@ async def glitchtgi(client, message):
     },
 )
 async def momify(client, message):
-    owo = await edit_or_reply(message, "`Making Memes! Look There, OwO`")
+    engine = message.Engine
+    owo = await edit_or_reply(message, engine.get_string("PROCESSING"))
     img = await convert_to_image(message, client)
     hmm = get_text(message)
     if not hmm:
-        await owo.edit("`Give Text :/`")
+        await owo.edit(engine.get_string("INPUT_REQ").format("Text"))
         returbn
     if not img:
-        await owo.edit("`Reply to a valid media first.`")
+        await owo.edit(engine.get_string("NEEDS_REPLY").format("a valid media first"))
         return
     if not os.path.exists(img):
-        await owo.edit("`Invalid Media!`")
+        await owo.edit(engine.get_string("INVALID_MEDIA"))
         return
     if ";" in hmm:
         stark = hmm.split(";", 1)
@@ -166,13 +169,14 @@ async def momify(client, message):
     },
 )
 async def flips(client, message):
-    owo = await edit_or_reply(message, "`OwO, Flipping...`")
+    engine = message.Engine
+    owo = await edit_or_reply(message, engine.get_string("PROCESSING"))
     img = await convert_to_image(message, client)
     if not img:
-        await owo.edit("`Reply to a valid media first.`")
+        await owo.edit(engine.get_string("NEEDS_REPLY").format("a valid media first"))
         return
     if not os.path.exists(img):
-        await owo.edit("`Invalid Media!`")
+        await owo.edit(engine.get_string("INVALID_MEDIA"))
         return
     image = cv2.imread(img)
     flipped = cv2.flip(image, 0)
@@ -199,13 +203,14 @@ async def flips(client, message):
     },
 )
 async def c_imagenote(client, message):
-    owo = await edit_or_reply(message, "`OwO, Cropping.`")
+    engine = message.Engine
+    owo = await edit_or_reply(message, engine.get_string("PROCESSING"))
     img = await convert_to_image(message, client)
     if not img:
-        await owo.edit("`Reply to a valid media first...`")
+        await owo.edit(engine.get_string("NEEDS_REPLY").format("A Valid Media"))
         return
     if not os.path.exists(img):
-        await owo.edit("`Invalid Media!`")
+        await owo.edit(engine.get_string("INVALID_MEDIA"))
         return
     ok = await convert_image_to_image_note(img)
     if not os.path.exists(ok):
@@ -233,13 +238,14 @@ async def c_imagenote(client, message):
     },
 )
 async def mirrorlol(client, message):
-    owo = await edit_or_reply(message, "`OwO, Let me go near Mirror...`")
+    engine = message.Engine
+    owo = await edit_or_reply(message, engine.get_string("PROCESSING"))
     img = await convert_to_image(message, client)
     if not img:
-        await owo.edit("`Reply to a valid media first.`")
+        await owo.edit(engine.get_string("NEEDS_REPLY").format("A Valid Media"))
         return
     if not os.path.exists(img):
-        await owo.edit("`Invalid Media!`")
+        await owo.edit(engine.get_string("INVALID_MEDIA"))
         return
     image = cv2.imread(img)
     flipped = cv2.flip(image, 1)
@@ -267,13 +273,14 @@ async def mirrorlol(client, message):
     },
 )
 async def oohno(client, message):
-    owo = await edit_or_reply(message, "`OwO, Scarrry Ghosssst`")
+    engine = message.Engine
+    owo = await edit_or_reply(message, engine.get_string("PROCESSING"))
     img = await convert_to_image(message, client)
     if not img:
-        await owo.edit("`Reply to a valid media first.`")
+        await owo.edit(engine.get_string("NEEDS_REPLY").format("A Valid Media"))
         return
     if not os.path.exists(img):
-        await owo.edit("`Invalid Media!`")
+        await owo.edit(engine.get_string("INVALID_MEDIA"))
         return
     image = cv2.imread(img)
     treshold, fridaydevs = cv2.threshold(image, 150, 225, cv2.THRESH_BINARY)
@@ -302,13 +309,14 @@ async def oohno(client, message):
     },
 )
 async def nice(client, message):
-    owo = await edit_or_reply(message, "`OwO, Let Me Draw.`")
+    engine = message.Engine
+    owo = await edit_or_reply(message, engine.get_string("PROCESSING"))
     img = await convert_to_image(message, client)
     if not img:
-        await owo.edit("`Reply to a valid media first.`")
+        await owo.edit(engine.get_string("NEEDS_REPLY").format("A Valid Media"))
         return
     if not os.path.exists(img):
-        await owo.edit("`Invalid Media!`")
+        await owo.edit(engine.get_string("INVALID_MEDIA"))
         return
     image = cv2.imread(img)
     scale_percent = 0.60
@@ -350,10 +358,11 @@ def dodgeV2(image, mask):
     },
 )
 async def getfakecertificate(client, message):
-    pablo = await edit_or_reply(message, "`Processing.....`")
+    engine = message.Engine
+    pablo = await edit_or_reply(message, engine.get_string("PROCESSING"))
     text = get_text(message)
     if not text:
-        await pablo.edit("Please Give Name For Certificate")
+        await pablo.edit(engine.get_string("INPUT_REQ").format(" Name For Certificate"))
         return
     famous_people = ["Modi", "Trump", "Albert", "Gandhi", "Chsaiujwal", "Aditya"]
     img = Image.open("./bot_utils_files/image_templates/certificate_templete.png")
@@ -391,13 +400,14 @@ async def getfakecertificate(client, message):
     },
 )
 async def weallarethugs(client, message):
-    tgi = await edit_or_reply(message, "`Using My Thug Algo To Make Him Thug!`")
+    engine = message.Engine
+    tgi = await edit_or_reply(message, engine.get_string("PROCESSING"))
     img = await convert_to_image(message, client)
     if not img:
-        await tgi.edit("`Reply to a valid media first.`")
+        await tgi.edit(engine.get_string("NEEDS_REPLY").format("A Valid Media"))
         return
     if not os.path.exists(img):
-        await tgi.edit("`Invalid Media!`")
+        await tgi.edit(engine.get_string("INVALID_MEDIA"))
         return
     imagePath = img
     maskPath = "./bot_utils_files/image_templates/thug_life_mask.png"
@@ -436,13 +446,14 @@ async def weallarethugs(client, message):
     },
 )
 async def toonize(client, message):
-    tgi = await edit_or_reply(message, "`Using My Toonize Algo To Make Him A Cartoon!`")
+    engine = message.Engine
+    tgi = await edit_or_reply(message, engine.get_string("PROCESSING"))
     img = await convert_to_image(message, client)
     if not img:
-        await tgi.edit("`Reply to a valid media first.`")
+        await tgi.edit(engine.get_string("NEEDS_REPLY").format("A Valid Media"))
         return
     if not os.path.exists(img):
-        await tgi.edit("`Invalid Media!`")
+        await tgi.edit(engine.get_string("INVALID_MEDIA"))
         return
     imagez = cv2.imread(img)
     cartoon_image_style_2 = cv2.stylization(imagez, sigma_s=60, sigma_r=0.5)
@@ -470,20 +481,21 @@ async def toonize(client, message):
     },
 )
 async def wewnews(client, message):
-    pablo = await edit_or_reply(message, "`Processing.....`")
+    engine = message.Engine
+    pablo = await edit_or_reply(message, engine.get_string("PROCESSING"))
     text = get_text(message)
     if not text:
-        await pablo.edit("Please Give Headlines For News")
+        await pablo.edit(engine.get_string("INPUT_REQ").format("Headlines For News"))
         return
     if not message.reply_to_message:
-        await pablo.edit("Please Reply To Image For News")
+        await pablo.edit(engine.get_string("NEEDS_REPLY").format("A Valid Media"))
         return
     img = await convert_to_image(message, client)
     if not img:
-        await pablo.edit("`Reply to a valid media first.`")
+        await pablo.edit(engine.get_string("NEEDS_REPLY").format("A Valid Media"))
         return
     if not os.path.exists(img):
-        await pablo.edit("`Invalid Media!`")
+        await pablo.edit(engine.get_string("INVALID_MEDIA"))
         return
     background = Image.open(img)
     newss = "./bot_utils_files/image_templates/live_new_templete.png"
@@ -518,13 +530,14 @@ async def wewnews(client, message):
     },
 )
 async def color_magic(client, message):
-    owo = await edit_or_reply(message, "`Using My Color Magic To Color This, OwO!`")
+    engine = message.Engine
+    owo = await edit_or_reply(message, engine.get_string("PROCESSING"))
     img = await convert_to_image(message, client)
     if not img:
-        await owo.edit("`Reply to a valid media first.`")
+        await owo.edit(engine.get_string("NEEDS_REPLY").format("A Valid Media"))
         return
     if not os.path.exists(img):
-        await owo.edit("`Invalid Media!`")
+        await owo.edit(engine.get_string("INVALID_MEDIA"))
         return
     net = cv2.dnn.readNetFromCaffe(
         "./bot_utils_files/ai_helpers/colouregex.prototxt",
@@ -574,7 +587,8 @@ async def color_magic(client, message):
     },
 )
 async def spin(client, message):
-    pablo = await edit_or_reply(message, "`Processing.....`")
+    engine = message.Engine
+    pablo = await edit_or_reply(message, engine.get_string("PROCESSING"))
     lolshit = get_text(message)
     if not lolshit:
         lolshit = "1"
@@ -587,7 +601,7 @@ async def spin(client, message):
         return
     keke = str(lolshit)
     if not message.reply_to_message:
-        await pablo.edit("`Reply To Media First !`")
+        await pablo.edit(engine.get_string("NEEDS_REPLY").format("A Valid Media"))
         return
     else:
         if lolshit:
@@ -596,10 +610,10 @@ async def spin(client, message):
             step = 1
     pic_loc = await convert_to_image(message, client)
     if not pic_loc:
-        await pablo.edit("`Reply to a valid media first.`")
+        await pablo.edit(engine.get_string("NEEDS_REPLY").format("A Valid Media"))
         return
     if not os.path.exists(pic_loc):
-        await pablo.edit("`No Media Found!`")
+        await pablo.edit(engine.get_string("INVALID_MEDIA"))
         return
     await pablo.edit("🌀 `Tighten your seatbelts, sh*t is about to get wild ...`")
     spin_dir = 1
@@ -639,12 +653,11 @@ async def spin(client, message):
     },
 )
 async def ph(client, message):
-    pablo = await edit_or_reply(message, "`Processing.....`")
+    engine = message.Engine
+    pablo = await edit_or_reply(message, engine.get_string("PROCESSING"))
     Hell = get_text(message)
     if not Hell:
-        await pablo.edit(
-            "`Please Give Me A Valid Input. You Can Check Help Menu To Know More!`"
-        )
+        await pablo.edit(engine.get_string("INPUT_REQ").format("Text."))
         return
     Escobar = Hell.split(":")
     username = Escobar[0]
@@ -652,7 +665,7 @@ async def ph(client, message):
         texto = Escobar[1]
     except:
         await pablo.edit(
-            "`Please Give Me A Valid Input. You Can Check Help Menu To Know More!`"
+            engine.get_string("INPUT_REQ").format("Text")
         )
         return
     img = Image.open("./bot_utils_files/image_templates/ph_comment_templete.jpg")
@@ -684,11 +697,12 @@ async def ph(client, message):
     },
 )
 async def fgs(client, message):
-    pablo = await edit_or_reply(message, "`Processing.....`")
+    engine = message.Engine
+    pablo = await edit_or_reply(message, engine.get_string("PROCESSING"))
     Hell = get_text(message)
     if not Hell:
         await pablo.edit(
-            "`Please Give Me A Valid Input. You Can Check Help Menu To Know More!`"
+            engine.get_string("INPUT_REQ").format("Text")
         )
         return
     Escobar = Hell.split(":")
@@ -697,7 +711,7 @@ async def fgs(client, message):
         result = Escobar[1]
     except:
         await pablo.edit(
-            "`Please Give Me A Valid Input. You Can Check Help Menu To Know More!`"
+            engine.get_string("INPUT_REQ").format("Text")
         )
         return
     photo = Image.open("./bot_utils_files/image_templates/google_search_templete.jpg")
@@ -731,11 +745,12 @@ async def fgs(client, message):
     },
 )
 async def jail(client, message):
-    pablo = await edit_or_reply(message, "`Processing.....`")
+    engine = message.Engine
+    pablo = await edit_or_reply(message, engine.get_string("PROCESSING"))
     Hell = get_text(message)
     if not Hell and not message.reply_to_message:
         await pablo.edit(
-            "`Please Give Me A Valid Input. You Can Check Help Menu To Know More!`"
+            engine.get_string("NEEDS_REPLY").format("A Image.")
         )
         return
     if message.reply_to_message:
@@ -747,7 +762,7 @@ async def jail(client, message):
             try:
                 img = await client.download_media(lol[0].file_id)
             except IndexError:
-                await pablo.edit("User Has No Profile Picture")
+                await pablo.edit("`User Has No Profile Picture!`")
                 return
     if Hell and not message.reply_to_message:
         lol = await client.get_profile_photos(Hell, limit=1)
@@ -756,7 +771,7 @@ async def jail(client, message):
             img = await client.download_media(lol[0].file_id)
 
         except IndexError:
-            await pablo.edit("User Has No Profile Picture")
+            await pablo.edit("`This User Has No Profile Picture.`")
             return
     mon = "./bot_utils_files/image_templates/jail_templete.png"
     foreground = Image.open(mon).convert("RGBA")
@@ -785,7 +800,8 @@ async def jail(client, message):
     cmd_help={"help": "Generates Fake Image!", "example": "{ch}picgen"},
 )
 async def picgen(client, message):
-    pablo = await edit_or_reply(message, "`Processing.....`")
+    engine = message.Engine
+    pablo = await edit_or_reply(message, engine.get_string("PROCESSING"))
     url = "https://thispersondoesnotexist.com/image"
     response = requests.get(url)
     if response.status_code == 200:
@@ -815,12 +831,11 @@ async def picgen(client, message):
     },
 )
 async def slogo(client, message):
-    event = await edit_or_reply(message, "`Processing.....`")
+    engine = message.Engine
+    event = await edit_or_reply(message, engine.get_string("PROCESSING"))
     text = get_text(message)
     if not text:
-        await event.edit(
-            "`Please Give Me A Valid Input. You Can Check Help Menu To Know More!`"
-        )
+        await event.edit(engine.get_string("INPUT_REQ").format("Text"))
         return
     img = Image.open("./bot_utils_files/image_templates/yellow_bg_for_logo.jpg")
     draw = ImageDraw.Draw(img)
@@ -868,12 +883,11 @@ async def slogo(client, message):
     },
 )
 async def adityalogo(client, message):
-    event = await edit_or_reply(message, "`Processing.....`")
+    engine = message.Engine
+    event = await edit_or_reply(message, engine.get_string("PROCESSING"))
     text = get_text(message)
     if not text:
-        await event.edit(
-            "`Please Give Me A Valid Input. You Can Check Help Menu To Know More!`"
-        )
+        await event.edit(engine.get_string("INPUT_REQ").format("Text"))
         return
     img = Image.open("./bot_utils_files/image_templates/black_blank_image.jpg")
     draw = ImageDraw.Draw(img)
@@ -915,10 +929,11 @@ async def adityalogo(client, message):
     },
 )
 async def ujwal_s_ticker(client, message):
-    msg_ = await edit_or_reply(message, "`Processing.....`")
+    engine = message.Engine
+    msg_ = await edit_or_reply(message, engine.get_string("PROCESSING"))
     text = get_text(message)
     if not text:
-        msg_.edit("`Give Me Text As Input!`")
+        msg_.edit(engine.get_string("INPUT_REQ").format("Text"))
         return
     sticktext = textwrap.wrap(text, width=10)
     sticktext = "\n".join(sticktext)

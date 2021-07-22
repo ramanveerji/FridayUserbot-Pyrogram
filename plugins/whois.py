@@ -35,17 +35,18 @@ async def wew_id(client, message):
     cmd_help={"help": "Get Info About A User", "example": "{ch}info @chsaiujwal"},
 )
 async def whois(client, message):
+    engine = message.Engine
     user_photo = None
     msg_ = await edit_or_reply(message, "`Hang On!`")
     text_ = get_text(message)
     userk = get_user(message, text_)[0]
     if not userk:
-        await msg_.edit("`Mention A User Boss!`")
+        await msg_.edit(engine.get_string("REPLY_TO_USER").format("Search"))
         return
     try:
         user_ = await client.get_users(userk)
     except:
-        await msg_.edit(f"`404 : Unable To Get To This User!`")
+        await msg_.edit(engine.get_string("USER_MISSING").format(userk))
         return
     if user_.photo:
         user_photo = await client.download_media(user_.photo.big_file_id)

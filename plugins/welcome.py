@@ -22,26 +22,25 @@ from main_startup.helper_func.basic_helpers import edit_or_reply
     },
 )
 async def save_welcome(client, message):
-    note_ = await edit_or_reply(message, "`Processing..`")
+    engine = message.Engine
+    note_ = await edit_or_reply(message, engine.get_string("PROCESSING"))
     if not message.reply_to_message:
-        await note_.edit("Reply To Message To Save As Welcome Message!")
+        await note_.edit(engine.get_string("REPLY_TO_WELCOME"))
         return
     msg = message.reply_to_message
     cool = await msg.copy(int(Config.LOG_GRP))
     await add_welcome(int(message.chat.id), cool.message_id)
-    await note_.edit(f"`Done! Welcome Message Saved!`")
+    await note_.edit(engine.get_string("WELCOME_SAVED"))
 
 
 @listen(filters.new_chat_members & filters.group)
 async def welcomenibba(client, message):
-    if not message:
-        
+    engine = message.Engine
+    if not message:    
         return
     if not await welcome_info(int(message.chat.id)):
-        
         return
     if not message.chat:
-        
         return
     is_m = False
     sed = await welcome_info(int(message.chat.id))
@@ -83,12 +82,13 @@ async def is_media(message):
     cmd_help={"help": "Delete welcome Message!", "example": "{ch}delwelcome"},
 )
 async def del_welcomez(client, message):
-    note_ = await edit_or_reply(message, "`Processing..`")
+    engine = message.Engine
+    note_ = await edit_or_reply(message, engine.get_string("PROCESSING"))
     if not await welcome_info(int(message.chat.id)):
-        await note_.edit("`Welcome Message Not Found In This Chat!`")
+        await note_.edit(engine.get_string("FILTER_3").format("Welcome Message"))
         return
     await del_welcome(int(message.chat.id))
-    await note_.edit(f"`Welcome Message Deleted Successfully!`")
+    await note_.edit(engine.get_string("FILTER_2").format("Welcome", "Message"))
 
 
 @friday_on_cmd(
@@ -96,10 +96,11 @@ async def del_welcomez(client, message):
     cmd_help={"help": "Current Welcome Message!", "example": "{ch}welcome"},
 )
 async def show_welcome(client, message):
-    pablo = await edit_or_reply(message, "`Processing..`")
+    engine = message.Engine
+    pablo = await edit_or_reply(message, engine.get_string("PROCESSING"))
     sed = await welcome_info(int(message.chat.id))
     if sed is False:
-        await pablo.edit("`No Welcome Found In This Chat...`")
+        await pablo.edit(engine.get_string("FILTER_3").format("Welcome Message"))
         return
     mag = f""" Welcome Message In Correct Chat Is :"""
     await client.copy_message(

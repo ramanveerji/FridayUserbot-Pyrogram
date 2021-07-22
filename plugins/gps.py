@@ -25,10 +25,11 @@ GMAPS_LOC = "https://maps.googleapis.com/maps/api/geocode/json"
     },
 )
 async def gps(client, message):
-    pablo = await edit_or_reply(message, "`Processing...`")
+    engine = message.Engine
+    pablo = await edit_or_reply(message, engine.get_string("PROCESSING"))
     args = get_text(message)
     if not args:
-        await pablo.edit("Please Provide location for sending GPS")
+        await pablo.edit(engine.get_string("INPUT_REQ").format("Location"))
         return
     try:
         geolocator = Nominatim(user_agent="FridayUB")
@@ -38,7 +39,7 @@ async def gps(client, message):
         latitude = geoloc.latitude
     except Exception as e:
         logging.info(e)
-        await pablo.edit("`I Can't Find That Location!`")
+        await pablo.edit(engine.get_string("GPS_2"))
         return
     gm = "https://www.google.com/maps/search/{},{}".format(latitude, longitude)
     await client.send_location(message.chat.id, float(latitude), float(longitude))

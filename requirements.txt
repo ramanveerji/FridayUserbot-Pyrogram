@@ -1,4 +1,4 @@
-pyrogram
+git+https://github.com/pyrogram/pyrogram
 filesplit
 wget>=3.2
 CairoSVG>=2.5.2
@@ -6,6 +6,7 @@ faker>=6.6.2
 html5lib
 langdetect>=1.0.8
 geopy>=2.1.0
+PyYAML>=5.4.1
 selenium>=3.141.0
 opencv-contrib-python>=4.5.1.48
 fake_useragent>=0.1.11
@@ -45,4 +46,4 @@ pyshorteners>=1.0.1
 telegraph>=1.4.1
 heroku3>=4.2.3
 aiofiles>=0.6.0
-aiohttp>=3.7.4.post0
+aiohttp

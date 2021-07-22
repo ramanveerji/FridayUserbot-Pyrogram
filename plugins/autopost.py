@@ -29,27 +29,27 @@ from main_startup.helper_func.basic_helpers import edit_or_reply, get_text
     chnnl_only=True,
 )
 async def autopost(client, message):
-    pablo = await edit_or_reply(message, "`Processing..`")
+    engine = message.Engine
+    mess_age_ = await edit_or_reply(message, engine.get_string("PROCESSING"))
     chnnl = get_text(message)
     if not chnnl:
-        await pablo.edit("`Provide Channel ID!`")
+        await mess_age_.edit(engine.get_string("INPUT_REQ").format("Chat ID"))
         return
-    if str(chnnl).startswith("-100"):
-        kk = str(chnnl).replace("-100", "")
-    else:
-        kk = chnnl
-    if not kk.isnumeric():
-        try:
-            u_ = await client.get_chat(kk)
-        except:
-            await pablo.edit("`Invalid Chat ID / Username!`")
-            return
-        kk = str(u_.id).replace("-100", "")
-    if await check_if_autopost_in_db(message.chat.id, kk):
-        await pablo.edit("Channel Already In DB")
+    try: 
+        channel_str = int(chnnl)
+    except ValueError:
+        channel_str = str(chnnl)
+    try:
+        u_ = await client.get_chat(channel_str)
+    except:
+        await mess_age_.edit(engine.get_string("INVALID_CHAT_ID"))
         return
-    await add_new_autopost(message.chat.id, kk)
-    await pablo.edit(f"`Added AutoPosting To This Channel From {chnnl}`")
+    channel_str = int(u_.id)
+    if await check_if_autopost_in_db(int(message.chat.id), channel_str):
+        await mess_age_.edit(engine.get_string("CHAT_ALREADY_IN_DB"))
+        return
+    await add_new_autopost(int(message.chat.id), channel_str)
+    await mess_age_.edit(engine.get_string("AUTOPOSTING_1").format(chnnl))
 
 
 @friday_on_cmd(
@@ -61,27 +61,27 @@ async def autopost(client, message):
     chnnl_only=True,
 )
 async def rmautopost(client, message):
-    pablo = await edit_or_reply(message, "`Processing..`")
+    engine = message.Engine
+    mess_age_ = await edit_or_reply(message, engine.get_string("PROCESSING"))
     chnnl = get_text(message)
     if not chnnl:
-        await pablo.edit("`Provide Channel ID!`")
+        await mess_age_.edit(engine.get_string("INPUT_REQ").format("Chat ID"))
         return
-    if str(chnnl).startswith("-100"):
-        kk = str(chnnl).replace("-100", "")
-    else:
-        kk = chnnl
-    if not kk.isnumeric():
-        try:
-            u_ = await client.get_chat(kk)
-        except:
-            await pablo.edit("`Invalid Chat ID / Username!`")
-            return
-        kk = str(u_.id).replace("-100", "")
-    if not await check_if_autopost_in_db(message.chat.id, kk):
-        await pablo.edit("Channel Not In DB")
+    try:
+        channel_str = int(chnnl)
+    except ValueError:
+        channel_str = str(chnnl)
+    try:
+        u_ = await client.get_chat(channel_str)
+    except:
+        await mess_age_.edit(engine.get_string("INVALID_CHAT_ID"))
         return
-    await del_autopost(message.chat.id, kk)
-    await pablo.edit(f"`Removed AutoPosting To This Channel From {chnnl}`")
+    channel_str = int(u_.id)
+    if not await check_if_autopost_in_db(int(message.chat.id), channel_str):
+        await mess_age_.edit(engine.get_string("CHAT_NOT_IN_DB"))
+        return
+    await del_autopost(int(message.chat.id), channel_str)
+    await mess_age_.edit(engine.get_string("AUTOPOSTING_2").format(chnnl))
 
 
 @listen(
@@ -91,13 +91,11 @@ async def rmautopost(client, message):
     & ~filters.service
 )
 async def autoposterz(client, message):
-    chat_id = str(message.chat.id).replace("-100", "")
+    chat_id = message.chat.id
     if not await get_autopost(int(chat_id)):
-        
         return
     channels_set = await get_autopost(int(chat_id))
     if not channels_set:
-        
         return
     for chat in channels_set:
         try:

@@ -9,7 +9,6 @@
 import logging
 import os
 import time
-
 import motor.motor_asyncio
 from pyrogram import Client
 
@@ -97,3 +96,8 @@ if Config.BOT_TOKEN:
     )
 else:
     bot = None
+
+from bot_utils_files.Localization.engine import Engine
+
+LangEngine = Engine()
+LangEngine.load_language()

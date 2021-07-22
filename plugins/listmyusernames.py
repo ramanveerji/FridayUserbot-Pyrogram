@@ -20,7 +20,8 @@ from main_startup.helper_func.basic_helpers import edit_or_reply, edit_or_send_a
     },
 )
 async def pabloescobar(client, message):
-    pablo = await edit_or_reply(message, "`Please Wait!`")
+    engine = message.Engine
+    pablo = await edit_or_reply(message, engine.get_string("PROCESSING"))
     channels = await client.send(
         pyrogram.raw.functions.channels.GetAdminedPublicChannels()
     )
@@ -28,9 +29,7 @@ async def pabloescobar(client, message):
     output_stre = ""
     for x in C:
         output_stre += f"{x.title}\n@{x.username}\n\n"
-    output_str = f"""I am Admin In All These Groups And Channels
-{output_stre}
-"""
+    output_str = engine.get_string("IAM_ADMIN").format("output_stre")
     await edit_or_send_as_file(
         output_str, pablo, client, "Your Admin Chats", "admin_chat"
     )

@@ -53,21 +53,12 @@ async def pingy(client, message):
     cmd_help={"help": "Get Alive Message Of Your Bot.!", "example": "{ch}alive"},
 )
 async def amialive(client, message):
+    engine = message.Engine
     img_ = Config.ALIVE_IMG
     me_ = client.me.first_name
     du = psutil.disk_usage(client.workdir)
     disk = f"{humanbytes(du.used)} / {humanbytes(du.total)} " f"({du.percent}%)"
-    alive = f"""
-**{me_}'s Friday-UserBot is Alive!**
-
-➔ **Version :** __{friday_version}__
-➔ **Uptime :** __{get_readable_time((time.time() - start_time))}__
-➔ **PyroGram Version :** __{__version__}__
-➔ **Python Version :** __{platform.python_version()}__
-➔ **OS :** __{platform.system()}__
-➔ **CPU :** __{len(psutil.Process().cpu_affinity())}__
-➔ **DISK USAGE :** __{disk}__
-"""
+    alive = engine.get_string("ALIVE_").format(me_, friday_version, get_readable_time((time.time() - start_time)), __version__, platform.python_version(), platform.system(), len(psutil.Process().cpu_affinity()), disk)
     if message.reply_to_message:
         await client.send_photo(
             message.chat.id,
@@ -126,7 +117,8 @@ async def give_sysinfo(client, message):
     cmd_help={"help": "Restart Your Bot!", "example": "{ch}restart"},
 )
 async def wow_restart(client, message):
-    await edit_or_reply(message, "`🔁 Restarting... 🔁`")
+    engine = message.Engine
+    await edit_or_reply(message, engine.get_string("RESTART"))
     args = [sys.executable, "-m", "main_startup"]
     execle(sys.executable, *args, environ)
     exit()

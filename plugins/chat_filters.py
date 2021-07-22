@@ -24,37 +24,39 @@ from main_startup.helper_func.basic_helpers import edit_or_reply, get_text
 @friday_on_cmd(
     ["delfilter"],
     cmd_help={"help": "Delete A Filter!", "example": "{ch}delfilter (filter name)"},
+    group_only=True
 )
 async def del_filterz(client, message):
-    note_ = await edit_or_reply(message, "`Processing..`")
+    engine = message.Engine
+    note_ = await edit_or_reply(message, engine.get_string("PROCESSING"))
     note_name = get_text(message)
     if not note_name:
-        await note_.edit("`Give A Filter Name!`")
+        await note_.edit(engine.get_string("INPUT_REQ").format("Keyword"))
         return
     note_name = note_name.lower()
     if not await filters_info(note_name, int(message.chat.id)):
-        await note_.edit("`Filter Not Found!`")
+        await note_.edit(engine.get_string("FILTER_1").format("FILTERS", note_name))
         return
     await del_filters(note_name, int(message.chat.id))
-    await note_.edit(f"`Filter {note_name} Deleted Successfully!`")
+    await note_.edit(engine.get_string("FILTER_2").format("Filter", note_name))
 
 
 @friday_on_cmd(
     ["filters"],
     cmd_help={"help": "List All The Filters In The Chat!", "example": "{ch}filters"},
+    group_only=True
 )
 async def show_filters(client, message):
-    pablo = await edit_or_reply(message, "`Processing..`")
+    engine = message.Engine
+    pablo = await edit_or_reply(message, engine.get_string("PROCESSING"))
     poppy = await all_filters(int(message.chat.id))
     if poppy is False:
-        await pablo.edit("`No Filters Found In This Chat...`")
+        await pablo.edit(engine.get_string("FILTER_3").format("Filters"))
         return
     kk = ""
     for Escobar in poppy:
         kk += f"\n > `{Escobar.get('keyword')}`"
-    X = await client.get_chat(int(message.chat.id))
-    grp_nme = X.title
-    mag = f"List Of Filters In {grp_nme}: \n{kk}"
+    mag = engine.get_string("LIST_OF").format("Filters", message.chat.title, kk)
     await pablo.edit(mag)
 
 
@@ -64,21 +66,23 @@ async def show_filters(client, message):
         "help": "Save A Filter!",
         "example": "{ch}savefilter (filter name) (replying to message)",
     },
+    group_only=True
 )
 async def s_filters(client, message):
-    note_ = await edit_or_reply(message, "`Processing..`")
+    engine = message.Engine
+    note_ = await edit_or_reply(message, engine.get_string("PROCESSING"))
     note_name = get_text(message)
     if not note_name:
-        await note_.edit("`Give A Filter Name!`")
+        await note_.edit(engine.get_string("INPUT_REQ").format("KeyWord"))
         return
     if not message.reply_to_message:
-        await note_.edit("Reply To Message To Save As Filter!")
+        await note_.edit(engine.get_string("REPLY_MSG"))
         return
     note_name = note_name.lower()
     msg = message.reply_to_message
     copied_msg = await msg.copy(int(Config.LOG_GRP))
     await add_filters(note_name, int(message.chat.id), copied_msg.message_id)
-    await note_.edit(f"`Done! {note_name} Added To Filters List!`")
+    await note_.edit(engine.get_string("FILTER_5").format(note_name, "Filters"))
 
 
 @listen(filters.incoming & ~filters.edited & filters.group & ~filters.private & ~filters.me)
@@ -95,7 +99,7 @@ async def reply_filter_(client, message):
         return
     for all_fil in al_fil:
         al_fill.append(all_fil.get("keyword"))
-    owoo = owo.lower()
+    owo = owo.lower()
     for filter_s in al_fill:
         pattern = r"( |^|[^\w])" + re.escape(filter_s) + r"( |$|[^\w])"
         if re.search(pattern, owo, flags=re.IGNORECASE):
@@ -135,10 +139,11 @@ async def is_media(message):
     cmd_help={"help": "Delete All The Filters in chat!", "example": "{ch}delfilters"},
 )
 async def del_all_filters(client, message):
-    pablo = await edit_or_reply(message, "`Processing...`")
+    engine = message.Engine
+    pablo = await edit_or_reply(message, engine.get_string("PROCESSING"))
     poppy = await all_filters(int(message.chat.id))
     if poppy is False:
-        await pablo.edit("`No Filters Found In This Chat...`")
+        await pablo.edit(engine.get_string("FILTER_3").format("Filters"))
         return
     await filters_del(int(message.chat.id))
-    await pablo.edit("Deleted All The Filters Successfully!!")
+    await pablo.edit(engine.get_string("REMOVED_ALL").format("Filters"))

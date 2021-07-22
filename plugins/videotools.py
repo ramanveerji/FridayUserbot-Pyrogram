@@ -28,12 +28,13 @@ from main_startup.helper_func.plugin_helpers import convert_vid_to_vidnote
     },
 )
 async def get_str(client, message):
-    msg_ = await edit_or_reply(message, "`Please Halt!`")
+    engine = message.Engine
+    msg_ = await edit_or_reply(message, engine.get_string("PROCESSING"))
     if not message.reply_to_message:
-        await msg_.edit("`Please Reply To Video To Get Its Subtitle!`")
+        await msg_.edit(engine.get_string("NEEDS_REPLY").format("Get Srt"))
         return
     if not message.reply_to_message.video:
-        await msg_.edit("`Please Reply To Video To Get Its Subtitle!`")
+        await msg_.edit(engine.get_string("NEEDS_REPLY").format("Get Srt"))
         return
     c_time = time.time()
     file_ = await message.reply_to_message.download(
@@ -44,10 +45,9 @@ async def get_str(client, message):
     cmd_to_un = f"ffmpeg -i {file_} {srt_file_name}"
     await run_cmd(cmd_to_un)
     if not os.path.exists(srt_file_name):
-        await msg_.edit("`Seems Like This Media Don't Have Subtitle`")
+        await msg_.edit(engine.get_string("UNABLE_TO_CONVERT"))
         os.remove(file_)
         return
-    await msg_.edit("`Almost Done! Now Uploading Srt File!`")
     if message.reply_to_message:
         await client.send_document(
             message.chat.id,
@@ -73,12 +73,13 @@ async def get_str(client, message):
     },
 )
 async def hell_speed_s(client, message):
-    msg_ = await edit_or_reply(message, "`Please Halt!`")
+    engine = message.Engine
+    msg_ = await edit_or_reply(message, engine.get_string("PROCESSING"))
     if not message.reply_to_message:
-        await msg_.edit("`Please Reply To Video To Fast Forward It!`")
+        await msg_.edit(engine.get_string("NEEDS_REPLY").format("Fast Forward"))
         return
     if not (message.reply_to_message.video or message.reply_to_message.animation):
-        await msg_.edit("`Please Reply To Video To Fast Forward It!`")
+        await msg_.edit(engine.get_string("NEEDS_REPLY").format("Fast Forward"))
         return
     c_time = time.time()
     file_ = await message.reply_to_message.download(
@@ -88,7 +89,7 @@ async def hell_speed_s(client, message):
     cmd_to_un = f'ffmpeg -i {file_} -vf "setpts=0.25*PTS" {file_name}'
     await run_cmd(cmd_to_un)
     if not os.path.exists(file_name):
-        await msg_.edit("`My Logic Broke! Rip`")
+        await msg_.edit(engine.get_string("UNABLE_TO_CONVERT"))
         return
     if message.reply_to_message:
         await client.send_video(
@@ -119,12 +120,13 @@ async def hell_speed_s(client, message):
     },
 )
 async def fking_slow(client, message):
+    engine = message.Engine
     msg_ = await edit_or_reply(message, "`Please Halt!`")
     if not message.reply_to_message:
-        await msg_.edit("`Please Reply To Video To Slow Down!`")
+        await msg_.edit(engine.get_string("NEEDS_REPLY").format("Slow Down"))
         return
     if not (message.reply_to_message.video or message.reply_to_message.animation):
-        await msg_.edit("`Please Reply To Video To Slow Down!`")
+        await msg_.edit(engine.get_string("NEEDS_REPLY").format("Slow Down"))
         return
     c_time = time.time()
     file_ = await message.reply_to_message.download(
@@ -134,7 +136,7 @@ async def fking_slow(client, message):
     cmd_to_un = f'ffmpeg -i {file_} -vf "setpts=4*PTS" {file_name}'
     await run_cmd(cmd_to_un)
     if not os.path.exists(file_name):
-        await msg_.edit("`My Logic Broke! Rip`")
+        await msg_.edit(engine.get_string("UNABLE_TO_CONVERT"))
         return
     if message.reply_to_message:
         await client.send_video(
@@ -165,6 +167,7 @@ async def fking_slow(client, message):
     },
 )
 async def v_note(client, message):
+    engine = message.Engine
     msg_ = await edit_or_reply(message, "`Please Halt!`")
     if not message.reply_to_message:
         await msg_.edit("`Please Reply To A Video To Convert To Video Note!`")

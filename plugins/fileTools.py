@@ -33,7 +33,8 @@ from main_startup.helper_func.basic_helpers import (
     },
 )
 async def chnnlzip(client, message):
-    pablo = await edit_or_reply(message, "`Fetching All Files From This Channel!`")
+    engine = message.Engine
+    pablo = await edit_or_reply(message, engine.get_string("FILE_TOOLS_1"))
     rndm = uuid.uuid4().hex
     un = get_text(message)
     dirz = f"./{rndm}/"
@@ -44,7 +45,7 @@ async def chnnlzip(client, message):
         chnnl = un
     else:
         chnnl = message.chat.id
-    async for msg in client.search_messages(chnnl):
+    async for msg in client.iter_history(chnnl):
         if msg.sticker:
             rndmname = uuid.uuid4().hex
             if msg.sticker.mime_type == "application/x-tgsticker":
@@ -67,7 +68,7 @@ async def chnnlzip(client, message):
             f.write(f"[{msg.date}] - {msg.text} \n\n")
     total = text_count + media_count
     await pablo.edit(
-        f"**Total Media :** `{total}` \n**Downloaded Media :** `{media_count}` \n**Total Texts Appended :** `{text_count}` \n**Now Zipping Files.**"
+        engine.get_string("FILE_TOOLS_2").format(total, media_count, text_count)
     )
     shutil.make_archive(str(f"{chnnl}_ZippedByFridayUB"), "zip", dirz)
     await pablo.edit("`Zipped! Uploading Now!`")
@@ -76,7 +77,7 @@ async def chnnlzip(client, message):
     list_ = []
     if siz_e > 2040108421:
         await pablo.edit(
-            "`File Over 2GB, Telegram Doesn't Allow This. Trying To Split Files!`"
+            engine.get_string("FILE_TOOLS_3")
         )
         fs = Filesplit()
         if not os.path.exists(f"./splitted_{chnnl}_{rndm}"):
@@ -126,33 +127,30 @@ def file_list(path, lisT):
     },
 )
 async def chnnlpdf(client, message):
-    pablo = await edit_or_reply(message, "`Fetching All Images From This Channel!`")
+    engine = message.Engine
+    pablo = await edit_or_reply(message, engine.get_string("FILE_TOOLS_1"))
     rndm = uuid.uuid4().hex
     un = get_text(message)
     dirz = f"./{rndm}/"
     photo_count = 0
-    text_count = 0
     os.makedirs(dirz)
     if un:
         chnnl = un
     else:
         chnnl = message.chat.id
-    async for msg in client.search_messages(chnnl, filter="photo"):
-        rndmname = uuid.uuid4().hex
-        file_name = os.path.join(dirz + rndmname + ".jpg")
-        photo_count += 1
-        try:
-            await msg.download(file_name=file_name)
-        except Exception as e:
-            logging.info(e)
-    text_count + photo_count
     images_path = []
-    images_names = os.listdir(dirz)
-    for i in images_names:
-        path = os.path.join(dirz, i)
-        images_path.append(path)
+    async for msg in client.iter_history(chnnl):
+        if msg.photo:
+            rndmname = uuid.uuid4().hex
+            file_name = os.path.join(dirz + rndmname + ".jpg")
+            photo_count += 1
+            try:
+                file_path = await msg.download(file_name=file_name)
+                images_path.append(file_path)
+            except Exception as e:
+                logging.info(f"Failed To Download - {e}")
     if not images_path:
-        await pablo.edit("`No Images Found!`")
+        await pablo.edit(engine.get_string("IMAGE_NOT_FOUND").format("This Chat"))
         shutil.rmtree(dirz)
         return
     with open("imagetopdf@fridayot.pdf", "wb") as f:
@@ -172,18 +170,22 @@ async def chnnlpdf(client, message):
     },
 )
 async def Download(client, message):
-    pablo = await edit_or_reply(message, "`Processing...`")
+    s_time = time.time()
+    engine = message.Engine
+    pablo = await edit_or_reply(message, engine.get_string("PROCESSING"))
     if not message.reply_to_message:
-        await pablo.edit("`Reply To A File To Download!`")
+        await pablo.edit(engine.get_string("REPLY_MSG"))
         return
     if not message.reply_to_message.media:
-        await pablo.edit("`Reply To A File To Download!`")
+        await pablo.edit(engine.get_string("REPLY_MSG"))
         return
     c_time = time.time()
     Escobar = await message.reply_to_message.download(
         progress=progress, progress_args=(pablo, c_time, f"`Downloading This File!`")
     )
-    await pablo.edit(f"Downloaded to `{Escobar}` Successfully!")
+    e_time = time.time()
+    dl_time = round(s_time - e_time)
+    await pablo.edit(engine.get_string("FILE_TOOLS_5").format(Escobar, dl_time))
 
 
 @friday_on_cmd(
@@ -194,16 +196,17 @@ async def Download(client, message):
     },
 )
 async def st(client, message):
-    pablo = await edit_or_reply(message, "`Setting As Thumb!`")
+    engine = message.Engine
+    pablo = await edit_or_reply(message, engine.get_string("PROCESSING"))
     if not message.reply_to_message:
-        await pablo.edit("`Reply To A Image To Set As Thumb For Uploading Files.!`")
+        await pablo.edit(engine.get_string("FILE_TOOLS_6"))
         return
     if not message.reply_to_message.photo:
-        await pablo.edit("`Reply To A Image To Set As Thumb For Uploading Files.!`")
+        await pablo.edit(engine.get_string("FILE_TOOLS_6"))
         return
     await message.reply_to_message.download(file_name="./main_startup/Cache/thumb.jpg")
     await pablo.edit(
-        f"`Yay! Custom Thumb Set, All Files Will Be Sent With This Thumb!`"
+        engine.get_string("FILE_TOOLS_7")
     )
 
 
@@ -221,16 +224,17 @@ song_ext = tuple([".mp3", ".wav", ".m4a"])
     },
 )
 async def upload(client, message):
-    pablo = await edit_or_reply(message, "`Processing...")
+    engine = message.Engine
+    pablo = await edit_or_reply(message, engine.get_string("PROCESSING"))
     file = get_text(message)
     c_time = time.time()
     if not file:
         await pablo.edit(
-            "`Please Give Me A Valid Input. You Can Check Help Menu To Know More!`"
-        )
+            engine.get_string("INPUT_REQ").format("File Path")
+            )
         return
     if not os.path.exists(file):
-        await pablo.edit("`404 : File Not Found.`")
+        await pablo.edit(engine.get_string("F_404"))
         return
     file_name = os.path.basename(file)
     send_as_thumb = False

@@ -28,12 +28,13 @@ BRANCH_ = Config.U_BRANCH
     ["update"], cmd_help={"help": "Update Your UserBot!", "example": "{ch}update"}
 )
 async def update_it(client, message):
-    msg_ = await edit_or_reply(message, "`Updating Please Wait!`")
+    engine = message.Engine
+    msg_ = await edit_or_reply(message, engine.get_string("UPDATING_PLS_WAIT"))
     try:
         repo = Repo()
     except GitCommandError:
         return await msg_.edit(
-            "`Invalid Git Command. Please Report This Bug To @FridayOT`"
+            engine.get_string("INVALID_GIT_CMD")
         )
     except InvalidGitRepositoryError:
         repo = Repo.init()
@@ -47,7 +48,7 @@ async def update_it(client, message):
         repo.heads.master.checkout(True)
     if repo.active_branch.name != Config.U_BRANCH:
         return await msg_.edit(
-            f"`Seems Like You Are Using Custom Branch - {repo.active_branch.name}! Please Switch To {Config.U_BRANCH} To Make This Updater Function!`"
+            engine.get_sring("CUSTOM_BRANCH").format(repo.active_branch.name, Config.U_BRANCH)
         )
     try:
         repo.create_remote("upstream", REPO_)
@@ -61,13 +62,13 @@ async def update_it(client, message):
         except GitCommandError:
             repo.git.reset("--hard", "FETCH_HEAD")
         await run_cmd("pip3 install --no-cache-dir -r requirements.txt")
-        await msg_.edit("`Updated Sucessfully! Give Me A min To Restart!`")
+        await msg_.edit(engine.get_string("UPDATED"))
         args = [sys.executable, "-m", "main_startup"]
         execle(sys.executable, *args, environ)
         exit()
         return
     else:
-        await msg_.edit("`Heroku Detected! Pushing, Please Halt!`")
+        await msg_.edit(engine.get_string("HEROKU_DETECTED"))
         ups_rem.fetch(Config.U_BRANCH)
         repo.git.reset("--hard", "FETCH_HEAD")
         if "heroku" in repo.remotes:

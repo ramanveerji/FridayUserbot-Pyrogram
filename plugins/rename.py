@@ -20,15 +20,16 @@ from main_startup.helper_func.basic_helpers import edit_or_reply, get_text, prog
     },
 )
 async def rename(client, message):
-    pablo = await edit_or_reply(message, "`Processing..`")
+    engine = message.Engine
+    pablo = await edit_or_reply(message, engine.get_string("PROCESSING"))
     fname = get_text(message)
     if not fname:
-        await pablo.edit("Please Give New Name For File With Extension")
+        await pablo.edit(engine.get_string("INPUT_REQ").format("File Name"))
         return
     if not message.reply_to_message:
-        await pablo.edit("Please Reply To A File To Rename")
+        await pablo.edit(engine.get_string("NEEDS_REPLY").format("Media"))
         return
-    await pablo.edit("⚡️`Rename and upload in progress, please wait!`⚡️")
+    await pablo.edit(engine.get_string("R_P"))
     file_name = None
     try:
         file_name = message.reply_to_message.document.file_name
@@ -53,6 +54,4 @@ async def rename(client, message):
         progress=progress,
         progress_args=(pablo, c_time, f"`Uploading {fname}`", EsCoBaR),
     )
-    await pablo.edit(
-        "File Renamed and Uploaded. By FridayUserBot. Get your FridayUserBot from @fridaychat"
-    )
+    await pablo.delete()

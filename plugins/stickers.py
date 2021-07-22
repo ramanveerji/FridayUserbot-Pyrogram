@@ -33,15 +33,16 @@ from main_startup.helper_func.plugin_helpers import convert_to_image
     },
 )
 async def packinfo(client, message):
-    pablo = await edit_or_reply(message, "`Processing...`")
+    engine = message.Engine
+    pablo = await edit_or_reply(message, engine.get_string("PROCESSING"))
     if not message.reply_to_message:
-        await pablo.edit("Please Reply To Sticker...")
+        await pablo.edit(engine.get_string("NEEDS_REPLY").format("Sticker"))
         return
     if not message.reply_to_message.sticker:
-        await pablo.edit("Please Reply To Sticker...")
+        await pablo.edit(engine.get_string("NEEDS_REPLY").format("Sticker"))
         return
     if not message.reply_to_message.sticker.set_name:
-        await pablo.edit("`Seems Like A Stray Sticker!`")
+        await pablo.delete()
         return
     stickerset = await client.send(
         GetStickerSet(
@@ -74,9 +75,10 @@ async def packinfo(client, message):
     },
 )
 async def packinfo(client, message):
-    pablo = await edit_or_reply(message, "`Using Megic To Kang This Sticker...`")
+    engine = message.Engine
+    pablo = await edit_or_reply(message, engine.get_string("KANG_MAGIC_"))
     if not message.reply_to_message:
-        await pablo.edit("Please Reply To Sticker...")
+        await pablo.edit(engine.get_string("NEEDS_REPLY").format("Sticker"))
         return
     Hell = get_text(message)
     name = ""
@@ -114,7 +116,7 @@ async def packinfo(client, message):
         else:
             cool = await convert_to_image(message, client)
             if not cool:
-                await pablo.edit("`Reply to a valid media first.`")
+                await pablo.edit(engine.get_string("UNSUPPORTED").format("Media"))
                 return
             file_name = resize_image(cool)
     elif message.reply_to_message.document:
@@ -126,7 +128,7 @@ async def packinfo(client, message):
     else:
         cool = await convert_to_image(message, client)
         if not cool:
-            await pablo.edit("`Reply to a valid media first.`")
+            await pablo.edit(engine.get_string("UNSUPPORTED").format("Media"))
             return
         file_name = resize_image(cool)
     try:
@@ -148,7 +150,7 @@ async def packinfo(client, message):
         while limit in messi.text:
             pack += 1
             prev_pack = int(pack) - 1
-            await pablo.edit(f"Kang Pack Vol __{prev_pack}__ is Full! Switching To Vol __{pack}__ Kang Pack")
+            await pablo.edit(engine.get_string("KANG_FULL").format(prev_pack, pack))
             packname = f"@{nm} Kang Pack {pack}"
             packshortname = f"FRIDAY_{message.from_user.id}_{pack}"
             if is_anim:
@@ -175,18 +177,14 @@ async def packinfo(client, message):
                 await client.send_message("stickers", "/skip")
                 await asyncio.sleep(0.5)
                 await client.send_message("stickers", packshortname)
-                await pablo.edit(
-                    f"Sticker Added To Your Pack With Emoji - {emoji}. You Can Find It [Here](https://t.me/addstickers/{packshortname})"
-                )
+                await pablo.edit(engine.get_string("ADDED_STICKER").format(emoji, packshortname))
                 return
         await client.send_document("stickers", file_name)
         await asyncio.sleep(1)
         await client.send_message("stickers", emoji)
         await asyncio.sleep(0.5)
         await client.send_message("stickers", "/done")
-        await pablo.edit(
-            f"`Sticker Added To Your Pack With Emoji - {emoji}. You Can Find It` [Here](https://t.me/addstickers/{packshortname})"
-        )
+        await pablo.edit(engine.get_string("ADDED_STICKER").format(emoji, packshortname))
     else:
         if is_anim:
             await client.send_message("stickers", "/newanimated")
@@ -205,9 +203,7 @@ async def packinfo(client, message):
         await client.send_message("stickers", "/skip")
         await asyncio.sleep(0.5)
         await client.send_message("stickers", packshortname)
-        await pablo.edit(
-            f"`Sticker Added To Your Pack With Emoji - {emoji}. You Can Find It` [Here](https://t.me/addstickers/{packshortname})"
-        )
+        await pablo.edit(engine.get_string("ADDED_STICKER").format(emoji, packshortname))
         if os.path.exists(file_name):
             os.remove(file_name)
 

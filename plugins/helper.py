@@ -21,7 +21,8 @@ from main_startup.helper_func.basic_helpers import edit_or_reply, get_text
     },
 )
 async def help(client, message):
-    f_ = await edit_or_reply(message, "`Please Wait!`")
+    engine = message.Engine
+    f_ = await edit_or_reply(message, engine.get_string("PROCESSING"))
     if bot:
         starkbot = bot.me
         bot_username = starkbot.username
@@ -31,17 +32,17 @@ async def help(client, message):
                 message.chat.id, nice.query_id, nice.results[0].id, hide_via=True
             )
         except BaseException as e:
-            return await f_.edit(f"`Unable To Open Help Menu Here.` \n**ERROR :** `{e}`")
+            return await f_.edit(engine.get_string("HELP_OPEN_ERROR").format(e))
         await f_.delete()
     else:
         cmd_ = get_text(message)
         if not cmd_:
-            help_t = prepare_cmd_list()            
+            help_t = prepare_cmd_list(engine)            
             await f_.edit(help_t)
         else:
             help_s = get_help_str(cmd_)
             if not help_s:
-                await f_.edit("<code>404: Plugin Not Found!</code>")
+                await f_.edit(engine.get_string("PLUGIN_NOT_FOUND"))
                 return
             await f_.edit(help_s)
 
@@ -54,15 +55,16 @@ async def help(client, message):
     },
 )
 async def help_(client, message):
-    f_ = await edit_or_reply(message, "`Please Wait.`")
+    engine = message.Engine
+    f_ = await edit_or_reply(message, engine.get_string("PROCESSING"))
     cmd_ = get_text(message)
     if not cmd_:
-        help_t = prepare_cmd_list()            
+        help_t = prepare_cmd_list(engine)            
         await f_.edit(help_t)
     else:
         help_s = get_help_str(cmd_)
         if not help_s:
-            await f_.edit("<code>404: Plugin Not Found!</code>")
+            await f_.edit(engine.get_string("PLUGIN_NOT_FOUND"))
             return
         await f_.edit(help_s)
 
@@ -74,16 +76,16 @@ def get_help_str(string):
         return XTRA_CMD_LIST[string]
     return CMD_LIST[string]
     
-def prepare_cmd_list():
-    main_l = f"<b><u>📡 Friday Command List 📡</b></u> \n\n<b>⚒ Main Command List ({len(CMD_LIST)}) :</b> \n\n"
+def prepare_cmd_list(engine):
+    mail_l = engine.get_string("CMD_LIST_MENU").format(len(CMD_LIST))
     for i in CMD_LIST:
         if i:
             main_l += f"<code>{i}</code>    "
     if Config.LOAD_UNOFFICIAL_PLUGINS:
-        main_l += f"\n\n<b>⚒ Xtra Command List ({len(XTRA_CMD_LIST)}) :</b> \n\n"
+        main_l += engine.get_string("CMD_LIST_MENU2").format(len(XTRA_CMD_LIST))
         for i in XTRA_CMD_LIST:
             if i:
                 main_l += f"<code>{i}</code>    "
-    main_l += f"\n\nUse <code>{Config.COMMAND_HANDLER}ahelp (cmd-name)</code> To Know More About A Plugin."
+    main_l += engine.get_string("KNOW_MORE_ABOUT_PLUGIN").format(Config.COMMAND_HANDLER)
     return main_l 
     

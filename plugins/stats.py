@@ -20,7 +20,8 @@ from main_startup.helper_func.basic_helpers import edit_or_reply, get_text, prog
     },
 )
 async def stats(client, message):
-    pablo = await edit_or_reply(message, f"`Processing...`")
+    engine = message.Engine
+    pablo = await edit_or_reply(message, engine.get_string("PROCESSING"))
     start = datetime.now()
     u = 0
     g = 0
@@ -43,17 +44,6 @@ async def stats(client, message):
                 a_chat += 1
         elif dialog.chat.type == "channel":
             c += 1
-
     end = datetime.now()
     ms = (end - start).seconds
-    await pablo.edit(
-        """`Your Stats Obtained in {} seconds`
-`You have {} Private Messages.`
-`You are in {} Groups.`
-`You are in {} Super Groups.`
-`You Are in {} Channels.`
-`You Are Admin in {} Chats.`
-`Bots = {}`""".format(
-            ms, u, g, sg, c, a_chat, b
-        )
-    )
+    await pablo.edit(engine.get_string("STATS").format(ms, u, g, sg, c, a_chat, b))
