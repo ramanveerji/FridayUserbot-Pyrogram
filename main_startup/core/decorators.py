@@ -30,14 +30,16 @@ from main_startup import (
     Friday2,
     Friday3,
     Friday4,
-    bot,
-    LangEngine
+    bot
 )
 from main_startup.config_var import Config
 from main_startup.helper_func.basic_helpers import is_admin_or_owner
-from bot_utils_files.Localization.engine import Engine
 from main_startup.core.helpers import edit_or_reply
 from database.sudodb import sudo_list
+
+from bot_utils_files.Localization.engine import Engine as engin_e
+
+Engine = engin_e()
 
 
 sudo_list_ = Friday.loop.create_task(sudo_list())
@@ -84,7 +86,6 @@ def friday_on_cmd(
             & ~filters.via_bot
             & ~filters.forwarded)
     cmd = list(cmd)
-    Engine = LangEngine
     add_help_menu(
         cmd=cmd[0],
         stack=inspect.stack(),

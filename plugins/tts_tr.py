@@ -8,11 +8,9 @@
 
 import os
 import time
-
 import gtts
 import requests
-from google_trans_new import google_translator
-from googletrans import LANGUAGES
+from googletrans import LANGUAGES, Translator
 from gtts import gTTS
 from hachoir.metadata import extractMetadata
 from hachoir.parser import createParser
@@ -22,17 +20,14 @@ from main_startup.core.decorators import friday_on_cmd
 from main_startup.helper_func.basic_helpers import edit_or_reply, get_text, run_in_exc
 
 @run_in_exc
-def tr(text, lang):
+def tr(text, lang, src):
     translator = google_translator()
-    try:
-        source_lan = translator.detect(text)[1]
-    except:
-        source_lan = translator.detect(text)[0]
     if not LANGUAGES.get(lang):
         return None, None, None
         return
-    transl_lan = LANGUAGES.get(lang, "English")
-    translated = translator.translate(text, lang_tgt=lang)
+    translated = translator.translate(text, dest=lang, src='auto')
+    source_lan = LANGUAGES.get(translated.src.lower())
+    transl_lan = LANGUAGES.get(translated.dest.lower())
     return source_lan, transl_lan, translated
 
 @run_in_exc

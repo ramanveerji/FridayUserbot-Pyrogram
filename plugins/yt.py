@@ -163,6 +163,6 @@ async def yt_vid(client, message):
             ),
         )
     await pablo.delete()
-    for files in (thumb, file_stark):
+    for files in (thumb, yt_file):
         if files and os.path.exists(files):
             os.remove(files)
