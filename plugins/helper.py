@@ -77,7 +77,7 @@ def get_help_str(string):
     return CMD_LIST[string]
     
 def prepare_cmd_list(engine):
-    mail_l = engine.get_string("CMD_LIST_MENU").format(len(CMD_LIST))
+    main_l = engine.get_string("CMD_LIST_MENU").format(len(CMD_LIST))
     for i in CMD_LIST:
         if i:
             main_l += f"<code>{i}</code>    "
