@@ -24,4 +24,4 @@ async def check_lang():
     if midhun:
         return midhun['lang']
     else:
-        return None
+        return 'en'
