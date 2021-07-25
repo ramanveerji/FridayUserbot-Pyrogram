@@ -14,7 +14,8 @@ ulang = db_x["UB_LANG"]
 async def set_lang(lang):
     midhun = await ulang.find_one({"_id": "Lang"})
     if midhun:
-        await ulang.update_one({"_id": "UB_LANG"}, {"$set": {"lang": lang}})
+        if midhun['lang'] != lang:
+            await ulang.update_one({"_id": "UB_LANG"}, {"$set": {"lang": lang}})
     else:
         await ulang.insert_one({"_id": "UB_LANG", "lang": lang})
 
@@ -24,4 +25,8 @@ async def check_lang():
     if midhun:
         return midhun['lang']
     else:
+<<<<<<< Updated upstream
         return 'en'
+=======
+        return 'en'
+>>>>>>> Stashed changes

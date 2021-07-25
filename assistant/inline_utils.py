@@ -50,7 +50,7 @@ from main_startup.helper_func.basic_helpers import (
 import os
 from main_startup.helper_func.assistant_helpers import _dl, download_yt
 from pyrogram.types import InputMediaDocument, InputMediaVideo, InputMediaAudio
-
+from googletrans import LANGUAGES
 from bot_utils_files.Localization.engine import language_string
 from database.localdb import set_lang
 
@@ -287,7 +287,6 @@ async def st_lang(client, cb):
 
 @bot.on_callback_query(filters.regex(pattern="change_lang"))
 async def change_lang(client, cb):
-    from googletrans import LANGUAGES
     nice_text = "Select A Language From Below."
     bttns_ = []
     for lang_ in slist:
