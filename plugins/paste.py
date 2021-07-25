@@ -41,10 +41,10 @@ async def paste(client, message):
         await pablo.edit(engine.get_string("NEEDS_REPLY").format("File / Text"))
         return
     async with aiohttp.ClientSession() as session:
-        req = await session.post("https://nekobin.com/api/documents", json={"content": message_s}, timeout=3)
+        req = await session.post("https://hastebin.com/documents", data=message_s.encode('utf-8'), timeout=3)
         resp = await req.json()
     key = resp.get("key")
-    url = f"https://nekobin.com/{key}"
-    raw = f"https://nekobin.com/raw/{key}"
+    url = f"https://hastebin.com/{key}"
+    raw = f"https://hastebin.com/raw/{key}"
     reply_text = engine.get_string("PASTED").format(url, raw)
     await pablo.edit(reply_text)
