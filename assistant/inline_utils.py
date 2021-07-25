@@ -46,11 +46,12 @@ from main_startup.helper_func.basic_helpers import (
     inline_wrapper,
     paginate_help,
 )
+
 import os
 from main_startup.helper_func.assistant_helpers import _dl, download_yt
 from pyrogram.types import InputMediaDocument, InputMediaVideo, InputMediaAudio
 
-
+from bot_utils_files.Localization.engine import language_string
 
 db_m = TinyDB("./main_startup/Cache/secret.json")
 db_s = TinyDB("./main_startup/Cache/not4u.json")
@@ -58,6 +59,7 @@ db_s = TinyDB("./main_startup/Cache/not4u.json")
 
 REPO_ = Config.UPSTREAM_REPO
 BRANCH_ = Config.U_BRANCH
+slist = [s for s in language_string.keys()]
 
 
 @bot.on_inline_query()
@@ -252,6 +254,11 @@ async def owo(client, inline_query):
                     text="SyS Info", callback_data=f"sys_info"
                 )
             ],
+            [
+             InlineKeyboardButton(
+                    text="Change UserBot Language", callback_data=f"change_lang"
+                )
+            ],
         ]
         if Config.LOAD_UNOFFICIAL_PLUGINS:
             total_ = len(XTRA_CMD_LIST) + len(CMD_LIST)
@@ -269,6 +276,23 @@ async def owo(client, inline_query):
                 )
             ],
         )
+
+@bot.on_callback_query(filters.regex(pattern="set_lang_(.*)"))
+async def st_lang(client, cb):
+    lang = cb.matches[0].group(1)
+    await set_lang(lang)
+    str_ = f"**UserBot Language Changed To** `{slist['lang']}` \n`Please Restart To Update Changes!`"
+    await cb.edit_message_text(str_)
+
+@bot.on_callback_query(filters.regex(pattern="change_lang"))
+async def change_lang(client, cb):
+    from googletrans import LANGUAGES
+    nice_text = "Select A Language From Below."
+    bttns_ = []
+    for lang_ in slist:
+        bttns_.append([InlineKeyboardButton(text=LANGUAGES[lang_], callback_data=f"set_lang_{lang_}")])
+    await cb.edit_message_text(nice_text, reply_markup=InlineKeyboardMarkup(bttns_))
+    
 
 @bot.on_callback_query(filters.regex(pattern="ytdl_(.*)_(video|audio)"))
 async def yt_dl_video(client, cb):

@@ -20,7 +20,7 @@ from main_startup.core.decorators import friday_on_cmd
 from main_startup.helper_func.basic_helpers import edit_or_reply, get_text, run_in_exc
 
 @run_in_exc
-def tr(text, lang, src):
+def tr(text, lang):
     translator = google_translator()
     if not LANGUAGES.get(lang):
         return None, None, None

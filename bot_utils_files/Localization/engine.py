@@ -10,14 +10,26 @@ import logging
 import os
 import yaml     
 import pathlib
+from database.localdb import check_lang
 from main_startup.config_var import Config
+from main_startup import (
+    CMD_LIST,
+    XTRA_CMD_LIST,
+    Config,
+    Friday,
+    Friday2,
+    Friday3,
+    Friday4,
+    bot
+)
 
 language_string = {}
 
+selected_lang = Friday.loop.create_task(check_lang())
 
 class Engine:
     def __init__(self):
-        self.language = Config.USERBOT_LANG
+        self.language = selected_lang
         self.path = "./bot_utils_files/Localization/strings/"
         
     def get_all_files_in_path(self, path):
