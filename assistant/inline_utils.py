@@ -289,10 +289,11 @@ async def st_lang(client, cb):
 @cb_wrapper
 async def change_lang(client, cb):
     nice_text = "Select A Language From Below :"
-    bttns_ = []
+    bttns_d = []
     for lang_ in language_string.keys():
-        bttns_.append([InlineKeyboardButton(text=LANGUAGES[lang_].title(), callback_data=f"set_lang_{lang_}")])
-    await cb.edit_message_text(nice_text, reply_markup=InlineKeyboardMarkup(bttns_))
+        bttns_d.append([InlineKeyboardButton(text=LANGUAGES[lang_].title(), callback_data=f"set_lang_{lang_}")])
+    print(bttns_d) 
+    await cb.edit_message_text(nice_text, reply_markup=InlineKeyboardMarkup(bttns_d))
     
 
 @bot.on_callback_query(filters.regex(pattern="ytdl_(.*)_(video|audio)"))
