@@ -15,6 +15,7 @@ import sys
 from datetime import datetime
 from os import environ, execle, path, remove
 import platform
+from bot_utils_files.Localization.engine import language_string
 import re
 import socket
 import time
@@ -292,7 +293,6 @@ async def change_lang(client, cb):
     bttns_d = []
     for lang_ in language_string.keys():
         bttns_d.append([InlineKeyboardButton(text=LANGUAGES[lang_].title(), callback_data=f"set_lang_{lang_}")])
-    print(bttns_d) 
     await cb.edit_message_text(nice_text, reply_markup=InlineKeyboardMarkup(bttns_d))
     
 
