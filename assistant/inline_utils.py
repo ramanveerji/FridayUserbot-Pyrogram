@@ -51,7 +51,7 @@ import os
 from main_startup.helper_func.assistant_helpers import _dl, download_yt
 from pyrogram.types import InputMediaDocument, InputMediaVideo, InputMediaAudio
 from googletrans import LANGUAGES
-from bot_utils_files.Localization.engine import language_string
+
 from database.localdb import set_lang
 
 db_m = TinyDB("./main_startup/Cache/secret.json")
@@ -60,7 +60,6 @@ db_s = TinyDB("./main_startup/Cache/not4u.json")
 
 REPO_ = Config.UPSTREAM_REPO
 BRANCH_ = Config.U_BRANCH
-slist = [s for s in language_string.keys()]
 
 
 @bot.on_inline_query()
@@ -291,9 +290,9 @@ async def st_lang(client, cb):
 async def change_lang(client, cb):
     nice_text = "Select A Language From Below :"
     bttns_ = []
-    for lang_ in slist:
+    for lang_ in language_string.keys():
         bttns_.append([InlineKeyboardButton(text=LANGUAGES[lang_].title(), callback_data=f"set_lang_{lang_}")])
-    await cb.edit_message_text(nice_text, reply_markup=InlineKeyboardMarkup([bttns_]))
+    await cb.edit_message_text(nice_text, reply_markup=InlineKeyboardMarkup(bttns_))
     
 
 @bot.on_callback_query(filters.regex(pattern="ytdl_(.*)_(video|audio)"))
