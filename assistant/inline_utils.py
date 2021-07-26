@@ -279,6 +279,7 @@ async def owo(client, inline_query):
         )
 
 @bot.on_callback_query(filters.regex(pattern="set_lang_(.*)"))
+@cb_wrapper
 async def st_lang(client, cb):
     lang = cb.matches[0].group(1)
     await set_lang(lang)
@@ -286,12 +287,13 @@ async def st_lang(client, cb):
     await cb.edit_message_text(str_)
 
 @bot.on_callback_query(filters.regex(pattern="change_lang"))
+@cb_wrapper
 async def change_lang(client, cb):
     nice_text = "Select A Language From Below :"
     bttns_ = []
     for lang_ in slist:
         bttns_.append([InlineKeyboardButton(text=LANGUAGES[lang_].title(), callback_data=f"set_lang_{lang_}")])
-    await cb.edit_message_text(nice_text, reply_markup=InlineKeyboardMarkup(bttns_))
+    await cb.edit_message_text(nice_text, reply_markup=InlineKeyboardMarkup([bttns_]))
     
 
 @bot.on_callback_query(filters.regex(pattern="ytdl_(.*)_(video|audio)"))
@@ -390,6 +392,11 @@ async def black_menu(client, cb):
             [
              InlineKeyboardButton(
                     text="SyS Info", callback_data=f"sys_info"
+                )
+            ],
+        [
+             InlineKeyboardButton(
+                    text="Change UserBot Language", callback_data=f"change_lang"
                 )
             ],
         ]
