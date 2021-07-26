@@ -27,7 +27,6 @@ language_string = {}
 
 class Engine:
     def __init__(self):
-        self.language = (Friday.loop.create_task(check_lang())).result() or "en"
         self.path = "./bot_utils_files/Localization/strings/"
         
     def get_all_files_in_path(self, path):
@@ -46,6 +45,6 @@ class Engine:
         logging.debug("All language Loaded.")
         
     def get_string(self, string):
-        lang_ = "en" if not language_string.get(self.language) else self.language
+        lang_ = Friday.selected_lang
         string_ = language_string.get(lang_).get(string) or f"**404_STRING_NOT_FOUND :** `String {string} Not Found in {lang} String 	File. - Please Report It To @FridayChat`"
         return string_
