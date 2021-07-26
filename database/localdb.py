@@ -12,7 +12,7 @@ ulang = db_x["UB_LANG"]
 
 
 async def set_lang(lang):
-    midhun = await ulang.find_one({"_id": "Lang"})
+    midhun = await ulang.find_one({"_id": "UB_LANG"})
     if midhun:
         if midhun['lang'] != lang:
             await ulang.update_one({"_id": "UB_LANG"}, {"$set": {"lang": lang}})
