@@ -25,11 +25,9 @@ from main_startup import (
 
 language_string = {}
 
-selected_lang = Friday.loop.create_task(check_lang())
-
 class Engine:
     def __init__(self):
-        self.language = selected_lang.result() or "en"
+        self.language = (Friday.loop.create_task(check_lang())).result() or or "en"
         self.path = "./bot_utils_files/Localization/strings/"
         
     def get_all_files_in_path(self, path):
