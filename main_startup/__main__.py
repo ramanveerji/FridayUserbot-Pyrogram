@@ -12,7 +12,8 @@ import platform
 
 import pyrogram
 from pyrogram import __version__
-
+from bot_utils_files.Localization.engine import Engine
+from database.localdb import check_lang
 from main_startup import (
     Friday,
     Friday2,
@@ -92,6 +93,9 @@ async def run_bot():
                 logging.error("[ASSISTANT] - Failed To Load : " + f"{mods} - {str(e)}")
     await Friday.start()
     Friday.me = await Friday.get_me()
+    Friday.selected_lang = await check_lang()
+    LangEngine = Engine()
+    LangEngine.load_language()
     Friday.has_a_bot = True if bot else False
     if Friday2:
         await Friday2.start()
