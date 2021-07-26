@@ -27,7 +27,7 @@ language_string = {}
 
 class Engine:
     def __init__(self):
-        self.language = (Friday.loop.create_task(check_lang())).result() or or "en"
+        self.language = (Friday.loop.create_task(check_lang())).result() or "en"
         self.path = "./bot_utils_files/Localization/strings/"
         
     def get_all_files_in_path(self, path):
