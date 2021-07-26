@@ -96,8 +96,3 @@ if Config.BOT_TOKEN:
     )
 else:
     bot = None
-
-from bot_utils_files.Localization.engine import Engine
-
-LangEngine = Engine()
-LangEngine.load_language()
