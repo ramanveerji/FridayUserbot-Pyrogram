@@ -25,8 +25,4 @@ async def check_lang():
     if midhun:
         return midhun['lang']
     else:
-<<<<<<< Updated upstream
         return 'en'
-=======
-        return 'en'
->>>>>>> Stashed changes

@@ -36,12 +36,12 @@ async def paste(client, message):
             os.remove(file)
         elif message.reply_to_message.text:
             message_s = message.reply_to_message.text
-    url = "https://del.dog/documents"
+    url = "https://hastebin.com/documents"
     if not message_s:
         await pablo.edit(engine.get_string("NEEDS_REPLY").format("File / Text"))
         return
     async with aiohttp.ClientSession() as session:
-        req = await session.post("https://hastebin.com/documents", data=message_s.encode('utf-8'), timeout=3)
+        req = await session.post(url, data=message_s.encode('utf-8'), timeout=3)
         resp = await req.json()
     key = resp.get("key")
     url = f"https://hastebin.com/{key}"

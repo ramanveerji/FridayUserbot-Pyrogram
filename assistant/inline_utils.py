@@ -287,7 +287,7 @@ async def st_lang(client, cb):
 
 @bot.on_callback_query(filters.regex(pattern="change_lang"))
 async def change_lang(client, cb):
-    nice_text = "Select A Language From Below."
+    nice_text = "Select A Language From Below :"
     bttns_ = []
     for lang_ in slist:
         bttns_.append([InlineKeyboardButton(text=LANGUAGES[lang_].title(), callback_data=f"set_lang_{lang_}")])

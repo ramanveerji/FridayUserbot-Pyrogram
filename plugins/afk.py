@@ -76,6 +76,8 @@ async def afk_er(client, message):
         return
     if not message.from_user:
         return
+    if message.from_user.id == client.me.id:
+        return
     use_r = int(message.from_user.id)
     if use_r not in afk_sanity_check.keys():
         afk_sanity_check[use_r] = 1
