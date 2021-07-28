@@ -31,8 +31,7 @@ class Engine:
         
     def get_all_files_in_path(self, path):
         path = pathlib.Path(path)
-        file_list = [i.absolute() for i in path.glob("**/*")]
-        return file_list
+        return [i.absolute() for i in path.glob("**/*")]
 
     def load_language(self):
         all_files = self.get_all_files_in_path(self.path)
@@ -46,5 +45,7 @@ class Engine:
         
     def get_string(self, string):
         lang_ = Friday.selected_lang
-        string_ = language_string.get(lang_).get(string) or f"**404_STRING_NOT_FOUND :** `String {string} Not Found in {lang} String 	File. - Please Report It To @FridayChat`"
-        return string_
+        return (
+            language_string.get(lang_).get(string)
+            or f"**404_STRING_NOT_FOUND :** `String {string} Not Found in {lang} String 	File. - Please Report It To @FridayChat`"
+        )
