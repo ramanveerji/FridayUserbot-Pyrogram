@@ -22,6 +22,7 @@ from main_startup.helper_func.basic_helpers import (
 )
 from main_startup.helper_func.logger_s import LogIt
 from plugins import devs_id
+from database.sudodb import sudo_list
 
 
 @friday_on_cmd(
