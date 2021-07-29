@@ -1700,10 +1700,8 @@ class googleimagesdownload:
                                 os.makedirs("logs")
                         except OSError as e:
                             print(e)
-                        json_file = open("logs/" + search_keyword[i] + ".json", "w")
-                        json.dump(items, json_file, indent=4, sort_keys=True)
-                        json_file.close()
-
+                        with open("logs/" + search_keyword[i] + ".json", "w") as json_file:
+                            json.dump(items, json_file, indent=4, sort_keys=True)
                     # Related images
                     if arguments["related_images"]:
                         stark.info(
@@ -1753,7 +1751,7 @@ def main():
             paths, errors = response.download(
                 arguments
             )  # wrapping response in a variable just for consistency
-            total_errors = total_errors + errors
+            total_errors += errors
 
         t1 = time.time()  # stop the timer
         total_time = (
