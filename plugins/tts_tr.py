@@ -21,10 +21,9 @@ from main_startup.helper_func.basic_helpers import edit_or_reply, get_text, run_
 
 @run_in_exc
 def tr(text, lang):
-    translator = google_translator()
+    translator = Translator()
     if not LANGUAGES.get(lang):
         return None, None, None
-        return
     translated = translator.translate(text, dest=lang, src='auto')
     source_lan = LANGUAGES.get(translated.src.lower())
     transl_lan = LANGUAGES.get(translated.dest.lower())

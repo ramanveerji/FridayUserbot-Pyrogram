@@ -22,6 +22,7 @@ from main_startup.helper_func.basic_helpers import (
 )
 from main_startup.helper_func.logger_s import LogIt
 from plugins import devs_id
+from database.sudodb import sudo_list
 
 
 @friday_on_cmd(
@@ -32,6 +33,7 @@ from plugins import devs_id
     },
 )
 async def gmute_him(client, message):
+    AFS = await sudo_list()
     engine = message.Engine
     g = await edit_or_reply(message, engine.get_string("PROCESSING"))
     text_ = get_text(message)
@@ -52,7 +54,7 @@ async def gmute_him(client, message):
     if userz.id in devs_id:
         await g.edit("`Sadly, I Can't Do That!`")
         return
-    if userz.id in Config.AFS:
+    if userz.id in AFS:
         await g.edit("`Sudo Users Can't Be Gmutted! Remove Him And Try Again!`")
         return
     if await is_gmuted(userz.id):
@@ -73,6 +75,7 @@ async def gmute_him(client, message):
     },
 )
 async def gmute_him(client, message):
+    AFS = await sudo_list()
     engine = message.Engine
     ug = await edit_or_reply(message, engine.get_string("PROCESSING"))
     text_ = get_text(message)
@@ -88,7 +91,7 @@ async def gmute_him(client, message):
     if userz.id == (client.me).id:
         await ug.edit(engine.get_string("TF_DO_IT").format("UN-gmute"))
         return
-    if userz.id in Config.AFS:
+    if userz.id in AFS:
         await ug.edit("`Sudo Users Can't Be Un-Gmutted! Remove Him And Try Again!`")
         return
     if not await is_gmuted(userz.id):
@@ -109,6 +112,7 @@ async def gmute_him(client, message):
     },
 )
 async def gbun_him(client, message):
+    AFS = await sudo_list()
     engine = message.Engine
     gbun = await edit_or_reply(message, engine.get_string("PROCESSING"))
     text_ = get_text(message)
@@ -130,7 +134,7 @@ async def gbun_him(client, message):
     if userz.id in devs_id:
         await g.edit("`Sadly, I Can't Do That!`")
         return
-    if userz.id in Config.AFS:
+    if userz.id in AFS:
         await gbun.edit("`Sudo Users Can't Be Gbanned! Remove Him And Try Again!`")
         return
     if await gban_info(userz.id):
@@ -163,6 +167,7 @@ async def gbun_him(client, message):
     },
 )
 async def ungbun_him(client, message):
+    AFS = await sudo_list()
     engine = message.Engine
     ungbun = await edit_or_reply(message, engine.get_string("PROCESSING"))
     text_ = get_text(message)
@@ -203,6 +208,7 @@ async def ungbun_him(client, message):
 
 @listen(filters.incoming & ~filters.me & ~filters.user(Config.AFS))
 async def watch(client, message):
+    AFS = await sudo_list()
     if not message:
         return
     if not message.from_user:

@@ -129,7 +129,7 @@ def get_readable_time(seconds: int) -> int:
 
 async def get_all_pros() -> list:
     """Get All Users , Sudo + Owners + Other Clients"""
-    users = list(Config.SUDO_USERS)
+    users = await sudo_list()
     ujwal = Friday.me
     users.append(ujwal.id)
     if Friday2:
@@ -243,7 +243,8 @@ def inline_wrapper(func):
 
 async def delete_or_pass(message):
     """Delete Message If Its From Self Else Just Pass"""
-    if message.from_user.id in Config.AFS:
+    AFS = await sudo_list()
+    if message.from_user.id in AFS:
         return message
     return await message.delete()
 
