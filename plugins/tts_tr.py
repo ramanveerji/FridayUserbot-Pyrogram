@@ -33,7 +33,6 @@ def tr(text, lang):
 def parse_tts(text_, lang, file):
     tts = gTTS(text_, lang=lang)
     tts.save(file)
-    google_translator()
     dec_s = detect(text_)
     duration = 0
     metadata = extractMetadata(createParser(file))
