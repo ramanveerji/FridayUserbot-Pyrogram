@@ -143,7 +143,7 @@ async def reverseing(client, message):
     else:
         await pablo.edit(engine.get_string("IMG_NOT_FOUND").format("google"))
         return
-    await pablo.edit(f"[{guess}]({fetchUrl})\n\n[Visually similar images]({imgspage})")
+    await pablo.edit(f"[{guess}]({fetchUrl})\n\n[Visually similar images]({imgspage})", disable_web_page_preview=True)
     if input_ and input_.isdigit():
         lim = int(input_)
         lst, Beast = await download_imgs_from_google(quess, lim)
@@ -199,7 +199,7 @@ async def yandex_(client, message):
         return
     img_search_url = searchUrl + "?" + query_string
     caption = engine.get_string("YANDEX").format(img_search_url)
-    await pablo.edit(caption, parse_mode="HTML")
+    await pablo.edit(caption, parse_mode="HTML", disable_web_page_preview=True)
     os.remove(imoge)
 
 

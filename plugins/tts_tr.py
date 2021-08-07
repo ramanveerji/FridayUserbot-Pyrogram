@@ -33,8 +33,10 @@ def tr(text, lang):
 def parse_tts(text_, lang, file):
     tts = gTTS(text_, lang=lang)
     tts.save(file)
-    google_translator()
-    dec_s = detect(text_)
+    try:
+        dec_s = detect(text_)
+    except:
+        dec_s = "unknown"
     duration = 0
     metadata = extractMetadata(createParser(file))
     if metadata and metadata.has("duration"):
@@ -76,7 +78,7 @@ async def gibspeech(client, message):
         audio=file, caption=owoc, duration=duration
     )
     await client.send_chat_action(message.chat.id, action="cancel")
-    if os.path.exist(file):
+    if os.path.exists(file):
         os.remove(file)
     await event.delete()
 
