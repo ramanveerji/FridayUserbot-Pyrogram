@@ -43,7 +43,7 @@ class Config((object)):
     REM_BG_API_KEY = os.environ.get("REM_BG_API_KEY", None)
     STRINGSESSION = os.environ.get("STRINGSESSION", None)
     ASSISTANT_START_PIC = os.environ.get(
-        "ASSISTANT_START_PIC", "https://telegra.ph//file/92c1a600394c723db90fc.jpg"
+        "ASSISTANT_START_PIC", "https://telegra.ph//file/9a33dee01e203c7d4ff1b.jpg"
     )
     STRINGSESSION_2 = os.environ.get("STRINGSESSION_2", None)
     STRINGSESSION_3 = os.environ.get("STRINGSESSION_3", None)
@@ -80,4 +80,3 @@ class Config((object)):
     CHROME_BIN_PATH = os.environ.get("CHROME_BIN_PATH", "/usr/bin/google-chrome-stable")
     USERBOT_LANG = os.environ.get("USERBOT_LANG", "en")
     XTRA_PLUGINS_REPO = os.environ.get("XTRA_PLUGINS_REPO", "https://github.com/DevsExpo/Xtra-Plugins")
-    DOWN_PATH = os.environ.get("DOWN_PATH")
