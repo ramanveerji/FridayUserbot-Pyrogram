@@ -80,3 +80,4 @@ class Config((object)):
     CHROME_BIN_PATH = os.environ.get("CHROME_BIN_PATH", "/usr/bin/google-chrome-stable")
     USERBOT_LANG = os.environ.get("USERBOT_LANG", "en")
     XTRA_PLUGINS_REPO = os.environ.get("XTRA_PLUGINS_REPO", "https://github.com/DevsExpo/Xtra-Plugins")
+    DOWN_PATH = os.environ.get("DOWN_PATH")
