@@ -10,6 +10,7 @@ import os
 import time
 from datetime import datetime
 
+import asyncio
 import gtts
 import requests
 from google_trans_new import google_translator
