@@ -228,7 +228,6 @@ async def ping(client, message):
 
 
 @bot.on_message(filters.command(["tts"]) & filters.incoming)
-@_check_owner_or_sudos
 async def tts_(client, message):
     stime = time.time()
     text_to_return = message.text
@@ -267,7 +266,6 @@ async def tts_(client, message):
 
 
 @bot.on_message(filters.command(["tr"]) & filters.incoming)
-@_check_owner_or_sudos
 async def tr(client, message):
     text_to_return = message.text
     try:
