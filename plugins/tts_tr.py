@@ -1,6 +1,6 @@
 # Copyright (C) 2020-2021 by DevsExpo@Github, < https://github.com/DevsExpo >.
 #
-# This file is part of < https://github.com/DevsExpo/FridayUserBot > project,
+# This file is part of < https://github.com/DevsExpo/FridayUB > project,
 # and is released under the "GNU v3.0 License Agreement".
 # Please see < https://github.com/DevsExpo/blob/master/LICENSE >
 #
@@ -107,7 +107,7 @@ async def tr_pls(client, message):
     if not source_lan:
         return await event.edit(engine.get_string("NEEDS_C_INPUT"))
     tr_text = f"""<b>Source ({source_lan.capitalize()})</b>
-<b>Translation ({transl_lan.capitalize()})</b>:
+<b>Translation ({transl_lan.capitalize()})</b>:\n
 <code>{translated}</code>"""
     if len(tr_text) >= 4096:
         url = "https://del.dog/documents"
