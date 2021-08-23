@@ -256,7 +256,7 @@ async def tts_(client, message):
     metadata = extractMetadata(createParser(f"{kk.get(language)}.ogg"))
     if metadata and metadata.has("duration"):
         duration = metadata.get("duration").seconds
-    owoc = f"**TTS** \n**Detected Text Language :** `{dec_s.capitalize()}` \n**Speech Text :** `{kk.get(language)}` \n**Time Taken :** `{hmm_time}s` \n__Powered By @FridayOT__"
+    owoc = f"**TTS** \n**Detected Text Language :** `{dec_s.capitalize()}` \n**Speech Text :** `{kk.get(language)}` \n**Time Taken :** `{hmm_time}s` \n__J.A.R.V.I.S__"
     await message.reply_audio(
         audio=f"{kk.get(language)}.ogg", caption=owoc, duration=duration
     )
