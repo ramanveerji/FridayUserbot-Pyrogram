@@ -89,7 +89,7 @@ async def glitchtgi(client, message):
         return
     photolove = await convert_to_image(message, client)
     #await pablo.edit("`Gli, Glitchiiingggg.....`")
-    pathsn = f"Glitched.gif"
+    pathsn = 'Glitched.gif'
     glitch_imgs = glitcher.glitch_image(photolove, 2, gif=True, color_offset=True)
     glitch_imgs[0].save(
         pathsn,
@@ -372,7 +372,7 @@ async def getfakecertificate(client, message):
     d1.text((1433, 1345), text, font=myFont, fill=(51, 51, 51))
     TZ = pytz.timezone(Config.TZ)
     datetime_tz = datetime.now(TZ)
-    oof = datetime_tz.strftime(f"%Y/%m/%d")
+    oof = datetime_tz.strftime('%Y/%m/%d')
     d1.text((961, 2185), oof, font=myFont2, fill=(51, 51, 51))
     d1.text((2441, 2113), random.choice(famous_people), font=myFont3, fill=(51, 51, 51))
     file_name = "certificate.png"
@@ -803,7 +803,7 @@ async def picgen(client, message):
     if response.status_code == 200:
         with open("FRIDAYOT.jpg", "wb") as f:
             f.write(response.content)
-    captin = f"Fake Image By Friday.\nGet Your Own Friday From @FRIDAYCHAT."
+    captin = 'Fake Image By Friday.\nGet Your Own Friday From @FRIDAYCHAT.'
     fole = "FRIDAYOT.jpg"
     if message.reply_to_message:
         await client.send_photo(

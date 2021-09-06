@@ -126,7 +126,7 @@ async def yt_vid(client, message):
     vid_title = yt_data['title']
     uploade_r = yt_data['uploader']
     yt_id = yt_data['id']
-    msg = message.reply_to_message or message 
+    msg = message.reply_to_message or message
     thumb_url = f"https://img.youtube.com/vi/{yt_id}/hqdefault.jpg"
     thumb = await _dl(thumb_url)
     caption = f"**{type_.title()} Name ➠** `{vid_title}` \n**Requested For ➠** `{input_str}` \n**Channel ➠** `{uploade_r}` \n**Link ➠** `{url}`"
@@ -158,10 +158,11 @@ async def yt_vid(client, message):
             progress_args=(
                 pablo,
                 c_time,
-                f"`Uploading Downloaded Youtube File.`",
+                '`Uploading Downloaded Youtube File.`',
                 str(yt_file),
             ),
         )
+
     await pablo.delete()
     for files in (thumb, yt_file):
         if files and os.path.exists(files):
