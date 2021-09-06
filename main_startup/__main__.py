@@ -53,9 +53,7 @@ async def load_unofficial_modules():
         try:
             load_xtra_mod(mods)
         except Exception as e:
-            logging.error(
-                "[USER][XTRA-PLUGINS] - Failed To Load : " + f"{mods} - {str(e)}"
-            )
+            logging.error("[USER][XTRA-PLUGINS] - Failed To Load : " + f'{mods} - {e}')
 
 
 async def fetch_plugins_from_channel():
@@ -114,7 +112,7 @@ async def run_bot():
         try:
             load_plugin(nm)
         except Exception as e:
-            logging.error("[USER] - Failed To Load : " + f"{nm} - {str(e)}")
+            logging.error("[USER] - Failed To Load : " + f'{nm} - {e}')
     if Config.LOAD_UNOFFICIAL_PLUGINS:
         await load_unofficial_modules()
     full_info = f"""Friday Based On Pyrogram V{__version__}

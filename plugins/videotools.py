@@ -38,8 +38,10 @@ async def get_str(client, message):
         return
     c_time = time.time()
     file_ = await message.reply_to_message.download(
-        progress=progress, progress_args=(msg_, c_time, f"`Downloading This Video!`")
+        progress=progress,
+        progress_args=(msg_, c_time, '`Downloading This Video!`'),
     )
+
     file_name = (message.reply_to_message.video.file_name).split(".")[0]
     srt_file_name = str(file_name) + ".srt"
     cmd_to_un = f"ffmpeg -i {file_} {srt_file_name}"
@@ -83,8 +85,10 @@ async def hell_speed_s(client, message):
         return
     c_time = time.time()
     file_ = await message.reply_to_message.download(
-        progress=progress, progress_args=(msg_, c_time, f"`Downloading This Video!`")
+        progress=progress,
+        progress_args=(msg_, c_time, '`Downloading This Video!`'),
     )
+
     file_name = "FastForwarded.mp4"
     cmd_to_un = f'ffmpeg -i {file_} -vf "setpts=0.25*PTS" {file_name}'
     await run_cmd(cmd_to_un)
@@ -97,8 +101,9 @@ async def hell_speed_s(client, message):
             file_name,
             reply_to_message_id=message.reply_to_message.message_id,
             progress=progress,
-            progress_args=(msg_, c_time, f"`Uploading Fast Forwarded Video`"),
+            progress_args=(msg_, c_time, '`Uploading Fast Forwarded Video`'),
         )
+
     else:
         await client.send_video(
             message.chat.id,
@@ -130,8 +135,10 @@ async def fking_slow(client, message):
         return
     c_time = time.time()
     file_ = await message.reply_to_message.download(
-        progress=progress, progress_args=(msg_, c_time, f"`Downloading This Video!`")
+        progress=progress,
+        progress_args=(msg_, c_time, '`Downloading This Video!`'),
     )
+
     file_name = "SlowDown.mp4"
     cmd_to_un = f'ffmpeg -i {file_} -vf "setpts=4*PTS" {file_name}'
     await run_cmd(cmd_to_un)
@@ -144,8 +151,9 @@ async def fking_slow(client, message):
             file_name,
             reply_to_message_id=message.reply_to_message.message_id,
             progress=progress,
-            progress_args=(msg_, c_time, f"`Uploading Slow Video`"),
+            progress_args=(msg_, c_time, '`Uploading Slow Video`'),
         )
+
     else:
         await client.send_video(
             message.chat.id,
@@ -178,8 +186,9 @@ async def v_note(client, message):
     c_time = time.time()
     file_ = await message.reply_to_message.download(
         progress=progress,
-        progress_args=(msg_, c_time, f"`Downloading This Video/Gif!`"),
+        progress_args=(msg_, c_time, '`Downloading This Video/Gif!`'),
     )
+
     file_name = "vid_note.mp4"
     await convert_vid_to_vidnote(file_, file_name)
     if not os.path.exists(file_name):
@@ -190,9 +199,10 @@ async def v_note(client, message):
             message.chat.id,
             file_name,
             progress=progress,
-            progress_args=(msg_, c_time, f"`Uploading Video Note`"),
+            progress_args=(msg_, c_time, '`Uploading Video Note`'),
             reply_to_message_id=message.reply_to_message.message_id,
         )
+
     else:
         await client.send_video_note(
             message.chat.id,

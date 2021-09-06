@@ -111,7 +111,7 @@ async def show_welcome(client, message):
     if sed is False:
         await pablo.edit(engine.get_string("FILTER_3").format("Welcome Message"))
         return
-    mag = f""" Welcome Message In Correct Chat Is :"""
+    mag = ' Welcome Message In Correct Chat Is :'
     await client.copy_message(
         from_chat_id=int(Config.LOG_GRP),
         chat_id=int(message.chat.id),

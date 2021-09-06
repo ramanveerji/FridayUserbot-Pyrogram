@@ -175,8 +175,10 @@ async def Download(client, message):
         return
     c_time = time.time()
     Escobar = await message.reply_to_message.download(
-        progress=progress, progress_args=(pablo, c_time, f"`Downloading This File!`")
+        progress=progress,
+        progress_args=(pablo, c_time, '`Downloading This File!`'),
     )
+
     e_time = time.time()
     dl_time = round(s_time - e_time)
     await pablo.edit(engine.get_string("FILE_TOOLS_5").format(Escobar, dl_time))

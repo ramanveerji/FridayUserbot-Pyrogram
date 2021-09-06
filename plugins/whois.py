@@ -56,23 +56,27 @@ async def whois(client, message):
     user_info += (
         f"✱ <b>LastName :</b> <code>{user_.last_name}</code> \n"
         if user_.last_name
-        else f"✱ <b>LastName :</b> <code>Not Set</code> \n"
+        else '✱ <b>LastName :</b> <code>Not Set</code> \n'
     )
+
     user_info += (
         f"✱ <b>DC :</b> <code>{user_.dc_id}</code> \n"
         if user_.dc_id
-        else f"✱ <b>DC :</b> <code>No PFP</code> \n"
+        else '✱ <b>DC :</b> <code>No PFP</code> \n'
     )
+
     user_info += (
         f"✱ <b>Status :</b> <code>{user_.status}</code> \n"
         if user_.status
-        else f"✱ <b>Status :</b> <code>Bot Can't Have Last Seen</code> \n"
+        else "✱ <b>Status :</b> <code>Bot Can't Have Last Seen</code> \n"
     )
+
     user_info += (
         f"✱ <b>Username :</b> <code>{user_.username}</code> \n"
         if user_.username
-        else f"✱ <b>Username :</b> <code>User Doesn't Have A UserName</code> \n"
+        else "✱ <b>Username :</b> <code>User Doesn't Have A UserName</code> \n"
     )
+
     user_info += f"✱ <b>Is Scam :</b> <code>{user_.is_scam}</code> \n"
     user_info += f"✱ <b>Is Bot :</b> <code>{user_.is_bot}</code> \n"
     user_info += f"✱ <b>Is Verified :</b> <code>{user_.is_verified}</code> \n"
@@ -80,11 +84,11 @@ async def whois(client, message):
     common = await client.get_common_chats(user_.id)
     user_info += f"✱ <b>Total Groups In Common :</b> <code>{len(common)}</code> \n"
     if user_.id in devs_id:
-        user_info += f"\n <code>Wow! This User is One Of My Developer</code> \n"
+        user_info += '\n <code>Wow! This User is One Of My Developer</code> \n'
     if await gban_info(user_.id):
         user_info += f"\n This User Is Gbanned For Reason : <code>{await gban_info(user_.id)}</code> \n"
     if await is_gmuted(user_.id):
-        user_info += f"\n This User Is Gmutted! \n"
+        user_info += '\n This User Is Gmutted! \n'
     if user_photo:
         await msg_.delete()
         if message.reply_to_message:

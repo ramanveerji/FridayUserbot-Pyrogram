@@ -93,7 +93,7 @@ async def download_yt(url, as_video=False):
         with YoutubeDL(opts) as ytdl:
             ytdl_data = ytdl.extract_info(url, download=True)
     except Exception as e:
-        return f"**Failed To Download** \n**Error :** `{str(e)}`", None, None, None
+        return f'**Failed To Download** \n**Error :** `{e}`', None, None, None
     yt_id = ytdl_data['id']
     name = ytdl_data['title']
     dur = ytdl_data["duration"]
