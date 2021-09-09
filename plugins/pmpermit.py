@@ -17,6 +17,8 @@ from database.bot_settings_db import (
     get_pm_spam_limit,
     get_pm_text,
     get_thumb,
+    add_block_text,
+    get_block_text,
     set_pm_spam_limit,
 )
 from database.pmdb import approve_user, disapprove_user, is_user_approved
