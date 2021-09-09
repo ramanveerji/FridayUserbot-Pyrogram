@@ -29,7 +29,7 @@ async def add_pm_text(text=default_text):
     else:
         await bsdb.insert_one({"_id": "PM_START_MSG", "pm_msg": text})
 
-async def add_block_text(text=default_text):
+async def add_block_text(text=default_bloco_text):
     _ = await bsdb.find_one({"_id": "PM_BLOCK_MSG"})
     if _:
         await bsdb.update_one({"_id": "PM_BLOCK_MSG"}, {"$set": {"msg": text}})
@@ -64,7 +64,7 @@ async def get_block_text():
     if __:
         return __["msg"]
     else:
-        return default_text
+        return default_bloco_text
 
 
 async def set_pm_spam_limit(psl=3):
