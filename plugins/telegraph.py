@@ -21,10 +21,10 @@ auth_url = r["auth_url"]
 
 
 @friday_on_cmd(
-    ["telegraph"],
+    ["telegraph", "tgf"],
     cmd_help={
         "help": "Get Telegraph link of replied image",
-        "example": "{ch}telegraph (reply to text or image)",
+        "example": "{ch}tgf or {ch}telegraph (reply to text or image)",
     },
 )
 async def telegrapher(client, message):
