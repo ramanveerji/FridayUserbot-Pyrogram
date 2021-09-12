@@ -1,5 +1,6 @@
 pyrogram
 filesplit
+google-trans-new
 wget>=3.2
 CairoSVG>=2.5.2
 faker>=6.6.2
