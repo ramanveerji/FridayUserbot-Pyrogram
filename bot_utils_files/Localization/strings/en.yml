@@ -209,7 +209,7 @@ YTDL_FAILED: "**Youtube Download Failed!** \n**Error :** `{}`"
 NO_RESULTS: "`No Results Found For {}, Perhaps, You Can Be More Specific.`"
 GETTING_RESULTS: "`Searching Results Matching For {}. Please Wait.`"
 ALIVE_: "
-**{}'s Friday-UserBot is Alive!**\n
+**{}'s Friday-UserBot is Alive!**
 
 \n➔ **Version :** __{}__
 \n➔ **Uptime :** __{}__
