@@ -127,22 +127,11 @@ async def promote_me(client, message):
     try:
         title = message.text.split(None, 1)[1]
     except IndexError:
-        title = "Admin"
+        title = None
     await pablo.edit("`Promoting This User!`")
     try:
         await client.promote_chat_member(
-            message.chat.id,
-            user.id,
-            is_anonymous=True,
-            can_change_info=True,
-            can_post_messages=True,
-            can_edit_messages=True,
-            can_delete_messages=True,
-            can_restrict_members=True,
-            can_invite_users=True,
-            can_pin_messages=True,
-            can_promote_members=True,
-            can_manage_chat=True,
+            message.chat.id, message.reply_to_message.from_user.id
         )
     except:
         await pablo.edit("`I Don't Have Enough Permissions To Promote!`")
