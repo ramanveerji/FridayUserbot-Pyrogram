@@ -349,6 +349,7 @@ async def ujwal_mote(client, message):
             can_invite_users=True,
             can_pin_messages=True,
             can_promote_members=True,
+            can_manage_chat=True,
         )
     except BaseException as e:
         await pablo.edit(engine.get_string("FAILED_ADMIN_ACTION").format("Promote", e))
@@ -407,6 +408,8 @@ async def ujwal_demote(client, message):
             can_invite_users=False,
             can_pin_messages=False,
             can_promote_members=False,
+            can_manage_voice_chats=False,
+            can_manage_chat=False,
         )
     except BaseException as e:
         await pablo.edit(engine.get_string("FAILED_ADMIN_ACTION").format("Demote", e))
