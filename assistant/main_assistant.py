@@ -127,7 +127,7 @@ async def promote_me(client, message):
     try:
         title = message.text.split(None, 1)[1]
     except IndexError:
-        title = Admin
+        title = "Admin"
     await pablo.edit("`Promoting This User!`")
     try:
         await client.promote_chat_member(
