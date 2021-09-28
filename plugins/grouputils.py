@@ -340,7 +340,7 @@ async def ujwal_mote(client, message):
         await client.promote_chat_member(
             message.chat.id,
             user.id,
-            is_anonymous=True,
+            is_anonymous=False,
             can_change_info=True,
             can_post_messages=True,
             can_edit_messages=True,
