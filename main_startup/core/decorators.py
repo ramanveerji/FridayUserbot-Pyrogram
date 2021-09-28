@@ -140,7 +140,7 @@ def friday_on_cmd(
                     TZ = pytz.timezone(Config.TZ)
                     datetime_tz = datetime.now(TZ)
                     text = "**!ERROR - REPORT!**\n\n"
-                    text += f'\n**Trace Back : ** `{format_exc()}`'
+                    text += f"\n**Trace Back : ** `{str(format_exc())}`"
                     text += f"\n**Plugin-Name :** `{func.__module__}`"
                     text += f"\n**Function Name :** `{func.__name__}` \n"
                     text += datetime_tz.strftime(
@@ -176,7 +176,7 @@ def listen(filter_s):
                 TZ = pytz.timezone(Config.TZ)
                 datetime_tz = datetime.now(TZ)
                 text = "**!ERROR WHILE HANDLING UPDATES!**\n\n"
-                text += f'\n**Trace Back : ** `{format_exc()}`'
+                text += f"\n**Trace Back : ** `{str(format_exc())}`"
                 text += f"\n**Plugin-Name :** `{func.__module__}`"
                 text += f"\n**Function Name :** `{func.__name__}` \n"
                 text += datetime_tz.strftime(
@@ -245,4 +245,4 @@ def add_handler(filter_s, func_, cmd):
     if Friday3:
         Friday3.add_handler(MessageHandler(func_, filters=filter_s), group=0)
     if Friday4:
-        Friday4.add_handler(MessageHandler(func_, filters=filter_s), group=0)      
+        Friday4.add_handler(MessageHandler(func_, filters=filter_s), group=0)
