@@ -302,8 +302,8 @@ async def change_lang(client, cb):
 
 @bot.on_callback_query(filters.regex(pattern="ytdl_(.*)_(video|audio)"))
 async def yt_dl_video(client, cb):
-    await cb.edit_message_text("`Feature Disabled Temp.`")
-    """
+    # await cb.edit_message_text("`Feature Disabled Temp.`")
+    # """
     url = cb.matches[0].group(1)
     audio_or_video = cb.matches[0].group(2)
     if audio_or_video == "video":
@@ -323,7 +323,7 @@ async def yt_dl_video(client, cb):
     await cb.edit_message_media(file_)
     if os.path.exists(file_name):
         os.remove(file_name)
-    """
+    # """
 
 @bot.on_callback_query(filters.regex(pattern="sc_(.*)"))
 async def no_horny(client, cb):
