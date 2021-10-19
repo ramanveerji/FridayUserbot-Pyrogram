@@ -335,7 +335,6 @@ async def pmPermit(client, message):
     log = LogIt(message)
     capt = await get_thumb()
     pm_warns = await get_pm_spam_limit()
-    PM_CUSTOM_BLOCK_MSG = await get_block_text()
     if int(message.chat.id) not in PM_WARNS:
         PM_WARNS[int(message.chat.id)] = 0
     else:
