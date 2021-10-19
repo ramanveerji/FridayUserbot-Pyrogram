@@ -341,14 +341,7 @@ async def pmPermit(client, message):
     else:
         PM_WARNS[int(message.chat.id)] += 1
     if PM_WARNS[int(message.chat.id)] >= int(pm_warns):
-        if not PM_CUSTOM_BLOCK_MSG:
-            await message.reply_text(
-                f"`Thats It! I Gave You {int(pm_warns)} Warnings.\nYou are now Reported and Blocked`\n**Reason:** `SPAM LIMIT REACHED !`"
-            )
-        else:
-            await message.reply_text(
-                f"{eval(PM_CUSTOM_BLOCK_MSG)}"
-            )
+        await message.reply_text(f"`Thats It! I Gave You {int(pm_warns)} Warnings.\nYou are now Reported and Blocked`\n**Reason:** `SPAM LIMIT REACHED !`") 
         await client.block_user(user_.id)
         if int(message.chat.id) in OLD_MSG:
             OLD_MSG.pop(int(message.chat.id))
