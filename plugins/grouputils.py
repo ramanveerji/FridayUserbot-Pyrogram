@@ -340,17 +340,21 @@ async def ujwal_mote(client, message):
         await client.promote_chat_member(
             message.chat.id,
             user.id,
-            can_change_info=me_.can_change_info,
-            can_delete_messages=me_.can_delete_messages,
-            can_restrict_members=me_.can_restrict_members,
-            can_invite_users=me_.can_invite_users,
-            can_pin_messages=me_.can_pin_messages,
-            can_promote_members=me_.can_promote_members,
+            is_anonymous=False,
+            can_change_info=True,
+            can_post_messages=True,
+            can_edit_messages=True,
+            can_delete_messages=True,
+            can_restrict_members=True,
+            can_invite_users=True,
+            can_pin_messages=True,
+            can_promote_members=True,
+            can_manage_chat=True,
         )
     except BaseException as e:
         await pablo.edit(engine.get_string("FAILED_ADMIN_ACTION").format("Promote", e))
         return
-    p = f"**#Promote** \n**User :** {user.mention} \n**Chat :** `{message.chat.title}` \n**Title :** `{Res}`"
+    p = f"**#Promote** \n**User :** [{user.first_name}](tg://user?id={user.id}) \n**Chat :** `{message.chat.title}` \n**Title :** `{Res}`"
     await pablo.edit(p)
     log = LogIt(message)
     await log.log_msg(client, p)
@@ -404,11 +408,13 @@ async def ujwal_demote(client, message):
             can_invite_users=False,
             can_pin_messages=False,
             can_promote_members=False,
+            can_manage_voice_chats=False,
+            can_manage_chat=False,
         )
     except BaseException as e:
         await pablo.edit(engine.get_string("FAILED_ADMIN_ACTION").format("Demote", e))
         return
-    d = f"**#Demote** \n**User :** {user.mention}\n**Chat :** `{message.chat.title}`"
+    d = f"**#Demote** \n**User :** [{user.first_name}](tg://user?id={user.id}) \n**Chat :** `{message.chat.title}`"
     await pablo.edit(d)
     log = LogIt(message)
     await log.log_msg(client, d)
