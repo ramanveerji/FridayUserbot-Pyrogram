@@ -104,3 +104,5 @@ will. Specifically you can redistribute and/or modify it under the terms of the
 [GNU General Public License](https://www.gnu.org/licenses/gpl.html) as
 published by the Free Software Foundation, either version 3 of the License, or
 (at your option) any later version. 
+
+[![This Repo](https://telegra.ph//file/62842cac668759806afa0.jpg)](https://heroku.com/deploy?template=https://github.com/ramanveerji/FridayUserbot-Pyrogram)
