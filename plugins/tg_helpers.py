@@ -139,11 +139,11 @@ async def join_(client, message):
     await owo.edit(engine.get_string("JOINED"))
 
 @friday_on_cmd(
-    ["leave"],
+    ["leavechat"],
     group_only=True,
     cmd_help={
         "help": "Leave Chat Easily.",
-        "example": "{ch}leave",
+        "example": "{ch}leavechat",
     },
 )
 async def leave_(client, message):
