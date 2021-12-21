@@ -195,10 +195,10 @@ async def flips(client, message):
             os.remove(files)
 
 @friday_on_cmd(
-    ["imgnote"],
+    ["circle"],
     cmd_help={
         "help": "Crop Image Into Round & Cool Sticker",
-        "example": "{ch}imgnote (reply to Image or sticker)",
+        "example": "{ch}circle (reply to Image or sticker)",
     },
 )
 async def c_imagenote(client, message):
