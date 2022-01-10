@@ -48,7 +48,7 @@ async def packinfo(client, message):
         GetStickerSet(
             stickerset=InputStickerSetShortName(
                 short_name=message.reply_to_message.sticker.set_name
-            )
+            ), hash=0
         )
     )
     emojis = []
@@ -132,7 +132,7 @@ async def packinfo(client, message):
         file_name = resize_image(cool)
     try:
         exist = await client.send(
-            GetStickerSet(stickerset=InputStickerSetShortName(short_name=packshortname))
+            GetStickerSet(stickerset=InputStickerSetShortName(short_name=packshortname), hash=0)
         )
     except StickersetInvalid:
         pass
