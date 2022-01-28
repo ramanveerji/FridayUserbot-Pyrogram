@@ -122,12 +122,12 @@ async def owo(client, inline_query):
             uploade_r = i["channel"]
             views = i["views"]
             thumb = f"https://img.youtube.com/vi/{yt_id}/hqdefault.jpg"
-            capt = f""
+            capt = f"
 **Video Title :** `{vid_title}`
 **Link :** `{url}`
 **Uploader :** `{uploade_r}`
 **Views :** `{views}`
-            ""
+            "
             results.append(
                 InlineQueryResultPhoto(
                     photo_url=thumb,
