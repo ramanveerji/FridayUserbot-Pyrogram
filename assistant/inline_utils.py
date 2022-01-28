@@ -302,7 +302,7 @@ async def change_lang(client, cb):
 
 @bot.on_callback_query(filters.regex(pattern="ytdl_(.*)_(video|audio)"))
 async def yt_dl_video(client, cb):
-    await cb.edit_message_text("`Working on it`")
+    await cb.edit_message_text("`Downloading, Please Wait.....`")
     url = cb.matches[0].group(1)
     audio_or_video = cb.matches[0].group(2)
     if audio_or_video == "video":
@@ -316,9 +316,9 @@ async def yt_dl_video(client, cb):
     import datetime
     f_size = humanbytes(os.stat(file_name).st_size)
     if audio_or_video == "video":
-        file_ = InputMediaVideo(file_name, thumb=downloaded_thumb, supports_streaming=True, duration=dur, caption=caption)
+        file_ = InputMediaVideo(file_name, thumb=downloaded_thumb, supports_streaming=True, duration=dur, caption=capt)
     else:
-        file_ = InputMediaAudio(file_name, performer=uploader, title=name, thumb=downloaded_thumb, duration=dur, caption=caption)
+        file_ = InputMediaAudio(file_name, performer=uploader, title=name, thumb=downloaded_thumb, duration=dur, caption=capt)
     await cb.edit_message_media(file_)
     if os.path.exists(file_name):
         os.remove(file_name)
