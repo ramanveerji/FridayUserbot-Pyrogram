@@ -9,7 +9,7 @@
 import os
 import time
 from datetime import datetime
-from pytube import YouTube, exceptions
+
 
 import gtts
 import requests
@@ -327,61 +327,3 @@ async def broadcast(client, message):
         )
     else:
         await lol.edit(f"Successfully Broadcasted to {s} users.")
-
-@bot.on_message(filters.command(["vid"]) & filters.incoming)
-@_check_owner_or_sudos
-def video_dl(client, message):
-    chat_id = message.chat.id
-    link = message.text.split(maxsplit=1)[1]
-    try:
-        yt = YouTube(link)
-        video = yt.streams.get_highest_resolution().download('res')
-        caption = yt.title
-        with open('a.jpg', 'wb') as t:
-            t.write(requests.get(yt.thumbnail_url).content)
-        thumb = open('a.jpg', 'rb')
-        app.send_chat_action(chat_id, "upload_video")
-        client.send_video(chat_id=chat_id, video=video, caption=caption,
-                          thumb=thumb, duration=yt.length)
-        if os.path.exists(video):
-            os.remove(video)
-        if os.path.exists('a.jpg'):
-            os.remove('a.jpg')
-
-    except exceptions.RegexMatchError:
-        message.reply_text("Invalid URL.")
-    except exceptions.LiveStreamError:
-        message.reply_text("Live Stream links not supported.")
-    except exceptions.VideoUnavailable:
-        message.reply_text("Video is unavailable.")
-    except exceptions.HTMLParseError:
-        message.reply_text("Given URL couldn't be parsed.")
-
-@bot.on_message(filters.command(["aud"]) & filters.incoming)
-@_check_owner_or_sudos
-def audio_dl(client, message):
-    chat_id = message.chat.id
-    link = message.text.split('audio', maxsplit=1)[1]
-    try:
-        yt = YouTube(link)
-        audio = yt.streams.get_audio_only().download('res')
-        title = yt.title
-        app.send_chat_action(chat_id, "upload_audio")
-        with open('a.jpg', 'wb') as t:
-            t.write(requests.get(yt.thumbnail_url).content)
-        thumb = open('a.jpg', 'rb')
-        client.send_audio(chat_id=chat_id, audio=audio, title=title,
-                          thumb=thumb, performer=yt.author, duration=yt.length)
-        if os.path.exists(audio):
-            os.remove(audio)
-        if os.path.exists('a.jpg'):
-            os.remove('a.jpg')
-
-    except exceptions.RegexMatchError:
-        message.reply_text("Invalid URL.")
-    except exceptions.LiveStreamError:
-        message.reply_text("Live Stream links not supported.")
-    except exceptions.VideoUnavailable:
-        message.reply_text("Video is unavailable.")
-    except exceptions.HTMLParseError:
-        message.reply_text("Given URL couldn't be parsed.")
