@@ -316,9 +316,9 @@ async def yt_dl_video(client, cb):
     import datetime
     f_size = humanbytes(os.stat(file_name).st_size)
     if audio_or_video == "video":
-        file_ = InputMediaVideo(file_name, thumb=downloaded_thumb, supports_streaming=True, duration=dur, caption = f"**Name ➠** `{vid_title}`")
+        file_ = InputMediaVideo(file_name, thumb=downloaded_thumb, supports_streaming=True, duration=dur, caption = f"**Name ➠** `{name}`")
     else:
-        file_ = InputMediaAudio(file_name, performer=uploader, title=name, thumb=downloaded_thumb, duration=dur, caption = f"**Name ➠** `{vid_title}`")
+        file_ = InputMediaAudio(file_name, performer=uploader, title=name, thumb=downloaded_thumb, duration=dur, caption = f"**Name ➠** `{name}`")
     await cb.edit_message_media(file_)
     if os.path.exists(file_name):
         os.remove(file_name)
