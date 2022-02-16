@@ -91,7 +91,7 @@ async def mentioned_(client, message):
 ```
 
 # X-Tra Plugins 🎸
-* Please Visit [Xtra-Plugins](https://github.com/DevsExpo/Xtra-Plugins) To Checkout Xtra-Plugins.
+* Please Visit [Xtra-Plugins](https://github.com/ramanveerji/Xtra-Plugins) To Checkout Xtra-Plugins.
 
 
 # Licence 📋
