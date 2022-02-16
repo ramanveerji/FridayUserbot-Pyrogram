@@ -88,4 +88,4 @@ async def rm_s_sudo(client, message):
                 msg += f"**•** [{(await client.get_users(i))['first_name']}](tg://user?id={i})\n"
       except:
                 msg += f"**•** [User](tg://user?id={i})\n"
-    await message.reply(f"**List of Sudo Users are:**\n\n{msg}")
+    await message.edit(f"**List of Sudo Users are:**\n\n{msg}")
