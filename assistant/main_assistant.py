@@ -181,9 +181,9 @@ async def demote_you(client, message):
 @bot.on_message(filters.command(["id"]) & filters.incoming)
 async def id(client, message):
     if message.reply_to_message is None:
-        await message.reply(f"*This chat's ID is:* `{message.chat.id}`")
+        await message.reply(f"**This chat's ID is:** `{message.chat.id}`")
     else:
-        test = f"*Replied User's ID is:* `{message.reply_to_message.from_user.id}`\n\n*This chat's ID is:* `{message.chat.id}`"
+        test = f"**Replied User's ID is:** `{message.reply_to_message.from_user.id}`\n\n**This chat's ID is:** `{message.chat.id}`"
         await message.reply(test)
 
 
