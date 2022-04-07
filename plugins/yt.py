@@ -65,7 +65,7 @@ def yt_dl(url, client, message, type_):
         }
     else:
         opts = {
-            "format": "best[height=720]",
+            "format": "best[height>=480]",
             "addmetadata": True,
             "key": "FFmpegMetadata",
             "prefer_ffmpeg": True,
