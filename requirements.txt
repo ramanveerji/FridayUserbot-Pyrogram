@@ -1,3 +1,4 @@
+asyncurban
 pyrogram
 filesplit
 google-trans-new
