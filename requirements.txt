@@ -1,3 +1,4 @@
+countryinfo
 shazamio
 wikipedia
 pygments
