@@ -1,5 +1,3 @@
-fsplit
-countryinfo
 shazamio
 wikipedia
 pygments
