@@ -1,0 +1,9 @@
+version: "3.9"
+services:
+  worker:
+    build: .
+    environment:
+      STRINGSESSION: $STRINGSESSION
+      API_ID: $API_ID  # defaults to None
+      API_HASH: $API_HASH  # defaults to None
+      MONGO_DB: $MONGO_DB  # defaults to None
