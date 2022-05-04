@@ -11,7 +11,7 @@ speedtest
 feedparser
 validators
 asyncurban
-pyrogram==1.2.12
+pyrogram==1.3.0
 filesplit
 google-trans-new
 wget>=3.2
