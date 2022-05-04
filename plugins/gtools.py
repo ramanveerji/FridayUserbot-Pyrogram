@@ -47,7 +47,7 @@ async def gmute_him(client, message):
         await g.edit(engine.get_string("USER_MISSING").format("User Doesn't Exists In This Chat !"))
         return
     if not reason:
-        reason = "Just_Gmutted!"
+        reason = "Globally Muted!"
     if userz.id == (client.me).id:
         await g.edit(engine.get_string("TF_DO_IT").format("Gmute"))
         return
@@ -55,13 +55,13 @@ async def gmute_him(client, message):
         await g.edit("`Sadly, I Can't Do That!`")
         return
     if userz.id in AFS:
-        await g.edit("`Sudo Users Can't Be Gmutted! Remove Him And Try Again!`")
+        await g.edit("`Sudo Users Can't Be muted Globally! Remove Him And Try Again!`")
         return
     if await is_gmuted(userz.id):
-        await g.edit("`Re-Gmute? Seriously? :/`")
+        await g.edit("`Re-mute? Seriously? :/`")
         return
     await gmute(userz.id, reason)
-    gmu = f"**#Gmutted** \n**User :** `{userz.id}` \n**Reason :** `{reason}`"
+    gmu = f"**#G-muted** \n**User :** `{userz.id}` \n**Reason :** `{reason}`"
     await g.edit(gmu)
     log = LogIt(message)
     await log.log_msg(client, gmu)
@@ -92,13 +92,13 @@ async def gmute_him(client, message):
         await ug.edit(engine.get_string("TF_DO_IT").format("UN-gmute"))
         return
     if userz.id in AFS:
-        await ug.edit("`Sudo Users Can't Be Un-Gmutted! Remove Him And Try Again!`")
+        await ug.edit("`Sudo Users Can't Be Un-Gmuted! Remove Him And Try Again!`")
         return
     if not await is_gmuted(userz.id):
-        await ug.edit("`Un-Gmute A Non Gmutted User? Seriously? :/`")
+        await ug.edit("`Un-Gmute A Non Gmuted User? Seriously? :/`")
         return
     await ungmute(userz.id)
-    ugmu = f"**#Un-Gmutted** \n**User :** `{userz.id}`"
+    ugmu = f"**#Un-Gmuted** \n**User :** `{userz.id}`"
     await ug.edit(ugmu)
     log = LogIt(message)
     await log.log_msg(client, ugmu)
