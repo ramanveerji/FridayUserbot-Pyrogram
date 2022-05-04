@@ -100,7 +100,7 @@ async def dpin(client, message):
 async def dpins(client, message):
     engine = message.Engine
     await client.unpin_all_chat_messages(message.chat.id)
-    await edit_or_reply(message, engine.get_string("UNPINNED ALL"))
+    await edit_or_reply(message, engine.get_string("UNPINNEDALL"))
 
 
 @friday_on_cmd(
