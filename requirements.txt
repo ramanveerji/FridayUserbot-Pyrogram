@@ -1,4 +1,4 @@
-fsplit
+filesplit
 countryinfo
 shazamio
 wikipedia
