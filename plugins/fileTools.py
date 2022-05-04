@@ -14,7 +14,7 @@ import time
 import uuid
 
 import img2pdf
-from fsplit.filesplit import Filesplit
+from filesplit.split import Split
 
 from main_startup.core.decorators import friday_on_cmd
 from main_startup.helper_func.basic_helpers import (
