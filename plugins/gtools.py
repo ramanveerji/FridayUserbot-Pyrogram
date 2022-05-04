@@ -149,7 +149,7 @@ async def gbun_him(client, message):
     await gbun.edit(engine.get_string("GBAN_START"))
     for ujwal in chat_dict:
         try:
-            await client.kick_chat_member(ujwal, int(userz.id))
+            await client.ban_chat_member(ujwal, int(userz.id))
         except:
             failed += 1
     await gban_user(userz.id, reason)
@@ -225,7 +225,7 @@ async def watch(client, message):
         if message.chat.type == "private":
             return
         try:
-            await message.chat.kick_member(int(user))
+            await message.chat.ban_member(int(user))
         except BaseException:
             return
         await client.send_message(
