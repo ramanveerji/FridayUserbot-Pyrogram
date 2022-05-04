@@ -10,7 +10,7 @@ from main_startup.helper_func.basic_helpers import (
     get_text,
     progress,
 )
-  @friday_on_cmd(
+@friday_on_cmd(
     ["apk", "apkpure"],
     cmd_help={"help": "APK Downloader", "example": "{ch}apk_dl (app name)"},
 )
