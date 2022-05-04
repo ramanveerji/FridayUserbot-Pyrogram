@@ -64,6 +64,8 @@ async def spin(client, message):
         "example": "{ch}pin (reply to messages)",
     },
 )
+
+
 async def lpin(client, message):
     engine = message.Engine
     if not message.reply_to_message:
