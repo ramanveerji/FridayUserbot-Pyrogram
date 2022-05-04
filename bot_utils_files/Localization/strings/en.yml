@@ -1,7 +1,7 @@
 language: "en"
 written_by: [Chsaiujwal, Aditya, LoneWolf_08]
 
-AFK_1: "**My Master Seems To Be Too Busy 👀.** \n__He Going Afk Because Of__ `{}`"
+AFK_1: "**My Master is too busy right now,** \n__He is going AFK because of__ `{}`"
 NEEDS_REPLY: "**400_REPLY_TO_MESSAGE :** `Please Reply To {}.`"
 AFK_2: "#AfkLogger Afk Is Active And Reason is {}"
 AFK_3: "**I Am Busy And I Am Going Afk**."
