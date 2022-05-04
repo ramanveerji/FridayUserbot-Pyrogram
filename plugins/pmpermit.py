@@ -324,7 +324,7 @@ async def pmPermit(client, message):
     if user_.is_verified:       
         return
     if user_.is_scam:
-        await message.reply_text("`Scammer Aren't Welcome To My Masters PM!`")
+        await message.reply_text("`Scammers aren't Welcome to my Masters PM!`")
         await client.block_user(user_.id)
         return
     if user_.is_support:
