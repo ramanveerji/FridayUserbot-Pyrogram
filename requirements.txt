@@ -8,7 +8,7 @@ quotefancy
 mal
 pytgcalls==0.7.4
 flag
-speedtest
+speedtest-cli
 feedparser
 validators
 asyncurban
