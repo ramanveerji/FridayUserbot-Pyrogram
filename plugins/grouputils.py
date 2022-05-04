@@ -89,7 +89,7 @@ async def lpin(client, message):
 )
 async def dpin(client, message):
     engine = message.Engine
-    await client.unpin_chat_message(chat_id, message_id)
+    await client.unpin_chat_message(message.chat.id, message_id)
     await edit_or_reply(message, engine.get_string("UNPINNED"))    
     
 @friday_on_cmd(
