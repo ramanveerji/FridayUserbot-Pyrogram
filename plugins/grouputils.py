@@ -87,9 +87,9 @@ async def lpin(client, message):
     only_if_admin=True,
     cmd_help={"help": "Unpin Current Pinned Message!", "example": "{ch}rmpin"},
 )
-async def dpins(client, message):
+async def dpin(client, message):
     engine = message.Engine
-    await client.unpin_chat_message(message.chat.id)
+    await client.unpin_chat_message(chat_id, message_id)
     await edit_or_reply(message, engine.get_string("UNPINNED"))    
     
 @friday_on_cmd(
