@@ -309,6 +309,8 @@ async def is_media(message):
 async def pmPermit(client, message):
     if not Config.PM_PSW:
         return
+    if message.type == None:
+        return
     if not message.from_user:   
         return
     if await is_user_approved(int(message.chat.id)):
