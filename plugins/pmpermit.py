@@ -309,7 +309,7 @@ async def is_media(message):
 async def pmPermit(client, message):
     if not Config.PM_PSW:
         return
-    if message.type == None:
+    if message.service:
         return
     if not message.from_user:   
         return
