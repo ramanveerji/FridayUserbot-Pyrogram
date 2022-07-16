@@ -11,9 +11,11 @@ from database import db_x
 bsdb = db_x["bot_sdb"]
 
 default_text = """<b>Hello, {user_firstname}!
-This is A UserBot Of {boss_firstname}.</b>
-<i>My Master is Busy As For Now, You Can Wait For Sometime
-If He Needs To Talk To You, He Will Approve You!</i>
+This is the Assistant Of {boss_firstname}.</b>
+<i>My Boss is away or busy as of now, You can wait for him to respond.
+Do not spam further messages else I may have to block you!</i>
+
+<b>This is an automated message by the assistant</b>
 <b><u>You Have {warns} Of Warns.</b></u>
 """
 
