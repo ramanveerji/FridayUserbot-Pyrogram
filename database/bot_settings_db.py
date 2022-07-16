@@ -15,7 +15,7 @@ This is the Assistant Of {boss_firstname}.</b>
 <i>My Boss is away or busy as of now, You can wait for him to respond.
 Do not spam further messages else I may have to block you!</i>
 
-<b>This is an automated message by the assistant</b>
+<b>This is an automated message by the assistant.</b>
 <b><u>You Have {warns} Of Warns.</b></u>
 """
 
