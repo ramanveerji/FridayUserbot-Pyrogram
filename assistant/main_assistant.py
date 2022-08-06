@@ -330,7 +330,7 @@ async def broadcast(client, message):
 
 @bot.on_message(filters.command(["write"]) & filters.incoming)
 async def writing(client, message):
-    wrt = await client.reply("`Writing please wi8...`")
+    wrt = await message.reply("`Writing please wi8...`")
     text = message.text.split(" ",1)[1]
     chat_id = int(message.chat.id)
     file_name = f"{message.chat.id}.jpg"
