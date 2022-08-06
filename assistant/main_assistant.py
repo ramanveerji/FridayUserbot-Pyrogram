@@ -333,13 +333,13 @@ async def broadcast(client, message):
 @_check_owner_or_sudos
 async def yt_dl_(client, message):
     input_str = get_text(message)
-    pablo = await client.reply(message, f"`Processing...`")
+    pablo = await client.reply("`Processing...`")
     if not input_str:
         await pablo.edit(
             "`Please Give Me A Valid Input. You Can Check Help Menu To Know More!`"
         )
         return
-    await pablo.edit(f"`Downloading Please Wait..`")
+    await pablo.edit("`Downloading Please Wait..`")
     url = input_str
     opts = {
         "format": "best",
