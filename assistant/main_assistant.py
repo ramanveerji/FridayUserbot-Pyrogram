@@ -328,45 +328,6 @@ async def broadcast(client, message):
     else:
         await lol.edit(f"Successfully Broadcasted to {s} users.")
 
-@bot.on_message(filters.command(["write"]) & filters.incoming)
-async def writing(client, message):
-    wrt = await message.reply("`Jarvis is writing text on page...`")
-    text = ""
-    if message.reply_to_message and (message.reply_to_message.text or message.reply_to_message.caption):
-        text = message.reply_to_message.text or message.reply_to_message.caption
-    elif " " in message.text:
-        text = message.text.split(" ",1)[1]
-    if not text:
-        await op.edit("What do you wanna write?")
-        return
-    if not text:
-        text = message.reply_to_message.text
-        chat_id = int(message.chat.id)
-        file_name = f"{message.chat.id}.jpg"
-        length = len(text)
-    if length < 500:
-        rgb = [0, 0, 0] # Edit RGB values here to change the Ink color
-        try:
-        # Can directly use pywhatkit module for this
-            data = requests.get(
-            "https://pywhatkit.herokuapp.com/handwriting?text=%s&rgb=%s,%s,%s"
-            (text, rgb[0], rgb[1], rgb[2])
-            ).content
-        except Exception as error:
-            await wrt.edit(f"{error}")
-            return
-    with open(file_name, "wb") as file:
-            file.write(data)
-            file.close()
-            await wrt.edit("`Uploading...`")
-            await client.send_photo(
-            chat_id=message.chat.id,
-            photo=file_name,
-            caption="__**Written by Jarvis**__",
-            )
-            await wrt.delete()
-            os.remove(file_name)
-
 
 @bot.on_message(filters.command(["vod"]) & filters.incoming)
 @_check_owner_or_sudos
