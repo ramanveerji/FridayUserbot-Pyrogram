@@ -327,3 +327,35 @@ async def broadcast(client, message):
         )
     else:
         await lol.edit(f"Successfully Broadcasted to {s} users.")
+
+@bot.on_message(filters.command(["write"])
+async def writing(client, message):
+    wrt = await client.reply("`Writing please wi8...`")
+    text = message.text.split(" ",1)[1]
+    chat_id = int(message.chat.id)
+    file_name = f"{message.chat.id}.jpg"
+    length = len(text)
+    if length < 500:
+        rgb = [0, 0, 0] # Edit RGB values here to change the Ink color
+        try:
+            # Can directly use pywhatkit module for this
+            data = requests.get(
+                "https://pywhatkit.herokuapp.com/handwriting?text=%s&rgb=%s,%s,%s"
+                % (text, rgb[0], rgb[1], rgb[2])
+            ).content
+        except Exception as error:
+            await wrt.edit(f"{error}")
+            return
+        with open(file_name, "wb") as file:
+            file.write(data)
+            file.close()
+        await wrt.edit("`Uploading...`")
+        await client.send_photo(
+            chat_id=message.chat.id,
+            photo=file_name,
+            caption="__**Written by @FridayUB**__",
+        )
+        await wrt.delete()
+        os.remove(file_name)
+    else:
+        await wrt.edit("`Please don't do It`")
