@@ -30,7 +30,7 @@ from main_startup.helper_func.assistant_helpers import (
     _check_admin,
     _check_owner_or_sudos,
 )
-from main_startup.helper_func.basic_helpers import get_all_pros, get_readable_time,edit_or_reply, get_text, progress, humanbytes
+from main_startup.helper_func.basic_helpers import get_all_pros, get_readable_time, get_text, progress, humanbytes
 
 
 @bot.on_message(filters.command(["start"]) & filters.incoming)
@@ -333,7 +333,7 @@ async def broadcast(client, message):
 @_check_owner_or_sudos
 async def yt_dl_(client, message):
     input_str = get_text(message)
-    pablo = await edit_or_reply(message, f"`Processing...`")
+    pablo = await client.reply(message, f"`Processing...`")
     if not input_str:
         await pablo.edit(
             "`Please Give Me A Valid Input. You Can Check Help Menu To Know More!`"
