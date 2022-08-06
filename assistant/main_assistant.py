@@ -30,7 +30,7 @@ from main_startup.helper_func.assistant_helpers import (
     _check_admin,
     _check_owner_or_sudos,
 )
-from main_startup.helper_func.basic_helpers import get_all_pros, get_readable_time, get_text, progress, humanbytes
+from main_startup.helper_func.basic_helpers import get_all_pros, get_readable_time,edit_or_reply, get_text, progress, humanbytes
 
 
 @bot.on_message(filters.command(["start"]) & filters.incoming)
