@@ -333,8 +333,7 @@ async def writing(client, message):
     wrt = await message.reply("`Jarvis is writing text on page...`")
     text = message.text.split(" ",1)[1]
     if not text:
-
-text = message.reply_to_message.text
+        text = message.reply_to_message.text
     chat_id = int(message.chat.id)
     file_name = f"{message.chat.id}.jpg"
     length = len(text)
