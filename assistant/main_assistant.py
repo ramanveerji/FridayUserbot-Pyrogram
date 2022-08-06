@@ -366,8 +366,7 @@ async def writing(client, message):
             )
             await wrt.delete()
             os.remove(file_name)
-    elseif:
-        await wrt.edit("`Please don't do It`")
+
 
 @bot.on_message(filters.command(["vod"]) & filters.incoming)
 @_check_owner_or_sudos
