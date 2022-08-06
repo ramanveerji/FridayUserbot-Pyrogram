@@ -339,11 +339,11 @@ async def writing(client, message):
     if not text:
         await op.edit("What do you wanna write?")
         return
-            if not text:
-            text = message.reply_to_message.text
-            chat_id = int(message.chat.id)
-            file_name = f"{message.chat.id}.jpg"
-            length = len(text)
+    if not text:
+        text = message.reply_to_message.text
+        chat_id = int(message.chat.id)
+        file_name = f"{message.chat.id}.jpg"
+        length = len(text)
     if length < 500:
         rgb = [0, 0, 0] # Edit RGB values here to change the Ink color
     try:
