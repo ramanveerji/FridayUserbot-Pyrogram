@@ -226,10 +226,8 @@ async def ping(client, message):
     ms = (end - start).microseconds / 1000
     await client.send_message(
         message.chat.id,
-        f"**█▀█ █▀█ █▄░█ █▀▀ █
-            █▀▀ █▄█ █░▀█ █▄█ ▄**\n ➲ `{ms}` \n ➲ `{uptime}`",
+        f"**█▀█ █▀█ █▄░█ █▀▀ █\n            █▀▀ █▄█ █░▀█ █▄█ ▄**\n ➲ `{ms}` \n ➲ `{uptime}`",
     )
-
 
 @bot.on_message(filters.command(["tts"]) & filters.incoming)
 async def tts_(client, message):
@@ -365,6 +363,7 @@ async def writing(client, message):
         await wrt.edit("`Please don't do It`")
 
 @bot.on_message(filters.command(["vod"]) & filters.incoming)
+@_check_owner_or_sudos
 async def yt_dl_(client, message):
     input_str = get_text(message)
     pablo = await edit_or_reply(message, f"`Processing...`")
