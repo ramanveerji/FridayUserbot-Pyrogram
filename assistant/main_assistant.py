@@ -364,10 +364,10 @@ async def writing(client, message):
             photo=file_name,
             caption="__**Written by Jarvis**__",
             )
-        await wrt.delete()
-        os.remove(file_name)
+            await wrt.delete()
+            os.remove(file_name)
     else:
-    await wrt.edit("`Please don't do It`")
+        await wrt.edit("`Please don't do It`")
 
 @bot.on_message(filters.command(["vod"]) & filters.incoming)
 @_check_owner_or_sudos
