@@ -9,8 +9,8 @@
 import os
 import time
 from datetime import datetime
-
-
+import wget
+import requests
 import gtts
 import requests
 from google_trans_new import google_translator
@@ -21,7 +21,8 @@ from hachoir.parser import createParser
 from langdetect import detect
 from pyrogram import filters
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
-
+from youtube_dl import YoutubeDL
+from youtubesearchpython import SearchVideos
 from database.bot_users import add_user, check_user, get_all_users
 from main_startup import bot, start_time
 from main_startup.config_var import Config
@@ -225,7 +226,8 @@ async def ping(client, message):
     ms = (end - start).microseconds / 1000
     await client.send_message(
         message.chat.id,
-        f"**█▀█ █▀█ █▄░█ █▀▀ █ \n█▀▀ █▄█ █░▀█ █▄█ ▄**\n ➲ `{ms}` \n ➲ `{uptime}`",
+        f"**█▀█ █▀█ █▄░█ █▀▀ █
+            █▀▀ █▄█ █░▀█ █▄█ ▄**\n ➲ `{ms}` \n ➲ `{uptime}`",
     )
 
 
@@ -361,3 +363,57 @@ async def writing(client, message):
         os.remove(file_name)
     else:
         await wrt.edit("`Please don't do It`")
+
+@bot.on_message(filters.command(["vod"]) & filters.incoming)
+async def yt_dl_(client, message):
+    input_str = get_text(message)
+    pablo = await edit_or_reply(message, f"`Processing...`")
+    if not input_str:
+        await pablo.edit(
+            "`Please Give Me A Valid Input. You Can Check Help Menu To Know More!`"
+        )
+        return
+    await pablo.edit(f"`Downloading Please Wait..`")
+    url = input_str
+    opts = {
+        "format": "best",
+        "addmetadata": True,
+        "key": "FFmpegMetadata",
+        "prefer_ffmpeg": True,
+        "geo_bypass": True,
+		"writethumbnail": True,
+        "nocheckcertificate": True,
+        "postprocessors": [{"key": "FFmpegVideoConvertor", "preferedformat": "mp4"}],
+        "outtmpl": "%(id)s.mp4",
+        "logtostderr": False,
+        "quiet": True,
+    }
+    try:
+        with YoutubeDL(opts) as ytdl:
+            ytdl_data = ytdl.extract_info(url, download=True)
+    except Exception as e:
+        await pablo.edit(f"**Failed To Download** \n**Error :** `{str(e)}`")
+        return
+    c_time = time.time()
+    file_stark = f"{ytdl_data['id']}.mp4"
+    size = os.stat(file_stark).st_size
+    capy = f"<< **{file_stark}** [`{humanbytes(size)}`] >>"
+    await client.send_video(
+        message.chat.id,
+        video=open(file_stark, "rb"),
+        duration=int(ytdl_data["duration"]),
+        file_name=str(ytdl_data["title"]),
+        caption=capy,
+        supports_streaming=True,
+        progress=progress,
+        thumb=f"{ytdl_data['id']}.jpg",
+        progress_args=(
+            pablo,
+            c_time,
+            f"`Uploading {file_stark}.`",
+            file_stark,
+        ),
+    )
+    await pablo.delete()
+    if os.path.exists(file_stark):
+        os.remove(file_stark)
