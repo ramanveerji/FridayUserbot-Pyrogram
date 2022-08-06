@@ -348,13 +348,13 @@ async def writing(client, message):
         rgb = [0, 0, 0] # Edit RGB values here to change the Ink color
         try:
         # Can directly use pywhatkit module for this
-        data = requests.get(
-        "https://pywhatkit.herokuapp.com/handwriting?text=%s&rgb=%s,%s,%s"
-        (text, rgb[0], rgb[1], rgb[2])
-        ).content
-    except Exception as error:
-        await wrt.edit(f"{error}")
-        return
+            data = requests.get(
+            "https://pywhatkit.herokuapp.com/handwriting?text=%s&rgb=%s,%s,%s"
+            (text, rgb[0], rgb[1], rgb[2])
+            ).content
+        except Exception as error:
+            await wrt.edit(f"{error}")
+            return
     with open(file_name, "wb") as file:
             file.write(data)
             file.close()
