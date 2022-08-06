@@ -355,9 +355,9 @@ async def writing(client, message):
     except Exception as error:
         await wrt.edit(f"{error}")
         return
-            with open(file_name, "wb") as file:
-                file.write(data)
-                file.close()
+    with open(file_name, "wb") as file:
+            file.write(data)
+            file.close()
             await wrt.edit("`Uploading...`")
             await client.send_photo(
             chat_id=message.chat.id,
