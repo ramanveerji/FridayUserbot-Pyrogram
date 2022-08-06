@@ -346,27 +346,27 @@ async def writing(client, message):
         length = len(text)
     if length < 500:
         rgb = [0, 0, 0] # Edit RGB values here to change the Ink color
-            try:
-            # Can directly use pywhatkit module for this
-            data = requests.get(
-            "https://pywhatkit.herokuapp.com/handwriting?text=%s&rgb=%s,%s,%s"
-            (text, rgb[0], rgb[1], rgb[2])
-            ).content
-        except Exception as error:
-            await wrt.edit(f"{error}")
-            return
-        with open(file_name, "wb") as file:
-                file.write(data)
-                file.close()
-                await wrt.edit("`Uploading...`")
-                await client.send_photo(
-                chat_id=message.chat.id,
-                photo=file_name,
-                caption="__**Written by Jarvis**__",
-                )
-                await wrt.delete()
-                os.remove(file_name)
-    else:
+        try:
+        # Can directly use pywhatkit module for this
+        data = requests.get(
+        "https://pywhatkit.herokuapp.com/handwriting?text=%s&rgb=%s,%s,%s"
+        (text, rgb[0], rgb[1], rgb[2])
+        ).content
+    except Exception as error:
+        await wrt.edit(f"{error}")
+        return
+    with open(file_name, "wb") as file:
+            file.write(data)
+            file.close()
+            await wrt.edit("`Uploading...`")
+            await client.send_photo(
+            chat_id=message.chat.id,
+            photo=file_name,
+            caption="__**Written by Jarvis**__",
+            )
+            await wrt.delete()
+            os.remove(file_name)
+    elseif:
         await wrt.edit("`Please don't do It`")
 
 @bot.on_message(filters.command(["vod"]) & filters.incoming)
