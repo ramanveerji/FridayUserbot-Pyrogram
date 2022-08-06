@@ -30,7 +30,7 @@ from main_startup.helper_func.assistant_helpers import (
     _check_admin,
     _check_owner_or_sudos,
 )
-from main_startup.helper_func.basic_helpers import get_all_pros, get_readable_time
+from main_startup.helper_func.basic_helpers import get_all_pros, get_readable_time, get_text, progress, humanbytes
 
 
 @bot.on_message(filters.command(["start"]) & filters.incoming)
@@ -226,7 +226,7 @@ async def ping(client, message):
     ms = (end - start).microseconds / 1000
     await client.send_message(
         message.chat.id,
-        f"**█▀█ █▀█ █▄░█ █▀▀ █\n            █▀▀ █▄█ █░▀█ █▄█ ▄**\n ➲ `{ms}` \n ➲ `{uptime}`",
+        f"**█▀█ █▀█ █▄░█ █▀▀ █\n█▀▀ █▄█ █░▀█ █▄█ ▄**\n ➲ `{ms}` \n ➲ `{uptime}`",
     )
 
 @bot.on_message(filters.command(["tts"]) & filters.incoming)
@@ -331,7 +331,14 @@ async def broadcast(client, message):
 @bot.on_message(filters.command(["write"]) & filters.incoming)
 async def writing(client, message):
     wrt = await message.reply("`Jarvis is writing text on page...`")
-    text = message.text.split(" ",1)[1]
+    text = ""
+   if message.reply_to_message and (message.reply_to_message.text or message.reply_to_message.caption):
+       text = message.reply_to_message.text or message.reply_to_message.caption
+   elif " " in message.text:   
+       text = message.text.split(" ",1)[1]
+   if not text:
+      await op.edit("What do you wanna write?")
+      return
     if not text:
         text = message.reply_to_message.text
     chat_id = int(message.chat.id)
