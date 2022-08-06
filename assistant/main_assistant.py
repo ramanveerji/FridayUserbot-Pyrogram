@@ -328,7 +328,7 @@ async def broadcast(client, message):
     else:
         await lol.edit(f"Successfully Broadcasted to {s} users.")
 
-@bot.on_message(filters.command(["write"])
+@bot.on_message(filters.command(["write"]) & filters.incoming)
 async def writing(client, message):
     wrt = await client.reply("`Writing please wi8...`")
     text = message.text.split(" ",1)[1]
