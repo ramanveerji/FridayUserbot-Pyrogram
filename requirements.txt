@@ -6,7 +6,6 @@ wikipedia
 pygments
 quotefancy
 mal
-pytgcalls==0.0.15
 flag
 speedtest
 feedparser
