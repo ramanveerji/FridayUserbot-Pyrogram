@@ -46,10 +46,10 @@ $ git clone https://github.com/DevsExpo/FridayUserBot
 # Open Git Cloned File
 $ cd FridayUserBot
 # Install All Requirements 
-$ pip(3) install -r requirements.txt
+$ pip3 install -r requirements.txt
 # Create local.env with variables as given below
 # Start Bot 
-$ python(3) -m main_startup
+$ python3 -m main_startup
 ```
 
 
