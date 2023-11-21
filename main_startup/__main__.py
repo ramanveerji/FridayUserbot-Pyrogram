@@ -81,7 +81,7 @@ async def run_bot():
             Friday = Client("my_account")
             await Friday.start()
             Friday.me = await Friday.get_me()
-        assistant_mods = plugin_collecter("./assistant/")
+            assistant_mods = plugin_collecter("./assistant/")
         for mods in assistant_mods:
             try:
                 load_plugin(mods, assistant=True)
