@@ -78,9 +78,9 @@ async def run_bot():
     if bot:
             await bot.start()
             bot.me = await bot.get_me()
-        Friday = Client("my_account")
-        await Friday.start()
-        Friday.me = await Friday.get_me()
+            Friday = Client("my_account")
+            await Friday.start()
+            Friday.me = await Friday.get_me()
         assistant_mods = plugin_collecter("./assistant/")
         for mods in assistant_mods:
             try:
