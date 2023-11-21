@@ -11,6 +11,7 @@ import os
 import platform
 
 from pyrogram import Client, __version__
+
 from bot_utils_files.Localization.engine import Engine
 from database.localdb import check_lang
 from main_startup import (
@@ -27,7 +28,7 @@ from main_startup.core.startup_helpers import (
     load_xtra_mod,
     plugin_collecter,
     run_cmd,
-    update_it
+    update_it,
 )
 
 from .config_var import Config
@@ -41,24 +42,28 @@ async def mongo_check():
         logging.error("Something Isn't Right With Mongo! Please Check Your URL")
         logging.error(str(e))
         quit(1)
+
+
 async def load_unofficial_modules():
     """Load Extra Plugins."""
     logging.info("Loading X-Tra Plugins!")
-    await run_cmd(f'bash bot_utils_files/other_helpers/xtra_plugins.sh {Config.XTRA_PLUGINS_REPO}')
+    await run_cmd(
+        f"bash bot_utils_files/other_helpers/xtra_plugins.sh {Config.XTRA_PLUGINS_REPO}"
+    )
     xtra_mods = plugin_collecter("./xtraplugins/")
     for mods in xtra_mods:
         try:
             load_xtra_mod(mods)
         except Exception as e:
-            logging.error("[USER][XTRA-PLUGINS] - Failed To Load : " + f'{mods} - {e}')
+            logging.error("[USER][XTRA-PLUGINS] - Failed To Load : " + f"{mods} - {e}")
 
 
 async def fetch_plugins_from_channel():
     """Fetch Plugins From Channel"""
     try:
         async for message in Friday.search_messages(
-                    Config.PLUGIN_CHANNEL, query=".py", filters="document"
-                ):
+            Config.PLUGIN_CHANNEL, query=".py", filters="document"
+        ):
             hmm = message.document.file_name
             if not os.path.exists(os.path.join("./plugins/", hmm)):
                 await Friday.download_media(message, file_name="./plugins/")
@@ -76,17 +81,17 @@ async def run_bot():
     """Run The Bot"""
     await mongo_check()
     if bot:
-            await bot.start()
-            bot.me = await bot.get_me()
-            Friday = Client("my_account")
-            await Friday.start()
-            Friday.me = await Friday.get_me()
-            assistant_mods = plugin_collecter("./assistant/")
+        await bot.start()
+        bot.me = await bot.get_me()
+        Friday = Client("my_account")
+        await Friday.start()
+        Friday.me = await Friday.get_me()
+        assistant_mods = plugin_collecter("./assistant/")
     for mods in assistant_mods:
-            try:
-                load_plugin(mods, assistant=True)
-            except Exception as e:
-                logging.error("[ASSISTANT] - Failed To Load : " + f"{mods} - {str(e)}")
+        try:
+            load_plugin(mods, assistant=True)
+        except Exception as e:
+            logging.error("[ASSISTANT] - Failed To Load : " + f"{mods} - {str(e)}")
     await Friday.start()
     Friday.me = await Friday.get_me()
     Friday.selected_lang = await check_lang()
@@ -112,7 +117,7 @@ async def run_bot():
         try:
             load_plugin(nm)
         except Exception as e:
-            logging.error("[USER] - Failed To Load : " + f'{nm} - {e}')
+            logging.error("[USER] - Failed To Load : " + f"{nm} - {e}")
     if Config.LOAD_UNOFFICIAL_PLUGINS:
         await load_unofficial_modules()
     full_info = f"""Friday Based On Pyrogram V{__version__}
