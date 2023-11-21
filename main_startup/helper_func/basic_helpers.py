@@ -15,7 +15,7 @@ import time
 from math import ceil
 from traceback import format_exc
 from typing import Tuple
-from pyrogram import Client
+from pyrogram import Client, filters
 from pyrogram.errors import FloodWait, MessageNotModified
 from pyrogram.types import (
     InlineKeyboardButton,
@@ -46,6 +46,31 @@ def guess_mime_type(file_):
 
 
 def get_user(message: Message, text: str) -> [int, str, None]:
+    """Get User From Message"""
+    if text is None:
+        asplit = None
+    else:
+        asplit = text.split(" ", 1)
+    user_s = None
+    reason_ = None
+    if message.reply_to_message:
+        user_s = message.reply_to_message.from_user.id
+        reason_ = text if text else None
+    elif asplit is None:
+        return None, None
+    elif len(asplit[0]) > 0:
+        if message.entities:
+            if len(message.entities) == 1:
+                required_entity = message.entities[0]
+                if required_entity.type == "text_mention":
+                    user_s = int(required_entity.user.id)
+                else:
+                    user_s = int(asplit[0]) if asplit[0].isdigit() else asplit[0]
+        else:
+            user_s = int(asplit[0]) if asplit[0].isdigit() else asplit[0]
+        if len(asplit) == 2:
+            reason_ = asplit[1]
+    return user_s, reason_
     """Get User From Message"""
     if text is None:
         asplit = None
