@@ -16,6 +16,7 @@ from main_startup.config_var import Config
 from main_startup.core.decorators import friday_on_cmd, listen
 from main_startup.helper_func.basic_helpers import edit_or_reply, get_text
 from main_startup.helper_func.logger_s import LogIt
+
 afk_sanity_check: dict = {}
 
 
@@ -48,17 +49,11 @@ async def set_afk(client, message):
     log = LogIt(message)
     if msge:
         msg = engine.get_string("AFK_1").format(msge)
-        await log.log_msg(
-            client,
-            engine.get_string("AFK_2").format(msge)
-        )
+        await log.log_msg(client, engine.get_string("AFK_2").format(msge))
         await go_afk(afk_start, msge)
     else:
         msg = engine.get_string("AFK_3")
-        await log.log_msg(
-            client,
-            engine.get_string("AFK_2").format("Not Specified.")
-        )
+        await log.log_msg(client, engine.get_string("AFK_2").format("Not Specified."))
         await go_afk(afk_start)
     await pablo.edit(msg)
 
@@ -119,7 +114,4 @@ async def no_afke(client, message):
     await kk.delete()
     await no_afk()
     log = LogIt(message)
-    await log.log_msg(
-        client,
-        engine.get_string("AFK_5").format(total_afk_time)
-    )
+    await log.log_msg(client, engine.get_string("AFK_5").format(total_afk_time))
