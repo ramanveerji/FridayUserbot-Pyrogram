@@ -10,8 +10,7 @@ import logging
 import os
 import platform
 
-import pyrogram
-from pyrogram import __version__
+from pyrogram import Client, __version__
 from bot_utils_files.Localization.engine import Engine
 from database.localdb import check_lang
 from main_startup import (
@@ -42,8 +41,6 @@ async def mongo_check():
         logging.error("Something Isn't Right With Mongo! Please Check Your URL")
         logging.error(str(e))
         quit(1)
-
-
 async def load_unofficial_modules():
     """Load Extra Plugins."""
     logging.info("Loading X-Tra Plugins!")
@@ -60,8 +57,8 @@ async def fetch_plugins_from_channel():
     """Fetch Plugins From Channel"""
     try:
         async for message in Friday.search_messages(
-            Config.PLUGIN_CHANNEL, filter="document", query=".py"
-        ):
+                    Config.PLUGIN_CHANNEL, query=".py", filters="document"
+                ):
             hmm = message.document.file_name
             if not os.path.exists(os.path.join("./plugins/", hmm)):
                 await Friday.download_media(message, file_name="./plugins/")
@@ -79,8 +76,11 @@ async def run_bot():
     """Run The Bot"""
     await mongo_check()
     if bot:
-        await bot.start()
-        bot.me = await bot.get_me()
+            await bot.start()
+            bot.me = await bot.get_me()
+        Friday = Client("my_account")
+        await Friday.start()
+        Friday.me = await Friday.get_me()
         assistant_mods = plugin_collecter("./assistant/")
         for mods in assistant_mods:
             try:
@@ -121,7 +121,7 @@ Friday Version : {friday_version}
 You Can Visit @FridaySupportOfficial For Updates And @FridayChat For Any Query / Help!
 """
     logging.info(full_info)
-    await pyrogram.idle()
+    await Client.idle()
 
 
 if __name__ == "__main__":
