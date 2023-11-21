@@ -7,15 +7,20 @@
 # All rights reserved.
 
 import asyncio
+import functools
 import logging
 import math
+import mimetypes
+import multiprocessing
 import os
 import shlex
 import time
+from concurrent.futures import ThreadPoolExecutor
 from math import ceil
 from traceback import format_exc
 from typing import Tuple
-from pyrogram import Client, filters
+
+from pyrogram import Client
 from pyrogram.errors import FloodWait, MessageNotModified
 from pyrogram.types import (
     InlineKeyboardButton,
@@ -23,14 +28,10 @@ from pyrogram.types import (
     InputTextMessageContent,
     Message,
 )
-from main_startup import Friday, Friday2, Friday3, Friday4
+
 from database.sudodb import sudo_list
+from main_startup import Friday, Friday2, Friday3, Friday4
 from main_startup.config_var import Config
-import multiprocessing
-import mimetypes
-import functools
-import threading
-from concurrent.futures import ThreadPoolExecutor
 
 max_workers = multiprocessing.cpu_count() * 5
 exc_ = ThreadPoolExecutor(max_workers=max_workers)
@@ -107,7 +108,9 @@ async def edit_or_reply(message, text, parse_mode="md"):
         return await message.edit(text, parse_mode=parse_mode)
     if message.from_user.id in sudo_lis_t:
         if message.reply_to_message:
-            return await message.reply_to_message.reply_text(text, parse_mode=parse_mode)
+            return await message.reply_to_message.reply_text(
+                text, parse_mode=parse_mode
+            )
         return await message.reply_text(text, parse_mode=parse_mode)
     return await message.edit(text, parse_mode=parse_mode)
 
@@ -205,7 +208,9 @@ def paginate_help(page_number, loaded_modules, prefix, is_official=True):
                         prefix, modulo_page, is_official
                     ),
                 ),
-                InlineKeyboardButton(text="Back 🔙", callback_data=f"backO_to_help_menu"),
+                InlineKeyboardButton(
+                    text="Back 🔙", callback_data=f"backO_to_help_menu"
+                ),
                 InlineKeyboardButton(
                     text="Next ⏩",
                     callback_data="{}_next({})_{}".format(
@@ -278,7 +283,7 @@ def humanbytes(size):
     """Convert Bytes To Bytes So That Human Can Read It"""
     if not size:
         return ""
-    power = 2 ** 10
+    power = 2**10
     raised_to_pow = 0
     dict_power_n = {0: "", 1: "Ki", 2: "Mi", 3: "Gi", 4: "Ti"}
     while size > power:
@@ -286,11 +291,13 @@ def humanbytes(size):
         raised_to_pow += 1
     return str(round(size, 2)) + " " + dict_power_n[raised_to_pow] + "B"
 
+
 def run_in_exc(f):
     @functools.wraps(f)
     async def wrapper(*args, **kwargs):
         loop = asyncio.get_running_loop()
         return await loop.run_in_executor(exc_, lambda: f(*args, **kwargs))
+
     return wrapper
 
 
@@ -401,7 +408,7 @@ def get_text(message: Message) -> [None, str]:
 
 
 async def runcmd(cmd: str) -> Tuple[str, str, int, int]:
-    """ run command in terminal """
+    """run command in terminal"""
     args = shlex.split(cmd)
     process = await asyncio.create_subprocess_exec(
         *args, stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.PIPE
