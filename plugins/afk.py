@@ -9,13 +9,14 @@
 import asyncio
 from datetime import datetime
 
-from pyrogram import filters
+from pyrogram import Client, filters
 
 from database.afk import check_afk, go_afk, no_afk
 from main_startup.config_var import Config
 from main_startup.core.decorators import friday_on_cmd, listen
 from main_startup.helper_func.basic_helpers import edit_or_reply, get_text
 from main_startup.helper_func.logger_s import LogIt
+
 afk_sanity_check: dict = {}
 
 
@@ -27,7 +28,7 @@ async def is_afk_(f, client, message):
         return bool(False)
 
 
-is_afk = filters.create(func=is_afk_, name="is_afk_")
+is_afk = Client.create_filter(func=is_afk_, name="is_afk_")
 
 
 @friday_on_cmd(
@@ -48,17 +49,11 @@ async def set_afk(client, message):
     log = LogIt(message)
     if msge:
         msg = engine.get_string("AFK_1").format(msge)
-        await log.log_msg(
-            client,
-            engine.get_string("AFK_2").format(msge)
-        )
+        await log.log_msg(client, engine.get_string("AFK_2").format(msge))
         await go_afk(afk_start, msge)
     else:
         msg = engine.get_string("AFK_3")
-        await log.log_msg(
-            client,
-            engine.get_string("AFK_2").format("Not Specified.")
-        )
+        await log.log_msg(client, engine.get_string("AFK_2").format("Not Specified."))
         await go_afk(afk_start)
     await pablo.edit(msg)
 
@@ -66,7 +61,7 @@ async def set_afk(client, message):
 @listen(
     is_afk
     & (filters.mentioned | filters.private)
-    & ~filters.me
+    & ~filters.user(Client.me)
     & ~filters.bot
     & ~filters.edited
     & filters.incoming
@@ -107,7 +102,7 @@ async def afk_er(client, message):
     await message.reply(message_to_reply)
 
 
-@listen(filters.outgoing & filters.me & is_afk)
+@listen(filters.outgoing & filters.user(Client.me) & is_afk)
 async def no_afke(client, message):
     engine = message.Engine
     lol = await check_afk()
@@ -119,7 +114,4 @@ async def no_afke(client, message):
     await kk.delete()
     await no_afk()
     log = LogIt(message)
-    await log.log_msg(
-        client,
-        engine.get_string("AFK_5").format(total_afk_time)
-    )
+    await log.log_msg(client, engine.get_string("AFK_5").format(total_afk_time))
