@@ -82,7 +82,7 @@ async def run_bot():
             await Friday.start()
             Friday.me = await Friday.get_me()
             assistant_mods = plugin_collecter("./assistant/")
-        for mods in assistant_mods:
+    for mods in assistant_mods:
             try:
                 load_plugin(mods, assistant=True)
             except Exception as e:
