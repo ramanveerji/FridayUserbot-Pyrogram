@@ -11,7 +11,7 @@ speedtest
 feedparser
 validators
 asyncurban
-git+https://github.com/ramanveerji/pyrogram-backup
+Pyrogram==1.4.0
 filesplit
 google-trans-new
 wget>=3.2
