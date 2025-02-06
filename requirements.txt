@@ -11,7 +11,7 @@ speedtest
 feedparser
 validators
 asyncurban
-pyrofork
+pyrogram==1.4.0 #pyrofork is the newest fork for pyrogram
 filesplit
 google-trans-new
 wget>=3.2
